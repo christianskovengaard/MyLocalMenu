@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+//phpinfo();
 
 //Require the UserCOntroller
 require './Controllers/UserController.php';
@@ -7,11 +8,21 @@ require './Controllers/UserController.php';
 $oUserController = new UserController();
 
 //Create new user
-$oUserController->CreateUser('Ole', '123456', 'Admin');
+$oUserController->CreateUser('OleBole', '123456', 1);
 
+
+$iUserId = 1;
 
 //Get the new user
-$oUser = $oUserController->GetUser();
+$oUser = $oUserController->GetUser($iUserId);
 
-var_dump($oUser);
+
+echo "Brugernavn er: ".$oUser->sUsername;
+
+echo "<pre>";
+    var_dump($oUser);
+echo "</pre>";
+
+
+
 ?>

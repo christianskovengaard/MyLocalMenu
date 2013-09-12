@@ -4,7 +4,7 @@ class User
 {
     private $sUsername;
     private $sUserPassword;
-    private $sUserRole;
+    private $iUserRole;
 
 
 
@@ -13,11 +13,11 @@ class User
         
     }
 
-    public function SetUser($sUsername,$sUserPassword,$sUserRole)
+    public function SetUser($sUsername,$sUserPassword,$iUserRole)
     {
         $this->sUsername = $sUsername;
         $this->sUserPassword = $sUserPassword;
-        $this->sUserRole = $sUserRole;
+        $this->iUserRole = $iUserRole;
     }
     
     public function GetUser()
@@ -27,7 +27,7 @@ class User
         $oUser = new stdClass();
         $oUser->sUsername = $this->sUsername;
         $oUser->sUserPassword = $this->sUserPassword;
-        $oUser->sUserRole = $this->sUserRole;
+        $oUser->iUserRole = $this->iUserRole;
         
         return $oUser;
     }

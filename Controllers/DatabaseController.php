@@ -16,17 +16,23 @@ class DatabaseController
         $oDatabase = $this->oDatabase->GetDatabase();
         
         //Connect to database
+        $sDatabasename = $oDatabase->sDatabaseName;
+        $sUsername = $oDatabase->sUsername;
+        $sPassword = $oDatabase->sPassword;
+        $sEncoding = $oDatabase->sEncoding;
+        $sHost = $oDatabase->sHost;
         
-        // Check connection
-        if(mysqli_connect_errno($con))
+        // PDO
+        $conPDO = new PDO("mysql:host=$sHost;dbname=$sDatabasename",$sUsername,$sPassword);
+        if($conPDO)
         {
-            return false;
+            $conPDO->exec("set names '.$sEncoding.'");
+            $conPDO->exec("SET CHARACTER SET '.$sEncoding.'");
+            return $conPDO;    
         }
-        else
-        {
-            mysqli_query($con, "SET NAMES utf8");
-            return $con;
-        }        
+        else{
+            return false;
+        }       
     }
     
     function __destruct() {
