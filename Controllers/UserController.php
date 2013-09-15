@@ -55,10 +55,6 @@ class UserController
 	$sQuery->bindValue(1, $oUser->sUsername);
         $sQuery->bindValue(2, $oUser->sUserPassword);
 	$sQuery->bindValue(3, $oUser->iUserRole);
-        /*$sQuery->bindValue(4, $ip);
-	$sQuery->bindValue(5, $time);
-        $sQuery->bindValue(6, $date);
-	$sQuery->bindValue(7, $user_id);*/
 
         try
         {
@@ -71,18 +67,13 @@ class UserController
         
     }
     
-    public function UpdateUser()
+    public function UpdateUser($sUsername,$sUserPassword,$iUserRole)
     {
-        $sUsername = 'Test fra POST';
-        $sUserPassword = 'Test fra POST 2';
         
         //Set the new values in the user class
-        $this->oUser->SetUser($sUsername, $sUserPassword);
         
         //Get the user
-        $oUser = $this->oUser->GetUser();
         
-        return $oUser;
         
         //Update the user in the database
     }

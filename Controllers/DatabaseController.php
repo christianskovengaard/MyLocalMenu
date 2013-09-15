@@ -5,7 +5,8 @@ class DatabaseController
     
     private $oDatabase;
     
-    function __construct() {
+    function __construct() 
+    {
         require './Classes/DatabaseClass.php';
         $this->oDatabase = new Database();
     }
@@ -35,8 +36,9 @@ class DatabaseController
         }       
     }
     
-    function __destruct() {
-        ;
+    function __destruct() 
+    {
+        
     }
 }
 ?>
