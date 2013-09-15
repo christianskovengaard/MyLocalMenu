@@ -92,6 +92,9 @@ class UserController
     
     public function UpdateUser($iUserId,$sUsername,$sUserPassword,$iUserRole)
     {
+        //Encrypt the password
+        $sUserPassword = $this->oBcrypt->genHash($sUserPassword);
+        
         //Set the new values in the user class
         $this->oUser->SetUser($sUsername, $sUserPassword, $iUserRole);
         
@@ -122,19 +125,20 @@ class UserController
     
     public function LogInUser($sUsername,$sUserPassword)
     {
-        /*
-        $query = $this->db->prepare("SELECT `password`, `id` FROM `users` WHERE `username` = ?");
-	$query->bindValue(1, $username);
-			
-	$query->execute();
-	$data 				= $query->fetch();
-	$stored_password 	= $data['password']; // stored hashed password
-	$id   				= $data['id']; // id of the user to be returned if the password is verified, below.
-        */
+        
+        $sQuery = $this->conPDO->prepare("SELECT sUserPassword FROM users WHERE sUsername = ? LIMIT 1");
+	$sQuery->bindValue(1, $sUsername);
+        
+	$sQuery->execute();
+        
+	//Fetch the result as assoc array
+        $aUser = $sQuery->fetch(PDO::FETCH_ASSOC);
+	
+        $sUserPasswordFromDatabase = $aUser['sUserPassword']; // stored hashed password
         
         if($this->oBcrypt->verify($sUserPassword, $sUserPasswordFromDatabase) === true)
         { // using the verify method to compare the password with the stored hashed password.
-			//User login
+            return true;
 	}
         else
         {
