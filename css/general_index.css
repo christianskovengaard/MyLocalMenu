@@ -1,0 +1,30 @@
+/* 
+    Document   : general
+    Created on : 12-09-2013, 15:13:40
+    Author     : spjael
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
+
+/* :::::::::::::::::TEKST OG LINKS:::::::::::::::::::::  */
+
+.button01 { Display: inline-block; background: #ddd; color: #333; cursor: pointer; }
+
+
+/* :::::::::::::::::SIDE OPDELING:::::::::::::::::::::  */
+
+.header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; }
+.info01 { position: relative; display: table; width: 100%; height: 400px; margin: 0px; background: #4dc17d; text-align: center; }
+.info02 { position: relative; display: table; width: 100%; margin: 0px; background: #000; color: #ddd; text-align: center; }
+.info03 { position: relative; display: table; width: 100%; margin: 0px; background: #353535; color: #ddd;  }
+.footer { position: relative; display: table; width: 100%; height: 80px; margin: 0px; }
+
+.wrapper { position: relative; width: 900px; height: 100%; margin: 0 auto;}
+
+/* :::::::::::::::::ANDET:::::::::::::::::::::  */
