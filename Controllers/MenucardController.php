@@ -6,7 +6,7 @@ class MenucardController
         ;
     }
     
-    public function SaveMenucard ()
+    public function AddMenucard ()
     {
         if(isset($_GET['sJSONMenucard']))
         {
@@ -17,6 +17,11 @@ class MenucardController
             //TODO: Get all the data and save it in the database
         }
         return true;
+    }
+    
+    public function UpdateMencard ()
+    {
+        
     }
 }
 ?>
