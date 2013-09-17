@@ -12,19 +12,69 @@ root {
 
 body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
 
-/* :::::::::::::::::TEKST OG LINKS:::::::::::::::::::::  */
+/* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
-.button01 { Display: inline-block; background: #ddd; color: #333; cursor: pointer; }
+h2, h3, h4, h5, h6, a, div  { 
+    font-family: "Bariol Bold", Arial, "Lucida Grande", sans-serif; 
+    font-weight : normal; color:#333; 
+}
 
+h1, p {
+    font-family: "Bariol Light", Arial, "Lucida Grande", sans-serif; 
+    font-weight : normal; color:#333; 
+}
 
-/* :::::::::::::::::SIDE OPDELING:::::::::::::::::::::  */
+h1 { font-size: 45px; line-height: 5px; color: #ddd; }
+h2 { font-size: 23px; line-height: 5px; }
+h3 { font-size: 22px; line-height: 5px; color: #ddd; }
+h5 { font-size: 22px; margin: 0px; }
+h6 { font-size: 14px; margin: 0px; }
+div { font-size: 22px; }
+
+input { 
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; color:#333; 
+    display: inline-block; font-size: 21px; border: 0px; margin: 0 10px 0 0; padding: 5px 10px; vertical-align: middle; outline: none; }
+.inputFrame { display: table; background: rgba(255,255,255,0.2); margin: 0 auto; padding: 10px; }
+
+.button01 { 
+      position: relative;
+      display: inline-block; 
+      background: #21201f; 
+      color: #ddd; 
+      padding: 5px 9px; 
+      text-decoration: none; 
+      cursor: pointer;
+      vertical-align: middle;
+      -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s; 
+}
+.button01:hover { background: #fff; color: #333; }
+
+/* ::::::::::::::::: SIDE OPDELING :::::::::::::::::::::  */
 
 .header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; }
-.info01 { position: relative; display: table; width: 100%; height: 400px; margin: 0px; background: #4dc17d; text-align: center; }
-.info02 { position: relative; display: table; width: 100%; margin: 0px; background: #000; color: #ddd; text-align: center; }
-.info03 { position: relative; display: table; width: 100%; margin: 0px; background: #353535; color: #ddd;  }
-.footer { position: relative; display: table; width: 100%; height: 80px; margin: 0px; }
+.info01 { position: relative; display: table; width: 100%; height: 600px; margin: 0px; background: #7b1544 url(../img/infobg01.png) center no-repeat; text-align: center; }
+.info02 { position: relative; display: table; width: 100%; margin: 0px; background: #21201f url(../img/index_bg_dots.gif) ; color: #ddd; text-align: center; }
+.info03 { position: relative; display: table; width: 100%; margin: 0px; background: #353535; padding: 20px 0;  }
+.footer { position: relative; display: table; width: 100%; height: 80px; margin: 0px; padding: 20px 0; }
 
-.wrapper { position: relative; width: 900px; height: 100%; margin: 0 auto;}
+.wrapper { position: relative; width: 1200px; height: 100%; margin: 0 auto;}
 
-/* :::::::::::::::::ANDET:::::::::::::::::::::  */
+/* ::::::::::::::::: ANDET :::::::::::::::::::::  */
+
+.header .inputFrame { position: absolute; right: 0; top:10px; background: #ddd; }
+
+.logoWrapper { display: block; width: 200px; margin: 10px 0 0 0; }
+.logoWrapper img { display: inline-table; width: 40px;  vertical-align: middle; }
+.logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
+
+.info01 input { font-size: 28px; }
+.Info01Img { height: 480px; }
+.FindMenuImg { display: inline-block; width: 40px; height: 44px; background: #fff; margin: 0 0 0 -10px; vertical-align: middle; cursor: pointer;}
+.FindMenuImg img { vertical-align: middle; margin: 6px 10px 0 0; }
+.FindMenuImg img:hover { opacity: 0.15; filter:alpha(opacity=15); }
+
+.info02 .inputFrame { background: rgba(255,255,255,0.1); margin-bottom: 10px; }
+.info02 input { background: #4f4f4f; color: #b5b5b5; border-top: 2px #2f2f2f solid; }
+
+.info03 h2,p { color: #b5b5b5; width: 400px; }
+

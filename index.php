@@ -20,17 +20,28 @@
         
         <div class="header">
             <div class="wrapper">
-                My Local Menu [logo]<br>
+                <div class="logoWrapper">                        
+                    <img src="img/logo.png">
+                    <div class="logoText">
+                         <h5>MyLocalMenu</h5>
+                         <h6>Menukort på mobile</h6>
+                    </div>
+                </div>
+                <div class="inputFrame">
                     <input type="text" placeholder="Email">
                     <input type="Password" placeholder="Kodeord">
                     <div onclick="" class="button01">Log ind</div>
+                </div>
             </div>
         </div> 
         
         <div class="info01">
             <div class="wrapper">
-                info01 [billeder]<br>
-                <input type="text"><div onclick="" class="button01" placeholder="Find Menukord">SÃ¸g</div>
+                <div class="Info01Img"></div>
+                <div class="inputFrame">
+                    <input type="text" placeholder="Find Menukort">
+                    <div onclick="" class="FindMenuImg"><img src="img/search.JPG"></div>
+                </div>
             </div>
         </div> 
         
@@ -38,23 +49,28 @@
             <div class="wrapper">
                 <h1>Opret et menukort</h1>
                 <h3>...det er helt gratis</h3>
-                <input type="text" placeholder="Indtast din email">
-                <input type="Password" placeholder="Indtast et kodeord">
-                <div onclick="" class="button01">Opret</div>
+                <div class="inputFrame">
+                    <input type="text" placeholder="Indtast din email">
+                    <input type="Password" placeholder="Indtast et kodeord">
+                    <input type="Password" placeholder="Gentag kodeorden">
+                    <div onclick="" class="button01">Opret</div>
+                </div>
             </div>
         </div> 
         
         <div class="info03">
             <div class="wrapper">
-                <h2>Du kan altid opdater dit menukort</h2>
-                <p>lsgk Ã¦naerjl Ã¦nbalkbkmer vker iogeja iopjarg weiop wpjag jklrg laweip seflEFK Lf fff lsgkÃ¦naer jlÃ¦nba lkbkmer vker iogeja iopjarg weiop wpjag jklrg laweip seflEFK Lf fff</p>
-                <h2>Virker pÃ¥</h2>
+                   <img src="img/info02.png">
             </div>
         </div>
         
         <div class="footer">
             <div class="wrapper">
                 Firma info kontakt ect
+                <h2>Du kan altid opdater dit menukort</h2>
+                <p>jggbga asdjkgau askdgjbad askjasdb jggbga asdjkgau askdgjbad askjasdb jggbga asdjkgau askdgjbad askjasdb jggbga asdjkgau askdgjbad askjasdb</p>
+                <h2>Virker på det hele</h2>
+                <p>[logoer]</p>
             </div>
         </div> 
         
