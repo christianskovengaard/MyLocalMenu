@@ -1,0 +1,106 @@
+/* 
+    Document   : general
+    Created on : 12-09-2013, 15:13:40
+    Author     : bejtrup
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
+
+/* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
+
+h2, h3, h4, h5, h6, a, div  { 
+    font-family: "Bariol Bold", Arial, "Lucida Grande", sans-serif; 
+    font-weight : normal; color:#333; 
+}
+
+h1, p {
+    font-family: "Bariol Light", Arial, "Lucida Grande", sans-serif; 
+    font-weight : normal; color:#333; 
+}
+
+h1 { font-size: 45px; line-height: 5px; color: #ddd; }
+h2 { font-size: 23px; line-height: 5px; }
+h3 { font-size: 22px; line-height: 5px; color: #ddd; }
+h5 { font-size: 22px; margin: 0px; }
+h6 { font-size: 14px; margin: 0px; }
+div { font-size: 22px; }
+
+input { 
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; color:#333; 
+    display: inline-block; font-size: 21px; height: 35px; border: 0px; margin: 0 10px 0 0; padding: 5px 10px; vertical-align: middle; outline: none; 
+    -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; 
+}
+.inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; }
+
+.buttonEdit {       
+      position: relative;
+      display: inline-block; 
+      background: #21201f; 
+      color: #ddd; 
+      padding: 5px 9px; 
+      text-decoration: none; 
+      cursor: pointer;
+      vertical-align: middle;
+      -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
+}
+
+.buttonEdit:hover { background: #fff; color: #333; }
+
+/* ::::::::::::::::: SIDE OPDELING :::::::::::::::::::::  */
+
+
+.header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; }
+.RestaurantInfo { position: relative; display: table; width: 100%; height: 150px; margin: 0px; background: #ddd; }
+.menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px; }
+
+
+.wrapper { position: relative; min-width: 800px; max-width: 100%; height: 100%; margin: 0 auto; padding: 0 20px; }
+
+.EditRestaurantInfo { position: absolute; display: none; width: 100%; top: 200px; }
+.EditRestaurantInfoWrapper { position: relative; width: 500px; margin: 0 auto; background: #999; padding: 20px;}
+
+
+/* ::::::::::::::::: ANDET :::::::::::::::::::::  */
+
+.logoWrapper { display: block; width: 200px; margin: 10px 0 0 0; }
+.logoWrapper img { display: inline-table; width: 40px;  vertical-align: middle; }
+.logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
+
+.menuWrapperInner { display: table; margin: 0 auto; }
+
+
+/* ::::::::::::::::: Sortabel :::::::::::::::::::::  */
+
+.sortableLi 
+{ 
+    margin: 0 5px 5px 5px; 
+    padding: 5px; 
+    font-size: 1.2em; 
+    width: 120px; 
+}
+.sortablediv ul 
+{
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0 0 2.5em; 
+    float: left; 
+    margin-right: 10px;
+}
+.sortablediv 
+{
+    float: left;
+}
+.AddLiButton 
+{
+    margin: 0 5px 5px 5px; 
+    padding: 5px; 
+    font-size: 1.2em; 
+    width: 120px;
+    cursor: pointer;
+}
