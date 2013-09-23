@@ -39,7 +39,8 @@
       });
       $(ids).sortable({
                 connectWith: ".connectedSortable",
-                items: "li:not(.non-dragable)"
+                items: "li:not(.non-dragable)",
+                tolerance: "pointer"
       }).disableSelection();
   }
   
@@ -125,3 +126,20 @@
   }
   
   /* Sortable list functions end */
+  
+   
+  function HideShowSwitch(CaseName,sObjectId) {
+     
+     switch(CaseName)
+     {
+        case 'PopUpWindow':
+            $("#"+sObjectId).animate({height: 'toggle'},200);
+            break;
+        case 'HideSortableEdits':
+            $(".DishEditWrapper").animate({height: 'toggle'},100);
+            break;
+     }
+
+}
+    
+ 

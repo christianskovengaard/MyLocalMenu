@@ -14,19 +14,20 @@ body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
 
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
-h2, h3, h4, h5, h6, a, div  { 
+h1, h2, h3, h4, h5, h6, a, div  { 
     font-family: "Bariol Bold", Arial, "Lucida Grande", sans-serif; 
     font-weight : normal; color:#333; 
 }
 
-h1, p {
+ p {
     font-family: "Bariol Light", Arial, "Lucida Grande", sans-serif; 
     font-weight : normal; color:#333; 
 }
 
-h1 { font-size: 45px; line-height: 5px; color: #ddd; }
-h2 { font-size: 23px; line-height: 5px; }
-h3 { font-size: 22px; line-height: 5px; color: #ddd; }
+h1 { font-size: 45px; line-height: 15px; }
+h2 { font-size: 23px; line-height: 20px; }
+h3 { font-size: 25px; line-height: 5px; }
+h4 { font-size: 14px; line-height: 5px; }
 h5 { font-size: 22px; margin: 0px; }
 h6 { font-size: 14px; margin: 0px; }
 div { font-size: 22px; }
@@ -56,7 +57,7 @@ input {
 
 
 .header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; }
-.RestaurantInfo { position: relative; display: table; width: 100%; height: 150px; margin: 0px; background: #ddd; }
+.RestaurantInfo { position: relative; display: table; width: 100%; margin: 0px; padding: 10px 0 0 0; background: #ddd; overflow: hidden;}
 .menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px; }
 
 
@@ -72,35 +73,89 @@ input {
 .logoWrapper img { display: inline-table; width: 40px;  vertical-align: middle; }
 .logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
 
-.menuWrapperInner { display: table; margin: 0 auto; }
+.menuWrapperInner { display: table; margin: 0 auto;  }
 
+/* ::::::::::::::::: Restaurant INFO :::::::::::::::::::::  */
+
+.Restaurant { display: inline-table; margin: 0 25px 0px 0; vertical-align: top; }
+.Restaurant.Name {  }
+    .Restaurant.Name h1 { margin: 15px 0 0 0; }
+    .RestaurantPhone {  }
+.Restaurant.OpeningHours {  }
+    .Restaurant.PhoneInfo h2, h4 { margin: 15px 0 0 0; }
+.Restaurant.Delivery {  }
 
 /* ::::::::::::::::: Sortabel :::::::::::::::::::::  */
 
 .sortableLi 
 { 
-    margin: 0 5px 5px 5px; 
-    padding: 5px; 
-    font-size: 1.2em; 
-    width: 120px; 
+    position: relative;
+    display: table;
+    margin: 2px 0; 
+    width: 100%;    
 }
 .sortablediv ul 
 {
+    position: relative; 
     list-style-type: none; 
     margin: 0; 
-    padding: 0 0 2.5em; 
-    float: left; 
-    margin-right: 10px;
+    padding: 0; 
 }
+
 .sortablediv 
 {
-    float: left;
+    position: relative;
+    display: inline-table;    
+    background: #ddd;
+    padding: 10px;
+    margin: 5px; 
 }
+
+.newsortablediv
+{
+    position: relative;
+    display: inline-block;   
+    height: 100px;
+    width: 300px;
+    padding: 5px 0;
+    margin: 5px;
+    border: 2px dotted #d6d6d6;
+    background: #eee;
+    cursor: pointer;
+    -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
+}
+.newsortablediv h3 { color: #d6d6d6; margin:20px; text-align: center; font-size: 38px; }
+.newsortablediv:hover { border: 2px dotted #999; background: #ddd; color: #333; }
+
 .AddLiButton 
 {
-    margin: 0 5px 5px 5px; 
-    padding: 5px; 
-    font-size: 1.2em; 
-    width: 120px;
+    text-align: center;
+    font-size: 45px; 
+    line-height: 25px;
+    padding: 10px 0 20px 0;
+    border: 2px dotted #d6d6d6;
+    background: #eee;
+    margin: 5px 0 0 0;
+    color: #d6d6d6;
     cursor: pointer;
+    -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
 }
+.AddLiButton:hover { border: 2px dotted #999; color: #999; background: #fff; }
+
+.DishWrapper { position: relative; padding: 5px; background: #fff; }
+    .DishNumber { display: inline-table; min-width: 25px; margin-right: 8px; }
+    .DishText { display: inline-table; width: 250px; }
+        .DishHeadline {  }
+            .sortableLi h1, .InfoSlide h1 { color: #333; font-size: 22px; line-height: 17px; margin: 0; }
+            .sortableLi h2, .InfoSlide h2 { color: #333; font-size: 16px; line-height: 17px; margin: 3px 0 0 0; }
+        .DishDescription {  }
+    .DishPrice { display: inline-table; vertical-align: bottom; text-align: right; }
+        .DishPrice h2 { display: inline; }
+    
+.DishEditWrapper { position: absolute; top:0px; right: 0px; padding: 0; text-align: center; }
+    .DeleteDish { display: inline-table; background: #555555 ; width: 20px; height: 20px; cursor: pointer; vertical-align: top; }
+        .DeleteDish p { font-size: 12px; color: #fff; margin: 0; padding-top: 3px; }
+        .DeleteDish p:hover { color: #333; }
+    .moveDish { display: inline-table; width: 20px; height: 20px; cursor: move; vertical-align: top; }
+        
+.InfoSlide { width: 350px; padding: 10px 5px; background: #fff; }
