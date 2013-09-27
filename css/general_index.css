@@ -1,7 +1,7 @@
 /* 
     Document   : general
     Created on : 12-09-2013, 15:13:40
-    Author     : spjael
+    Author     : bejtrup
     Description:
         Purpose of the stylesheet follows.
 */
@@ -33,8 +33,10 @@ div { font-size: 22px; }
 
 input { 
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; color:#333; 
-    display: inline-block; font-size: 21px; border: 0px; margin: 0 10px 0 0; padding: 5px 10px; vertical-align: middle; outline: none; }
-.inputFrame { display: table; background: rgba(255,255,255,0.2); margin: 0 auto; padding: 10px; }
+    display: inline-block; font-size: 21px; height: 35px; border: 0px; margin: 0 10px 0 0; padding: 5px 10px; vertical-align: middle; outline: none; 
+    -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; 
+}
+.inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; }
 
 .button01 { 
       position: relative;
@@ -52,29 +54,37 @@ input {
 /* ::::::::::::::::: SIDE OPDELING :::::::::::::::::::::  */
 
 .header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; }
-.info01 { position: relative; display: table; width: 100%; height: 600px; margin: 0px; background: #7b1544 url(../img/infobg01.png) center no-repeat; text-align: center; }
+.info01 { position: relative; display: table; width: 100%; height: 500px; margin: 0px; background: #7b1544 url(../img/index_bg_suzhi.png_2) ; text-align: center; }
 .info02 { position: relative; display: table; width: 100%; margin: 0px; background: #21201f url(../img/index_bg_dots.gif) ; color: #ddd; text-align: center; }
 .info03 { position: relative; display: table; width: 100%; margin: 0px; background: #353535; padding: 20px 0;  }
 .footer { position: relative; display: table; width: 100%; height: 80px; margin: 0px; padding: 20px 0; }
 
-.wrapper { position: relative; width: 1200px; height: 100%; margin: 0 auto;}
+.wrapper { position: relative; min-width: 240px; max-width: 1240px; height: 100%; margin: 0 auto; padding: 0 20px;}
 
 /* ::::::::::::::::: ANDET :::::::::::::::::::::  */
 
-.header .inputFrame { position: absolute; right: 0; top:10px; background: #ddd; }
+.header .inputFrame { position: absolute; right: 20px; top:10px; background: #ddd; }
 
 .logoWrapper { display: block; width: 200px; margin: 10px 0 0 0; }
 .logoWrapper img { display: inline-table; width: 40px;  vertical-align: middle; }
 .logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
 
 .info01 input { font-size: 28px; }
-.Info01Img { height: 480px; }
-.FindMenuImg { display: inline-block; width: 40px; height: 44px; background: #fff; margin: 0 0 0 -10px; vertical-align: middle; cursor: pointer;}
+.Info01Img { position: relative; height: 400px; max-width: 1058px; margin: 0 auto; }
+.Info01Img img { width: 100%; }
+.Info01Img h2 { position: absolute; width: 300px; line-height: 25px; color: #ddd; }
+.Info01Txt01 { left: 80px; top: 300px;}
+.Info01Txt02 { left: 380px; top: 300px;}
+.Info01Txt03 { right: 10px; top: 300px;}
+
+.FindMenuImg { display: inline-block; width: 40px; height: 45px; background: #fff; margin: 0 0 0 -20px; vertical-align: middle; cursor: pointer;}
 .FindMenuImg img { vertical-align: middle; margin: 6px 10px 0 0; }
 .FindMenuImg img:hover { opacity: 0.15; filter:alpha(opacity=15); }
 
 .info02 .inputFrame { background: rgba(255,255,255,0.1); margin-bottom: 10px; }
 .info02 input { background: #4f4f4f; color: #b5b5b5; border-top: 2px #2f2f2f solid; }
 
+.Info03Img { max-width: 1200px; }
+.info03 img { width: 100%; }
 .info03 h2,p { color: #b5b5b5; width: 400px; }
 
