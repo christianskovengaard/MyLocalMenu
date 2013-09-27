@@ -61,7 +61,10 @@
   
   function SaveSortableLists()
   {
+      var iLastMenucardItemIndex = '';
       var globalIndex = '';
+      var iLastIndexofMenucardCategories = '';
+      var iLastIndexManucardItem = '';
       //Array for all the lists
       var aAllLists = new Array();
       //aLists
@@ -100,15 +103,28 @@
               //Put li array into array for one list
               aList[index] = aLiElement;
               
-          });
+              iLastIndexManucardItem = index+1;
+              iLastMenucardItemIndex = index;
+          });         
+          
+          //iLastMenucardItemIndex
+          aList[iLastIndexManucardItem] = iLastMenucardItemIndex;
           
           //Put aList array into aAllLists array on aLists wich is fiels 0
           aAllLists[index] = aList;
+          iLastIndexofMenucardCategories = index;
           globalIndex = index;
+          
       });
       globalIndex++;
       //sMenucard name
       aAllLists[globalIndex] = "Menukort navn";
+      //sMenucard description
+      globalIndex++;
+      aAllLists[globalIndex] = "Menukort beskrivelse";
+      //iNumberofMenucardCategories
+      globalIndex++;
+      aAllLists[globalIndex] = iLastIndexofMenucardCategories;
       
       var sJSONAllLists = JSON.stringify(aAllLists);
       

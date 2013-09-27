@@ -23,16 +23,14 @@ class UserController
     }
 
 
-    public function GetUser($iUserId)
+    public function GetUser($iUserIdHashed)
     {
-       
-       //TODO: Select user based on the hash of the iUserId
         
        //Get user from database based on the iUserId remember to use PDO
-       $sQuery = $this->conPDO->prepare("SELECT sUsername,sUserPassword,iUserRole FROM users WHERE iUserId = ? LIMIT 1");
+       $sQuery = $this->conPDO->prepare("SELECT sUsername,sUserPassword,iUserRole FROM users WHERE iUserIdHashed = ? LIMIT 1");
         
        //Bind the values to the ? signs
-       $sQuery->bindValue(1, $iUserId); 
+       $sQuery->bindValue(1, $iUserIdHashed);
        //Execute the query
        try
        {
@@ -80,8 +78,15 @@ class UserController
             $iUserId = $this->conPDO->lastInsertId();
             //Get last inserted id and generate a hash of that to save in the database (the hash is generate with a random string and the iUserId)
             //The generated hash is the id to be passed with ajax
-            //When the user is to be updated, then use the verify to see if the iUserId and the generated hash gives the same value as the returned hash
+            $iUserIdHashed = $this->oBcrypt->genHash($iUserId);
             
+            //Update the user
+            $sQuery = $this->conPDO->prepare("UPDATE users SET iUserIdHashed = ? WHERE iUserId = ?");
+        
+            $sQuery->bindValue(1, $iUserIdHashed);
+            $sQuery->bindValue(2, $iUserId);
+            
+            $sQuery->execute();            
 	}
         catch(PDOException $e)
         {
@@ -90,8 +95,9 @@ class UserController
         
     }
     
-    public function UpdateUser($iUserId,$sUsername,$sUserPassword,$iUserRole)
+    public function UpdateUser($iUserIdHashed,$sUsername,$sUserPassword,$iUserRole)
     {
+        
         //Encrypt the password
         $sUserPassword = $this->oBcrypt->genHash($sUserPassword);
         
@@ -99,7 +105,7 @@ class UserController
         $this->oUser->SetUser($sUsername, $sUserPassword, $iUserRole);
         
         //Update the user
-        $sQuery = $this->conPDO->prepare("UPDATE users SET sUsername = ?, sUserPassword = ?, iUserRole = ? WHERE iUserId = ?");
+        $sQuery = $this->conPDO->prepare("UPDATE users SET sUsername = ?, sUserPassword = ?, iUserRole = ? WHERE iUserIdHashed = ?");
         
         //Get the user
         $oUser = $this->oUser->GetUser();
@@ -109,7 +115,7 @@ class UserController
         $sQuery->bindValue(2, $oUser->sUserPassword);
 	$sQuery->bindValue(3, $oUser->iUserRole);
         
-        $sQuery->bindValue(4, $iUserId);
+        $sQuery->bindValue(4, $iUserIdHashed);
         
         try
         {

@@ -9,7 +9,7 @@ if(isset($_GET['sFunction']))
         case "SaveMenucard":
             require_once '../Controllers/MenucardController.php';
             $oMenucardController = new MenuCardController();
-            if($oMenucardController->SaveMenucard() == true)
+            if($oMenucardController->AddMenucard() == true)
             {
                 $sResult = '{"sFunction":"SaveMenucard","result":"True"}';
             }

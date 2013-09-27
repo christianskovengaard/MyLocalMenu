@@ -2,7 +2,7 @@
 
 class MenucardClass
 {
-    private $iMenucardId;
+    private $iMenucardIdHashed;
     private $sMenucardName;
     private $sMenucardDescription;
     private $iMenucardFK;
