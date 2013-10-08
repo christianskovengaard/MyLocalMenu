@@ -227,5 +227,15 @@ class MenucardController
     {
         
     }
+    
+    public function GetMenucard ()
+    {
+        
+    }
+    
+    public function DeleteMenucard ()
+    {
+        
+    }
 }
 ?>

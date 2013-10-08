@@ -48,7 +48,7 @@ class UserController
        $this->oUser->SetUser($aUser['sUsername'], $aUser['sUserPassword'], $aUser['iUserRole']);
        
        $oUser = $this->oUser->GetUser();
-       
+              
        //Return the user
        return $oUser;
        
