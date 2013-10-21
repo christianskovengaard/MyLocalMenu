@@ -13,6 +13,7 @@
         <![endif]-->
         
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/general.js"></script>
         
     </head>
     <body>
@@ -29,10 +30,11 @@
                          <h6>Menukort på mobile</h6>
                     </div>
                 </div>
-                <div class="inputFrame">
-                    <input type="text" placeholder="Email">
+                <div onclick="HideShowSwitch('Login','LoginBox');" class="button01">Log ind</div>
+                <div id="LoginBox" class="inputFrame">
+                    <input id="LoginEmail" type="text" placeholder="Email">
                     <input type="Password" placeholder="Kodeord">
-                    <div onclick="" class="button01">Log ind</div>
+                    <div onclick="HideShowSwitch('Login','LoginBox');" class="button02">Log ind</div>
                 </div>
             </div>
         </div> 
@@ -41,9 +43,9 @@
             <div class="wrapper">
                 <div class="Info01Img">
                     <img src="img/info01.png">
-                    <h2 class="Info01Txt01">1. gang taster din kunde dit unikke nummer ind på mobilen</h2>
-                    <h2 class="Info01Txt02">Så er dit menukort altid på mobilen</h2>
-                    <h2 class="Info01Txt03">Alle dine ændringer på menukorten kommer med det sammen ud på mobilen</h2>
+<!--                    <h2 class="Info01Txt01">Første gang tastes det unikke nummer ind på mobilen</h2>
+                    <h2 class="Info01Txt02">Så er menukortet altid på mobilen</h2>
+                    <h2 class="Info01Txt03">Alle ændringer på menukorten kommer med det sammen ud på mobilen</h2>  -->
                 </div>
                 <div class="inputFrame">
                     <input type="text" placeholder="Find Menukort">
@@ -58,8 +60,8 @@
                 <h3>...det er helt gratis</h3>
                 <div class="inputFrame">
                     <input type="text" placeholder="Indtast din email">
-                    <input type="Password" placeholder="Indtast et kodeord">
-                    <input type="Password" placeholder="Gentag kodeorden">
+<!--                    <input type="Password" placeholder="Indtast et kodeord">
+                    <input type="Password" placeholder="Gentag kodeorden">-->
                     <div onclick="" class="button01">Opret</div>
                 </div>
             </div>

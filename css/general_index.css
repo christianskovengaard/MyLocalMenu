@@ -36,7 +36,7 @@ input {
     display: inline-block; font-size: 21px; height: 35px; border: 0px; margin: 0 10px 0 0; padding: 5px 10px; vertical-align: middle; outline: none; 
     -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; 
 }
-.inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; }
+.inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; z-index: 100;}
 
 .button01 { 
       position: relative;
@@ -54,7 +54,7 @@ input {
 /* ::::::::::::::::: SIDE OPDELING :::::::::::::::::::::  */
 
 .header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; }
-.info01 { position: relative; display: table; width: 100%; height: 500px; margin: 0px; background: #7b1544 url(../img/index_bg_suzhi.png_2) ; text-align: center; }
+.info01 { position: relative; display: table; width: 100%; margin: 0px; padding: 0 0 20px 0; background: #7b1544 url(../img/index_bg_suzhi.png_2) ; text-align: center; }
 .info02 { position: relative; display: table; width: 100%; margin: 0px; background: #21201f url(../img/index_bg_dots.gif) ; color: #ddd; text-align: center; }
 .info03 { position: relative; display: table; width: 100%; margin: 0px; background: #353535; padding: 20px 0;  }
 .footer { position: relative; display: table; width: 100%; height: 80px; margin: 0px; padding: 20px 0; }
@@ -63,15 +63,21 @@ input {
 
 /* ::::::::::::::::: ANDET :::::::::::::::::::::  */
 
-.header .inputFrame { position: absolute; right: 20px; top:10px; background: #ddd; }
+.header .inputFrame { position: absolute; right: 20px; top:-2px; background: #ddd; z-index: 10; display: none; height: 45px; }
+.header .button01 { position: absolute; right: 20px; top:17px; }
+.header .button02 { display: inline-table; position: relative; cursor: pointer;  }
+.header .button02:hover { color: #999; }
+
+.loginBoxContent { display: inline; }
+.loginBoxContent input { height: 26px; }
 
 .logoWrapper { display: block; width: 200px; margin: 10px 0 0 0; }
 .logoWrapper img { display: inline-table; width: 40px;  vertical-align: middle; }
 .logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
 
 .info01 input { font-size: 28px; }
-.Info01Img { position: relative; height: 400px; max-width: 1058px; margin: 0 auto; }
-.Info01Img img { width: 100%; }
+.Info01Img { position: relative; max-width: 1058px; margin: 0 auto; z-index: 1; }
+.Info01Img img { width: 100%; z-index: 1;}
 .Info01Img h2 { position: absolute; width: 300px; line-height: 25px; color: #ddd; }
 .Info01Txt01 { left: 80px; top: 300px;}
 .Info01Txt02 { left: 380px; top: 300px;}

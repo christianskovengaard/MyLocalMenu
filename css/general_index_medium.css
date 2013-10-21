@@ -12,7 +12,7 @@ root {
 
 .wrapper { min-width: 500px; max-width: 980px; }
 
-.Info01Img { height: 400px; max-width: 900px; }
+.Info01Img {  max-width: 900px; }
 
 .Info01Img h2 { font-size: 0.8em; line-height: 25px; width: 230px; }
 .Info01Txt01 { left: 60px; top: 240px;}
