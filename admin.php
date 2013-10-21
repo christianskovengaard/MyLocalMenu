@@ -30,6 +30,10 @@
                          <h5>MyLocalMenu</h5>
                          <h6>Menukort på mobile</h6>
                     </div>
+                    <div class="appGetInfo">
+                        <h6>Hent MyLocalMenu nu til:</h6>
+                        <p>logoerne for de forskellige</p>
+                    </div>
                 </div>
             </div>            
         </div>
