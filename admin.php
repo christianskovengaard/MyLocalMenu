@@ -44,8 +44,8 @@
                     <div class="RestaurantPhone"><h2>☎ 33 23 21 40</h2></div>
                     <div class="RestaurantAdresse"><h4>Oehlenslægersgade 50, 1663 Vesterbro</h4></div>
                 </div>        
-                <div class="Restaurant OpeningHours"><h4>Åbningstider:</h4><h4>Man-Fre: 11:00 - 22.00</h4><h4>Lør-Søn: 11:00 - 22.00</h4></div>
-                <div class="Restaurant Delivery"><h4>Udbringning: kl 16:00 - 21:00</h4><h4>Vesterbro - Enghave 35,- kr</h4><h4>Sydhavnen - Frederiksberg 45,- kr</h4></div>
+                    <div class="Restaurant OpeningHours"><h4>Åbningstider:</h4><h4>I dag Tirsdag: 11:00 - 22.00</h4></div>
+                    <div class="Restaurant Delivery"><h4>Udbringning:</h4><h4>I dag Tirsdag: 16:00 - 21:00</h4></div>
                 <div class="buttonEdit" onclick="HideShowSwitch('PopUpWindow','EditRestaurantInfo');">Rediger</div>
              </div>          
         </div>
@@ -64,6 +64,10 @@
                     </div>
                     <div class="sortablediv">
                         <h3>Liste 1</h3>
+                        <div class="DishEditWrapper">
+                            <div class="moveDish"><img src="img/moveIcon.png"></div>
+                            <div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div>
+                        </div>
                         <ul id="sortable1" class="connectedSortable">                        
                             
                             <li class="sortableLi"> 
@@ -76,13 +80,13 @@
                                     <div class="DishPrice"><h2>...</h2><h2>65</h2><h2>kr</h2></div>     
                                     
                                     <div class="DishEditWrapper">
-                                        <div class="moveDish" onclick="DeleteLiSortable(this);"><img src="img/moveIcon.png"></div>
+                                        <div class="moveDish"><img src="img/moveIcon.png"></div>
                                         <div class="DeleteDish" onclick="DeleteLiSortable(this);"><p>╳</p></div>
                                     </div>                                    
                                 </div>
                             </li>                             
                             
-                            <li onclick="DeleteLiSortable(this);" class="sortableLi">
+                            <li class="sortableLi">
                                <div class="DishWrapper">
                                     <div class="DishNumber"><h1>2</h1></div>
                                     <div class="DishText">
@@ -92,13 +96,13 @@
                                     <div class="DishPrice"><h2>...</h2><h2>105</h2><h2>kr</h2></div>
                                     
                                     <div class="DishEditWrapper">
-                                        <div class="moveDish" onclick="DeleteLiSortable(this);"><img src="img/moveIcon.png"></div>
+                                        <div class="moveDish"><img src="img/moveIcon.png"></div>
                                         <div class="DeleteDish" onclick="DeleteLiSortable(this);"><p>╳</p></div>
                                     </div> 
                                 </div>
                             </li>                            
                           <li onclick="CreateNewLiInSortableList('sortable1')" class="AddLiButton non-dragable">
-                             +
+                             <h3>+</h3>
                           </li>
                         </ul>
                     </div>
