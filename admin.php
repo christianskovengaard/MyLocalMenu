@@ -44,8 +44,8 @@
                     <div class="RestaurantPhone"><h2>☎ 33 23 21 40</h2></div>
                     <div class="RestaurantAdresse"><h4>Oehlenslægersgade 50, 1663 Vesterbro</h4></div>
                 </div>        
-                    <div class="Restaurant OpeningHours"><h4>Åbningstider:</h4><h4>I dag Tirsdag: 11:00 - 22.00</h4></div>
-                    <div class="Restaurant Delivery"><h4>Udbringning:</h4><h4>I dag Tirsdag: 16:00 - 21:00</h4></div>
+                <div class="Restaurant OpeningHours"><h4><b>Åbningstider:</b></h4><h4>I dag: 11:00 - 22.00</h4></div>
+                <div class="Restaurant Delivery"><h4><b>Udbringning:</b></h4><h4>I dag: 16:00 - 21:00</h4></div>
                 <div class="buttonEdit" onclick="HideShowSwitch('PopUpWindow','EditRestaurantInfo');">Rediger</div>
              </div>          
         </div>

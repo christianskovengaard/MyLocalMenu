@@ -82,8 +82,8 @@ input {
     .Restaurant.Name h1 { margin: 15px 0 0 0; }
     .RestaurantPhone {  }
     .Restaurant.OpeningHours { margin: 10px 0 0 0; }
-        .Restaurant.PhoneInfo h2, h4{ margin: 15px 0 0 0; }
-    .Restaurant.Delivery {  margin: 10px 0 0 10px; }
+        .Restaurant.PhoneInfo h2, h4 { margin: 12px 0 0 0; text-align:left; }
+    .Restaurant.Delivery {  margin: 10px 10px 0 10px; }
 
 /* ::::::::::::::::: Sortabel :::::::::::::::::::::  */
 
@@ -148,7 +148,7 @@ input {
             .sortableLi h1, .InfoSlide h1 { color: #333; font-size: 22px; line-height: 17px; margin: 0; }
             .sortableLi h2, .InfoSlide h2 { color: #333; font-size: 16px; line-height: 17px; margin: 3px 0 0 0; }
         .DishDescription {  }
-    .DishPrice { display: inline-table; vertical-align: bottom; text-align: right;  }
+    .DishPrice { display: inline-table; vertical-align: bottom; text-align: right; }
         .DishPrice h2 { display: inline; text-align: right;}
     
 .DishEditWrapper { position: absolute; top:0px; right: 0px; padding: 0; text-align: center; }

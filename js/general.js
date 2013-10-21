@@ -86,7 +86,7 @@ function CreateNewLiInSortableList(id)
                 var sNewMenuCardItemPriceH22 = document.createElement("h2");
                 sNewMenuCardItemPrice.appendChild(sNewMenuCardItemPriceH22);
                     
-                    var sNewMenuCardItemPriceH2Text = document.createTextNode('100');
+                    var sNewMenuCardItemPriceH2Text = document.createTextNode('0');
                     sNewMenuCardItemPriceH22.appendChild(sNewMenuCardItemPriceH2Text);
                 
                 var sNewMenuCardItemPriceH222 = document.createElement("h2");
@@ -121,7 +121,7 @@ function CreateNewLiInSortableList(id)
                         
 
 //      $('#'+id+' .AddLiButton').before('<li onclick="DeleteLiSortable(this);" class="sortableLi ui-state-default">Nyt lis</li>');   
-      $('#'+id+' .AddLiButton').before(sNewMenuCardItemLi);            
+      $('#'+id+' .AddLiButton').before(sNewMenuCardItemLi); 
   }
   
   function UpdateSortableLists()
