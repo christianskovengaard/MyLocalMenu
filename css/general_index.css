@@ -15,12 +15,12 @@ body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
 h2, h3, h4, h5, h6, a, div  { 
-    font-family: "Bariol Bold", Arial, "Lucida Grande", sans-serif; 
+    font-family: "Bariol", "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
 h1, p {
-    font-family: "Bariol Light", Arial, "Lucida Grande", sans-serif; 
+    font-family: "Bariol-Light", "Bariol Light", "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
