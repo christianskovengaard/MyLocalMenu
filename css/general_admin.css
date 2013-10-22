@@ -15,12 +15,14 @@ body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
 h1, h2, h3, h4, h5, h6, a, div  { 
-    font-family: "Bariol Bold", Arial, "Lucida Grande", sans-serif; 
+    /*font-family: "Bariol Bold", Arial, "Lucida Grande", sans-serif;*/
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
  p {
-    font-family: "Bariol Light", Arial, "Lucida Grande", sans-serif; 
+    /*font-family: "Bariol Light", Arial, "Lucida Grande", sans-serif;*/
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
@@ -73,7 +75,9 @@ input {
 .logoWrapper img { display: inline-table; width: 40px;  vertical-align: middle; }
 .logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
 
-.appGetInfo { position: absolute; right: 0px; top: 0px; }
+.appGetInfo { position: absolute; right: 20px; top: 0px; }
+.appGetInfo img { height: 40px; width: auto; opacity:1; margin: 5px 10px 0 0; cursor: pointer;}
+.appGetInfo img:hover { opacity:0.7; }
 
 .menuWrapperInner { display: table; margin: 0 auto;  }
 
