@@ -14,15 +14,13 @@ body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
 
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
-h1, h2, h3, h4, h5, h6, a, div  { 
-    /*font-family: "Bariol Bold", Arial, "Lucida Grande", sans-serif;*/
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+h5, h6  { 
+    font-family:"Bariol", "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
- p {
-    /*font-family: "Bariol Light", Arial, "Lucida Grande", sans-serif;*/
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+h1, h2, h3, h4, a, p, div  { 
+    font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 

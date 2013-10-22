@@ -31,7 +31,7 @@
                          <h6>Menukort på mobile</h6>
                     </div>
                     <div class="appGetInfo">
-                        <h4><b>Hent MyLocalMenu appen nu</b></h4>
+                        <h6>Hent MyLocalMenu appen nu</h6>
                         <img src="img/getAppleApp.png"><img src="img/getAndroidApp.png"><img src="img/getWindowsApp.png">
                     </div>
                 </div>
