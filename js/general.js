@@ -42,8 +42,15 @@ function CreateNewLiInSortableList(id)
                 var sNewMenuCardItemNumberText = document.createElement("h1");
                 sNewMenuCardItemNumber.appendChild(sNewMenuCardItemNumberText);
                     
-                    var sNewMenuCardItemNumberTextNumberPrev = $('#'+id+' .DishNumber').last().text();
-                    if(sNewMenuCardItemNumberTextNumberPrev == 0 ){ sNewMenuCardItemNumberTextNumberPrev = 0; }
+
+                    var sNewMenuCardItemNumberTextNumberPrev = $('ul li .DishNumber').last().text();
+                    if(sNewMenuCardItemNumberTextNumberPrev == 0 ){ 
+                        
+                        
+                        
+                        var sNewMenuCardItemNumberTextNumberPrev = $('#'+idprev+' .DishNumber').last().text();
+                    }
+                    
                     var sNewMenuCardItemNumberTextNumberPrev = parseInt(sNewMenuCardItemNumberTextNumberPrev);
                     
                     var sNewMenuCardItemNumberTextNumber = document.createTextNode(sNewMenuCardItemNumberTextNumberPrev+1);
