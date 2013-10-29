@@ -176,60 +176,79 @@ function CreateNewLiInSortableList(id)
       //Array for all the lists
       var aAllLists = new Array();
       //aLists
-      aAllLists[0] = "";
-      //aAllLists[1] = "Menukort navn";
-
-      $(".sortablediv ul").each(function(index)
+      aAllLists[0] = "";     
+      
+      //Loop through for each sMenucardCategory
+      $("#sortableList").each(function(index)
       {
           //Aray for one list
           var aList = new Array();
-          //sTitle
-          aList[0] = $(this).prev().html();
+          //sMenucardCategoryName
+          aList[0] = $(this).children(":first").html();
           //iId
-          aList[1] = $(this).attr('id');
-          //sCategoriDescription
+          aList[1] = $(this).attr('id');          
+          //sMenucardCategoryDescription
           aList[2] = "Beskrivelse"; 
           
           //Id used in the next jQuery each loop
           var iId = $(this).attr('id');
-          $("#"+iId+" li:not(.AddLiButton)").each(function(index)
-          {
-              //Need to increse index with 3 so it does not overwrite aList[2];
-              //This makes the first index to be 3
-              index = index+3;
-              
-              //Array for li element
-              var aLiElement = new Array();
-              //sTitle
-              aLiElement[0] = $(this).html();
-              //iId
-              aLiElement[1] = "Id";
-              //sDescription
-              aLiElement[2] = "Beskrivelse";
-              //iPrice
-              aLiElement[3] = "Prisen";
-              //Put li array into array for one list
-              aList[index] = aLiElement;
-              
-              iLastIndexManucardItem = index+1;
-              iLastMenucardItemIndex = index;
-          });         
           
+          index = index+2;
+          
+          $(this).children("ul").each(function()
+          {             
+              $(this).children(":not(.AddLiButton)").each(function()
+              {
+                  
+                  //Loop through .dishwrapper for each of the sMenucardItems
+                  $(this).children().each(function()
+                  {
+                      index = index+1;
+                      
+                      var sMenucardItemNumber = $(this).children(".DishNumber").children("h1").html();                     
+                      var sMenucardItemDesc = $(this).children(".DishText").children(".DishDescription").children("h2").html(); 
+                      var sMenucardItemName = $(this).children(".DishText").children(".DishHeadline").children("h1").html();
+                      var sMenucardItemPrice = $(this).children(".DishPrice").children(":nth-child(2)").html();
+                    
+                      //Array for li element
+                      var aLiElement = new Array();
+                      //sTitle
+                      aLiElement[0] = sMenucardItemName;
+                      //iId
+                      aLiElement[1] = "Id";
+                      //sDescription
+                      aLiElement[2] = sMenucardItemDesc;
+                      //iPrice
+                      aLiElement[3] = sMenucardItemPrice;
+                      //iNumber
+                      aLiElement[4] = sMenucardItemNumber;
+                      //Put li array into array for one list
+                      aList[index] = aLiElement;
+
+                      iLastIndexManucardItem = index+1;
+                      iLastMenucardItemIndex = index;
+                  });
+              });
+          });
+                  
           //iLastMenucardItemIndex
           aList[iLastIndexManucardItem] = iLastMenucardItemIndex;
-          
+          globalIndex = globalIndex+1;
           //Put aList array into aAllLists array on aLists wich is fiels 0
-          aAllLists[index] = aList;
-          iLastIndexofMenucardCategories = index;
-          globalIndex = index;
+          aAllLists[globalIndex] = aList;
+          iLastIndexofMenucardCategories = globalIndex;
+          
           
       });
+      
       globalIndex++;
       //sMenucard name
       aAllLists[globalIndex] = "Menukort navn";
       //sMenucard description
       globalIndex++;
       aAllLists[globalIndex] = "Menukort beskrivelse";
+      globalIndex++;
+      aAllLists[globalIndex] = "Menucard ID";
       //iNumberofMenucardCategories
       globalIndex++;
       aAllLists[globalIndex] = iLastIndexofMenucardCategories;
