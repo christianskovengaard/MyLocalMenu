@@ -33,8 +33,10 @@ class MenucardController
         } 
     }
     
-    public function AddMenucard ()
-    {
+    public function AddMenucard () //TODO: remove all functions where it uses tables between tables (it add the same thinks many times WHY!)
+    {                               //TODO: Update table menucardinfo
+                                    //TODO: Update table openinghours
+                                    //TODO: Opdate table takeaway
         if(isset($_GET['sJSONMenucard']))
         {
             
@@ -46,6 +48,10 @@ class MenucardController
             $sJSONMenucard = $_GET['sJSONMenucard'];
             //Convert the JSON string into an array
             $aJSONMenucard = json_decode($sJSONMenucard);
+            
+       
+            var_dump($aJSONMenucard);
+        
             
             //Get MenucardDescription
             end($aJSONMenucard);
@@ -119,23 +125,19 @@ class MenucardController
                 $this->oMenucardCategory->SetMenucardCategory($sMenucardCategoryName, $sMenucardCategoryDescription);
                 
                 //Insert the new MenucardCategory
-                $sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory (sMenucardCategoryName,sMenucardCategoryDescription) VALUES (?,?)");
+                $sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory (sMenucardCategoryName,sMenucardCategoryDescription,iFK_iMenucardId) VALUES (?,?,?)");
                 
                 //Get the Menucard Category
                 $oMenucardCategory = $this->oMenucardCategory->GetMenucardCategory();
                 
                 $sQuery->bindValue(1, $oMenucardCategory->sMenucardCategoryName);
                 $sQuery->bindValue(2, $oMenucardCategory->sMenucardCategoryDescription);
+                $sQuery->bindValue(3, $iMenucardId);
                 
                 try
                 {
                     $sQuery->execute();
-                    $iMenucardCategoryId = $this->conPDO->lastInsertId();
-                    
-                    //Update the menucard_menucardcategory table to link the menucard with the menucardcategory
-                    $sQuery = $this->conPDO->prepare("INSERT INTO menucard_menucardcategory (iFK_iMenucardId,iFK_iMenucardCategoryId) VALUES (?,?)");
-                    $sQuery->bindValue(1, $iMenucardId);
-                    $sQuery->bindValue(2, $iMenucardCategoryId);               
+                    $iMenucardCategoryId = $this->conPDO->lastInsertId();                                 
                     
                     try
                     {
@@ -173,22 +175,19 @@ class MenucardController
                     $oMenucardItem = $this->oMenucardItem->GetMenucardItem();
                     
                     //TODO: Insert the menucarditem. remember to use the FK ffor menucardcetegory
-                    $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice) VALUES (?,?,?,?)");
+                    $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iFK_iMenucardCategoryId) VALUES (?,?,?,?,?)");
                     $sQuery->bindValue(1, $oMenucardItem->sMenucardItemName);
                     $sQuery->bindValue(2, $oMenucardItem->sMenucardItemNumber);               
                     $sQuery->bindValue(3, $oMenucardItem->sMenucardItemDescription);
                     $sQuery->bindValue(4, $oMenucardItem->iMenucardItemPrice);
+                    $sQuery->bindValue(5, $iMenucardCategoryId);
+                    
                     try
                     {
                         $sQuery->execute();
                         
                         //Update the menucardcategory_menucarditem
-                        $iMenucardItemId = $this->conPDO->lastInsertId();
-
-                        //Update the menucardcategory_menucarditem table to link the menucarditem with the menucardcategory
-                        $sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory_menucarditem (iFK_iMenucardCategoryId,iFK_iMenucardItemId) VALUES (?,?)");
-                        $sQuery->bindValue(1, $iMenucardCategoryId);
-                        $sQuery->bindValue(2, $iMenucardItemId);               
+                        //$iMenucardItemId = $this->conPDO->lastInsertId();             
 
                         try
                         {
