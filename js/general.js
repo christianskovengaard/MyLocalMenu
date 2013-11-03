@@ -289,6 +289,27 @@ function CreateNewLiInSortableList(id)
             break;
      }
 
-}
+    }
+    
+    
+    
+    
+    function GetMenucardWithSerialNumber()
+    {
+       
+         var iMenucardSerialNumber = $('#iMenucardSerialNumber').val();
+         if(iMenucardSerialNumber != '')
+         {
+             $.ajax({
+                type: "GET",
+                url: "API/api.php",
+                dataType: "json",
+                data: {sFunction:"GetMenucardWithSerialNumber",iMenucardSerialNumber:iMenucardSerialNumber}
+               }).done(function(result) 
+               {
+                   console.log('result: '+result.result);
+               });
+         }
+    }
     
  

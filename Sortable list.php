@@ -15,6 +15,8 @@
     <div style="margin-top: 10px;">
         <input type="button" value="Lav ny liste" onclick="CreateNewSortableList();">
         <input type="button" value="Gem lister" onclick="SaveSortableLists();">
+        <input type="button" value="Hent Menukort" onclick="GetMenucardWithSerialNumber();">
+        <input type="text" value="AA0001" id="iMenucardSerialNumber"/> 
     </div>
     <div class="sortablediv">
         <h3>Liste 1</h3>
@@ -35,90 +37,5 @@
             
         });  
     </script>
-    
-    <pre class='xdebug-var-dump' dir='ltr'>
-<b>array</b> <i>(size=6)</i>
-  0 <font color='#888a85'>=&gt;</font> 
-    <b>array</b> <i>(size=9)</i>
-      0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Liste 1'</font> <i>(length=7)</i>
-      1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'sortable1'</font> <i>(length=9)</i>
-      2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-      3 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Item 1'</font> <i>(length=6)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      4 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Item 2'</font> <i>(length=6)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      5 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Item 3'</font> <i>(length=6)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      6 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Item 4'</font> <i>(length=6)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      7 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Item 5'</font> <i>(length=6)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      8 <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>7</font>
-  1 <font color='#888a85'>=&gt;</font> 
-    <b>array</b> <i>(size=6)</i>
-      0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Liste 2'</font> <i>(length=7)</i>
-      1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'sortable2'</font> <i>(length=9)</i>
-      2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-      3 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Item1'</font> <i>(length=5)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      4 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Nyt li'</font> <i>(length=6)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      5 <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>4</font>
-  2 <font color='#888a85'>=&gt;</font> 
-    <b>array</b> <i>(size=7)</i>
-      0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Liste 3'</font> <i>(length=7)</i>
-      1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'sortable3'</font> <i>(length=9)</i>
-      2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-      3 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Item1'</font> <i>(length=5)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      4 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Nyt li'</font> <i>(length=6)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      5 <font color='#888a85'>=&gt;</font> 
-        <b>array</b> <i>(size=4)</i>
-          0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Nyt li'</font> <i>(length=6)</i>
-          1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Id'</font> <i>(length=2)</i>
-          2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Beskrivelse'</font> <i>(length=11)</i>
-          3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Prisen'</font> <i>(length=6)</i>
-      6 <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>5</font>
-  3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Menukort navn'</font> <i>(length=13)</i>
-  4 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'Menukort beskrivelse'</font> <i>(length=20)</i>
-  5 <font color='#888a85'>=&gt;</font> <small>int</small> <font color='#4e9a06'>2</font>
-</pre>
 </body>
 </html>
