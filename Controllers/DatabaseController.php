@@ -29,6 +29,11 @@ class DatabaseController
         {
             $conPDO->exec("set names '.$sEncoding.'");
             $conPDO->exec("SET CHARACTER SET '.$sEncoding.'");
+            //Prevent MySQL injection attacks
+            $conPDO->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            //Enables errormode
+            $conPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
             return $conPDO;    
         }
         else{

@@ -25,6 +25,26 @@ if(isset($_GET['sFunction']))
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
                 echo $result;
         break;
+        
+        case "GetMenucardWithSerialNumber":
+            require_once '../Controllers/MenucardController.php';
+            $oMenucardController = new MenuCardController();
+            if($oMenucardController->GetMenucardWithSerialNumber() == false)
+            {
+                $sResult = '{"sFunction":"GetMenucardWithSerialNumber","result":"False"}';
+            }
+            else
+            {
+                $sResult = $oMenucardController->GetMenucardWithSerialNumber();
+            }
+            echo $sResult;
+
+        break;
+        
+        default:
+                $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
+                echo $result;
+        break;
 
     }
 }
