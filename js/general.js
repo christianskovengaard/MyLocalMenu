@@ -28,107 +28,20 @@ function CreateNewLiInSortableList(id)
   {
 //    var GetMenuCardItemUl = document.getElementById(id);
     
-    var sNewMenuCardItemLi = document.createElement("li");
-    sNewMenuCardItemLi.setAttribute("class","sortableLi");
+    // Class = + TEMP for at undgå a appende til alle classer med samme navn, denne ændres sidst i funktionen.
     
-        var sNewMenuCardItemWrapper = document.createElement("div");
-        sNewMenuCardItemWrapper.setAttribute("class","DishWrapper");
-        sNewMenuCardItemLi.appendChild(sNewMenuCardItemWrapper);
-            
-            var sNewMenuCardItemNumber = document.createElement("div");
-            sNewMenuCardItemNumber.setAttribute("class","DishNumber");
-            sNewMenuCardItemWrapper.appendChild(sNewMenuCardItemNumber);
-            
-                var sNewMenuCardItemNumberText = document.createElement("h1");
-                sNewMenuCardItemNumber.appendChild(sNewMenuCardItemNumberText);
-                    
+    $('#'+id+' .AddLiButton').before('<li class="sortableLi sortableLiTEMP"></li>');
+    $('.sortableLiTEMP').append('<div class="DishWrapper DishWrapperTEMP"></div>');
+    $('.sortableLiTEMP').removeClass('sortableLiTEMP');
+    
+    $('.DishWrapperTEMP').append('<div class="DishNumber"><input type="text" maxlength="4" onkeyup="InputAutogrow(this);" placeholder="nr"></div>');
+    $('.DishWrapperTEMP').append('<div class="DishText"><div class="DishHeadline"><input type="text" onkeyup="InputAutogrow(this);" placeholder="Overskrift"></div><div class="DishDescription"><textarea rows="1" onkeyup="InputAutoheigth(this);" placeholder="Beskrivelse"></textarea></div></div>');
+    $('.DishWrapperTEMP').append('<div class="DishPrice"><h2>...</h2><input onkeyup="InputAutogrow(this);" type="text" placeholder="0"><h2>kr</h2></div>');
+    $('.DishWrapperTEMP').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
+    $('.DishWrapperTEMP').removeClass('DishWrapperTEMP');
+    $('.DishNumber input').focus();
+    
 
-                    var sNewMenuCardItemNumberTextNumberPrev = $('ul li .DishNumber').last().text();
-                    if(sNewMenuCardItemNumberTextNumberPrev == 0 ){ 
-                        
-                        
-                        
-                        var sNewMenuCardItemNumberTextNumberPrev = $('#'+idprev+' .DishNumber').last().text();
-                    }
-                    
-                    var sNewMenuCardItemNumberTextNumberPrev = parseInt(sNewMenuCardItemNumberTextNumberPrev);
-                    
-                    var sNewMenuCardItemNumberTextNumber = document.createTextNode(sNewMenuCardItemNumberTextNumberPrev+1);
-                    sNewMenuCardItemNumberText.appendChild(sNewMenuCardItemNumberTextNumber);           
-            
-            var sNewMenuCardItemText = document.createElement("div");
-            sNewMenuCardItemText.setAttribute("class","DishText");
-            sNewMenuCardItemWrapper.appendChild(sNewMenuCardItemText);
-            
-                var sNewMenuCardItemTextHeadline = document.createElement("div");
-                sNewMenuCardItemTextHeadline.setAttribute("class","DishHeadline");
-                sNewMenuCardItemText.appendChild(sNewMenuCardItemTextHeadline);
-            
-                    var sNewMenuCardItemTextHeadlineH1 = document.createElement("h1");
-                    sNewMenuCardItemTextHeadline.appendChild(sNewMenuCardItemTextHeadlineH1);
-
-                        var sNewMenuCardItemTextHeadlineText = document.createTextNode('Overskrift');
-                        sNewMenuCardItemTextHeadlineH1.appendChild(sNewMenuCardItemTextHeadlineText); 
-            
-                var sNewMenuCardItemTextDescription = document.createElement("div");
-                sNewMenuCardItemTextDescription.setAttribute("class","DishDescription");
-                sNewMenuCardItemText.appendChild(sNewMenuCardItemTextDescription);
-            
-                    var sNewMenuCardItemTextDescriptionH2 = document.createElement("h2");
-                    sNewMenuCardItemTextDescription.appendChild(sNewMenuCardItemTextDescriptionH2);
-
-                        var sNewMenuCardItemTextDescriptionText = document.createTextNode('Beskrivelse');
-                        sNewMenuCardItemTextDescriptionH2.appendChild(sNewMenuCardItemTextDescriptionText);          
-            
-            var sNewMenuCardItemPrice = document.createElement("div");
-            sNewMenuCardItemPrice.setAttribute("class","DishPrice");
-            sNewMenuCardItemWrapper.appendChild(sNewMenuCardItemPrice);
-            
-                var sNewMenuCardItemPriceH2 = document.createElement("h2");
-                sNewMenuCardItemPrice.appendChild(sNewMenuCardItemPriceH2);
-                
-                    var sNewMenuCardItemPriceH2Text = document.createTextNode('...');
-                    sNewMenuCardItemPriceH2.appendChild(sNewMenuCardItemPriceH2Text);
-                
-                var sNewMenuCardItemPriceH22 = document.createElement("h2");
-                sNewMenuCardItemPrice.appendChild(sNewMenuCardItemPriceH22);
-                    
-                    var sNewMenuCardItemPriceH2Text = document.createTextNode('0');
-                    sNewMenuCardItemPriceH22.appendChild(sNewMenuCardItemPriceH2Text);
-                
-                var sNewMenuCardItemPriceH222 = document.createElement("h2");
-                sNewMenuCardItemPrice.appendChild(sNewMenuCardItemPriceH222);   
-                
-                    var sNewMenuCardItemPriceH2Text = document.createTextNode('kr');
-                    sNewMenuCardItemPriceH222.appendChild(sNewMenuCardItemPriceH2Text);
-                       
-            var sNewMenuCardItemEditWrapper = document.createElement("div");
-            sNewMenuCardItemEditWrapper.setAttribute("class","DishEditWrapper");
-//            sNewMenuCardItemEditWrapper.setAttribute("style","display: block");
-            sNewMenuCardItemWrapper.appendChild(sNewMenuCardItemEditWrapper);
-            
-                var sNewMenuCardItemEditWrapperMove = document.createElement("div");
-                sNewMenuCardItemEditWrapperMove.setAttribute("class","moveDish");
-                sNewMenuCardItemEditWrapper.appendChild(sNewMenuCardItemEditWrapperMove);
-                    
-                    var sNewMenuCardItemEditWrapperMoveImg =  document.createElement("img");
-                    sNewMenuCardItemEditWrapperMoveImg.setAttribute("src","img/moveIcon.png");
-                    sNewMenuCardItemEditWrapperMove.appendChild(sNewMenuCardItemEditWrapperMoveImg);
-                    
-                var sNewMenuCardItemEditWrapperDelete = document.createElement("div");
-                sNewMenuCardItemEditWrapperDelete.setAttribute("class","DeleteDish");
-                sNewMenuCardItemEditWrapperDelete.setAttribute("onclick","DeleteLiSortable(this);");
-                sNewMenuCardItemEditWrapper.appendChild(sNewMenuCardItemEditWrapperDelete);
-                    
-                    var sNewMenuCardItemEditWrapperDelP =  document.createElement("p");
-                    sNewMenuCardItemEditWrapperDelete.appendChild(sNewMenuCardItemEditWrapperDelP);
-                        
-                        var sNewMenuCardItemEditWrapperDelPText = document.createTextNode('╳');
-                        sNewMenuCardItemEditWrapperDelP.appendChild(sNewMenuCardItemEditWrapperDelPText);
-                        
-
-//      $('#'+id+' .AddLiButton').before('<li onclick="DeleteLiSortable(this);" class="sortableLi ui-state-default">Nyt lis</li>');   
-      $('#'+id+' .AddLiButton').before(sNewMenuCardItemLi); 
   }
   
   function UpdateSortableLists()
@@ -251,8 +164,7 @@ function CreateNewLiInSortableList(id)
   
   /* Sortable list functions end */
   
-   
-  function HideShowSwitch(CaseName,sObjectId) {
+function HideShowSwitch(CaseName,sObjectId) {
      
      switch(CaseName)
      {
@@ -271,5 +183,26 @@ function CreateNewLiInSortableList(id)
      }
 
 }
-    
  
+    function InputAutogrow(id){
+
+        var value = $(id).val();
+        var length = value.length + 2;
+        
+        $(id).css('width', length * 10);
+        if( value == '0'){
+            $(id).css('width', '10');
+        }
+        
+    }
+    
+function InputAutoheigth(id){
+    
+    var value = $(id).val();
+    var length = value.length;
+    length = length /36;
+    var rows = length + 1;
+    $(id).attr('rows',rows);
+        
+    }
+    
