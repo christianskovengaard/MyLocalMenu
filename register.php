@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimun-scale=1.0, initial-scale=1.0" />
+        <title>My Local Menu</title>
+        <link rel="stylesheet" type="text/css" href="css/general_index.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 500px)" href="css/general_index_small.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:501px) and (max-width: 850px)" href="css/general_index_medium.css" />
+                
+        <!--[if lt IE 9]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/general.js"></script>
+        
+    </head>
+    <body>
+        
+        <div class="header">
+            <div class="wrapper">
+                <div class="logoWrapper">                        
+                    <img src="img/logo.png">
+                    <div class="logoText">
+                         <h5>MyLocalMenu</h5>
+                         <h6>Menukort på mobile</h6>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+<!--        <div class="info01">
+            <div class="wrapper">
+
+            </div>
+        </div> -->
+        
+        <div class="info03">
+            <div class="wrapper">
+                <h1>Opret dit menukort</h1>
+                <h3>➊➁➂</h3>
+                <div class="inputFrameWrapper">
+                    
+                        <div class="inputFrame A">
+                            <h5>Opret din bruger</h5>
+                            <input type="text" placeholder="Din email">
+                            <input type="password" placeholder="Kode fra modtaget email">
+                            <input type="password" placeholder="Indtast en kode">
+                            <input type="password" placeholder="Gentag koden">
+                            <div onclick="registerNext(1);" class="button01">næste</div>
+                        </div>
+
+                        <div class="inputFrame B">
+                            <h5>Spisestedet</h5>
+                            <input type="text" placeholder="Spisesteds navn">
+                            <input type="text" style="background: #ccc ; " placeholder="evt Spisestets slogan">
+                            <input type="text" placeholder="Gadenavn og nummer">
+                            <input type="text" size="4" maxlength="4" placeholder="Postnr">
+                            <input type="text" maxlength="8" placeholder="Telefonnummer">
+                            <div onclick="registerNext(0);" class="button01 prev">tilbage</div>
+                            <div onclick="registerNext(2);" class="button01">næste</div>
+                        </div>
+
+                        <div class="inputFrame C">
+                            <h5>Åbningstider</h5>
+                            <p>Man:</p><select  class="Hours" id=""><option value = "0">00:00</option></select>
+                           
+                            
+                            <h5>Bringer i ud?</h5><div onclick="" class="button01 prev">Ja</div><div onclick="" class="button01 prev">Nej</div>
+                            <p>Man:</p><select  class="Hours" id=""><option value = "0">00:00</option></select>
+                            <input type="text" maxlength="8" placeholder="Note">
+                            <div onclick="registerNext(1);" class="button01 prev">tilbage</div>
+                            <div onclick="" class="button01">OK</div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div> 
+        
+<!--        <div class="info03">
+            <div class="wrapper">
+                  
+            </div>
+        </div>-->
+        
+        <div class="footer">
+            <div class="wrapper">
+                <h2>Sprøgsmål?</h2>
+                <p>ring: 88 88 88 88 </p>
+            </div>
+        </div> 
+        
+    </body>
+</html>
