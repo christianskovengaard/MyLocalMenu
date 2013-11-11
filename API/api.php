@@ -29,13 +29,14 @@ if(isset($_GET['sFunction']))
         case "GetMenucardWithSerialNumber":
             require_once '../Controllers/MenucardController.php';
             $oMenucardController = new MenuCardController();
-            if($oMenucardController->GetMenucardWithSerialNumber() == false)
+            $result = $oMenucardController->GetMenucardWithSerialNumber();
+            if($result['result'] == false)
             {
                 $sResult = '{"sFunction":"GetMenucardWithSerialNumber","result":"False"}';
             }
-            else
+            if($result['result'] == true)
             {
-                $sResult = $oMenucardController->GetMenucardWithSerialNumber();
+                $sResult = json_encode($result);
             }
             echo $sResult;
 

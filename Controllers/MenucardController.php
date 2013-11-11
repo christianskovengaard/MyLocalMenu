@@ -11,6 +11,7 @@ class MenucardController
 
     public function __construct() 
     {
+        
         require '../Classes/bcrypt.php';
         $this->oBcrypt = new Bcrypt();
         
@@ -46,9 +47,6 @@ class MenucardController
             $sJSONMenucard = $_GET['sJSONMenucard'];
             //Convert the JSON string into an array
             $aJSONMenucard = json_decode($sJSONMenucard);
-            
-       
-            var_dump($aJSONMenucard);
         
             
             //Get MenucardID
@@ -161,7 +159,7 @@ class MenucardController
                     //Get the menucarditem
                     $oMenucardItem = $this->oMenucardItem->GetMenucardItem();
                     
-                    //TODO: Insert the menucarditem. remember to use the FK ffor menucardcetegory
+                    //Insert the menucarditem. remember to use the FK ffor menucardcetegory
                     $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iFK_iMenucardCategoryId) VALUES (?,?,?,?,?)");
                     $sQuery->bindValue(1, $oMenucardItem->sMenucardItemName);
                     $sQuery->bindValue(2, $oMenucardItem->sMenucardItemNumber);               
@@ -204,14 +202,18 @@ class MenucardController
     
     public function GetMenucardWithSerialNumber ()
     {
+        
+        $aMenucard = array(
+                'sFunction' => 'GetMenucardWithSerialNumber',
+                'result' => false
+            );
+        
         if(isset($_GET['iMenucardSerialNumber']))
         {
-            $aData = array();
-            $aData['sFunction'] = 'GetMenucardWithSerialNumber';
-            $aData['result'] = '';
+            
             $iMenucardSerialNumber = $_GET['iMenucardSerialNumber'];
             
-            $aMenucard = array();
+            $aMenucard['result'] = true;
             
             //First get the Menucard 
             $sQuery = $this->conPDO->prepare("SELECT * FROM `menucard`
@@ -327,51 +329,44 @@ class MenucardController
             {
                 $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryName'] = $row['sMenucardCategoryName'];
                 $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryDescription'] = $row['sMenucardCategoryDescription'];
+                $iFK_iMenucardCategoryId = $row['iMenucardCategoryId'];
+
                 
-                //TODO: Third get all the items for the category
-                
-                $i++;
+                 //Get all menucarditem for the category
+                 $sQueryItem = $this->conPDO->prepare("SELECT * FROM `menucarditem`
+                                                WHERE `iFK_iMenucardCategoryId` = :iFK_iMenucardCategoryId AND `iMenucardItemActive` = '1'");
+                 $sQueryItem->bindValue(':iFK_iMenucardCategoryId', $iFK_iMenucardCategoryId);
+                 
+                 try
+                 {
+                    $x = 0;
+                    $sQueryItem->execute(); 
+                    
+                    while ($rowItem = $sQueryItem->fetch(PDO::FETCH_ASSOC)) 
+                    {
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemName'][$x] = $rowItem['sMenucardItemName'];
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemNumber'][$x] = $rowItem['sMenucardItemNumber'];
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemDescription'][$x] = $rowItem['sMenucardItemDescription'];
+                        $aMenucard['aMenucardCategoryItems'.$i]['iMenucardItemPrice'][$x] = $rowItem['iMenucardItemPrice'];
+                        $x++;
+                    }
+                 }  
+                 catch (PDOException $e)
+                 {
+                     die($e->getMessage()); 
+                 }
+                 
+                 $i++;
             }
-            var_dump($aMenucard);
+            //var_dump($aMenucard);
+            return $aMenucard;
             
-            /*
             
-            
-            $sQuery = $this->conPDO->prepare("SELECT DISTINCT * FROM `menucard`
-                                                INNER JOIN `menucardcategory`
-                                                ON `menucard`.`iMenucardId` = `menucardcategory`.`iFK_iMenucardId`
-                                                INNER JOIN `menucarditem`
-                                                ON `menucardcategory`.`iMenucardCategoryId` = `menucarditem`.`iFK_iMenucardCategoryId`
-                                                WHERE `iMenucardSerialNumber` = :iMenucardSerialNumber AND `iMenucardActive` = '1' AND `iMenucardCategoryActive` = '1' AND `iMenucardItemActive` = '1'"
-                                            );
-            $sQuery->bindValue(':iMenucardSerialNumber', $iMenucardSerialNumber);
-            $sQuery->debugDumpParams();
-            try
-            {
-                $sQuery->execute();             
-            }
-            catch (PDOException $e)
-            {
-               die($e->getMessage()); 
-            }
-            
-            while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
-            {
-                $aMenucards[] = $row;
-            }
-            // set PDO to null in order to close the connection
-            $pdo = null;
-            
-            var_dump($aMenucards);
-            
-            $aData = json_encode($aData);
-            //return $aData;
-              */
-             
+   
         }
         else
         {
-            return false;
+            return $aMenucard;
         }
         
     }
