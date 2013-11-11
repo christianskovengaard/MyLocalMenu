@@ -246,29 +246,53 @@ function InputAutoheigth(id){
 // register
 
 function registerNext(num) {
-    
-     if(num==0){
+    if(num==0){
          $('.info03 .wrapper h3').remove(); 
-         $('.info03 .wrapper h1').after('<h3>➊➁➂</h3>');
+         $('.info03 .wrapper h1').after('<h3>➊ ➁ ➂</h3>');
          $('.inputFrame.A').css('margin-left','0px');
          var H = $('.inputFrame.A').height();
          $('.inputFrameWrapper').css("height",H+20);
     }
      if(num==1){
          $('.info03 .wrapper h3').remove();
-         $('.info03 .wrapper h1').after('<h3>➀➋➂</h3>');
+         $('.info03 .wrapper h1').after('<h3>➀ ➋ ➂</h3>');
          $('.inputFrame.A').css('margin-left','-266px');
          var H = $('.inputFrame.B').height();
          $('.inputFrameWrapper').css("height",H+20);
      }
      if(num==2){
         $('.info03 .wrapper h3').remove(); 
-        $('.info03 .wrapper h1').after('<h3>➀➁➌</h3>');
+        $('.info03 .wrapper h1').after('<h3>➀ ➁ ➌</h3>');
         $('.inputFrame.A').css('margin-left','-532px');
+        makeOpeningHours();
         var H = $('.inputFrame.C').height();
         $('.inputFrameWrapper').css("height",H+20);
+        
     }
-     
-     
-
 }
+
+function makeOpeningHours() {
+    
+    $('.Hours.Opening').append('<p>Man:</p><select  class="Hours" id=""><option value = "0">01:00</option></select><p> til </p><select  class="Hours" id=""><option value = "0">01:00</option></select><div class="button02">lukket</div>');
+}
+
+function makeTakeAwayHours(status) {
+
+    if(status == 0 ){
+        $('#TakAwayNo').toggleClass('prev').toggleClass('Clicked') ;
+        if($('#TakAwayYes').hasClass('Clicked')){ $('#TakAwayYes').removeClass('Clicked').addClass('prev'); }
+        $('.Hours.TakeAway').slideUp(200);
+    }
+    if(status == 1 ){
+        $('#TakAwayYes').toggleClass('prev').toggleClass('Clicked');
+        if($('#TakAwayNo').hasClass('Clicked')){
+            $('#TakAwayNo').removeClass('Clicked').addClass('prev'); 
+        }
+        if( $('.Hours.TakeAway').is(':empty') ){
+            $('.Hours.TakeAway').append('<p>Man:</p><select  class="Hours" id=""><option value = "0">01:00</option></select><p> til </p>');
+        }
+        $('.Hours.TakeAway').slideDown(200);
+    }
+}
+
+

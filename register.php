@@ -64,12 +64,11 @@
 
                         <div class="inputFrame C">
                             <h5>Åbningstider</h5>
-                            <p>Man:</p><select  class="Hours" id=""><option value = "0">00:00</option></select>
-                           
-                            
-                            <h5>Bringer i ud?</h5><div onclick="" class="button01 prev">Ja</div><div onclick="" class="button01 prev">Nej</div>
-                            <p>Man:</p><select  class="Hours" id=""><option value = "0">00:00</option></select>
-                            <input type="text" maxlength="8" placeholder="Note">
+                            <div class="Hours Opening"></div>
+                            <h5>Bringer I ud?</h5><div id="TakAwayYes" onclick="makeTakeAwayHours(1);" class="button01 prev">Ja</div><div id="TakAwayNo" onclick="makeTakeAwayHours(0);" class="button01 prev">Nej</div>
+                            <br><br>
+                            <div class="Hours TakeAway"></div>
+                            <input type="text" style="background: #ccc ; " placeholder="evt Note">
                             <div onclick="registerNext(1);" class="button01 prev">tilbage</div>
                             <div onclick="" class="button01">OK</div>
                         </div>

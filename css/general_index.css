@@ -95,7 +95,7 @@ input {
 
 .Info03Img { max-width: 1200px; }
 .info03 img { width: 100%; }
-.info03 h2,p { color: #b5b5b5; width: 400px; }
+.info03 h2 { color: #b5b5b5; width: 400px; }
 
 .info03 input { display: block; margin-bottom: 3px; }
 .info03 .inputFrame { padding-right: 0; display: inline-table; width: 235px; margin-right: 15px;  white-space:normal; 
@@ -104,8 +104,23 @@ input {
                              -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;}
 .info03 .button01 { float: right; margin-right: 10px; }
 .info03 .button01.prev { float: left; background: #aaa; }
+.info03 .button01.Clicked { float: left; }
+.info03 .button02 { display: inline-block; background: #555; color: #fff; font-size: 16px; padding: 3px 5px; margin: 0 0 0 10px; }
 .info03 h5 { margin: 10px 0px; }
 .info03 h3 { text-align: center; }
 .info03 h1 { margin: 4px 0px; }
-.info03 p { color: #333; display: inline-block; margin: 0; }
-.info03 select { display: inline-block; margin: 0; }
+.info03 p { color: #333; display: inline-block; font-size: 18px; margin: 0 4px 0 0; line-height: 5px; vertical-align: middle;}
+.info03 select { 
+   display: inline-block; 
+   margin: 0 4px 0 0;    
+   background: #fff;
+   padding: 5px;
+   font-size: 14px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   -webkit-appearance: none;
+   vertical-align: middle;
+}
+.Hours.Opening { vertical-align: middle; }
+.Hours.TakeAway { display: hidden; margin: 0 0 10px 0; }
