@@ -17,7 +17,7 @@
       var id = 'sortable'+lastchar;
       $('.sortablediv:last').after('<div class="sortablediv newplaceholder"></div>');
       $('.newplaceholder').append('<h3>Liste '+lastchar+'</h3>');
-      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
+      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
       $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"><li onclick="CreateNewLiInSortableList(\''+id+'\')" class="AddLiButton non-dragable"><h3>+</h3></li></ul>');
 //      $('.newplaceholder').append(' <input type="button" value="Slet liste '+id+'" onclick="DeleteSortableList(\''+id+'\')">');
       $('.sortablediv:last').removeClass('newplaceholder'); 
@@ -37,11 +37,41 @@ function CreateNewLiInSortableList(id)
     $('.DishWrapperTEMP').append('<div class="DishNumber"><input type="text" maxlength="4" onkeyup="InputAutogrow(this);" placeholder="nr"></div>');
     $('.DishWrapperTEMP').append('<div class="DishText"><div class="DishHeadline"><input type="text" onkeyup="InputAutogrow(this);" placeholder="Overskrift"></div><div class="DishDescription"><textarea rows="1" onkeyup="InputAutoheigth(this);" placeholder="Beskrivelse"></textarea></div></div>');
     $('.DishWrapperTEMP').append('<div class="DishPrice"><h2>...</h2><input onkeyup="InputAutogrow(this);" type="text" placeholder="0"><h2>kr</h2></div>');
-    $('.DishWrapperTEMP').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
+    $('.DishWrapperTEMP').append('<div class="DishEditWrapper DishEditWrapperTEMP"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
     $('.DishWrapperTEMP').removeClass('DishWrapperTEMP');
+
     $('.DishNumber input').focus();
     
-
+    $('.AddLiButton').hide();
+    $('.newsortablediv').hide();
+    $('#'+id+' .AddLiButton').before('<li class="SaveMenuDish" onclick="SaveMenuDishToHtml();">Gem Menupunkt</li>');
+  }
+  
+  function CreateNewDivresturanatInfo() {
+      $('.AddLiButton.info').before('<div Class="InfoSlide"><input type="text> placeholder="Overskrift"><textarea rows="1" onkeyup="InputAutoheigth(this);" placeholder="Valgfri tekst"></textarea></div>')
+  }
+  
+  function SaveMenuDishToHtml() {
+      var Number = $('.DishNumber input').val();
+      var Headline = $('.DishHeadline input').val();
+      var Description = $('.DishDescription textarea').val();
+      var price = $('.DishPrice input').val();
+      
+      if(Number != ''  && Headline != '' && Description != '' && price !=''){
+          $('.DishNumber input').replaceWith('<h1>'+Number+'</h1>');
+          $('.DishHeadline input').replaceWith('<h1>'+Headline+'</h1>');
+          $('.DishDescription textarea').replaceWith('<h2>'+Description+'</h2>');
+          $('.DishPrice input').replaceWith('<h2>'+price+'</h2>');
+          $('.SaveMenuDish').hide();
+          $('.AddLiButton').fadeIn();
+          $('.newsortablediv').fadeIn();
+          $('.DishEditWrapperTEMP').removeClass('DishEditWrapperTEMP');
+      }
+      
+      else{
+          alert("udfyld venlist alle felter")
+      }
+      
   }
   
   function UpdateSortableLists()
@@ -78,7 +108,21 @@ function CreateNewLiInSortableList(id)
           
           $(id).parent().parent().remove();
       }
-  }    
+  } 
+  
+  function EditSortableList(id){
+  
+          var dish = $(id);
+          var number = dish.closest('.DishWrapper').children('.DishNumber');
+          var numberValue = number.text();
+          number.replaceWith('<div class="DishNumber"><input id="DishNum" type="text"  maxlength="4" onkeyup="InputAutogrow(this);" value="'+numberValue+'"></div>');
+          $('#DishNum').focus();
+          
+          var headline = dish.closest('.DishWrapper').children().children('.DishHeadline');
+          var headlineValue = headline.text();
+          headline.replaceWith('<div class="DishHeadline"><input id="DishNum" type="text"  maxlength="4" onkeyup="InputAutogrow(this);" value="'+headlineValue+'"></div>');
+
+ }
   
   function SaveSortableLists()
   {

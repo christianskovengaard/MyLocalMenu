@@ -63,13 +63,16 @@
                     </div>
                     <div class="sortablediv" id='restuarantInfo'>
                         <h3>King of chicken</h3>
+                        
                         <div Class="InfoSlide"><h1>Vi laver firmaaftaler og mad til receptioner</h1><h2>Spydstegte franske kyllinger i ægte rotisserie-over, salatbar, sandwich, bagte kartofter, bigger fries, flødekartofler, biggerfries, flødekartofler, ovnbagte kartofler i kyllingefond, aioli, coleslaw, tzatziki, hjemmelavede saucer, marinader, dressinger</h2></div>
                         <div Class="InfoSlide"><h1>Take-away røtisserie</h1><h2>Vi får leveret friske franske kyllinger. Disse bliver marineret i hjemmelavet lage og langtidsstegte i røstisserie-ovne, hvor hovedparten af fedtet steges væk. Der er altså tale om et produkt, som er lækkert og med saftig smag. Vi er leveringdygtige til enhver lejlighed, bl.a. firmaordninger, receptioner og catering. Står De og mangler gode forslag til Deres fest, så kom ind og lad os lave et godt tilbud til Dem.</h2></div>
+                        <div Class="AddLiButton info" onclick="CreateNewDivresturanatInfo()"><h3>+</h3></div>
                     </div>
                     <div class="sortablediv" id='sortableList'>
                         <h3>Liste 1</h3>
                         <div class="DishEditWrapper">
                             <div class="moveDish"><img src="img/moveIcon.png"></div>
+                            <div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div>
                             <div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div>
                         </div>
                         <ul id="sortable1" class="connectedSortable">                        
@@ -85,6 +88,7 @@
                                     
                                     <div class="DishEditWrapper">
                                         <div class="moveDish"><img src="img/moveIcon.png"></div>
+                                        <div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div>
                                         <div class="DeleteDish" onclick="DeleteLiSortable(this);"><p>╳</p></div>
                                     </div>                                    
                                 </div>
@@ -101,6 +105,7 @@
                                     
                                     <div class="DishEditWrapper">
                                         <div class="moveDish"><img src="img/moveIcon.png"></div>
+                                        <div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div>
                                         <div class="DeleteDish" onclick="DeleteLiSortable(this);"><p>╳</p></div>
                                     </div> 
                                 </div>
