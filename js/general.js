@@ -16,15 +16,24 @@
       lastchar = parseInt(lastchar) +1;
       var id = 'sortable'+lastchar;
       $('.sortablediv:last').after('<div class="sortablediv newplaceholder"></div>');
-      $('.newplaceholder').append('<h3>Liste '+lastchar+'</h3>');
-      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
-      $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"><li onclick="CreateNewLiInSortableList(\''+id+'\')" class="AddLiButton non-dragable"><h3>+</h3></li></ul>');
+      $('.newplaceholder').append('<h3><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="Overskrift"></h3>');
+      $('.newplaceholder h3 input').focus();
+      $('.newplaceholder').append('<h4><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="evt ekstra info"></h4>');
+      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
+      $('.DishEditWrapper').hide();
+      $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"></ul>');
+      $('#'+id).append('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuList(this);"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuListHeadlineToHtml(\''+id+'\');">✓ Gem Menupunkt</a></li>');
+//      $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"><li onclick="CreateNewLiInSortableList(\''+id+'\')" class="AddLiButton non-dragable"><h5>+</h5></li></ul>');
 //      $('.newplaceholder').append(' <input type="button" value="Slet liste '+id+'" onclick="DeleteSortableList(\''+id+'\')">');
       $('.sortablediv:last').removeClass('newplaceholder'); 
+      
+      $('.AddLiButton').hide();
+      $('.newsortablediv').hide();
+      
       UpdateSortableLists();   
   }
   
-function CreateNewLiInSortableList(id)
+  function CreateNewLiInSortableList(id)
   {
 //    var GetMenuCardItemUl = document.getElementById(id);
     
@@ -34,21 +43,39 @@ function CreateNewLiInSortableList(id)
     $('.sortableLiTEMP').append('<div class="DishWrapper DishWrapperTEMP"></div>');
     $('.sortableLiTEMP').removeClass('sortableLiTEMP');
     
-    $('.DishWrapperTEMP').append('<div class="DishNumber"><input type="text" maxlength="4" onkeyup="InputAutogrow(this);" placeholder="nr"></div>');
-    $('.DishWrapperTEMP').append('<div class="DishText"><div class="DishHeadline"><input type="text" onkeyup="InputAutogrow(this);" placeholder="Overskrift"></div><div class="DishDescription"><textarea rows="1" onkeyup="InputAutoheigth(this);" placeholder="Beskrivelse"></textarea></div></div>');
-    $('.DishWrapperTEMP').append('<div class="DishPrice"><h2>...</h2><input onkeyup="InputAutogrow(this);" type="text" placeholder="0"><h2>kr</h2></div>');
+    $('.DishWrapperTEMP').append('<div class="DishNumber"><input type="text" maxlength="4" placeholder="nr"></div>');
+    $('.DishWrapperTEMP').append('<div class="DishText"><div class="DishHeadline"><input type="text" placeholder="Overskrift"></div><div class="DishDescription"><textarea rows="1" placeholder="Beskrivelse"></textarea></div></div>');
+    $('.DishWrapperTEMP').append('<div class="DishPrice"><h2>...</h2><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuDishToHtml();}" placeholder="0"><h2>kr</h2></div>');
     $('.DishWrapperTEMP').append('<div class="DishEditWrapper DishEditWrapperTEMP"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
+    $('.DishWrapperTEMP').hide().slideDown();
     $('.DishWrapperTEMP').removeClass('DishWrapperTEMP');
 
     $('.DishNumber input').focus();
     
+    $('.DishWrapper input').autoGrowInput();
+    $('.DishDescription textarea').autogrow();
+    
+    $('.EditDish').hide();
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
-    $('#'+id+' .AddLiButton').before('<li class="SaveMenuDish" onclick="SaveMenuDishToHtml();">Gem Menupunkt</li>');
+    $('.newsortabledivbuffer').css('display', 'inline-block');
+    $('#'+id+' .AddLiButton').before('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Gem Menupunkt</a></li>');
   }
   
   function CreateNewDivresturanatInfo() {
-      $('.AddLiButton.info').before('<div Class="InfoSlide"><input type="text> placeholder="Overskrift"><textarea rows="1" onkeyup="InputAutoheigth(this);" placeholder="Valgfri tekst"></textarea></div>')
+    $('.AddLiButton.info').before('<div Class="InfoSlide new"><input type="text" placeholder="Overskrift"><textarea rows="1" onkeyup="InputAutoheigth(this);" placeholder="Valgfri tekst"></textarea></div>');
+    
+    
+    $('.InfoSlide.new textarea').autogrow();
+    
+    $('.InfoSlide.new input').focus();
+    
+    $('.AddLiButton').hide();
+    $('.newsortablediv').hide();
+    $('.newsortabledivbuffer').css('display', 'inline-block');
+    $('.AddLiButton.info').before('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveInfoToHtml();">✓ Gem Info</a></div>');
+    $('.EditDish').hide();
+      
   }
   
   function SaveMenuDishToHtml() {
@@ -57,22 +84,165 @@ function CreateNewLiInSortableList(id)
       var Description = $('.DishDescription textarea').val();
       var price = $('.DishPrice input').val();
       
-      if(Number != ''  && Headline != '' && Description != '' && price !=''){
+      if(Number != ''  && Headline != '' && price !=''){
           $('.DishNumber input').replaceWith('<h1>'+Number+'</h1>');
           $('.DishHeadline input').replaceWith('<h1>'+Headline+'</h1>');
           $('.DishDescription textarea').replaceWith('<h2>'+Description+'</h2>');
           $('.DishPrice input').replaceWith('<h2>'+price+'</h2>');
-          $('.SaveMenuDish').hide();
-          $('.AddLiButton').fadeIn();
+          $('.SaveMenuDish').fadeOut('normal', function(){ 
+              $(this).remove();
+              $('.AddLiButton').fadeIn('fast');
+          });
           $('.newsortablediv').fadeIn();
+          $('.newsortabledivbuffer').hide();
+          $('.EditDish').show();
+          
           $('.DishEditWrapperTEMP').removeClass('DishEditWrapperTEMP');
       }
       
       else{
-          alert("udfyld venlist alle felter")
+          alert("udfyld venlist et nummer, en overskrift og en pris");
       }
+}
+ 
+  function SaveInfoToHtml(){
+     
+      var infoHeadline = $('.InfoSlide.new input').val();
+      var infoDescription = $('.InfoSlide.new textarea').val();
       
-  }
+      if(infoHeadline != ''  && infoDescription != ''){
+          
+          $('.InfoSlide.new').before('<div Class="InfoSlide"><h1>'+infoHeadline+'</h1><h2>'+infoDescription+'</h2><div class="DishEditWrapper"><div class="EditDish" onclick="EditInfo(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div></div>');
+          $('.InfoSlide.new').remove();
+          $('.SaveMenuDish').fadeOut('normal', function(){ 
+              $(this).remove();
+              $('.AddLiButton').fadeIn('fast');
+          });
+          $('.EditDish').show();
+          $('.newsortablediv').fadeIn();
+          $('.newsortabledivbuffer').hide();
+          
+      }
+      else{
+          alert("udfyld venlist alle felter");
+      }    
+ }   
+  
+  function SaveMenuListHeadlineToHtml(id){
+      var listHeadline = $('.sortablediv h3 input').val();
+      var listDescription = $('.sortablediv h4 input').val();
+
+      if(listHeadline != ''){
+          
+          $('.sortablediv h3 input').replaceWith(listHeadline);
+          $('.sortablediv h4 input').replaceWith(listDescription);
+          
+
+          $('.SaveMenuDish').fadeOut('normal', function(){ 
+
+              $(this).before('<li onclick="CreateNewLiInSortableList(\''+id+'\')" class="AddLiButton non-dragable"><h5>+</h5></li>');
+              $(this).remove();
+              $('.AddLiButton').fadeIn('fast');
+              
+          });
+          $('.DishEditWrapper').show();
+          $('.EditDish').show();
+          $('.newsortablediv').fadeIn();
+          $('.newsortabledivbuffer').hide();
+          
+      }
+      else{
+          alert("udfyld venlist en overskrift");
+      }    
+ }
+ 
+   function SaveEditedMenuListHeadlineToHtml(id){
+      var listHeadline = $('.sortablediv h3 input').val();
+      var listDescription = $('.sortablediv h4 input').val();
+
+      if(listHeadline != ''){
+          
+          $('.sortablediv h3 input').replaceWith(listHeadline);
+          $('.sortablediv h4 input').replaceWith(listDescription);
+          
+
+          $('.SaveMenuDish').fadeOut('normal', function(){ 
+              $(this).remove();
+              $('.AddLiButton').fadeIn('fast');
+              
+          });
+          $('.DishEditWrapper').show();
+          $('.EditDish').show();
+          $('.newsortablediv').fadeIn();
+          $('.newsortabledivbuffer').hide();
+          
+      }
+      else{
+          alert("udfyld venlist en overskrift");
+      }    
+ }
+ 
+ function SaveEditedInfoToHtml(id){
+      var Headline = $('.InfoSlide input').val();
+      var Description = $('.InfoSlide textarea').val();
+
+      if(Headline != '' && Description !=''){
+          
+          $('.InfoSlide input').replaceWith('<h1>'+Headline+'</h1>');
+          $('.InfoSlide textarea').replaceWith('<h2>'+Description+'</h2>');
+          
+
+          $('.SaveMenuDish').fadeOut('normal', function(){ 
+              $(this).remove();
+              $('.AddLiButton').fadeIn('fast');
+              
+          });
+          $('.DishEditWrapper').show();
+          $('.EditDish').show();
+          $('.newsortablediv').fadeIn();
+          $('.newsortabledivbuffer').hide();
+          
+      }
+      else{
+          alert("udfyld venlist begge felter");
+      }    
+ }
+ 
+  
+  function CancelNewMenuDish() {
+          $('.DishEditWrapperTEMP').parent().slideUp('normal',function(){ $('.DishEditWrapperTEMP').parent().parent().remove(); });
+          
+          $('.InfoSlide.new').fadeOut('normal', function(){ 
+              $(this).remove();
+          });
+          $('.SaveMenuDish').fadeOut('normal', function(){ 
+              $(this).remove();
+              $('.AddLiButton').fadeIn('fast');
+          });
+          $('.newsortablediv').fadeIn();
+          $('.newsortabledivbuffer').hide();
+          $('.EditDish').show();
+}
+
+  function CancelEditMenuDish() {
+          
+          $('.SaveMenuDish').fadeOut('normal');
+          $('.AddLiButton').fadeIn('fast');
+          $('.newsortablediv').fadeIn();
+          $('.newsortabledivbuffer').hide();
+          
+          alert('JEG VED IKKE LIGE HVORDAN MAN NEMMENT KOMMER TILBAGE TIL ORGINAL');
+}
+
+  function CancelNewMenuList(id) {
+          
+          $(id).parent().parent().parent().remove();
+          $('.AddLiButton').fadeIn('fast');
+          $('.newsortablediv').fadeIn();
+          $('.newsortabledivbuffer').hide();
+          
+
+}
   
   function UpdateSortableLists()
   {
@@ -115,15 +285,77 @@ function CreateNewLiInSortableList(id)
           var dish = $(id);
           var number = dish.closest('.DishWrapper').children('.DishNumber');
           var numberValue = number.text();
-          number.replaceWith('<div class="DishNumber"><input id="DishNum" type="text"  maxlength="4" onkeyup="InputAutogrow(this);" value="'+numberValue+'"></div>');
-          $('#DishNum').focus();
-          
+          number.replaceWith('<div class="DishNumber"><input id="DishNum" type="text" maxlength="4" value="'+numberValue+'"></div>');
+
           var headline = dish.closest('.DishWrapper').children().children('.DishHeadline');
           var headlineValue = headline.text();
-          headline.replaceWith('<div class="DishHeadline"><input id="DishNum" type="text"  maxlength="4" onkeyup="InputAutogrow(this);" value="'+headlineValue+'"></div>');
+          headline.replaceWith('<div class="DishHeadline"><input type="text" value="'+headlineValue+'"></div>');
 
- }
+          var DishDescription = dish.closest('.DishWrapper').children().children('.DishDescription');
+          var DishDescriptionValue = DishDescription.text();
+          DishDescription.replaceWith('<div class="DishDescription"><textarea>'+DishDescriptionValue+'</textarea></div>');
+          
+          var DishPrice = dish.closest('.DishWrapper').children('.DishPrice');
+          var DishPriceValue = DishPrice.children().eq(1).text();
+          DishPrice.replaceWith('<div class="DishPrice"><h2>...</h2><input type="text" value="'+DishPriceValue+'"><h2>kr</h2></div>');
+          
+          var PriceWidth = 12*DishPriceValue.length;
+          $('.DishPrice input').css('width',PriceWidth);
+          $('#DishNum').focus();
+          $('.DishWrapper input').autoGrowInput();
+          $('.DishDescription textarea').autogrow();
+    
+          $('.EditDish').hide();
+    
+    $('.AddLiButton').hide();
+    $('.newsortablediv').hide();
+    $('.newsortabledivbuffer').css('display', 'inline-block');
+    dish.closest('.DishWrapper').after('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Gem Menupunkt</a></li>');
+}
   
+  function EditListHeadline(id){
+  
+          var headline = $(id).closest('.sortablediv').children('h3');
+          var headlineText = headline.text();
+          var description = $(id).closest('.sortablediv').children('h4');
+          var descriptionText = description.text();
+          
+          headline.replaceWith('<h3><input type=text value="'+headlineText+'"></h3>');
+          if( descriptionText == "" ){
+            description.replaceWith('<h4><input type=text placeholder="evt ekstra info"></h4>');
+          }
+          else{
+              description.replaceWith('<h4><input type=text value="'+descriptionText+'"></h4>');
+          }
+                    
+          $('.EditDish').hide();
+    
+          $('.AddLiButton').hide();
+          $('.newsortablediv').hide();
+          $('.newsortabledivbuffer').css('display', 'inline-block');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(this);">✓ Gem overskrift</a></div>');
+}
+
+  function EditInfo(id){
+  
+          var headline = $(id).closest('.InfoSlide').children('h1');
+          var headlineText = headline.text();
+          var description = $(id).closest('.InfoSlide').children('h2');
+          var descriptionText = description.text();
+          
+          headline.replaceWith('<input type=text value="'+headlineText+'">');
+          description.replaceWith('<textarea>'+descriptionText+'"</textarea>');
+          
+          $('.InfoSlide textarea').autogrow();
+                    
+          $('.EditDish').hide();
+    
+          $('.AddLiButton').hide();
+          $('.newsortablediv').hide();
+          $('.newsortabledivbuffer').css('display', 'inline-block');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedInfoToHtml(this);">✓ Gem overskrift</a></div>');
+}
+
   function SaveSortableLists()
   {
       var iLastMenucardItemIndex = '';
@@ -227,7 +459,7 @@ function CreateNewLiInSortableList(id)
   
   /* Sortable list functions end */
   
-function HideShowSwitch(CaseName,sObjectId) {
+  function HideShowSwitch(CaseName,sObjectId) {
      
      switch(CaseName)
      {
@@ -237,7 +469,7 @@ function HideShowSwitch(CaseName,sObjectId) {
         case 'HideSortableEdits':
             $(".DishEditWrapper").animate({height: 'toggle'},100);
             $(".AddLiButton").animate({top: 'toggle'},100);
-            $(".newsortablediv").animate({top: 'toggle'},100);
+            $(".newsortablediv").animate({width: 'toggle'},200);
             break;
         case 'Login':
             $("#"+sObjectId).animate({width: 'toggle'},100);
@@ -246,31 +478,8 @@ function HideShowSwitch(CaseName,sObjectId) {
      }
 
 }
- 
-    function InputAutogrow(id){
-
-        var value = $(id).val();
-        var length = value.length + 2;
-        
-        $(id).css('width', length * 10);
-        if( value == '0'){
-            $(id).css('width', '10');
-        }
-        
-    }
-    
-function InputAutoheigth(id){
-    var value = $(id).val();
-    var length = value.length;
-    length = length /36;
-    var rows = length + 1;
-    $(id).attr('rows',rows);
-    
-    }
-    
-    
-    
-    function GetMenucardWithSerialNumber()
+   
+  function GetMenucardWithSerialNumber()
     {
        
          var iMenucardSerialNumber = $('#iMenucardSerialNumber').val();
@@ -287,9 +496,11 @@ function InputAutoheigth(id){
                });
          }
     }
-// register
 
-function registerNext(num) {
+   
+   // register
+
+  function registerNext(num) {
     if(num==0){
          $('.info03 .wrapper h3').remove(); 
          $('.info03 .wrapper h1').after('<h3>➊ ➁ ➂</h3>');
@@ -315,12 +526,12 @@ function registerNext(num) {
     }
 }
 
-function makeOpeningHours() {
+  function makeOpeningHours() {
     
     $('.Hours.Opening').append('<p>Man:</p><select  class="Hours" id=""><option value = "0">01:00</option></select><p> til </p><select  class="Hours" id=""><option value = "0">01:00</option></select><div class="button02">lukket</div>');
 }
 
-function makeTakeAwayHours(status) {
+  function makeTakeAwayHours(status) {
 
     if(status == 0 ){
         $('#TakAwayNo').toggleClass('prev').toggleClass('Clicked') ;
@@ -338,5 +549,6 @@ function makeTakeAwayHours(status) {
         $('.Hours.TakeAway').slideDown(200);
     }
 }
-
+    
+    // register end
 

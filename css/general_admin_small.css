@@ -1,0 +1,19 @@
+/* 
+    Document   : general_admin_small
+    Created on : 18-11-2013, 23:07:06
+    Author     : spjael
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+html,body {
+    overflow-x: hidden; padding: 0;
+}
+.menuWrapper {padding: 0px; margin: 0;}
+.wrapper { padding: 0px; margin: 0; }
+.menuWrapperInner { max-width: 400px; text-align: center; }
+
+.sortablediv { text-align: left; margin-left: 0px; }
