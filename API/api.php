@@ -42,6 +42,23 @@ if(isset($_GET['sFunction']))
 
         break;
         
+        case "GetMenucard":
+            require_once '../Controllers/MenucardController.php';
+            $oMenucardController = new MenuCardController();
+            $result = $oMenucardController->GetMenucard();
+            if($result['result'] == false)
+            {
+                $sResult = '{"sFunction":"GetMenucard","result":"False"}';
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
+        
+        
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
                 echo $result;
