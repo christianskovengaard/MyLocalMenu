@@ -358,6 +358,26 @@ class MenucardController
                  
                  $i++;
             }
+            
+            //Get restuarent info for the menucard
+            $sQuery = $this->conPDO->prepare("SELECT * FROM `restuarentinfo`
+                                                WHERE `iFK_iMenucardId` = :iFK_iMenucardId LIMIT 1");
+            $sQuery->bindValue(':iFK_iMenucardId', $iMenucardId);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $aMenucard['sRestuarentName'] = $aResult['sRestuarentInfoName'];
+            $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
+            $aMenucard['sRestuarentAddress'] = $aResult['sRestuarentInfoAddress'];
+            
+            
             //var_dump($aMenucard);
             return $aMenucard;
             
