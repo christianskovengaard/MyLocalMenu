@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimun-scale=1.0, initial-scale=1.0" />
         <title>My Local Menu</title>
         <link rel="stylesheet" type="text/css" href="css/general_admin.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 820px)" href="css/general_admin_small.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:821px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 800px)" href="css/general_admin_small.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:801px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
                 
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -53,7 +53,7 @@
                 <div class="Restaurant OpeningHours"><h4><b>Åbningstider:</b></h4><h4>I dag: 11:00 - 22.00</h4><h5>åben</h5></div>
                 <div class="Restaurant Delivery"><h4><b>Udbringning:</b></h4><h4>I dag: 16:00 - 21:00</h4><h5>ikke mulig</h5></div>
                 <div class="buttonEdit top" onclick="HideShowSwitch('PopUpWindow','EditRestaurantInfo');"><img src="img/edit.png">Resturent info</div>
-                <div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Rediger Menukort</div>
+                <div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Menukort</div>
 
              </div>          
         </div>

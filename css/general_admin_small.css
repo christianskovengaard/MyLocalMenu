@@ -10,10 +10,43 @@ root {
     display: block;
 }
 html,body {
-    overflow-x: hidden; padding: 0;
+    overflow-x: hidden; padding: 0; 
 }
+h1 { font-size: 25px; line-height: 10px; }
+h2 { font-size: 12px; line-height: 15px; }
+h3 { font-size: 25px; line-height: 5px; }
+h4 { font-size: 14px; line-height: 5px; }
+h5 { font-size: 22px; margin: 0px; }
+h6 { font-size: 14px; margin: 0px; }
+div { font-size: 22px; }
+
+.header { height: 90px; }
+.logoWrapper { margin: 0;}
+.logoWrapper h5 { font-size: 0.8em; }
+.logoWrapper h6 { font-size: 0.6em; }
+.logoWrapper img { height: 40px; width: auto; }
+.appGetInfo { right: auto; left: 50%; top: auto; bottom: 4px; margin-left: -136px }
+.appGetInfo img { height: 30px; width: auto; margin: 0 2px 0 0; }
+.appGetInfo h6 { display: none; }
+
+.wrapper { position: relative; overflow: visible ; z-index: 1; }
+.menuWrapperInner { margin-top: 50px; z-index: 0; }
+.buttonEdit { font-size: 15px; padding: 2px 4px 0 0; bottom: -35px; right: 140px; }
+.buttonEdit img { width: 25px; margin-bottom: 2px; z-index: 10; }
+.buttonEdit.top { top:auto; bottom: -35px; right: 5px; max-height: 29px; }
+
+.Restaurant { margin-right: 10px; }
+.Restaurant.info { margin-right: 0; }
+.RestaurantInfo { padding-bottom: 40px; }
+.Restaurant.OpeningHours, .Restaurant.Delivery { margin: 0; }
+.Restaurant h4 { font-size: 12px; }
+.RestaurantAdresse { margin-top: -10px;}
+.RestaurantAdresse h4 { max-width: 150px; line-height: 12px; }
+.RestaurantAdresse img { width: 10px; }
+.RestaurantPhone img { width: 10px; }
+
 .menuWrapper {padding: 0px; margin: 0;}
-.wrapper { padding: 0px; margin: 0; }
+.wrapper { padding: 0px 10px; margin: 0; }
 .menuWrapperInner { max-width: 400px; text-align: center; }
 
 .sortablediv { text-align: left; margin-left: 0px; }
