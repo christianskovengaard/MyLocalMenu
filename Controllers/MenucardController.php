@@ -186,6 +186,8 @@ class MenucardController
             }
             
             
+            //TODO: Insert info about the menucard
+            
             /*echo "<h1>Hele arrayet</h1>";
             echo '<pre>';
                 print_r($aJSONMenucard);
@@ -230,16 +232,15 @@ class MenucardController
             }
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             if($aResult == false): return false; endif;
-            $aMenucard['sMenucardName'] = $aResult['sMenucardName'];
-            $iFK_iMenucardInfoId = $aResult['iFK_iMenucardInfoId'];
+            $aMenucard['sMenucardName'] = utf8_encode($aResult['sMenucardName']);
             $iMenucardId = $aResult['iMenucardId'];
-            
+            $iFK_RestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
             
             //Get all menucardinfo
             $sQuery = $this->conPDO->prepare("SELECT * FROM `menucardinfo`
                                                WHERE `iFK_iMenucardId` = :iFK_iMenucardInfoId
                                                AND `iMenucardInfoActive` = '1'");
-            $sQuery->bindValue(':iFK_iMenucardInfoId', $iFK_iMenucardInfoId);
+            $sQuery->bindValue(':iFK_iMenucardInfoId', $iMenucardId);
             try
             {
                 $sQuery->execute();             
@@ -251,8 +252,8 @@ class MenucardController
             $i = 0;
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
-                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoHeadline'] = $row['sMenucardInfoHeadline'];
-                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoParagraph'] = $row['sMenucardInfoParagraph'];
+                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoHeadline'] = utf8_encode($row['sMenucardInfoHeadline']);
+                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoParagraph'] = utf8_encode($row['sMenucardInfoParagraph']);
                 $i++;
             }
             
@@ -279,7 +280,7 @@ class MenucardController
             $i = 0;
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
-                $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = $row['sDayName'];
+                $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = $row['iTimeFrom'];
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = $row['iTimeTo'];
                 $i++;
@@ -306,7 +307,7 @@ class MenucardController
             $i = 0;
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
-                $aMenucard['aMenucardTakeAwayHours'][$i]['sDayName'] = $row['sDayName'];
+                $aMenucard['aMenucardTakeAwayHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
                 $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeFrom'] = $row['iTimeFrom'];
                 $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeTo'] = $row['iTimeTo'];
                 $i++;
@@ -327,8 +328,8 @@ class MenucardController
             $i = 0;
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
-                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryName'] = $row['sMenucardCategoryName'];
-                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryDescription'] = $row['sMenucardCategoryDescription'];
+                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryName'] = utf8_encode($row['sMenucardCategoryName']);
+                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryDescription'] = utf8_encode($row['sMenucardCategoryDescription']);
                 $iFK_iMenucardCategoryId = $row['iMenucardCategoryId'];
 
                 
@@ -344,9 +345,9 @@ class MenucardController
                     
                     while ($rowItem = $sQueryItem->fetch(PDO::FETCH_ASSOC)) 
                     {
-                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemName'][$x] = $rowItem['sMenucardItemName'];
-                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemNumber'][$x] = $rowItem['sMenucardItemNumber'];
-                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemDescription'][$x] = $rowItem['sMenucardItemDescription'];
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemName'][$x] = utf8_encode($rowItem['sMenucardItemName']);
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemNumber'][$x] = utf8_encode($rowItem['sMenucardItemNumber']);
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemDescription'][$x] = utf8_encode($rowItem['sMenucardItemDescription']);
                         $aMenucard['aMenucardCategoryItems'.$i]['iMenucardItemPrice'][$x] = $rowItem['iMenucardItemPrice'];
                         $x++;
                     }
@@ -361,8 +362,8 @@ class MenucardController
             
             //Get restuarent info for the menucard
             $sQuery = $this->conPDO->prepare("SELECT * FROM `restuarentinfo`
-                                                WHERE `iFK_iMenucardId` = :iFK_iMenucardId LIMIT 1");
-            $sQuery->bindValue(':iFK_iMenucardId', $iMenucardId);
+                                                WHERE `iRestuarentInfoId` = :iFK_RestuarentInfoId LIMIT 1");
+            $sQuery->bindValue(':iFK_RestuarentInfoId', $iFK_RestuarentInfoId);
             try
             {
                 $sQuery->execute();             
@@ -373,12 +374,12 @@ class MenucardController
             }
             
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-            $aMenucard['sRestuarentName'] = $aResult['sRestuarentInfoName'];
+            $aMenucard['sRestuarentName'] = utf8_encode($aResult['sRestuarentInfoName']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
-            $aMenucard['sRestuarentAddress'] = $aResult['sRestuarentInfoAddress'];
+            $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);
             
             
-            //var_dump($aMenucard);
+            var_dump($aMenucard);
             return $aMenucard;
             
             
