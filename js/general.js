@@ -15,7 +15,7 @@
       }
       lastchar = parseInt(lastchar) +1;
       var id = 'sortable'+lastchar;
-      $('.sortablediv:last').after('<div class="sortablediv newplaceholder"></div>');
+      $('.sortablediv:last').after('<div class="sortablediv newplaceholder sortableList"></div>');
       $('.newplaceholder').append('<h3><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="Overskrift"></h3>');
       $('.newplaceholder h3 input').focus();
       $('.newplaceholder').append('<h4><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="evt ekstra info"></h4>');
@@ -362,55 +362,61 @@
       var globalIndex = '';
       var iLastIndexofMenucardCategories = '';
       var iLastIndexManucardItem = '';
-      //Array for all the lists
-      var aAllLists = new Array();
+      //Array for all the lists, as and assoc array
+      var aAllLists = {};
       //aLists
       aAllLists[0] = "";     
+      
+      $("#sortableList").each(function(index)
+      {
+         alert('index new '+index); 
+      });
       
       //Loop through for each sMenucardCategory
       $("#sortableList").each(function(index)
       {
-          //Aray for one list
-          var aList = new Array();
+          alert('index sortableList '+index);
+          //Aray for one list, as and assoc array
+          var aList = {};
           //sMenucardCategoryName
-          aList[0] = $(this).children(":first").html();
+          aList['sMenucardCategoryName'] = $(this).children(":first").html();
           //iId
-          aList[1] = $(this).attr('id');          
+          aList['iId'] = $(this).attr('id');          
           //sMenucardCategoryDescription
-          aList[2] = "Beskrivelse"; 
+          aList['sMenucardCategoryDescription'] = $(this).children().eq(1).html(); 
           
           //Id used in the next jQuery each loop
-          var iId = $(this).attr('id');
+          //var iId = $(this).attr('id');
           
-          index = index+2;
+          //index = index+2;
           
           $(this).children("ul").each(function()
           {             
-              $(this).children(":not(.AddLiButton)").each(function()
+              $(this).children(":not(.AddLiButton)").each(function(index)
               {
                   
                   //Loop through .dishwrapper for each of the sMenucardItems
                   $(this).children().each(function()
                   {
-                      index = index+1;
+                      //index = index+1;
                       
                       var sMenucardItemNumber = $(this).children(".DishNumber").children("h1").html();                     
                       var sMenucardItemDesc = $(this).children(".DishText").children(".DishDescription").children("h2").html(); 
                       var sMenucardItemName = $(this).children(".DishText").children(".DishHeadline").children("h1").html();
                       var sMenucardItemPrice = $(this).children(".DishPrice").children(":nth-child(2)").html();
                     
-                      //Array for li element
-                      var aLiElement = new Array();
+                      //Array for li element, as assoc array
+                      var aLiElement = {};
                       //sTitle
-                      aLiElement[0] = sMenucardItemName;
+                      aLiElement['sTitle'] = sMenucardItemName;
                       //iId
-                      aLiElement[1] = "Id";
+                      aLiElement['iId'] = "Id";
                       //sDescription
-                      aLiElement[2] = sMenucardItemDesc;
+                      aLiElement['sDescription'] = sMenucardItemDesc;
                       //iPrice
-                      aLiElement[3] = sMenucardItemPrice;
+                      aLiElement['iPrice'] = sMenucardItemPrice;
                       //iNumber
-                      aLiElement[4] = sMenucardItemNumber;
+                      aLiElement['iNumber'] = sMenucardItemNumber;
                       //Put li array into array for one list
                       aList[index] = aLiElement;
 
@@ -421,7 +427,7 @@
           });
                   
           //iLastMenucardItemIndex
-          aList[iLastIndexManucardItem] = iLastMenucardItemIndex;
+          aList['iLastMenucardItemIndex'] = iLastMenucardItemIndex;
           globalIndex = globalIndex+1;
           //Put aList array into aAllLists array on aLists wich is fiels 0
           aAllLists[globalIndex] = aList;
@@ -430,18 +436,35 @@
           
       });
       
-      globalIndex++;
+
       //sMenucard name
-      aAllLists[globalIndex] = "Menukort navn";
+      aAllLists['sMenucardname'] = "Menukort navn";
       //sMenucard description
-      globalIndex++;
-      aAllLists[globalIndex] = "Menukort beskrivelse";
-      globalIndex++;
-      aAllLists[globalIndex] = "Menucard ID";
+      aAllLists['sMenucarddescription'] = "Menukort beskrivelse";
+      aAllLists['iMenucardIdHashed'] = "Menucard ID";
       //iNumberofMenucardCategories
-      globalIndex++;
-      aAllLists[globalIndex] = iLastIndexofMenucardCategories;
+      aAllLists['iNumberofMenucardCategories'] = iLastIndexofMenucardCategories;
       
+      //restuarantInfo, Get menucardinfo
+      //Loop through for each sMenucardCategory
+      $("#restuarantInfo .InfoSlide > .InfoSlidebox").each(function(index)
+      {   
+          //alert($(this).html());
+          //Getting opening hours
+          
+      });
+      var aAllMenucardInfo = {};
+      $("#restuarantInfo .InfoSlide").each(function(index)
+      {
+          if(index > 0){
+            var aMenucardInfo = {};
+            aMenucardInfo['headline'] = $(this).find('h1').html();;
+            aMenucardInfo['text'] = $(this).find('h2').html();;
+            aAllMenucardInfo[index] = aMenucardInfo;
+            //alert('headline: '+headline+' text '+text);
+          }
+      }); 
+      aAllLists['menucardinfo'] = aAllMenucardInfo;
       var sJSONAllLists = JSON.stringify(aAllLists);
       
        $.ajax({
@@ -453,7 +476,7 @@
        {
            console.log('result: '+result.result);
        });
-      
+       
       
   }
   
