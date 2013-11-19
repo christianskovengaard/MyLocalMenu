@@ -204,9 +204,64 @@ class MenucardController
         
     }
     
-    public function DeleteMenucard ()
+    public function DeactivateMenucard ()
     {
+       $aMenucard = array(
+                'sFunction' => 'DeactivateMenucard',
+                'result' => false
+            );
         
+        if(isset($_GET['iMenucardIdHashed'])) //API call http://localhost:8888/MyLocalMenu/API/api.php?sFunction=DeactivateMenucard&iMenucardIdHashed=$2y$12$03127701752701037b018OLdzfJhmmQVUwBNlzRfr8G4ajnfBR1MO
+        {
+            $aMenucard['result'] = true;
+            $iMenucardIdHashed = $_GET['iMenucardIdHashed'];
+            
+            $sQuery = $this->conPDO->prepare("UPDATE `menucard` SET iMenucardActive = '0'
+                                               WHERE `iMenucardIdHashed` = :iMenucardIdHashed
+                                               AND `iMenucardActive` = '1' LIMIT 1");
+            $sQuery->bindValue(':iMenucardIdHashed', $iMenucardIdHashed);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            
+            return $aMenucard;
+            
+        }
+    }
+    
+    public function ActivateMenucard ()
+    {
+       $aMenucard = array(
+                'sFunction' => 'ActivateMenucard',
+                'result' => false
+            );
+        
+        if(isset($_GET['iMenucardIdHashed'])) //API call http://localhost:8888/MyLocalMenu/API/api.php?sFunction=ActivateMenucard&iMenucardIdHashed=$2y$12$03127701752701037b018OLdzfJhmmQVUwBNlzRfr8G4ajnfBR1MO
+        {
+            $aMenucard['result'] = true;
+            $iMenucardIdHashed = $_GET['iMenucardIdHashed'];
+            
+            $sQuery = $this->conPDO->prepare("UPDATE `menucard` SET iMenucardActive = '1'
+                                               WHERE `iMenucardIdHashed` = :iMenucardIdHashed
+                                               AND `iMenucardActive` = '0' LIMIT 1");
+            $sQuery->bindValue(':iMenucardIdHashed', $iMenucardIdHashed);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            
+            return $aMenucard;
+            
+        }
     }
     
     public function GetMenucard ()

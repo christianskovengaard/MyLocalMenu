@@ -59,6 +59,40 @@ if(isset($_GET['sFunction']))
         break;
         
         
+        case "DeactivateMenucard":
+            require_once '../Controllers/MenucardController.php';
+            $oMenucardController = new MenuCardController();
+            $result = $oMenucardController->DeactivateMenucard();
+            if($result['result'] == false)
+            {
+                $sResult = '{"sFunction":"DeactivateMenucard","result":"False"}';
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
+        
+        
+        case "ActivateMenucard":
+            require_once '../Controllers/MenucardController.php';
+            $oMenucardController = new MenuCardController();
+            $result = $oMenucardController->ActivateMenucard();
+            if($result['result'] == false)
+            {
+                $sResult = '{"sFunction":"ActivateMenucard","result":"False"}';
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
+        
+        
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
                 echo $result;
