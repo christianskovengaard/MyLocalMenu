@@ -477,7 +477,7 @@
            console.log('result: '+result.result);
        });
        
-      
+      //TODO: Chek that it get all categories and all items
   }
   
   /* Sortable list functions end */

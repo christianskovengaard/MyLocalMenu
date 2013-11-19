@@ -39,6 +39,8 @@ class MenucardController
         if(isset($_GET['sJSONMenucard']))
         {
             
+            //TODO: Change the handeling to handle the assoc array from ajaxcall
+            
             //Get the iCompanyId based user logged in
             //$iCompanyId = $_SESSION['iCompanyId'];
             $iCompanyId = '1';
