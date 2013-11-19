@@ -47,7 +47,7 @@ class MenucardController
             $sJSONMenucard = $_GET['sJSONMenucard'];
             //Convert the JSON string into an array
             $aJSONMenucard = json_decode($sJSONMenucard);
-        
+            var_dump($aJSONMenucard);
             
             //Get MenucardID
             end($aJSONMenucard);
