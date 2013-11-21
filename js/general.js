@@ -445,7 +445,7 @@
             aMenucardInfo['headline'] = $(this).find('h1').html();;
             aMenucardInfo['text'] = $(this).find('h2').html();;
             aAllMenucardInfo[index] = aMenucardInfo;
-            //alert('headline: '+headline+' text '+text);
+            aAllMenucardInfo['iLastIndexOfmenucardinfo'] = index;
           }
       }); 
       aAllLists['menucardinfo'] = aAllMenucardInfo;
