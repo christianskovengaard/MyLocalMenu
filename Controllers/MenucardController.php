@@ -49,14 +49,26 @@ class MenucardController
             //$iCompanyId = $_SESSION['iCompanyId'];
             $iCompanyId = '1';
             
-            //TODO: Get the $iRestuarentInfoId based on the $iCompanyId
-            $iRestuarentInfoId = '1';
+            //Get the $iRestuarentInfoId based on the $iCompanyId
+            $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo WHERE iFK_iCompanyInfoId = :iCompanyId LIMIT 1");
+                
+            $sQuery->bindValue(':iCompanyId', $iCompanyId);
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $iRestuarentInfoId = $aResult['iRestuarentInfoId'];
+            
+            try
+            {
+                $sQuery->execute();
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
             
             //Get the JSON string
             $sJSONMenucard = $_GET['sJSONMenucard'];
             //Convert the JSON string into an array
             $aJSONMenucard = json_decode($sJSONMenucard);
-            var_dump($aJSONMenucard);
             
             //Get MenucardIdHashed
             $MenucardIdHashed = $aJSONMenucard->iMenucardIdHashed;
