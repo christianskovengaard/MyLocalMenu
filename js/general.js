@@ -359,23 +359,16 @@
   function SaveSortableLists()
   {
       var iLastMenucardItemIndex = '';
-      var globalIndex = '';
       var iLastIndexofMenucardCategories = '';
-      var iLastIndexManucardItem = '';
       //Array for all the lists, as and assoc array
       var aAllLists = {};
       //aLists
-      aAllLists[0] = "";     
+      //aAllLists['allMenuCategories'] = "";     
       
-      $("#sortableList").each(function(index)
-      {
-         alert('index new '+index); 
-      });
       
       //Loop through for each sMenucardCategory
-      $("#sortableList").each(function(index)
+      $(".sortableList").each(function(categoryIndex)
       {
-          alert('index sortableList '+index);
           //Aray for one list, as and assoc array
           var aList = {};
           //sMenucardCategoryName
@@ -385,11 +378,6 @@
           //sMenucardCategoryDescription
           aList['sMenucardCategoryDescription'] = $(this).children().eq(1).html(); 
           
-          //Id used in the next jQuery each loop
-          //var iId = $(this).attr('id');
-          
-          //index = index+2;
-          
           $(this).children("ul").each(function()
           {             
               $(this).children(":not(.AddLiButton)").each(function(index)
@@ -397,9 +385,7 @@
                   
                   //Loop through .dishwrapper for each of the sMenucardItems
                   $(this).children().each(function()
-                  {
-                      //index = index+1;
-                      
+                  {                      
                       var sMenucardItemNumber = $(this).children(".DishNumber").children("h1").html();                     
                       var sMenucardItemDesc = $(this).children(".DishText").children(".DishDescription").children("h2").html(); 
                       var sMenucardItemName = $(this).children(".DishText").children(".DishHeadline").children("h1").html();
@@ -420,7 +406,6 @@
                       //Put li array into array for one list
                       aList[index] = aLiElement;
 
-                      iLastIndexManucardItem = index+1;
                       iLastMenucardItemIndex = index;
                   });
               });
@@ -428,22 +413,21 @@
                   
           //iLastMenucardItemIndex
           aList['iLastMenucardItemIndex'] = iLastMenucardItemIndex;
-          globalIndex = globalIndex+1;
           //Put aList array into aAllLists array on aLists wich is fiels 0
-          aAllLists[globalIndex] = aList;
-          iLastIndexofMenucardCategories = globalIndex;
+          aAllLists[categoryIndex] = aList;
+          iLastIndexofMenucardCategories = categoryIndex;
           
           
       });
       
 
       //sMenucard name
-      aAllLists['sMenucardname'] = "Menukort navn";
+      aAllLists['sMenucardname'] = "Menukort navn HARDCODED";
       //sMenucard description
-      aAllLists['sMenucarddescription'] = "Menukort beskrivelse";
-      aAllLists['iMenucardIdHashed'] = "Menucard ID";
+      aAllLists['sMenucarddescription'] = "Menukort beskrivelse HARDCODED";
+      aAllLists['iMenucardIdHashed'] = "Menucard ID HARDCODED";
       //iNumberofMenucardCategories
-      aAllLists['iNumberofMenucardCategories'] = iLastIndexofMenucardCategories;
+      aAllLists['iLastIndexofMenucardCategories'] = iLastIndexofMenucardCategories;
       
       //restuarantInfo, Get menucardinfo
       //Loop through for each sMenucardCategory
