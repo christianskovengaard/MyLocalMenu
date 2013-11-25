@@ -43,8 +43,6 @@ class MenucardController
         if(isset($_GET['sJSONMenucard']))
         {
             
-            //TODO: Change the handeling to handle the assoc array from ajaxcall
-            
             //Get the iCompanyId based user logged in
             //$iCompanyId = $_SESSION['iCompanyId'];
             $iCompanyId = '1';
@@ -469,7 +467,7 @@ class MenucardController
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);
             
-            var_dump($aMenucard);
+            //var_dump($aMenucard);
             
             return $aMenucard;
             
@@ -657,7 +655,7 @@ class MenucardController
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);
             
             
-            var_dump($aMenucard);
+            //var_dump($aMenucard);
             return $aMenucard;
             
             
