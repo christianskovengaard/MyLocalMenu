@@ -30,11 +30,11 @@
                          <h6>Menukort på mobile</h6>
                     </div>
                 </div>
-                <div onclick="HideShowSwitch('Login','LoginBox');" class="button01">Log ind</div>
+                <div onclick="HideShowSwitch('Login');" class="button01">Log ind</div>
                 <div id="LoginBox" class="inputFrame">
                     <input id="LoginEmail" type="text" placeholder="Email">
                     <input type="Password" placeholder="Kodeord">
-                    <div onclick="HideShowSwitch('Login','LoginBox');" class="button02">Log ind</div>
+                    <div onclick="HideShowSwitch('Login');" class="button02">Log ind</div>
                 </div>
             </div>
         </div> 
