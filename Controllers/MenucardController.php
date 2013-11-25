@@ -71,7 +71,7 @@ class MenucardController
             $aJSONMenucard = json_decode($sJSONMenucard);
             
             //Get MenucardIdHashed
-            $MenucardIdHashed = $aJSONMenucard->iMenucardIdHashed;
+            //$MenucardIdHashed = $aJSONMenucard->iMenucardIdHashed;
             //Get MenucardDescription
             $sMenucardDescription = $aJSONMenucard->sMenucarddescription;
             //Get MenucardName
@@ -99,9 +99,9 @@ class MenucardController
                 
                 //Get the last inserted id
                 $iMenucardId = $this->conPDO->lastInsertId();
-                //echo "last id: ".$iMenucardId;
+
                 $iMenucardIdHashed = $this->oBcrypt->genHash($iMenucardId);
-                //echo "hashed: ".$iMenucardIdHashed;
+
                 $sQuery = $this->conPDO->prepare("UPDATE menucard SET iMenucardIdHashed = ? WHERE iMenucardId = ? LIMIT 1");
                 
                 $sQuery->bindValue(1, $iMenucardIdHashed);
