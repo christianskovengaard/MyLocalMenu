@@ -22,7 +22,7 @@
       $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
       $('.DishEditWrapper').hide();
       $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"></ul>');
-      $('#'+id).append('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuList(this);"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuListHeadlineToHtml(\''+id+'\');">✓ Gem Menupunkt</a></li>');
+      $('#'+id).append('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuList(this);"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuListHeadlineToHtml(\''+id+'\');">✓ Updater</a></li>');
 //      $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"><li onclick="CreateNewLiInSortableList(\''+id+'\')" class="AddLiButton non-dragable"><h5>+</h5></li></ul>');
 //      $('.newplaceholder').append(' <input type="button" value="Slet liste '+id+'" onclick="DeleteSortableList(\''+id+'\')">');
       $('.sortablediv:last').removeClass('newplaceholder'); 
@@ -59,7 +59,7 @@
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
     $('.newsortabledivbuffer').css('display', 'inline-block');
-    $('#'+id+' .AddLiButton').before('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Gem Menupunkt</a></li>');
+    $('#'+id+' .AddLiButton').before('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Updater</a></li>');
   }
   
   function CreateNewDivresturanatInfo() {
@@ -73,7 +73,7 @@
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
     $('.newsortabledivbuffer').css('display', 'inline-block');
-    $('.AddLiButton.info').before('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveInfoToHtml();">✓ Gem Info</a></div>');
+    $('.AddLiButton.info').before('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveInfoToHtml();">✓ Updater</a></div>');
     $('.EditDish').hide();
       
   }
@@ -310,7 +310,7 @@
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
     $('.newsortabledivbuffer').css('display', 'inline-block');
-    dish.closest('.DishWrapper').after('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Gem Menupunkt</a></li>');
+    dish.closest('.DishWrapper').after('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Updater</a></li>');
 }
   
   function EditListHeadline(id){
@@ -333,7 +333,7 @@
           $('.AddLiButton').hide();
           $('.newsortablediv').hide();
           $('.newsortabledivbuffer').css('display', 'inline-block');
-          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(this);">✓ Gem overskrift</a></div>');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(this);">✓ Updater</a></div>');
 }
 
   function EditInfo(id){
@@ -353,11 +353,18 @@
           $('.AddLiButton').hide();
           $('.newsortablediv').hide();
           $('.newsortabledivbuffer').css('display', 'inline-block');
-          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedInfoToHtml(this);">✓ Gem overskrift</a></div>');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedInfoToHtml(this);">✓ Updater</a></div>');
 }
 
   function SaveSortableLists()
   {
+      $('#EditMenuButton').text('');
+      $('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\',\'0\');"><img src="img/edit.png">Menukort</div>');
+                   
+      $(".DishEditWrapper").slideUp(100);
+      $(".AddLiButton").slideUp(100);
+      $(".newsortablediv").slideUp(100);
+      
       var iLastMenucardItemIndex = '';
       var iLastIndexofMenucardCategories = '';
       //Array for all the lists, as and assoc array
@@ -474,9 +481,13 @@
             $("#"+sObjectId).animate({height: 'toggle'},200);
             break;
         case 'HideSortableEdits':
-            $(".DishEditWrapper").animate({height: 'toggle'},100);
-            $(".AddLiButton").animate({top: 'toggle'},100);
-            $(".newsortablediv").animate({width: 'toggle'},200);
+            
+            $('#EditMenuButton').text('');
+            $('#EditMenuButton').append('<div class="buttonEdit Save" onclick="SaveSortableLists();">✓ Gem menukort</div>')
+            $(".DishEditWrapper").slideDown(100);
+            $(".AddLiButton").slideDown(100);
+            $(".newsortablediv").slideDown(100);
+            
             break;
         case 'Login':
             $("#"+sObjectId).animate({width: 'toggle'},100);

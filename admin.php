@@ -53,7 +53,7 @@
                 <div class="Restaurant OpeningHours"><h4><b>Åbningstider:</b></h4><h4>I dag: 11:00 - 22.00</h4><h5>åben</h5></div>
                 <div class="Restaurant Delivery"><h4><b>Udbringning:</b></h4><h4>I dag: 16:00 - 21:00</h4><h5>ikke mulig</h5></div>
                 <div class="buttonEdit top" onclick="HideShowSwitch('PopUpWindow','EditRestaurantInfo');"><img src="img/edit.png">Resturent info</div>
-                <div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Menukort</div>
+                <div id="EditMenuButton"><div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Menukort</div></div>
 
              </div>          
         </div>
@@ -62,7 +62,7 @@
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
                     <div>                        
-                        <input type="button" value="Gem lister" onclick="SaveSortableLists();"/>
+<!--                        <input type="button" value="Gem lister" onclick="SaveSortableLists();"/>-->
                         <!--<div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Rediger Menukort</div>-->
                     </div>
                     <div class="sortablediv" id='restuarantInfo'>
