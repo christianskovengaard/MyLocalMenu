@@ -48,8 +48,10 @@
                     <h2 class="Info01Txt03">Alle ændringer på menukorten kommer med det sammen ud på mobilen</h2>  -->
                 </div>
                 <div class="inputFrame">
-                    <input type="text" placeholder="Find Menukort">
-                    <div onclick="" class="FindMenuImg"><img src="img/search.JPG"></div>
+                    <form method="GET" action="viewmenucard.php" id="FindMenucardForm">
+                        <input type="text" name="iMenucardSerialNumber" placeholder="Find Menukort">                   
+                        <div onclick="SubmitForm('FindMenucardForm')" class="FindMenuImg"><img src="img/search.JPG"></div>
+                    </form>
                 </div>
             </div>
         </div> 

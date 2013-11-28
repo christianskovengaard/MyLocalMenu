@@ -20,8 +20,8 @@
     </head>
     <body>
         <div class="header">
-            <div class="wrapper">
-                <div class="logoWrapper">                        
+            <div class="wrapper">               
+                <div onclick="PageChange('index');" class="logoWrapper">  
                     <img src="img/logo.png">
                     <div class="logoText">
                          <h5>MyLocalMenu</h5>
@@ -30,11 +30,10 @@
                     <div class="appGetInfo">
                         <h6>Hent MyLocalMenu appen nu</h6>
                         <img src="img/getAppleApp.png"><img src="img/getAndroidApp.png"><img src="img/getWindowsApp.png">
-                    </div>
+                    </div>                  
                 </div>
             </div>            
         </div>
-        <input type="button" onclick="GetMenucard(false);" value="HentMenukort"/>
         <div class="RestaurantInfo">         
         </div>
         
@@ -49,5 +48,10 @@
         </div>
         <div id="mustache_template">           
         </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                GetMenucard(false);
+            });
+        </script>
     </body>
 </html>

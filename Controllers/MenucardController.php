@@ -554,11 +554,19 @@ class MenucardController
                die($e->getMessage()); 
             }
             $i = 0;
+            $TodayDayname = $today = date("l");
+            $TodayDaynameDanish = $this->GetDanishDayname($TodayDayname);
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
                 $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
-                $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = $row['iTimeFrom'];
-                $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = $row['iTimeTo'];
+                $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
+                $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
+                
+                //Check for Openinghours hour today               
+                if($row['sDayName'] == $TodayDaynameDanish)
+                {                  
+                    $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                }
                 $i++;
             }
             
@@ -584,8 +592,14 @@ class MenucardController
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
                 $aMenucard['aMenucardTakeAwayHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
-                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeFrom'] = $row['iTimeFrom'];
-                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeTo'] = $row['iTimeTo'];
+                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
+                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
+                
+                //Check for TakeAway hour today               
+                if($row['sDayName'] == $TodayDaynameDanish)
+                {                  
+                    $aMenucard['sRestuarentTakeAwayHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                }
                 $i++;
             }
            
@@ -655,6 +669,9 @@ class MenucardController
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);
             
             
+            
+            
+            
             //var_dump($aMenucard);
             return $aMenucard;
             
@@ -671,6 +688,19 @@ class MenucardController
     public function AddMenucardInfo () 
     {
         //TODO: Insert menucard info into database
-    }  
+    }
+    
+    
+    private function GetDanishDayname($sDayname)
+    {
+        if($sDayname == 'Monday') return 'Mandag';
+        if($sDayname == 'Tuesday') return 'Tirsdag';
+        if($sDayname == 'Wednesday') return 'Onsdag';
+        if($sDayname == 'Thursday') return 'Torsdag';
+        if($sDayname == 'Friday') return 'Fredag';
+        if($sDayname == 'Saturday') return 'Lørdag';
+        if($sDayname == 'Sunday') return 'Søndag';
+        
+    }
 }
 ?>
