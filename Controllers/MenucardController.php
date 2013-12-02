@@ -78,7 +78,6 @@ class MenucardController
             //Set the MenucardClass
             $this->oMenucard->SetMenucard($sMenucardName, $sMenucardDescription);
             
-            //TODO: Inssert Menucard into database and get the FK for the menucard, and use the iCompanyId to which user created the menucard. Remember to create iMenuCardIdHashed with bCrypt
             //Get user from database based on the iUserId remember to use PDO
             $sQuery = $this->conPDO->prepare("INSERT INTO menucard (sMenucardName,iFK_iRestuarentInfoId) VALUES (?,?)");
             
@@ -467,8 +466,7 @@ class MenucardController
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);
             
-            //var_dump($aMenucard);
-            
+            //var_dump($aMenucard);           
             return $aMenucard;
             
         }else{
@@ -480,7 +478,15 @@ class MenucardController
     
     public function GetMenucardWithSerialNumber ()
     {
+        //Allow all, NOT SAFE
+        header('Access-Control-Allow-Origin: *');  
         
+        /* Only allow trusted, MUCH more safe
+        header('Access-Control-Allow-Origin: spjæl.dk');
+        header('Access-Control-Allow-Origin: xn--spjl-xoa.sk');
+        header('Access-Control-Allow-Origin: www.spjæl.dk');
+        header('Access-Control-Allow-Origin: www.xn--spjl-xoa.dk');
+        */
         $aMenucard = array(
                 'sFunction' => 'GetMenucardWithSerialNumber',
                 'result' => false
@@ -666,17 +672,10 @@ class MenucardController
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $aMenucard['sRestuarentName'] = utf8_encode($aResult['sRestuarentInfoName']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
-            $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);
-            
-            
-            
-            
+            $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
             
             //var_dump($aMenucard);
             return $aMenucard;
-            
-            
-   
         }
         else
         {
@@ -699,8 +698,7 @@ class MenucardController
         if($sDayname == 'Thursday') return 'Torsdag';
         if($sDayname == 'Friday') return 'Fredag';
         if($sDayname == 'Saturday') return 'Lørdag';
-        if($sDayname == 'Sunday') return 'Søndag';
-        
+        if($sDayname == 'Sunday') return 'Søndag';       
     }
 }
 ?>
