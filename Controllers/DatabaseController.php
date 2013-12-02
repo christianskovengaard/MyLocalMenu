@@ -7,7 +7,7 @@ class DatabaseController
     
     function __construct() 
     {
-        require '../Classes/DatabaseClass.php';
+        require './Classes/DatabaseClass.php';
         $this->oDatabase = new Database();
     }
     

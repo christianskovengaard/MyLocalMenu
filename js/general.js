@@ -468,13 +468,14 @@
   
   /* GetMenucard function */
   
-  function getUrlVars() {
+  function getUrlVars() 
+  {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
         vars[key] = value;
     });
     return vars;
-}
+  }
 
    
   function GetMenucard(isAdmin)
@@ -489,6 +490,7 @@
         if(isAdmin === true)
         {
             //Use admin.php
+            //TODO: Get data show with mustache templates
             
         }else{
 
@@ -497,9 +499,6 @@
 
             //Use viewmenucard.php
             var iMenucardSerialNumber = getUrlVars()["iMenucardSerialNumber"];
-
-            //TESTTING
-             //iMenucardSerialNumber = 'AA0001';
 
             //Get data            
             $.ajax({
