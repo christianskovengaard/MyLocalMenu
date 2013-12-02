@@ -1,0 +1,26 @@
+<script id="menucardinfo_viewmenucard" type="text/template"> <!--TODO: Change template to handle opening hours and takeaway hours -->
+    <h3>Info</h3> 
+    <div class="InfoSlide top">
+        <div class="InfoSlidebox">
+            <h3>Åbningstider</h3>
+            {{#openinghours}}
+            <h4>{{sDayName}} {{iTimeFrom}}-{{iTimeTo}}</h4>
+            {{/openinghours}}
+        </div>
+        <div class="InfoSlidebox">
+            <h3>Udbrigning</h3>
+            {{#takeawayhours}}
+            <h4>{{sDayName}} {{iTimeFrom}}-{{iTimeTo}}</h4>
+            {{/takeawayhours}}
+        </div>
+        <div class="InfoSlidebox">
+            <h3>Smileys</h3>
+        </div>
+    </div>
+    {{#info}}
+    <div class="InfoSlide">   
+        <h1>{{headline}}</h1>
+        <h2>{{text}}</h2>
+    </div>
+    {{/info}}
+</script>

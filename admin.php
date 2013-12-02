@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimun-scale=1.0, initial-scale=1.0" />
         <title>My Local Menu</title>
         <link rel="stylesheet" type="text/css" href="css/general_admin.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 500px)" href="css/general_admin_small.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:501px) and (max-width: 850px)" href="css/general_admin_medium.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 800px)" href="css/general_admin_small.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:801px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
                 
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,7 +15,9 @@
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="js/general.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/jquery.autogrow.js"></script>
         
+    
     </head>
     <body>
         <?php
@@ -30,6 +32,10 @@
                          <h5>MyLocalMenu</h5>
                          <h6>Menukort på mobile</h6>
                     </div>
+                    <div class="appGetInfo">
+                        <h6>Hent MyLocalMenu appen nu</h6>
+                        <img src="img/getAppleApp.png"><img src="img/getAndroidApp.png"><img src="img/getWindowsApp.png">
+                    </div>
                 </div>
             </div>            
         </div>
@@ -41,12 +47,14 @@
                     <h2>Rottiserie og Take away</h2>            
                 </div>
                 <div class="Restaurant info">
-                    <div class="RestaurantPhone"><h2>☎ 33 23 21 40</h2></div>
-                    <div class="RestaurantAdresse"><h4>Oehlenslægersgade 50, 1663 Vesterbro</h4></div>
+                    <div class="RestaurantPhone"><h2><img src="img/phone.png">33 23 21 40</h2></div>
+                    <div class="RestaurantAdresse"><h4><img src="img/ic_pin.png">Oehlenslægersgade 50, 1663 Vesterbro</h4></div>
                 </div>        
-                <div class="Restaurant OpeningHours"><h4>Åbningstider:</h4><h4>Man-Fre: 11:00 - 22.00</h4><h4>Lør-Søn: 11:00 - 22.00</h4></div>
-                <div class="Restaurant Delivery"><h4>Udbringning: kl 16:00 - 21:00</h4><h4>Vesterbro - Enghave 35,- kr</h4><h4>Sydhavnen - Frederiksberg 45,- kr</h4></div>
-                <div class="buttonEdit" onclick="HideShowSwitch('PopUpWindow','EditRestaurantInfo');">Rediger</div>
+                <div class="Restaurant OpeningHours"><h4><b>Åbningstider:</b></h4><h4>I dag: 11:00 - 22.00</h4><h5>åben</h5></div>
+                <div class="Restaurant Delivery"><h4><b>Udbringning:</b></h4><h4>I dag: 16:00 - 21:00</h4><h5>ikke mulig</h5></div>
+                <div class="buttonEdit top" onclick="HideShowSwitch('PopUpWindow','EditRestaurantInfo');"><img src="img/edit.png">Resturent info</div>
+                <div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Menukort</div>
+
              </div>          
         </div>
         
@@ -54,16 +62,58 @@
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
                     <div>                        
-                        <input type="button" value="Gem lister" onclick="SaveSortableLists();">
-                        <div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');">Rediger</div>
+                        <input type="button" value="Gem lister" onclick="SaveSortableLists();"/>
+                        <!--<div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Rediger Menukort</div>-->
                     </div>
-                    <div class="sortablediv">
-                        <h3>King of chicken</h3>
-                        <div Class="InfoSlide"><h1>Vi laver firmaaftaler og mad til receptioner</h1><h2>Spydstegte franske kyllinger i ægte rotisserie-over, salatbar, sandwich, bagte kartofter, bigger fries, flødekartofler, biggerfries, flødekartofler, ovnbagte kartofler i kyllingefond, aioli, coleslaw, tzatziki, hjemmelavede saucer, marinader, dressinger</h2></div>
-                        <div Class="InfoSlide"><h1>Take-away røtisserie</h1><h2>Vi får leveret friske franske kyllinger. Disse bliver marineret i hjemmelavet lage og langtidsstegte i røstisserie-ovne, hvor hovedparten af fedtet steges væk. Der er altså tale om et produkt, som er lækkert og med saftig smag. Vi er leveringdygtige til enhver lejlighed, bl.a. firmaordninger, receptioner og catering. Står De og mangler gode forslag til Deres fest, så kom ind og lad os lave et godt tilbud til Dem.</h2></div>
+                    <div class="sortablediv" id='restuarantInfo'>
+                        <h3>Info</h3>
+                        <div class="InfoSlide top">
+                            <div class="InfoSlidebox">
+                                <h3>Åbningstider</h3>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                            </div>
+                            <div class="InfoSlidebox">
+                                <h3>Udbrigning</h3>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                                <h4>man: 09:00-18:00</h4>
+                            </div>
+                            <div class="InfoSlidebox">
+                                <h3>Smileys</h3>
+                            </div>
+                        </div>
+                        <div Class="InfoSlide"><h1>Vi laver firmaaftaler og mad til receptioner</h1><h2>Spydstegte franske kyllinger i ægte rotisserie-over, salatbar, sandwich, bagte kartofter, bigger fries, flødekartofler, biggerfries, flødekartofler, ovnbagte kartofler i kyllingefond, aioli, coleslaw, tzatziki, hjemmelavede saucer, marinader, dressinger</h2>
+                            <div class="DishEditWrapper">
+                                <div class="EditDish" onclick="EditInfo(this)"><img src="img/edit.png"></div>
+                                <div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div>
+                            </div>
+                        </div>
+                            
+                        <div Class="InfoSlide"><h1>Take-away røtisserie</h1><h2>Vi får leveret friske franske kyllinger. Disse bliver marineret i hjemmelavet lage og langtidsstegte i røstisserie-ovne, hvor hovedparten af fedtet steges væk. Der er altså tale om et produkt, som er lækkert og med saftig smag. Vi er leveringdygtige til enhver lejlighed, bl.a. firmaordninger, receptioner og catering. Står De og mangler gode forslag til Deres fest, så kom ind og lad os lave et godt tilbud til Dem.</h2>
+                            <div class="DishEditWrapper">
+                                <div class="EditDish" onclick="EditInfo(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div>
+                            </div>
+                        </div>
+                        <div Class="AddLiButton info" onclick="CreateNewDivresturanatInfo()"><h5>+</h5></div>
                     </div>
-                    <div class="sortablediv">
+                    <div class="sortablediv sortableList">
                         <h3>Liste 1</h3>
+                        <h4>Beskrivelse</h4>
+                        <div class="DishEditWrapper">
+                            <div class="moveDish"><img src="img/moveIcon.png"></div>
+                            <div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div>
+                            <div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div>
+                        </div>
                         <ul id="sortable1" class="connectedSortable">                        
                             
                             <li class="sortableLi"> 
@@ -76,13 +126,14 @@
                                     <div class="DishPrice"><h2>...</h2><h2>65</h2><h2>kr</h2></div>     
                                     
                                     <div class="DishEditWrapper">
-                                        <div class="moveDish" onclick="DeleteLiSortable(this);"><img src="img/moveIcon.png"></div>
+                                        <div class="moveDish"><img src="img/moveIcon.png"></div>
+                                        <div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div>
                                         <div class="DeleteDish" onclick="DeleteLiSortable(this);"><p>╳</p></div>
                                     </div>                                    
                                 </div>
                             </li>                             
                             
-                            <li onclick="DeleteLiSortable(this);" class="sortableLi">
+                            <li class="sortableLi">
                                <div class="DishWrapper">
                                     <div class="DishNumber"><h1>2</h1></div>
                                     <div class="DishText">
@@ -92,17 +143,19 @@
                                     <div class="DishPrice"><h2>...</h2><h2>105</h2><h2>kr</h2></div>
                                     
                                     <div class="DishEditWrapper">
-                                        <div class="moveDish" onclick="DeleteLiSortable(this);"><img src="img/moveIcon.png"></div>
+                                        <div class="moveDish"><img src="img/moveIcon.png"></div>
+                                        <div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div>
                                         <div class="DeleteDish" onclick="DeleteLiSortable(this);"><p>╳</p></div>
                                     </div> 
                                 </div>
                             </li>                            
                           <li onclick="CreateNewLiInSortableList('sortable1')" class="AddLiButton non-dragable">
-                             +
+                             <h5>+</h5>
                           </li>
                         </ul>
                     </div>
                     <div onclick="CreateNewSortableList();" class="newsortablediv"><h3>+</h3></div>
+                    <div class="newsortabledivbuffer"></div>     
                 </div>
                 
             </div> 

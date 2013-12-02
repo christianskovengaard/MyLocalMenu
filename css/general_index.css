@@ -1,7 +1,7 @@
 /* 
     Document   : general
     Created on : 12-09-2013, 15:13:40
-    Author     : spjael
+    Author     : bejtrup
     Description:
         Purpose of the stylesheet follows.
 */
@@ -15,12 +15,12 @@ body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
 h2, h3, h4, h5, h6, a, div  { 
-    font-family: "Bariol Bold", Arial, "Lucida Grande", sans-serif; 
+    font-family: "Bariol", "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
 h1, p {
-    font-family: "Bariol Light", Arial, "Lucida Grande", sans-serif; 
+    font-family: "Bariol-Light", "Bariol Light", "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
@@ -33,14 +33,17 @@ div { font-size: 22px; }
 
 input { 
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; color:#333; 
-    display: inline-block; font-size: 21px; border: 0px; margin: 0 10px 0 0; padding: 5px 10px; vertical-align: middle; outline: none; }
-.inputFrame { display: table; background: rgba(255,255,255,0.2); margin: 0 auto; padding: 10px; }
+    display: inline-block; font-size: 21px; height: 35px; border: 0px; margin: 0 10px 0 0; padding: 5px 10px; vertical-align: middle; outline: none; 
+    -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; 
+}
+.inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; z-index: 100;}
 
 .button01 { 
       position: relative;
       display: inline-block; 
       background: #21201f; 
       color: #ddd; 
+      font-size: 0.8em;
       padding: 5px 9px; 
       text-decoration: none; 
       cursor: pointer;
@@ -52,29 +55,72 @@ input {
 /* ::::::::::::::::: SIDE OPDELING :::::::::::::::::::::  */
 
 .header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; }
-.info01 { position: relative; display: table; width: 100%; height: 600px; margin: 0px; background: #7b1544 url(../img/infobg01.png) center no-repeat; text-align: center; }
+.info01 { position: relative; display: table; width: 100%; margin: 0px; padding: 0 0 20px 0; background: #7b1544 url(../img/index_bg_suzhi.png_2) ; text-align: center; }
 .info02 { position: relative; display: table; width: 100%; margin: 0px; background: #21201f url(../img/index_bg_dots.gif) ; color: #ddd; text-align: center; }
 .info03 { position: relative; display: table; width: 100%; margin: 0px; background: #353535; padding: 20px 0;  }
 .footer { position: relative; display: table; width: 100%; height: 80px; margin: 0px; padding: 20px 0; }
 
-.wrapper { position: relative; width: 1200px; height: 100%; margin: 0 auto;}
+.wrapper { position: relative; min-width: 240px; max-width: 1240px; height: 100%; margin: 0 auto; padding: 0 20px;}
 
 /* ::::::::::::::::: ANDET :::::::::::::::::::::  */
 
-.header .inputFrame { position: absolute; right: 0; top:10px; background: #ddd; }
+.header .inputFrame { position: absolute; right: 20px; top:-2px; background: #ddd; z-index: 10; display: none; height: 45px; }
+.header .button01 { position: absolute; right: 20px; top:17px; }
+.header .button02 { display: inline-table; position: relative; cursor: pointer;  }
+.header .button02:hover { color: #999; }
+
+.loginBoxContent { display: inline; }
+.loginBoxContent input { height: 26px; }
 
 .logoWrapper { display: block; width: 200px; margin: 10px 0 0 0; }
 .logoWrapper img { display: inline-table; width: 40px;  vertical-align: middle; }
 .logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
 
 .info01 input { font-size: 28px; }
-.Info01Img { height: 480px; }
-.FindMenuImg { display: inline-block; width: 40px; height: 44px; background: #fff; margin: 0 0 0 -10px; vertical-align: middle; cursor: pointer;}
+.Info01Img { position: relative; max-width: 1058px; margin: 0 auto; z-index: 1; }
+.Info01Img img { width: 100%; z-index: 1;}
+.Info01Img h2 { position: absolute; width: 300px; line-height: 25px; color: #ddd; }
+.Info01Txt01 { left: 80px; top: 300px;}
+.Info01Txt02 { left: 380px; top: 300px;}
+.Info01Txt03 { right: 10px; top: 300px;}
+
+.FindMenuImg { display: inline-block; width: 40px; height: 45px; background: #fff; margin: 0 0 0 -20px; vertical-align: middle; cursor: pointer;}
 .FindMenuImg img { vertical-align: middle; margin: 6px 10px 0 0; }
 .FindMenuImg img:hover { opacity: 0.15; filter:alpha(opacity=15); }
 
 .info02 .inputFrame { background: rgba(255,255,255,0.1); margin-bottom: 10px; }
 .info02 input { background: #4f4f4f; color: #b5b5b5; border-top: 2px #2f2f2f solid; }
 
-.info03 h2,p { color: #b5b5b5; width: 400px; }
+/* ::::::::::::::::: rigister :::::::::::::::::::::  */
 
+.Info03Img { max-width: 1200px; }
+.info03 img { width: 100%; }
+.info03 h2 { color: #b5b5b5; width: 400px; }
+
+.info03 input { display: block; margin-bottom: 3px; }
+.info03 .inputFrame { padding-right: 0; display: inline-table; width: 235px; margin-right: 15px;  white-space:normal; 
+                      -o-transition:.5s; -ms-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s; }
+.info03 .inputFrameWrapper { vertical-align: top; position: relative; display: block; margin: 0 auto; height: 300px; width: 245px; overflow:hidden; white-space:nowrap; 
+                             -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;}
+.info03 .button01 { float: right; margin-right: 10px; }
+.info03 .button01.prev { float: left; background: #aaa; }
+.info03 .button01.Clicked { float: left; }
+.info03 .button02 { display: inline-block; background: #555; color: #fff; font-size: 16px; padding: 3px 5px; margin: 0 0 0 10px; }
+.info03 h5 { margin: 10px 0px; }
+.info03 h3 { text-align: center; }
+.info03 h1 { margin: 4px 0px; }
+.info03 p { color: #333; display: inline-block; font-size: 18px; margin: 0 4px 0 0; line-height: 5px; vertical-align: middle;}
+.info03 select { 
+   display: inline-block; 
+   margin: 0 4px 0 0;    
+   background: #fff;
+   padding: 5px;
+   font-size: 14px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   -webkit-appearance: none;
+   vertical-align: middle;
+}
+.Hours.Opening { vertical-align: middle; }
+.Hours.TakeAway { display: hidden; margin: 0 0 10px 0; }

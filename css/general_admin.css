@@ -14,13 +14,13 @@ body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
 
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
-h1, h2, h3, h4, h5, h6, a, div  { 
-    font-family: "Bariol Bold", Arial, "Lucida Grande", sans-serif; 
+h5, h6  { 
+    font-family:"Bariol", "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
- p {
-    font-family: "Bariol Light", Arial, "Lucida Grande", sans-serif; 
+h1, h2, h3, h4, a, p, div  { 
+    font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
@@ -39,7 +39,7 @@ input {
 }
 .inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; }
 
-.buttonEdit {       
+/*.buttonEdit {       
       position: relative;
       display: inline-block; 
       background: #21201f; 
@@ -49,20 +49,31 @@ input {
       cursor: pointer;
       vertical-align: middle;
       -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
+}*/
+.buttonEdit.top { top: 0px; bottom: auto; }
+.buttonEdit {       
+      position: absolute;
+      bottom: 10px; right: 10px;
+      background: #21201f; 
+      color: #ddd; 
+      padding: 3px 9px 3px 1px; 
+      text-decoration: none; 
+      cursor: pointer;
+      vertical-align: middle;
+      -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; -khtml-border-radius: 4px; 
+      -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
 }
+.buttonEdit img { width: 30px; vertical-align: middle; }
 
-.buttonEdit:hover { background: #fff; color: #333; }
+.buttonEdit:hover { background: #aaa;}
 
 /* ::::::::::::::::: SIDE OPDELING :::::::::::::::::::::  */
 
 
 .header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; }
 .RestaurantInfo { position: relative; display: table; width: 100%; margin: 0px; padding: 10px 0 0 0; background: #ddd; overflow: hidden;}
-.menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px; }
-
-
-.wrapper { position: relative; min-width: 800px; max-width: 100%; height: 100%; margin: 0 auto; padding: 0 20px; }
-
+.menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px;}
+.wrapper { position: relative; max-width: 100%; height: 100%; margin: 0 auto; padding: 0 20px; }
 .EditRestaurantInfo { position: absolute; display: none; width: 100%; top: 200px; }
 .EditRestaurantInfoWrapper { position: relative; width: 500px; margin: 0 auto; background: #999; padding: 20px;}
 
@@ -73,17 +84,25 @@ input {
 .logoWrapper img { display: inline-table; width: 40px;  vertical-align: middle; }
 .logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
 
-.menuWrapperInner { display: table; margin: 0 auto;  }
+.appGetInfo { position: absolute; right: 20px; top: 0px; }
+.appGetInfo img { height: 40px; width: auto; opacity:1; margin: 5px 10px 0 0; cursor: pointer;}
+.appGetInfo img:hover { opacity:0.7; }
+
+.menuWrapperInner { display: table; margin: 0 auto; min-width: 400px;}
 
 /* ::::::::::::::::: Restaurant INFO :::::::::::::::::::::  */
 
 .Restaurant { display: inline-table; margin: 0 25px 0px 0; vertical-align: top; }
 .Restaurant.Name {  }
     .Restaurant.Name h1 { margin: 15px 0 0 0; }
-    .RestaurantPhone {  }
-.Restaurant.OpeningHours {  }
-    .Restaurant.PhoneInfo h2, h4 { margin: 15px 0 0 0; }
-.Restaurant.Delivery {  }
+    .RestaurantPhone { margin: 0; }
+    .RestaurantAdresse { margin: -15px 0 0 0; }
+    .Restaurant.OpeningHours { display: inline-block; margin: 10px 0 0 0; }
+        .Restaurant h4 { margin: 12px 0 0 0; text-align:left; }
+        .Restaurant h5 { margin: 7px 0 0 0; text-align: center; font-size: 15px; background: #ccc; }
+    .Restaurant.Delivery { margin: 10px 10px 0 10px; }
+.RestaurantAdresse img { display: inline-block; width: 15px; vertical-align: middle; margin-right: 2px; }
+.RestaurantPhone img { display: inline-block; width: 15px; vertical-align: top; margin:0 5px 0 0; }
 
 /* ::::::::::::::::: Sortabel :::::::::::::::::::::  */
 
@@ -92,9 +111,9 @@ input {
     position: relative;
     display: table;
     margin: 2px 0; 
-    width: 100%;    
+    width: 100%;
 }
-.sortablediv ul 
+.sortablediv ul
 {
     position: relative; 
     list-style-type: none; 
@@ -102,60 +121,114 @@ input {
     padding: 0; 
 }
 
-.sortablediv 
+.sortablediv
 {
     position: relative;
     display: inline-table;    
     background: #ddd;
     padding: 10px;
     margin: 5px; 
+    vertical-align: top;
 }
+.sortablediv h3 { max-width: 280px; margin: 0; line-height: 25px;}
+.sortablediv h4 { line-height: 20px; margin: 6px 0; line-height: 13px; min-height: 2px; max-width: 350px; }
+.sortablediv h3 input { width: 280px; background:#eee; margin: 0; }
+.sortablediv h4 input { width: 325px; background:#ccc; margin: 0; font-size: 18px; padding: 0px 5px;}
 
 .newsortablediv
 {
     position: relative;
+
     display: inline-block;   
     height: 100px;
     width: 300px;
     padding: 0px 0;
+
+    display: inline-block; 
+    padding: 44px 0;
     margin: 5px;
-    border: 2px dotted #d6d6d6;
-    background: #eee;
+    background: #fff;
     cursor: pointer;
+    width: 365px;
     -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
 }
+
 .newsortablediv h3 { color: #d6d6d6; margin:20px; text-align: center; font-size: 45px; line-height: 0px; }
 .newsortablediv:hover { border: 2px dotted #999; background: #ddd; color: #333; }
 
+.newsortablediv h3 { color: #d6d6d6; margin:0; text-align: center; font-size: 38px; line-height: 36px; }
+.newsortablediv:hover { background: #ddd; color: #333; }
+.newsortabledivbuffer { display: none; width: 365px; margin: 5px;}
+
+
 .AddLiButton 
 {
-    text-align: center;
-    font-size: 45px; 
-    line-height: 25px;
-    padding: 10px 0 20px 0;
-    border: 2px dotted #d6d6d6;
-    background: #eee;
-    margin: 5px 0 0 0;
+    display: block;
+    background: rgba(255,255,255,0.2);
+    margin: 0px;
+    padding: 3px 0 0 0;
     color: #d6d6d6;
     cursor: pointer;
-    -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
+    width: 100%; height: 50px;
+    min-width: 325px;
+    -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s; 
 }
-.AddLiButton:hover { border: 2px dotted #999; color: #999; background: #fff; }
+.AddLiButton h5 { color: #d6d6d6; text-align: center; font-size: 38px; line-height: 38px; margin: 0px; }
+
+.AddLiButton:hover { background: #fff; }
+
+.AddLiButton.info { margin-top: 0; }
 
 .DishWrapper { position: relative; padding: 5px; background: #fff; }
+
+.DishWrapper input,.InfoSlide input { background: #ddd; margin: 0; padding: 0px 3px; transition: width 0.25s;  }
     .DishNumber { display: inline-table; min-width: 25px; margin-right: 8px; }
-    .DishText { display: inline-table; width: 250px; }
+    .DishNumber input { width: 28px; min-width: 28px;   }
+    .DishText { display: inline-table; width: 250px; overflow: hidden; }
+    .DishText input { width: 250px; min-width: 250px; }
         .DishHeadline {  }
             .sortableLi h1, .InfoSlide h1 { color: #333; font-size: 18px; line-height: 17px; margin: 0; }
             .sortableLi h2, .InfoSlide h2 { color: #333; font-size: 12px; line-height: 14px; margin: 3px 0 0 0; }
         .DishDescription {  }
+        .DishDescription textarea, .InfoSlide textarea {
+            font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+            font-size: 16px; line-height: 17px; 
+            background: #ddd; 
+            border: 0px; 
+            padding: 2px; 
+            outline: none;  overflow: hidden;
+            margin: 2px 0 0 0;  
+            width: 100%; 
+            resize: none;
+            -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;
+        }
     .DishPrice { display: inline-table; vertical-align: bottom; text-align: right; }
-        .DishPrice h2 { display: inline; }
+    .DishPrice input { width: 13px; min-width: 13px; }
+        .DishPrice h2 { display: inline; text-align: right;}
     
 .DishEditWrapper { position: absolute; top:0px; right: 0px; padding: 0; text-align: center; }
-    .DeleteDish { display: inline-table; background: #555555 ; width: 20px; height: 20px; cursor: pointer; vertical-align: top; }
+    .DeleteDish { display: inline-table; background: #555555 ; width: 20px; height: 22px; cursor: pointer; vertical-align: top; }
         .DeleteDish p { font-size: 12px; color: #fff; margin: 0; padding-top: 3px; }
-        .DeleteDish p:hover { color: #333; }
-    .moveDish { display: inline-table; width: 20px; height: 20px; cursor: move; vertical-align: top; }
-        
-.InfoSlide { width: 350px; padding: 10px 5px; background: #fff; }
+        .DeleteDish p:hover { background: #333; }
+    .EditDish { display: inline-block; background: #555; width: 22px; height: 22px; text-align: center; margin-right: 3px; padding: 0; cursor: pointer; vertical-align: top; }
+       .EditDish img { width: 20px; margin: 0; vertical-align: top; }
+       .EditDish:hover { background: #333;  }
+    .moveDish { display: inline-table; width: 20px; height: 20px; cursor: move; margin-right:5px; vertical-align: top; }
+ 
+.DishEditWrapperTEMP { display: none; }    
+
+#restuarantInfo h3 { margin-bottom: 7px;}
+.InfoSlide { position: relative; width: 340px; padding: 10px 5px; background: #fff; }
+.InfoSlide.new input { width: 334px; }
+.InfoSlide.top { margin-bottom: 3px; }
+.InfoSlide.top h3 { font-size: 14px; line-height: 8px; font-weight: bold; }
+.InfoSlide.top h4 { margin:1px 0; }
+.InfoSlidebox { display: inline-block; margin-right: 5px; vertical-align: top; }
+
+.SaveMenuDish { text-align: center; padding: 5px 0; display: block; min-width: 345px;}
+.saveMenuDishButton { font-size: 18px; background: #fea525; color: #fff; display: inline-table; padding: 5px 10px;  cursor: pointer;
+                     -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; -khtml-border-radius: 4px; 
+                     -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;}
+.saveMenuDishButton.Cancel { margin: 0 10px 0 0; background: #555;}
+.saveMenuDishButton:hover { background: #ff9000;  }
+.saveMenuDishButton.Cancel:hover { background: #333;}

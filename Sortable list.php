@@ -15,6 +15,8 @@
     <div style="margin-top: 10px;">
         <input type="button" value="Lav ny liste" onclick="CreateNewSortableList();">
         <input type="button" value="Gem lister" onclick="SaveSortableLists();">
+        <input type="button" value="Hent Menukort" onclick="GetMenucardWithSerialNumber();">
+        <input type="text" value="AA0001" id="iMenucardSerialNumber"/> 
     </div>
     <div class="sortablediv">
         <h3>Liste 1</h3>
