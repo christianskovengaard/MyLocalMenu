@@ -473,12 +473,13 @@
   
   /* Sortable list functions end */
   
-  function HideShowSwitch(CaseName,sObjectId) {
+  function HideShowSwitch(CaseName) {
      
      switch(CaseName)
      {
-        case 'PopUpWindow':
-            $("#"+sObjectId).animate({height: 'toggle'},200);
+        case 'PopUpWindowEditManuInfo':
+            $("#EditRestaurantInfo").animate({height: 'toggle'},200);
+            getValuesForEditManuInfo();
             break;
         case 'HideSortableEdits':
             
@@ -490,7 +491,7 @@
             
             break;
         case 'Login':
-            $("#"+sObjectId).animate({width: 'toggle'},100);
+            $("#LoginBox").animate({width: 'toggle'},100);
             $("#LoginEmail").focus();
             break;
      }
@@ -513,6 +514,28 @@
                    console.log('result: '+result.result);
                });
          }
+    }
+    
+    
+    function getValuesForEditManuInfo(){
+        
+        var MenuName = $('.Restaurant.Name h1').text();
+        $("#MenuName").val(MenuName);
+        $("#MenuName").focus();
+        var MenuSubName = $('.Restaurant.Name h2').text();
+        $("#MenuSubName").val(MenuSubName);
+        var MenuAdress = $('.RestaurantAdresse h4').eq(0).text();
+        $("#MenuAdress").val(MenuAdress);
+        var MenuZip = $('.RestaurantAdresse h4').eq(1).text();
+        MenuZip = MenuZip.slice(0,4);
+        $("#MenuZip").val(MenuZip);
+        var MenuTown = $('.RestaurantAdresse h4').eq(1).text();
+        MenuTown = MenuTown.slice(5);
+
+        $("#MenuTown").val(MenuTown);
+        var MenuPhone = $('.RestaurantPhone h2').text();
+        $("#MenuPhone").val(MenuPhone);
+
     }
 
    
@@ -569,4 +592,6 @@
 }
     
     // register end
+    
+    
 

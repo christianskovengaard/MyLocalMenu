@@ -47,12 +47,12 @@
                     <h2>Rottiserie og Take away</h2>            
                 </div>
                 <div class="Restaurant info">
-                    <div class="RestaurantPhone"><h2><img src="img/phone.png">33 23 21 40</h2></div>
-                    <div class="RestaurantAdresse"><h4><img src="img/ic_pin.png">Oehlenslægersgade 50, 1663 Vesterbro</h4></div>
+                    <div class="RestaurantPhone"><img src="img/phone.png"><h2>33 23 21 40</h2></div>
+                    <div class="RestaurantAdresse"><img src="img/ic_pin.png"><h4>Oehlenslægersgade 50<br>1663 Vesterbro</h4></div>
                 </div>        
                 <div class="Restaurant OpeningHours"><h4><b>Åbningstider:</b></h4><h4>I dag: 11:00 - 22.00</h4><h5>åben</h5></div>
                 <div class="Restaurant Delivery"><h4><b>Udbringning:</b></h4><h4>I dag: 16:00 - 21:00</h4><h5>ikke mulig</h5></div>
-                <div class="buttonEdit top" onclick="HideShowSwitch('PopUpWindow','EditRestaurantInfo');"><img src="img/edit.png">Resturent info</div>
+                <div class="buttonEdit top" onclick="HideShowSwitch('PopUpWindowEditManuInfo');"><img src="img/edit.png">Resturent info</div>
                 <div id="EditMenuButton"><div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Menukort</div></div>
 
              </div>          
@@ -166,16 +166,25 @@
         
         <div id="EditRestaurantInfo" class="EditRestaurantInfo">
             <div class="EditRestaurantInfoWrapper">
-                [Rediger Restaurant Info]
-                <div class="buttonEdit" onclick="HideShowSwitch('PopUpWindow','EditRestaurantInfo');">[X]</div>
-                <br>[Navn]
-                <br>[evt Slogan]
-                <br>[Adresse x 2]
-                <br>[Telefonnummer]
-                <br>[åbningstider]
-                <br>[Udbringning]
-                <br>[Info]
-                <br>[modtager kort]
+                <h3>Ret oplysninger</h3>
+                <div>
+                    <div class="buttonEdit" onclick="HideShowSwitch('PopUpWindowEditManuInfo');">[X]</div>
+                    <p>Menukorts navn</p>
+                    <input id="MenuName" type="text" value="">
+                    <p>evt Slogan</p>
+                    <input id="MenuSubName" type="text" value="">
+                    <p>Vejnavn og nummer</p>
+                    <input id="MenuAdress" type="text" value="">
+                    <p>Postnr. og by</p>
+                    <input id="MenuZip" type="text" value="">
+                    <input id="MenuTown" type="text" value="">
+                    <p>Telefonnr.</p>
+                    <input id="MenuPhone" type="text" value="">
+                </div>
+                <div>
+                    <p>Åbningstider</p>
+                    <p>Udbringning</p>     
+                </div>
             </div>             
         </div>
         
