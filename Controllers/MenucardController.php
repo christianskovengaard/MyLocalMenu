@@ -43,8 +43,6 @@ class MenucardController
         if(isset($_GET['sJSONMenucard']))
         {
             
-            //TODO: Change the handeling to handle the assoc array from ajaxcall
-            
             //Get the iCompanyId based user logged in
             //$iCompanyId = $_SESSION['iCompanyId'];
             $iCompanyId = '1';
@@ -80,7 +78,6 @@ class MenucardController
             //Set the MenucardClass
             $this->oMenucard->SetMenucard($sMenucardName, $sMenucardDescription);
             
-            //TODO: Inssert Menucard into database and get the FK for the menucard, and use the iCompanyId to which user created the menucard. Remember to create iMenuCardIdHashed with bCrypt
             //Get user from database based on the iUserId remember to use PDO
             $sQuery = $this->conPDO->prepare("INSERT INTO menucard (sMenucardName,iFK_iRestuarentInfoId) VALUES (?,?)");
             
@@ -469,8 +466,7 @@ class MenucardController
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);
             
-            var_dump($aMenucard);
-            
+            //var_dump($aMenucard);           
             return $aMenucard;
             
         }else{
@@ -482,7 +478,15 @@ class MenucardController
     
     public function GetMenucardWithSerialNumber ()
     {
+        //Allow all, NOT SAFE
+        header('Access-Control-Allow-Origin: *');  
         
+        /* Only allow trusted, MUCH more safe
+        header('Access-Control-Allow-Origin: spjæl.dk');
+        header('Access-Control-Allow-Origin: xn--spjl-xoa.sk');
+        header('Access-Control-Allow-Origin: www.spjæl.dk');
+        header('Access-Control-Allow-Origin: www.xn--spjl-xoa.dk');
+        */
         $aMenucard = array(
                 'sFunction' => 'GetMenucardWithSerialNumber',
                 'result' => false
@@ -556,11 +560,19 @@ class MenucardController
                die($e->getMessage()); 
             }
             $i = 0;
+            $TodayDayname = $today = date("l");
+            $TodayDaynameDanish = $this->GetDanishDayname($TodayDayname);
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
                 $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
-                $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = $row['iTimeFrom'];
-                $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = $row['iTimeTo'];
+                $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
+                $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
+                
+                //Check for Openinghours hour today               
+                if($row['sDayName'] == $TodayDaynameDanish)
+                {                  
+                    $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                }
                 $i++;
             }
             
@@ -586,8 +598,14 @@ class MenucardController
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
                 $aMenucard['aMenucardTakeAwayHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
-                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeFrom'] = $row['iTimeFrom'];
-                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeTo'] = $row['iTimeTo'];
+                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
+                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
+                
+                //Check for TakeAway hour today               
+                if($row['sDayName'] == $TodayDaynameDanish)
+                {                  
+                    $aMenucard['sRestuarentTakeAwayHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                }
                 $i++;
             }
            
@@ -654,14 +672,10 @@ class MenucardController
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $aMenucard['sRestuarentName'] = utf8_encode($aResult['sRestuarentInfoName']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
-            $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);
+            $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
             
-            
-            var_dump($aMenucard);
+            //var_dump($aMenucard);
             return $aMenucard;
-            
-            
-   
         }
         else
         {
@@ -673,6 +687,18 @@ class MenucardController
     public function AddMenucardInfo () 
     {
         //TODO: Insert menucard info into database
-    }  
+    }
+    
+    
+    private function GetDanishDayname($sDayname)
+    {
+        if($sDayname == 'Monday') return 'Mandag';
+        if($sDayname == 'Tuesday') return 'Tirsdag';
+        if($sDayname == 'Wednesday') return 'Onsdag';
+        if($sDayname == 'Thursday') return 'Torsdag';
+        if($sDayname == 'Friday') return 'Fredag';
+        if($sDayname == 'Saturday') return 'Lørdag';
+        if($sDayname == 'Sunday') return 'Søndag';       
+    }
 }
 ?>

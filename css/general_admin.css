@@ -24,13 +24,13 @@ h1, h2, h3, h4, a, p, div  {
     font-weight : normal; color:#333; 
 }
 
-h1 { font-size: 45px; line-height: 15px; }
-h2 { font-size: 23px; line-height: 20px; }
-h3 { font-size: 25px; line-height: 5px; }
-h4 { font-size: 14px; line-height: 5px; }
-h5 { font-size: 22px; margin: 0px; }
+h1 { font-size: 40px; line-height: 15px; }
+h2 { font-size: 18px; line-height: 14px; }
+h3 { font-size: 20px; line-height: 5px; }
+h4 { font-size: 12px; line-height: 5px; }
+h5 { font-size: 18px; margin: 0px; }
 h6 { font-size: 14px; margin: 0px; }
-div { font-size: 22px; }
+div { font-size: 15px; }
 
 input { 
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; color:#333; 
@@ -150,7 +150,17 @@ input {
 .newsortablediv
 {
     position: relative;
+<<<<<<< HEAD
     display: none; 
+=======
+
+    display: inline-block;   
+    height: 100px;
+    width: 300px;
+    padding: 0px 0;
+
+    display: inline-block; 
+>>>>>>> 8e36eb1a89c327790bfa05f29827094e820c5551
     padding: 44px 0;
     margin: 5px;
     background: #fff;
@@ -158,9 +168,14 @@ input {
     width: 365px;
     -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
 }
+
+.newsortablediv h3 { color: #d6d6d6; margin:20px; text-align: center; font-size: 45px; line-height: 0px; }
+.newsortablediv:hover { border: 2px dotted #999; background: #ddd; color: #333; }
+
 .newsortablediv h3 { color: #d6d6d6; margin:0; text-align: center; font-size: 38px; line-height: 36px; }
 .newsortablediv:hover { background: #ddd; color: #333; }
 .newsortabledivbuffer { display: none; width: 365px; margin: 5px;}
+
 
 .AddLiButton 
 {
@@ -188,8 +203,8 @@ input {
     .DishText { display: inline-table; width: 250px; overflow: hidden; }
     .DishText input { width: 250px; min-width: 250px; }
         .DishHeadline {  }
-            .sortableLi h1, .InfoSlide h1 { color: #333; font-size: 22px; line-height: 17px; margin: 0; }
-            .sortableLi h2, .InfoSlide h2 { color: #333; font-size: 16px; line-height: 17px; margin: 3px 0 0 0; }
+            .sortableLi h1, .InfoSlide h1 { color: #333; font-size: 18px; line-height: 17px; margin: 0; }
+            .sortableLi h2, .InfoSlide h2 { color: #333; font-size: 12px; line-height: 14px; margin: 3px 0 0 0; }
         .DishDescription {  }
         .DishDescription textarea, .InfoSlide textarea {
             font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -233,4 +248,7 @@ input {
 .saveMenuDishButton.Cancel { margin: 0 10px 0 0; background: #555;}
 .saveMenuDishButton:hover { background: #ff9000;  }
 .saveMenuDishButton.Cancel:hover { background: #333;}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8e36eb1a89c327790bfa05f29827094e820c5551

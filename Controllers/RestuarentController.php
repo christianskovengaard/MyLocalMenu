@@ -1,6 +1,6 @@
 <?php
 
-class CompanyController 
+class RestuarentController 
 {
     public function __construct() {
         ;
@@ -8,4 +8,5 @@ class CompanyController
     
     
 }
+
 ?>

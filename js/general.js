@@ -468,12 +468,212 @@
            console.log('result: '+result.result);
        });
        
-      //TODO: Chek that it get all categories and all items
   }
   
   /* Sortable list functions end */
   
+<<<<<<< HEAD
   function HideShowSwitch(CaseName) {
+=======
+  
+  /* GetMenucard function */
+  
+  function getUrlVars() 
+  {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+  }
+
+   
+  function GetMenucard(isAdmin)
+  {
+     if($('#iMenucardSerialNumber').val() !== '')
+     {
+        //isAdmin is used to see the if user is logged in or not
+        //If the user is logged in then use the admin.php
+        //If the user is NOT logged in then use the viewmenucard.php
+
+        //Load the mustache template into viewmenucard
+        if(isAdmin === true)
+        {
+            //Use admin.php
+            //TODO: Get data show with mustache templates
+            
+        }else{
+
+            //Clear the menucard area
+            $('.sortableList').remove();
+
+            //Use viewmenucard.php
+            var iMenucardSerialNumber = getUrlVars()["iMenucardSerialNumber"];
+
+            //Get data            
+            $.ajax({
+              type: "GET",
+              url: "API/api.php",
+              dataType: "json",
+              data: {sFunction:"GetMenucardWithSerialNumber",iMenucardSerialNumber:iMenucardSerialNumber}
+             }).done(function(result){
+                 if(result.result === true){
+
+                      //Load the template restuarentinfo_viewmenucard.html into viewmenucard.php
+                      $("#mustache_template").load( "mustache_templates/restuarentinfo_viewmenucard.html",function(){
+
+                          var restuarent = {
+                              sRestuarentName: result.sRestuarentName,
+                              sRestuarentInfoDescription: "Felt mangler",
+                              sRestuarentPhone: result.sRestuarentPhone,
+                              sRestuarentAddress: result.sRestuarentAddress,
+                              sRestuarentOpenningHoursToday: result.sRestuarentOpenningHoursToday,
+                              sRestuarentTakeAwayHoursToday: result.sRestuarentTakeAwayHoursToday
+                          };
+                          //Load template and show
+                          var template = $('#restuarentinfo_viewmenucard').html();
+                          var html = Mustache.to_html(template, restuarent);
+                          $('.RestaurantInfo').html(html);
+
+                      });
+
+                      //Show the menucardinfo //TODO: Get the openinig hours and takeaway hours
+                      $("#mustache_template").load( "mustache_templates/menucardinfo_viewmenucard.html",function(){
+
+                          var menucardinfo = {
+                              info: [],
+                              openinghours: [],
+                              takeawayhours: []
+                          };
+
+                          //Foreach menucardinfo insert into the menucarcardinfo
+                          $.each(result.aMenucardInfo, function(key,value){
+                              var obj = {
+                                  headline: value.sMenucardInfoHeadline,
+                                  text: value.sMenucardInfoParagraph
+                              };
+                              //Append the obj to the menucardinfo obj
+                              menucardinfo.info.push(obj);
+                          });
+
+                          //Foreach OpeningHours insert into the menucarcardinfo
+                          $.each(result.aMenucardOpeningHours, function(key,value){
+                              var obj = {
+                                  sDayName: value.sDayName,
+                                  iTimeFrom: value.iTimeFrom,
+                                  iTimeTo: value.iTimeTo
+                              };
+
+                              //Append the obj to the openinghours obj
+                              menucardinfo.openinghours.push(obj);
+                          });
+
+                          //Foreach TakeAwayHours insert into the menucarcardinfo
+                          $.each(result.aMenucardTakeAwayHours, function(key,value){
+                              var obj = {
+                                  sDayName: value.sDayName,
+                                  iTimeFrom: value.iTimeFrom,
+                                  iTimeTo: value.iTimeTo
+                              };
+                              //Append the obj to the takeawayhours obj
+                              menucardinfo.takeawayhours.push(obj);
+                          }); 
+
+                          var template = $('#menucardinfo_viewmenucard').html();
+                          var html = Mustache.to_html(template, menucardinfo);
+                          $('#restuarantInfo').html(html);
+                      });
+
+                      //Show the menucard categories and items
+                      $("#mustache_template").load( "mustache_templates/menucard_viewmenucard.html",function(){
+
+                          var menucards = {
+                              menucard: []
+                          };
+
+                          //Foreach menucard insert into the menucarcardinfo
+                          $.each(result.aMenucardCategory, function(key,value){
+
+                              //alert('liste index: '+key);
+                              var category = {
+                                  sMenucardCategoryName: value.sMenucardCategoryName,
+                                  sMenucardCategoryDescription: value.sMenucardCategoryDescription,
+                                  items:[]
+                              };                                                       
+
+                              //Get all the items and the values name,desc,number,price
+                              $.each(result['aMenucardCategoryItems'+key].sMenucardItemName, function(keyItem,value){
+
+                                  var sMenucardItemName = value;
+                                  var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
+                                  var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
+                                  var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
+
+                                  var item = {
+                                      sMenucardItemName: sMenucardItemName,
+                                      sMenucardItemDescription: sMenucardItemDescription,
+                                      sMenucardItemNumber: sMenucardItemNumber,
+                                      iMenucardItemPrice: iMenucardItemPrice
+                                  };
+
+                                  //Append the item to the items in the category obj
+                                  category.items.push(item);
+                              });
+
+                              //Append the category obj to the menucard obj
+                              menucards.menucard.push(category);
+
+                          });
+
+                          //Format for menucard 
+                          /*
+                           var menucards = {
+                              menucard: [{sMenucardCategoryName: "Kategorinavn",sMenucardCategoryDescription: "Beskrivelse 1",
+                                          items : [{sMenucardItemNumber:"11",
+                                          sMenucardItemName: "navnet",
+                                          sMenucardItemDescription: "beskrivelse",
+                                          iMenucardItemPrice: "14"},
+                                          {sMenucardItemNumber:"22",
+                                          sMenucardItemName: "navnet 2",
+                                          sMenucardItemDescription: "beskrivelse 2",
+                                          iMenucardItemPrice: "234"}
+                                          ]
+                                          },
+                                          {sMenucardCategoryName: "Kategorinavn 2",sMenucardCategoryDescription: "Beskrivelse 2",
+                                          items : [{sMenucardItemNumber:"33",
+                                          sMenucardItemName: "navnet 33",
+                                          sMenucardItemDescription: "beskrivelse 33",
+                                          iMenucardItemPrice: "14"},
+                                          {sMenucardItemNumber:"44",
+                                          sMenucardItemName: "navnet 44",
+                                          sMenucardItemDescription: "beskrivelse 44",
+                                          iMenucardItemPrice: "234"}
+                                          ]
+                                          }      
+                              ]
+                          };
+                          */
+
+                          var template = $('#menucard_viewmenucard').html();
+                          var html = Mustache.to_html(template, menucards);
+                          $('#restuarantInfo').after(html);
+                      });
+                }else{
+                    
+                    $('#restuarantInfo').html('Der kunne ikke findes noget menukort');
+                }
+             });
+
+             
+
+        }
+     }
+  }
+  
+  /* GetMenucard function end*/
+  
+  function HideShowSwitch(CaseName,sObjectId) {
+>>>>>>> 8e36eb1a89c327790bfa05f29827094e820c5551
      
      switch(CaseName)
      {
@@ -595,3 +795,19 @@
     
     
 
+
+
+/* Hook for loge link */
+function PageChange(pagename)
+{
+  window.location.href = pagename+'.php';
+}
+/* end */
+
+/* Submit form */
+
+function SubmitForm(formId)
+{
+    $( "#"+formId ).submit();
+}
+/* end */
