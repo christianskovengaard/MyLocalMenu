@@ -32,7 +32,7 @@
       
       UpdateSortableLists();   
   }
-  
+
   function CreateNewLiInSortableList(id)
   {
 //    var GetMenuCardItemUl = document.getElementById(id);
@@ -240,6 +240,7 @@
           $('.AddLiButton').fadeIn('fast');
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
+          $('.DishEditWrapper').fadeIn();
           
 
 }
@@ -359,7 +360,7 @@
   function SaveSortableLists()
   {
       $('#EditMenuButton').text('');
-      $('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\',\'0\');"><img src="img/edit.png">Menukort</div>');
+      $('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\');"><img src="img/edit.png">Menukort</div>');
                    
       $(".DishEditWrapper").slideUp(100);
       $(".AddLiButton").slideUp(100);
@@ -471,11 +472,7 @@
   }
   
   /* Sortable list functions end */
-  
-<<<<<<< HEAD
-  function HideShowSwitch(CaseName) {
-=======
-  
+
   /* GetMenucard function */
   
   function getUrlVars() 
@@ -672,9 +669,8 @@
   
   /* GetMenucard function end*/
   
-  function HideShowSwitch(CaseName,sObjectId) {
->>>>>>> 8e36eb1a89c327790bfa05f29827094e820c5551
-     
+  function HideShowSwitch(CaseName) {
+
      switch(CaseName)
      {
         case 'PopUpWindowEditManuInfo':
@@ -687,7 +683,7 @@
             $('#EditMenuButton').append('<div class="buttonEdit Save" onclick="SaveSortableLists();">✓ Gem menukort</div>')
             $(".DishEditWrapper").slideDown(100);
             $(".AddLiButton").slideDown(100);
-            $(".newsortablediv").slideDown(100);
+            $(".newsortablediv").css('display','inline-table').slideDown(100);
             
             break;
         case 'Login':
@@ -695,7 +691,6 @@
             $("#LoginEmail").focus();
             break;
      }
-
 }
    
   function GetMenucardWithSerialNumber()
@@ -715,8 +710,7 @@
                });
          }
     }
-    
-    
+      
     function getValuesForEditManuInfo(){
         
         var MenuName = $('.Restaurant.Name h1').text();
@@ -724,21 +718,18 @@
         $("#MenuName").focus();
         var MenuSubName = $('.Restaurant.Name h2').text();
         $("#MenuSubName").val(MenuSubName);
-        var MenuAdress = $('.RestaurantAdresse h4').eq(0).text();
-        $("#MenuAdress").val(MenuAdress);
-        var MenuZip = $('.RestaurantAdresse h4').eq(1).text();
-        MenuZip = MenuZip.slice(0,4);
+        var MenuAdress = $('.RestaurantAdresse h4').html();
+        var MenuAdress = MenuAdress.split('<br>');
+        $("#MenuAdress").val(MenuAdress[0]);
+        var MenuZip = MenuAdress[1].slice(0,4);
         $("#MenuZip").val(MenuZip);
-        var MenuTown = $('.RestaurantAdresse h4').eq(1).text();
-        MenuTown = MenuTown.slice(5);
-
+        var MenuTown = MenuAdress[1].slice(5);
         $("#MenuTown").val(MenuTown);
         var MenuPhone = $('.RestaurantPhone h2').text();
         $("#MenuPhone").val(MenuPhone);
 
     }
 
-   
    // register
 
   function registerNext(num) {

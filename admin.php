@@ -50,10 +50,10 @@
                     <div class="RestaurantPhone"><img src="img/phone.png"><h2>33 23 21 40</h2></div>
                     <div class="RestaurantAdresse"><img src="img/ic_pin.png"><h4>Oehlenslægersgade 50<br>1663 Vesterbro</h4></div>
                 </div>        
-                <div class="Restaurant OpeningHours"><h4><b>Åbningstider:</b></h4><h4>I dag: 11:00 - 22.00</h4><h5>åben</h5></div>
-                <div class="Restaurant Delivery"><h4><b>Udbringning:</b></h4><h4>I dag: 16:00 - 21:00</h4><h5>ikke mulig</h5></div>
+                <div class="Restaurant OpeningHours"><h4><b>Åbningstider:</b></h4><h4>I dag: 11:00 - 22.00</h4><h5 class="open">åben</h5></div>
+                <div class="Restaurant Delivery"><h4><b>Udbringning:</b></h4><h4>I dag: 16:00 - 21:00</h4><h5 class="closed">ikke mulig</h5></div>
                 <div class="buttonEdit top" onclick="HideShowSwitch('PopUpWindowEditManuInfo');"><img src="img/edit.png">Resturent info</div>
-                <div id="EditMenuButton"><div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Menukort</div></div>
+                <div id="EditMenuButton"><div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits');"><img src="img/edit.png">Menukort</div></div>
 
              </div>          
         </div>

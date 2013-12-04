@@ -10,22 +10,23 @@ root {
     display: block;
 }
 
-body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
+body,html { width: 100%; height: 100%; margin: 0px; background: #e6e3dd url(../img/back.gif);  }
+/*background: #e8e9e8 url(../img/back.gif);*/
 
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
 h5, h6  { 
-    font-family:"Bariol", "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight : normal; color:#333; 
+    font-family:"HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight : normal; color:#3c3c3c; 
 }
 
 h1, h2, h3, h4, a, p, div  { 
     font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight : normal; color:#333; 
+    font-weight : normal; color:#3c3c3c; 
 }
 
-h1 { font-size: 40px; line-height: 15px; }
-h2 { font-size: 18px; line-height: 14px; }
+h1 { font-size: 40px; line-height: 30px; }
+h2 { font-size: 18px; line-height: 10px; }
 h3 { font-size: 20px; line-height: 5px; }
 h4 { font-size: 12px; line-height: 5px; }
 h5 { font-size: 18px; margin: 0px; }
@@ -39,24 +40,13 @@ input {
 }
 .inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; }
 
-/*.buttonEdit {       
-      position: relative;
-      display: inline-block; 
-      background: #21201f; 
-      color: #ddd; 
-      padding: 5px 9px; 
-      text-decoration: none; 
-      cursor: pointer;
-      vertical-align: middle;
-      -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
-}*/
 .buttonEdit.top { top: 0px; bottom: auto; }
 .buttonEdit {       
       position: absolute;
       bottom: 10px; right: 10px;
       background: #21201f; 
       color: #ddd; 
-      padding: 3px 9px 3px 1px; 
+      padding: 0px 9px 0px 1px; 
       text-decoration: none; 
       cursor: pointer;
       vertical-align: middle;
@@ -67,7 +57,7 @@ input {
 
 .buttonEdit:hover { background: #aaa;}
 
-.buttonEdit.Save { background: #fea525; color: #fff; padding-left: 10px; }
+.buttonEdit.Save { background: #fea525; color: #fff; padding: 6px 9px; }
 
 .buttonEdit.Save:hover { background: #ff9000;  }
 
@@ -75,8 +65,8 @@ input {
 /* ::::::::::::::::: SIDE OPDELING :::::::::::::::::::::  */
 
 
-.header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; }
-.RestaurantInfo { position: relative; display: table; width: 100%; margin: 0px; padding: 10px 0 0 0; background: #ddd; overflow: hidden;}
+.header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; }
+.RestaurantInfo { position: relative; display: table; width: 100%; margin: 0px; padding: 10px 0 0 0; background: rgba(143,130,121,0.5); overflow: hidden;} /* background: #dedcc9;*/
 .menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px;}
 .wrapper { position: relative; max-width: 100%; height: 100%; margin: 0 auto; padding: 0 20px; }
 .EditRestaurantInfo { position: absolute; display: none; width: 100%; top: 200px; }
@@ -104,13 +94,16 @@ input {
 
 .Restaurant { display: inline-table; margin: 0 25px 0px 0; vertical-align: top; }
 .Restaurant.Name {  }
-    .Restaurant.Name h1 { margin: 15px 0 0 0; }
+    .Restaurant.Name h1 { margin: 10px 0 0px 0; }
     .RestaurantPhone { margin: 0; }
-    .RestaurantAdresse { margin: -15px 0 0 0; }
-    .Restaurant.OpeningHours { display: inline-block; margin: 10px 0 0 0; }
+    .RestaurantAdresse { margin: -5px 0 0 0; }
+    
+    .Restaurant.OpeningHours { display: inline-block; margin: 5px 0 0 0; }
         .Restaurant h4 { margin: 12px 0 0 0; text-align:left; }
-        .Restaurant h5 { margin: 7px 0 0 0; text-align: center; font-size: 15px; background: #ccc; }
-    .Restaurant.Delivery { margin: 10px 10px 0 10px; }
+        .Restaurant h5 { margin: 7px 0 0 0; text-align: center; font-size: 15px;  }
+        .closed { background: #a4a3a1; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -khtml-border-radius: 3px; }
+        .open { background: #fea525; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -khtml-border-radius: 3px;  }
+    .Restaurant.Delivery { margin: 5px 10px 0 10px; }
 .RestaurantAdresse img { display: inline-block; width: 15px; vertical-align: middle; margin-right: 4px; margin-bottom: 10px;  }
 .RestaurantAdresse h4 { display: inline-block; line-height: 13px; margin: 5px 0; } 
 .RestaurantPhone img { display: inline-block; width: 15px; vertical-align: middle; margin:0 5px 3px 0; }
@@ -136,8 +129,9 @@ input {
 .sortablediv
 {
     position: relative;
-    display: inline-table;    
-    background: #ddd;
+    display: inline-table;
+    background: rgba(143,130,121,0.5);
+/*    background: #ddd;*/
     padding: 10px;
     margin: 5px; 
     vertical-align: top;
@@ -150,17 +144,7 @@ input {
 .newsortablediv
 {
     position: relative;
-<<<<<<< HEAD
     display: none; 
-=======
-
-    display: inline-block;   
-    height: 100px;
-    width: 300px;
-    padding: 0px 0;
-
-    display: inline-block; 
->>>>>>> 8e36eb1a89c327790bfa05f29827094e820c5551
     padding: 44px 0;
     margin: 5px;
     background: #fff;
@@ -169,13 +153,9 @@ input {
     -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
 }
 
-.newsortablediv h3 { color: #d6d6d6; margin:20px; text-align: center; font-size: 45px; line-height: 0px; }
-.newsortablediv:hover { border: 2px dotted #999; background: #ddd; color: #333; }
-
 .newsortablediv h3 { color: #d6d6d6; margin:0; text-align: center; font-size: 38px; line-height: 36px; }
 .newsortablediv:hover { background: #ddd; color: #333; }
 .newsortabledivbuffer { display: none; width: 365px; margin: 5px;}
-
 
 .AddLiButton 
 {
@@ -248,7 +228,3 @@ input {
 .saveMenuDishButton.Cancel { margin: 0 10px 0 0; background: #555;}
 .saveMenuDishButton:hover { background: #ff9000;  }
 .saveMenuDishButton.Cancel:hover { background: #333;}
-<<<<<<< HEAD
-
-=======
->>>>>>> 8e36eb1a89c327790bfa05f29827094e820c5551
