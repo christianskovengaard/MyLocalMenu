@@ -690,6 +690,12 @@
             $("#LoginBox").animate({width: 'toggle'},100);
             $("#LoginEmail").focus();
             break;
+        case 'Email':
+            var mail = $('#sEmailToSubmit').val();
+            var mailhost = mail.split('@')[1];
+            $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Velkommen</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>')
+            $('.EmailSubmission').hide().slideDown(100);
+            break;
      }
 }
    

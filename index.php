@@ -60,12 +60,12 @@
             <div class="wrapper">
                 <h1>Opret et menukort</h1>
                 <h3>...det er helt gratis</h3>
-                <div class="inputFrame">
-                    <input type="text" placeholder="Indtast din email">
+                <div class="inputFrame" id="EmailSubmission">
+                    <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
 <!--                    <input type="Password" placeholder="Indtast et kodeord">
                     <input type="Password" placeholder="Gentag kodeorden">-->
-                    <div onclick="" class="button01">Opret</div>
-                </div>
+                    <div onclick="HideShowSwitch('Email');" class="button01">Opret</div>
+                </div>           
             </div>
         </div> 
         
