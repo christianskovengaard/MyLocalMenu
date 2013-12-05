@@ -472,10 +472,7 @@
   
   /* Sortable list functions end */
   
-<<<<<<< HEAD
-  function HideShowSwitch(CaseName) {
-=======
-  
+ 
   /* GetMenucard function */
   
   function getUrlVars() 
@@ -668,12 +665,11 @@
 
         }
      }
-  }
-  
+  }  
   /* GetMenucard function end*/
   
+  
   function HideShowSwitch(CaseName,sObjectId) {
->>>>>>> 8e36eb1a89c327790bfa05f29827094e820c5551
      
      switch(CaseName)
      {
@@ -698,23 +694,6 @@
 
 }
    
-  function GetMenucardWithSerialNumber()
-    {
-       
-         var iMenucardSerialNumber = $('#iMenucardSerialNumber').val();
-         if(iMenucardSerialNumber != '')
-         {
-             $.ajax({
-                type: "GET",
-                url: "API/api.php",
-                dataType: "json",
-                data: {sFunction:"GetMenucardWithSerialNumber",iMenucardSerialNumber:iMenucardSerialNumber}
-               }).done(function(result) 
-               {
-                   console.log('result: '+result.result);
-               });
-         }
-    }
     
     
     function getValuesForEditManuInfo(){
