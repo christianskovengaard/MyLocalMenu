@@ -12,20 +12,21 @@ class MenucardController
 
     public function __construct() 
     {
+        define('ROOT_DIRECTORY', realpath(dirname(__FILE__).'/..'));
         
-        require '../Classes/bcrypt.php';
+        require_once(ROOT_DIRECTORY . '/Classes/bcrypt.php');
         $this->oBcrypt = new Bcrypt();
         
-        require '../Classes/MenucardClass.php';
+        require_once(ROOT_DIRECTORY . '/Classes/MenucardClass.php');
         $this->oMenucard = new MenucardClass();
         
-        require '../Classes/MenucardCategoryClass.php';
+        require_once(ROOT_DIRECTORY . '/Classes/MenucardCategoryClass.php');
         $this->oMenucardCategory = new MenucardCategoryClass();
         
-        require '../Classes/MenucardItemClass.php';
+        require_once(ROOT_DIRECTORY . '/Classes/MenucardItemClass.php');
         $this->oMenucardItem = new MenucardItemClass();
         
-        require '../Classes/MenucardInfoClass.php';
+        require_once(ROOT_DIRECTORY . '/Classes/MenucardInfoClass.php');
         $this->oMenucardInfo = new MenucardInfoClass();
         
         require 'DatabaseController.php';

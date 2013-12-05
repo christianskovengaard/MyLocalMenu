@@ -13,12 +13,14 @@ class UserController
         $oDatabaseController = new DatabaseController();
         $this->conPDO = $oDatabaseController->ConnectToDatabase();
         
-        //Initiate the UserClass
-        require './Classes/UserClass.php';
+        define('ROOT_DIRECTORY', realpath(dirname(__FILE__).'/..'));  
+        
+        //Initiate the UserClass     
+        require_once(ROOT_DIRECTORY . '/Classes/UserClass.php');
         $this->oUser = new User();
         
         //Initiate the Bcrypt class
-        require './Classes/bcrypt.php';
+        require_once(ROOT_DIRECTORY . '/Classes/bcrypt.php');
         $this->oBcrypt = new Bcrypt();
     }
 
