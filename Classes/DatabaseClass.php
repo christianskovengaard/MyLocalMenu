@@ -15,6 +15,12 @@ class Database
         $this->sPassword = 'root';
         $this->sEncoding = 'utf8';
         $this->sHost = 'localhost';
+        
+        //Production user 
+        //name: sec_user
+        //pass: tvgoseVtu7pmEE4bZ7rV
+        //Privileges (SELECT,UPDATE,INSERT)
+        
     }
     
     public function SetDatabase($sDatabaseName,$sUsername,$sPassword,$sEncoding,$sHost)
