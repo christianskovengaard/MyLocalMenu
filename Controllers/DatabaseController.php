@@ -6,8 +6,10 @@ class DatabaseController
     private $oDatabase;
             
     function __construct() 
-    {
+    {      
+        //Global configuration
         define('ROOT_DIRECTORY', realpath(dirname(__FILE__).'/..'));
+        
         require_once(ROOT_DIRECTORY . '/Classes/DatabaseClass.php');
         $this->oDatabase = new Database();
     }

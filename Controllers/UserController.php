@@ -13,7 +13,6 @@ class UserController
         $oDatabaseController = new DatabaseController();
         $this->conPDO = $oDatabaseController->ConnectToDatabase();
         
-        define('ROOT_DIRECTORY', realpath(dirname(__FILE__).'/..'));  
         
         //Initiate the UserClass     
         require_once(ROOT_DIRECTORY . '/Classes/UserClass.php');

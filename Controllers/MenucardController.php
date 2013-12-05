@@ -12,7 +12,6 @@ class MenucardController
 
     public function __construct() 
     {
-        define('ROOT_DIRECTORY', realpath(dirname(__FILE__).'/..'));
         
         require_once(ROOT_DIRECTORY . '/Classes/bcrypt.php');
         $this->oBcrypt = new Bcrypt();
