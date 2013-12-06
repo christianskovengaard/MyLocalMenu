@@ -487,9 +487,7 @@
    
   function GetMenucard(isAdmin)
   {
-     if($('#iMenucardSerialNumber').val() !== '')
-     {
-        //isAdmin is used to see the if user is logged in or not
+        //isAdmin is used to see if the user is logged in or not
         //If the user is logged in then use the admin.php
         //If the user is NOT logged in then use the viewmenucard.php
 
@@ -505,14 +503,15 @@
             $('.sortableList').remove();
 
             //Use viewmenucard.php
-            var iMenucardSerialNumber = getUrlVars()["iMenucardSerialNumber"];
+            var sRestuarentName = getUrlVars()["sRestuarentName"];
+            //solve æøå problem in IE encodeURIComponent
 
             //Get data            
             $.ajax({
               type: "GET",
               url: "API/api.php",
               dataType: "json",
-              data: {sFunction:"GetMenucardWithSerialNumber",iMenucardSerialNumber:iMenucardSerialNumber}
+              data: {sFunction:"GetMenucardWithRestuarentName",sRestuarentName:sRestuarentName}
              }).done(function(result){
                  if(result.result === true){
 
@@ -664,7 +663,6 @@
              
 
         }
-     }
   }  
   /* GetMenucard function end*/
   

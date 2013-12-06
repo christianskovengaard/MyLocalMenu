@@ -42,6 +42,22 @@ if(isset($_GET['sFunction']))
 
         break;
         
+        case "GetMenucardWithRestuarentName":
+            require_once '../Controllers/MenucardController.php';
+            $oMenucardController = new MenuCardController();
+            $result = $oMenucardController->GetMenucardWithRestuarentName();
+            if($result['result'] == false)
+            {
+                $sResult = '{"sFunction":"GetMenucardWithRestuarentName","result":"False"}';
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
+        
         case "GetMenucard":
             require_once '../Controllers/MenucardController.php';
             $oMenucardController = new MenuCardController();

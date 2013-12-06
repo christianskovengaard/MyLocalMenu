@@ -685,6 +685,225 @@ class MenucardController
         
     }
     
+    public function GetMenucardWithRestuarentName ()
+    {
+        
+        $aMenucard = array(
+                'sFunction' => 'GetMenucardWithRestuarentName',
+                'result' => false
+            );
+        
+        if(isset($_GET['sRestuarentName']))
+        {
+            
+            $sRestuarentName = $_GET['sRestuarentName'];
+            $sRestuarentName = str_replace("+", " ", $sRestuarentName);
+
+            //Get the $iMenucardSerialNumber from the $sRestuarentName
+            //First get the Menucard 
+            $sQuery = $this->conPDO->prepare("SELECT iMenucardSerialNumber FROM menucard
+                                                INNER JOIN restuarentinfo
+                                                ON restuarentinfo.iRestuarentInfoId = menucard.iFK_iRestuarentInfoId
+                                                WHERE sRestuarentInfoName = :sRestuarentName LIMIT 1");
+            $sQuery->bindValue(':sRestuarentName', $sRestuarentName);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }          
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            if($aResult == false): return false; endif;
+            $iMenucardSerialNumber = $aResult['iMenucardSerialNumber'];
+            $aMenucard['result'] = true;
+            
+            //First get the Menucard 
+            $sQuery = $this->conPDO->prepare("SELECT * FROM `menucard`
+                                               WHERE `iMenucardSerialNumber` = :iMenucardSerialNumber
+                                               AND `iMenucardActive` = '1' LIMIT 1");
+            $sQuery->bindValue(':iMenucardSerialNumber', $iMenucardSerialNumber);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            if($aResult == false): return false; endif;
+            $aMenucard['sMenucardName'] = utf8_encode($aResult['sMenucardName']);
+            $iMenucardId = $aResult['iMenucardId'];
+            $iFK_RestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
+            
+            //Get all menucardinfo
+            $sQuery = $this->conPDO->prepare("SELECT * FROM `menucardinfo`
+                                               WHERE `iFK_iMenucardId` = :iFK_iMenucardInfoId
+                                               AND `iMenucardInfoActive` = '1'");
+            $sQuery->bindValue(':iFK_iMenucardInfoId', $iMenucardId);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            $i = 0;
+            while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
+            {
+                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoHeadline'] = utf8_encode($row['sMenucardInfoHeadline']);
+                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoParagraph'] = utf8_encode($row['sMenucardInfoParagraph']);
+                $i++;
+            }
+            
+            
+            
+            //Get openning hours
+            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName FROM `openinghours`
+                                                LEFT JOIN `day`
+                                                ON `day`.`iDayId` = `openinghours`.`iFK_iDayId`
+                                                LEFT JOIN `time` as timeFrom
+                                                ON `timeFrom`.`iTimeId` = `openinghours`.`iFK_iTimeFromId`
+                                                LEFT JOIN `time` as timeTo
+                                                ON `timeTo`.`iTimeId` = `openinghours`.`iFK_iTimeToId`
+                                                WHERE `iFK_iMenucardId` = :iFK_iMenucardId");
+            $sQuery->bindValue(':iFK_iMenucardId', $iMenucardId);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            $i = 0;
+            $TodayDayname = $today = date("l");
+            $TodayDaynameDanish = $this->GetDanishDayname($TodayDayname);
+            while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
+            {
+                $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
+                $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
+                $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
+                
+                //Check for Openinghours hour today               
+                if($row['sDayName'] == $TodayDaynameDanish)
+                {                  
+                    $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                }
+                $i++;
+            }
+            
+            //Get takeaway hours
+            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName FROM `takeaway`
+                                                LEFT JOIN `day`
+                                                ON `day`.`iDayId` = `takeaway`.`iFK_iDayId`
+                                                LEFT JOIN `time` as timeFrom
+                                                ON `timeFrom`.`iTimeId` = `takeaway`.`iFK_iTimeFromId`
+                                                LEFT JOIN `time` as timeTo
+                                                ON `timeTo`.`iTimeId` = `takeaway`.`iFK_iTimeToId`
+                                                WHERE `iFK_iMenucardId` = :iFK_iMenucardId");
+            $sQuery->bindValue(':iFK_iMenucardId', $iMenucardId);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            $i = 0;
+            while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
+            {
+                $aMenucard['aMenucardTakeAwayHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
+                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
+                $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
+                
+                //Check for TakeAway hour today               
+                if($row['sDayName'] == $TodayDaynameDanish)
+                {                  
+                    $aMenucard['sRestuarentTakeAwayHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                }
+                $i++;
+            }
+           
+            //Get all the categories for the menucard
+            $sQuery = $this->conPDO->prepare("SELECT * FROM `menucardcategory`
+                                                WHERE `iFK_iMenucardId` = :iFK_iMenucardId AND `iMenucardCategoryActive` = '1'");
+            $sQuery->bindValue(':iFK_iMenucardId', $iMenucardId);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            $i = 0;
+            while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
+            {
+                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryName'] = utf8_encode($row['sMenucardCategoryName']);
+                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryDescription'] = utf8_encode($row['sMenucardCategoryDescription']);
+                $iFK_iMenucardCategoryId = $row['iMenucardCategoryId'];
+
+                
+                 //Get all menucarditem for the category
+                 $sQueryItem = $this->conPDO->prepare("SELECT * FROM `menucarditem`
+                                                WHERE `iFK_iMenucardCategoryId` = :iFK_iMenucardCategoryId AND `iMenucardItemActive` = '1'");
+                 $sQueryItem->bindValue(':iFK_iMenucardCategoryId', $iFK_iMenucardCategoryId);
+                 
+                 try
+                 {
+                    $x = 0;
+                    $sQueryItem->execute(); 
+                    
+                    while ($rowItem = $sQueryItem->fetch(PDO::FETCH_ASSOC)) 
+                    {
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemName'][$x] = utf8_encode($rowItem['sMenucardItemName']);
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemNumber'][$x] = utf8_encode($rowItem['sMenucardItemNumber']);
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemDescription'][$x] = utf8_encode($rowItem['sMenucardItemDescription']);
+                        $aMenucard['aMenucardCategoryItems'.$i]['iMenucardItemPrice'][$x] = $rowItem['iMenucardItemPrice'];
+                        $x++;
+                    }
+                 }  
+                 catch (PDOException $e)
+                 {
+                     die($e->getMessage()); 
+                 }
+                 
+                 $i++;
+            }
+            
+            //Get restuarent info for the menucard
+            $sQuery = $this->conPDO->prepare("SELECT * FROM `restuarentinfo`
+                                                WHERE `iRestuarentInfoId` = :iFK_RestuarentInfoId LIMIT 1");
+            $sQuery->bindValue(':iFK_RestuarentInfoId', $iFK_RestuarentInfoId);
+            try
+            {
+                $sQuery->execute();             
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $aMenucard['sRestuarentName'] = utf8_encode($aResult['sRestuarentInfoName']);
+            $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
+            $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
+            
+            //var_dump($aMenucard);
+            return $aMenucard;
+        }
+        else
+        {
+            return $aMenucard;
+        }
+        
+    }
+    
     public function AddMenucardInfo () 
     {
         //TODO: Insert menucard info into database
