@@ -1,7 +1,9 @@
 <?php
 //Check if user is logged in
-//sec_session_start(); // Our custom secure way of starting a php session.
-//if(login_check($mysqli) == true) { ?>
+require 'Controllers/SecurityController.php';
+$oSecurityController = new SecurityController();
+$oSecurityController->sec_session_start(); // Our custom secure way of starting a php session.
+if($oSecurityController->login_check() == true) { ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -202,8 +204,9 @@
         
     </body>
 </html>
-<?php //} else {
+<?php } else {
    echo 'You are not authorized to access this page, please login. <br/>';
-//}
+   echo "Login <a href='fakeLogin.php'>here</a> with username: admin and password: admin";
+}
 
 ?>

@@ -2,10 +2,11 @@
 
 class SecurityController 
 {
+    private $conPDO;
     
     public function __construct() 
     {
-
+        
     }
     
     //SECURE SESSION START FUNCTION - run this if you want to use session
@@ -51,26 +52,38 @@ class SecurityController
     
     //CREATE LOGIN CHECK FUNCTION - Logged Status, check if user is loggede in
     //TODO: Change to use PDO
-    public function login_check($mysqli) 
+    public function login_check() 
     {
+       
+        require 'DatabaseController.php';
+        $oDatabase = new DatabaseController();
+        $this->conPDO = $oDatabase->ConnectToDatabase();
+        
        // Check if all session variables are set
-       if(isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) {
+       if(isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) 
+       {
          $user_id = $_SESSION['user_id'];
          $login_string = $_SESSION['login_string'];
-         $username = $_SESSION['username'];
+         //$username = $_SESSION['username'];
          $ip_address = $_SERVER['REMOTE_ADDR']; // Get the IP address of the user. 
          $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
 
-         if ($stmt = $mysqli->prepare("SELECT password FROM members WHERE id = ? LIMIT 1")) { 
-            $stmt->bind_param('i', $user_id); // Bind "$user_id" to parameter.
-            $stmt->execute(); // Execute the prepared query.
-            $stmt->store_result();
+         if ($sQuery = $this->conPDO->prepare("SELECT sUserPassword FROM users WHERE iUserIdHashed = :iUserIdHashed LIMIT 1")) 
+         { 
+            $sQuery->bindValue(':iUserIdHashed', $user_id); // Bind "$user_id" to parameter.
+            $sQuery->execute(); // Execute the prepared query.
 
-            if($stmt->num_rows == 1) { // If the user exists
-               $stmt->bind_result($password); // get variables from result.
-               $stmt->fetch();
+            if($sQuery->rowCount() == 1) 
+            { // If the user exists
+               $aUser = $sQuery->fetch(PDO::FETCH_ASSOC);
+
+               $password = $aUser['sUserPassword']; // get variables from result. The userpassword hashed
+               $password = hash('sha512', $password);
                $login_check = hash('sha512', $password.$ip_address.$user_browser);
-               if($login_check == $login_string) {
+               //echo "login string: ".$login_string;
+               //echo "<br> login check: ".$login_check.'<br>';
+               if($login_check == $login_string) 
+               {
                   // Logged In!!!!
                   return true;
                } else {

@@ -149,7 +149,7 @@ class UserController
         $user_id_hashed = $aUser['iUserIdHashed']; // iUserId hashed
         $user_id =  $aUser['iUserId']; //iUserId
         $username = $aUser['sUsername']; // sUsername
-        $password = hash('sha512', $sUserPassword.$sUserPasswordFromDatabase); // hash the password with the unique password from DB.
+        $password = hash('sha512', $sUserPasswordFromDatabase); // hash the password with the unique password from DB.
         
         
         
