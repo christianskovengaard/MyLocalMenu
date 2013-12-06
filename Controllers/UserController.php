@@ -161,7 +161,7 @@ class UserController
            { 
                 // Account is locked
                 //TODO: Send an email to user saying their account is locked
-                echo 'Account is locked';
+                echo 'Account is locked for 2 hours';
                 return false;
            }
            else

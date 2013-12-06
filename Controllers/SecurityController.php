@@ -31,7 +31,6 @@ class SecurityController
        // All login attempts are counted from the past 2 hours. 
        $valid_attempts = $now - (2 * 60 * 60); 
 
-       //TODO: change to PDO
        if ($sQuery = $conPDO->prepare("SELECT time FROM login_attempts WHERE iFK_iUserId = :iUserId AND time > '$valid_attempts'"))
        { 
           $sQuery->bindValue(':iUserId', $user_id); 
