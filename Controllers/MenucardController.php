@@ -13,6 +13,10 @@ class MenucardController
     public function __construct() 
     {
         
+        require 'DatabaseController.php';
+        $oDatabaseController = new DatabaseController();
+        $this->conPDO = $oDatabaseController->ConnectToDatabase();
+        
         require_once(ROOT_DIRECTORY . '/Classes/bcrypt.php');
         $this->oBcrypt = new Bcrypt();
         
@@ -27,10 +31,7 @@ class MenucardController
         
         require_once(ROOT_DIRECTORY . '/Classes/MenucardInfoClass.php');
         $this->oMenucardInfo = new MenucardInfoClass();
-        
-        require 'DatabaseController.php';
-        $oDatabaseController = new DatabaseController();
-        $this->conPDO = $oDatabaseController->ConnectToDatabase();
+               
         
         if(!isset($_SESSION)) 
         { 

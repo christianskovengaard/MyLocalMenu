@@ -790,3 +790,34 @@ function SubmitForm(formId)
     $( "#"+formId ).submit();
 }
 /* end */
+
+/* Autocomplete inputs */
+
+$(document).ready(function(){
+    
+  //Get all restuarent names
+  
+       $.ajax({
+             type : "GET",
+             url : 'API/api.php',
+             dataType : 'json',
+             data : {sFunction:"GetRestuarentNames"}
+        }).done(function(response){
+
+            $('.autocomplete').autocomplete({
+                delay: 150,
+                source: function(req, responseFn) {
+                    if(req.term.length >= 2){
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp( "^" + re, "i" );
+                    var a = $.grep(response.sRestuarentNames, function(item,index){
+                        return matcher.test(item);
+                    });
+                        responseFn( a );
+                    }
+                }
+            }); 
+     });
+});
+
+/* end */
