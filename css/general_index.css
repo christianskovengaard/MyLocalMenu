@@ -101,14 +101,14 @@ input {
 
 /* ::::::::::::::::: rigister :::::::::::::::::::::  */
 
-.Info03Img { max-width: 1200px; }
-.info03 img { width: 100%; }
-.info03 h2 { color: #b5b5b5; width: 400px; }
+#info03register { background: #bbb url(../img/backpurple.gif); }
+#info03register h1 { color: #333; margin-top: 20px; }
+.info03 h2 { color: #333; width: 400px; }
 
 .info03 input { display: block; margin-bottom: 3px; }
 .info03 .inputFrame { padding-right: 0; display: inline-table; width: 235px; margin-right: 15px;  white-space:normal; 
                       -o-transition:.5s; -ms-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s; }
-.info03 .inputFrameWrapper { vertical-align: top; position: relative; display: block; margin: 0 auto; height: 300px; width: 245px; overflow:hidden; white-space:nowrap; 
+.info03 .inputFrameWrapper { vertical-align: top; position: relative; display: block; margin: 0 auto; height: 300px; width: 255px; overflow:hidden; white-space:nowrap; 
                              -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;}
 .info03 .button01 { float: right; margin-right: 10px; }
 .info03 .button01.prev { float: left; background: #aaa; }

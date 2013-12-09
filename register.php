@@ -36,16 +36,16 @@
             </div>
         </div> -->
         
-        <div class="info03">
+        <div class="info03" id="info03register">
             <div class="wrapper">
                 <h1>Opret dit menukort</h1>
                 <h3>➊➁➂</h3>
                 <div class="inputFrameWrapper">
                     
                         <div class="inputFrame A">
-                            <h5>Opret din bruger</h5>
-                            <input type="text" placeholder="Din email">
-                            <input type="password" placeholder="Kode fra modtaget email">
+                            <h5>Vælge din kode</h5>
+<!--                            <input type="text" placeholder="Din email">
+                            <input type="password" placeholder="Kode fra modtaget email">-->
                             <input type="password" placeholder="Indtast en kode">
                             <input type="password" placeholder="Gentag koden">
                             <div onclick="registerNext(1);" class="button01">næste</div>
