@@ -85,10 +85,10 @@
       var price = $('.DishPrice input').val();
       
       if(Number != ''  && Headline != '' && price !=''){
-          $('.DishNumber input').replaceWith('<h1>'+Number+'</h1>');
-          $('.DishHeadline input').replaceWith('<h1>'+Headline+'</h1>');
-          $('.DishDescription textarea').replaceWith('<h2>'+Description+'</h2>');
-          $('.DishPrice input').replaceWith('<h2>'+price+'</h2>');
+          $('.DishNumber input').parent().html('<h1>'+Number+'</h1>');
+          $('.DishHeadline input').parent().html('<h1>'+Headline+'</h1>');
+          $('.DishDescription textarea').parent().html('<h2>'+Description+'</h2>');
+          $('.DishPrice input').parent().html('<h2>...</h2><h2>'+price+'</h2><h2>kr</h2>');
           $('.SaveMenuDish').fadeOut('normal', function(){ 
               $(this).remove();
               $('.AddLiButton').fadeIn('fast');
@@ -134,8 +134,8 @@
 
       if(listHeadline != ''){
           
-          $('.sortablediv h3 input').replaceWith(listHeadline);
-          $('.sortablediv h4 input').replaceWith(listDescription);
+          $('.sortablediv h3 input').parent().html(listHeadline);
+          $('.sortablediv h4 input').parent().html(listDescription);
           
 
           $('.SaveMenuDish').fadeOut('normal', function(){ 
@@ -162,8 +162,8 @@
 
       if(listHeadline != ''){
           
-          $('.sortablediv h3 input').replaceWith(listHeadline);
-          $('.sortablediv h4 input').replaceWith(listDescription);
+          $('.sortablediv h3 input').parent().html(listHeadline);
+          $('.sortablediv h4 input').parent().html(listDescription);
           
 
           $('.SaveMenuDish').fadeOut('normal', function(){ 
@@ -188,8 +188,8 @@
 
       if(Headline != '' && Description !=''){
           
-          $('.InfoSlide input').replaceWith('<h1>'+Headline+'</h1>');
-          $('.InfoSlide textarea').replaceWith('<h2>'+Description+'</h2>');
+          $('.InfoSlide input').parent().html('<h1>'+Headline+'</h1>');
+          $('.InfoSlide textarea').parent().html('<h2>'+Description+'</h2>');
           
 
           $('.SaveMenuDish').fadeOut('normal', function(){ 
@@ -224,14 +224,21 @@
           $('.EditDish').show();
 }
 
-  function CancelEditMenuDish() {
+  function CancelEditMenuDish() { 
           
+
+          $('#DishNum').parent().html('<h1>'+sessionStorage.number+'</h1>');
+          $('.DishHeadline input').parent().html('<h1>'+sessionStorage.headline+'</h1>');
+          $('.DishDescription textarea').parent().html('<h2>'+sessionStorage.DishDescription+'</h2>');
+          $('.DishPrice input').parent().html('<h2>...</h2><h2>'+sessionStorage.DishPrice+'</h2><h2>kr</h2>');
+
+  
           $('.SaveMenuDish').fadeOut('normal');
           $('.AddLiButton').fadeIn('fast');
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
-          
-          alert('JEG VED IKKE LIGE HVORDAN MAN NEMMENT KOMMER TILBAGE TIL ORGINAL');
+          $('.EditDish').fadeIn();
+
 }
 
   function CancelNewMenuList(id) {
@@ -265,8 +272,8 @@
   function DeleteLiSortable(elem)
   {
       var elem = $(elem).parent().parent();
-      var text = $(elem).text();
-      if (confirm('Ønsker du at slette '+text)) 
+      var text = $(elem).find('.DishHeadline').text();
+      if (confirm('Dette vil slette: '+text)) 
       {
           $(elem).remove();
       }
@@ -274,31 +281,31 @@
   
   function DeleteSortableList(id)
   {
-      var text = $(id).parent().parent().text();
-      if (confirm('Ønsker du at slette '+text+' og alle under punkter?')) {
+      var text = $(id).parent().parent().find('h3').text();
+      if (confirm('Dette vil slette: '+text+' og alle menupunkter ?')) {
           
           $(id).parent().parent().remove();
       }
   } 
   
   function EditSortableList(id){
-  
+         
           var dish = $(id);
           var number = dish.closest('.DishWrapper').children('.DishNumber');
           var numberValue = number.text();
-          number.replaceWith('<div class="DishNumber"><input id="DishNum" type="text" maxlength="4" value="'+numberValue+'"></div>');
+          number.html('<input id="DishNum" type="text" maxlength="4" value="'+numberValue+'">');
 
           var headline = dish.closest('.DishWrapper').children().children('.DishHeadline');
           var headlineValue = headline.text();
-          headline.replaceWith('<div class="DishHeadline"><input type="text" value="'+headlineValue+'"></div>');
+          headline.html('<input type="text" value="'+headlineValue+'">');
 
           var DishDescription = dish.closest('.DishWrapper').children().children('.DishDescription');
           var DishDescriptionValue = DishDescription.text();
-          DishDescription.replaceWith('<div class="DishDescription"><textarea>'+DishDescriptionValue+'</textarea></div>');
+          DishDescription.html('<textarea>'+DishDescriptionValue+'</textarea>');
           
           var DishPrice = dish.closest('.DishWrapper').children('.DishPrice');
           var DishPriceValue = DishPrice.children().eq(1).text();
-          DishPrice.replaceWith('<div class="DishPrice"><h2>...</h2><input type="text" value="'+DishPriceValue+'"><h2>kr</h2></div>');
+          DishPrice.html('<h2>...</h2><input type="text" value="'+DishPriceValue+'"><h2>kr</h2>');
           
           var PriceWidth = 12*DishPriceValue.length;
           $('.DishPrice input').css('width',PriceWidth);
@@ -307,6 +314,17 @@
           $('.DishDescription textarea').autogrow();
     
           $('.EditDish').hide();
+          
+    if(typeof(Storage)!=="undefined"){
+            sessionStorage.number = numberValue;
+            sessionStorage.headline= headlineValue;
+            sessionStorage.DishDescription = DishDescriptionValue;
+            sessionStorage.DishPrice = DishPriceValue;
+    }
+    else
+    {
+      alert("Beklager, Der er en fejl. Du skal hente en nyrere Browser");
+    }
     
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
@@ -321,21 +339,38 @@
           var description = $(id).closest('.sortablediv').children('h4');
           var descriptionText = description.text();
           
-          headline.replaceWith('<h3><input type=text value="'+headlineText+'"></h3>');
+          if(typeof(Storage)!=="undefined"){
+                sessionStorage.headlineHead = headlineText;
+                sessionStorage.descriptionHEAD = descriptionText;
+          }
+          else
+          {
+                alert("Beklager, Der er en fejl. Du skal hente en nyrere Browser");
+          }
+          
+          headline.html('<h3><input id="headEditHeadline" type=text value="'+headlineText+'"></h3>');
           if( descriptionText == "" ){
-            description.replaceWith('<h4><input type=text placeholder="evt ekstra info"></h4>');
+            description.html('<h4><input id="HeadEditDescription" type=text placeholder="evt ekstra info"></h4>');
           }
           else{
-              description.replaceWith('<h4><input type=text value="'+descriptionText+'"></h4>');
+              description.html('<h4><input id="HeadEditDescription" type=text value="'+descriptionText+'"></h4>');
           }
                     
           $('.EditDish').hide();
-    
+          
           $('.AddLiButton').hide();
           $('.newsortablediv').hide();
           $('.newsortabledivbuffer').css('display', 'inline-block');
-          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(this);">✓ Updater</a></div>');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditHeadline();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(this);">✓ Updater</a></div>');
 }
+  function CancelEditHeadline(){
+        $('#headEditHeadline').parent().html(sessionStorage.headlineHead);
+        $('#HeadEditDescription').parent().html(sessionStorage.descriptionHEAD);
+        $('.EditDish').fadeIn();
+        $('.SaveMenuDish').fadeOut();
+        $('.AddLiButton').fadeIn();
+  }
+
 
   function EditInfo(id){
   
@@ -344,8 +379,17 @@
           var description = $(id).closest('.InfoSlide').children('h2');
           var descriptionText = description.text();
           
-          headline.replaceWith('<input type=text value="'+headlineText+'">');
-          description.replaceWith('<textarea>'+descriptionText+'"</textarea>');
+          if(typeof(Storage)!=="undefined"){
+                sessionStorage.headlineInfo = headlineText;
+                sessionStorage.descriptionInfo = descriptionText;
+          }
+          else
+          {
+                alert("Beklager, Der er en fejl. Du skal hente en nyrere Browser");
+          }
+          
+          headline.html('<input id="InfoEditHeadline" type=text value="'+headlineText+'">');
+          description.html('<textarea id="InfoEditDescription">'+descriptionText+'"</textarea>');
           
           $('.InfoSlide textarea').autogrow();
                     
@@ -354,8 +398,17 @@
           $('.AddLiButton').hide();
           $('.newsortablediv').hide();
           $('.newsortabledivbuffer').css('display', 'inline-block');
-          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedInfoToHtml(this);">✓ Updater</a></div>');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuinfo();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedInfoToHtml(this);">✓ Updater</a></div>');
 }
+
+   function CancelEditMenuinfo(){
+       $('#InfoEditHeadline').parent().html(sessionStorage.headlineInfo);
+       $('#InfoEditDescription').parent().html(sessionStorage.descriptionInfo);
+       
+       $('.EditDish').fadeIn();
+       $('.SaveMenuDish').fadeOut();
+       $('.newsortablediv').fadeIn();
+   }
 
   function SaveSortableLists()
   {
