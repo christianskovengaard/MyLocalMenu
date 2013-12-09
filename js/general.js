@@ -506,7 +506,7 @@
 
             //Use viewmenucard.php
             var sRestuarentName = getUrlVars()["sRestuarentName"];
-            //solve æøå problem in IE encodeURIComponent
+            //solve æøå problem in IE encodeURIComponent();
 
             //Get data            
             $.ajax({
