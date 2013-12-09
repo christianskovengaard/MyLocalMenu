@@ -558,7 +558,7 @@
             $('.sortableList').remove();
 
             //Use viewmenucard.php
-            var sRestuarentName = getUrlVars()["sRestuarentName"];
+            var iMenucardSerialNumber = getUrlVars()["iMenucardSerialNumber"];
             //solve æøå problem in IE encodeURIComponent();
 
             //Get data            
@@ -566,7 +566,7 @@
               type: "GET",
               url: "API/api.php",
               dataType: "json",
-              data: {sFunction:"GetMenucardWithRestuarentName",sRestuarentName:sRestuarentName}
+              data: {sFunction:"GetMenucardWithSerialNumber",iMenucardSerialNumber:iMenucardSerialNumber}
              }).done(function(result){
                  if(result.result === true){
 
@@ -867,7 +867,7 @@ function SubmitForm(formId)
 }
 /* end */
 
-/* Autocomplete inputs */
+/* Autocomplete inputs
 
 $(document).ready(function(){
     
@@ -896,4 +896,4 @@ $(document).ready(function(){
      });
 });
 
-/* end */
+ end */
