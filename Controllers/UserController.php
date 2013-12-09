@@ -5,6 +5,7 @@ class UserController
     private $conPDO;
     private $oUser;
     private $oBcrypt;
+    private $oSecurity;
     
     public function __construct() 
     {
@@ -13,13 +14,17 @@ class UserController
         $oDatabaseController = new DatabaseController();
         $this->conPDO = $oDatabaseController->ConnectToDatabase();
         
-        //Initiate the UserClass
-        require './Classes/UserClass.php';
+        
+        //Initiate the UserClass     
+        require_once(ROOT_DIRECTORY . '/Classes/UserClass.php');
         $this->oUser = new User();
         
         //Initiate the Bcrypt class
-        require './Classes/bcrypt.php';
+        require_once(ROOT_DIRECTORY . '/Classes/bcrypt.php');
         $this->oBcrypt = new Bcrypt();
+        
+        require 'SecurityController.php';
+        $this->oSecurity = new SecurityController();
     }
 
 
@@ -132,27 +137,74 @@ class UserController
     public function LogInUser($sUsername,$sUserPassword)
     {
         
-        $sQuery = $this->conPDO->prepare("SELECT sUserPassword FROM users WHERE sUsername = ? LIMIT 1");
+        $sQuery = $this->conPDO->prepare("SELECT sUserPassword,iUserIdHashed,iUserId,sUsername FROM users WHERE sUsername = ? LIMIT 1");
 	$sQuery->bindValue(1, $sUsername);
         
 	$sQuery->execute();
-        
+
 	//Fetch the result as assoc array
         $aUser = $sQuery->fetch(PDO::FETCH_ASSOC);
 	
         $sUserPasswordFromDatabase = $aUser['sUserPassword']; // stored hashed password
+        $user_id_hashed = $aUser['iUserIdHashed']; // iUserId hashed
+        $user_id =  $aUser['iUserId']; //iUserId
+        $username = $aUser['sUsername']; // sUsername
+        $password = hash('sha512', $sUserPasswordFromDatabase); // hash the password with the unique password from DB.
         
-        if($this->oBcrypt->verify($sUserPassword, $sUserPasswordFromDatabase) === true)
-        { // using the verify method to compare the password with the stored hashed password.
-            return true;
-	}
-        else
+        
+        
+        //Check if num result is 1
+        if($sQuery->rowCount() == 1)
         {
-            return false;	
-	}
-    }
+           // We check if the account is locked from too many login attempts
+           if($this->oSecurity->checkbrute($user_id,$this->conPDO) == true)
+           { 
+                // Account is locked
+                //TODO: Send an email to user saying their account is locked
+                echo 'Account is locked for 2 hours';
+                return false;
+           }
+           else
+           {
+                // using the verify method to compare the password with the stored hashed password.
+                if($this->oBcrypt->verify($sUserPassword, $sUserPasswordFromDatabase) === true)
+                { 
+                    //Start a secure session
+                    $this->oSecurity->sec_session_start();
+                    
+                    $ip_address = $_SERVER['REMOTE_ADDR']; // Get the IP address of the user. 
+                    $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
+
+                    //$user_id_hashed = preg_replace("/[^0-9]+/", "", $user_id_hashed); // XSS protection as we might print this value
+                    $_SESSION['user_id'] = $user_id_hashed; 
+                    $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
+                    $_SESSION['username'] = $username;
+                    $_SESSION['login_string'] = hash('sha512', $password.$ip_address.$user_browser);
+                    // Login successful.
+                    return true;
+                }
+                else
+                {
+                    // Password is not correct
+                    // We record this attempt in the database
+                    $now = time();
+                    $sQuery = $this->conPDO->prepare("INSERT INTO login_attempts (iFK_iUserId, time) VALUES (:user_id,:now)");
+                    $sQuery->bindValue(':user_id', $user_id);
+                    $sQuery->bindValue(':now', $now);
+                    $sQuery->execute();
+                    echo 'Login attempt';
+                    return false;	
+                }  
+           }
+        }
+        else 
+        {
+            // No user exists. 
+            echo 'No user';
+            return false;
+        }
+        
+     }
     
 }
-
-
 ?>

@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimun-scale=1.0, initial-scale=1.0" />
         <title>My Local Menu</title>
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css" />
         <link rel="stylesheet" type="text/css" href="css/general_index.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 500px)" href="css/general_index_small.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:501px) and (max-width: 850px)" href="css/general_index_medium.css" />
@@ -13,6 +14,7 @@
         <![endif]-->
         
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
         <script type="text/javascript" src="js/general.js"></script>
         
     </head>
@@ -49,7 +51,7 @@
                 </div>
                 <div class="inputFrame">
                     <form method="GET" action="viewmenucard.php" id="FindMenucardForm">
-                        <input type="text" name="iMenucardSerialNumber" placeholder="Find Menukort">                   
+                        <input type="text" name="sRestuarentName" placeholder="Find Menukort" class="autocomplete">                   
                         <div onclick="SubmitForm('FindMenucardForm')" class="FindMenuImg"><img src="img/search.JPG"></div>
                     </form>
                 </div>

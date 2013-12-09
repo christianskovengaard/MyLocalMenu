@@ -473,6 +473,8 @@
   
   /* Sortable list functions end */
 
+
+
   /* GetMenucard function */
   
   function getUrlVars() 
@@ -487,9 +489,7 @@
    
   function GetMenucard(isAdmin)
   {
-     if($('#iMenucardSerialNumber').val() !== '')
-     {
-        //isAdmin is used to see the if user is logged in or not
+        //isAdmin is used to see if the user is logged in or not
         //If the user is logged in then use the admin.php
         //If the user is NOT logged in then use the viewmenucard.php
 
@@ -505,14 +505,15 @@
             $('.sortableList').remove();
 
             //Use viewmenucard.php
-            var iMenucardSerialNumber = getUrlVars()["iMenucardSerialNumber"];
+            var sRestuarentName = getUrlVars()["sRestuarentName"];
+            //solve æøå problem in IE encodeURIComponent
 
             //Get data            
             $.ajax({
               type: "GET",
               url: "API/api.php",
               dataType: "json",
-              data: {sFunction:"GetMenucardWithSerialNumber",iMenucardSerialNumber:iMenucardSerialNumber}
+              data: {sFunction:"GetMenucardWithRestuarentName",sRestuarentName:sRestuarentName}
              }).done(function(result){
                  if(result.result === true){
 
@@ -664,13 +665,16 @@
              
 
         }
-     }
-  }
-  
+  }  
   /* GetMenucard function end*/
   
-  function HideShowSwitch(CaseName) {
 
+
+
+
+  
+  function HideShowSwitch(CaseName) {
+     
      switch(CaseName)
      {
         case 'PopUpWindowEditManuInfo':
@@ -699,6 +703,7 @@
      }
 }
    
+
   function GetMenucardWithSerialNumber()
     {
        
@@ -807,4 +812,35 @@ function SubmitForm(formId)
 {
     $( "#"+formId ).submit();
 }
+/* end */
+
+/* Autocomplete inputs */
+
+$(document).ready(function(){
+    
+  //Get all restuarent names
+  
+       $.ajax({
+             type : "GET",
+             url : 'API/api.php',
+             dataType : 'json',
+             data : {sFunction:"GetRestuarentNames"}
+        }).done(function(response){
+
+            $('.autocomplete').autocomplete({
+                delay: 150,
+                source: function(req, responseFn) {
+                    if(req.term.length >= 2){
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp( "^" + re, "i" );
+                    var a = $.grep(response.sRestuarentNames, function(item,index){
+                        return matcher.test(item);
+                    });
+                        responseFn( a );
+                    }
+                }
+            }); 
+     });
+});
+
 /* end */
