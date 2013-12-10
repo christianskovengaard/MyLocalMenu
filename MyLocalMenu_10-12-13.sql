@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.33)
 # Database: MyLocalMenu
-# Generation Time: 2013-11-19 12:36:14 +0000
+# Generation Time: 2013-12-10 11:43:05 +0000
 # ************************************************************
 
 
@@ -74,6 +74,32 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table login_attempts
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `login_attempts`;
+
+CREATE TABLE `login_attempts` (
+  `iFK_iUserId` int(11) NOT NULL,
+  `time` varchar(30) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `login_attempts` WRITE;
+/*!40000 ALTER TABLE `login_attempts` DISABLE KEYS */;
+
+INSERT INTO `login_attempts` (`iFK_iUserId`, `time`)
+VALUES
+	(1,'1386246383'),
+	(1,'1386246400'),
+	(1,'1386246406'),
+	(1,'1386246412'),
+	(1,'1386246419'),
+	(1,'1386246428');
+
+/*!40000 ALTER TABLE `login_attempts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Dump of table menucard
 # ------------------------------------------------------------
 
@@ -94,10 +120,7 @@ LOCK TABLES `menucard` WRITE;
 
 INSERT INTO `menucard` (`iMenucardId`, `sMenucardName`, `iMenucardIdHashed`, `iMenucardActive`, `iMenucardSerialNumber`, `iFK_iRestuarentInfoId`)
 VALUES
-	(1,'Menukort navn','$2y$12$03127701752701037b018OLdzfJhmmQVUwBNlzRfr8G4ajnfBR1MO',1,'AA0001',1),
-	(2,'Menukort navn','$2y$12$1576874065270107f1df9ulXvy.5kPZeQvMJADDvzt5JEoJ.nY7Wy',1,NULL,1),
-	(3,'Menukort navn','$2y$12$6604717163527010bebfaurHVFoBoHtlQtVxjb1veU8Y5GQHC1yk2',1,NULL,1),
-	(4,'Menukort navn','$2y$12$7185088167527010f565butujYl1fPJhKLibCo7YplkqHj5H1K5aq',1,NULL,1);
+	(1,'Menukort navn HARDCODED','$2y$12$9310397815528e17234eeuCpTkBF3tSkwm9cSm83Td0uSsCiDsVPy',1,'AA0001',1);
 
 /*!40000 ALTER TABLE `menucard` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -123,9 +146,8 @@ LOCK TABLES `menucardcategory` WRITE;
 INSERT INTO `menucardcategory` (`iMenucardCategoryId`, `sMenucardCategoryName`, `sMenucardCategoryDescription`, `iMenucardCategoryActive`, `iFK_iMenucardId`)
 VALUES
 	(1,'Liste 1','Beskrivelse',1,1),
-	(2,'Liste 2','Beskrivelse 2',1,1),
-	(3,'Liste 1','Beskrivelse',1,3),
-	(4,'Liste 1','Beskrivelse',1,4);
+	(2,'liste 2h','jhkjhkjh',1,1),
+	(3,'er','sdsdsdsd',1,1);
 
 /*!40000 ALTER TABLE `menucardcategory` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -150,8 +172,8 @@ LOCK TABLES `menucardinfo` WRITE;
 
 INSERT INTO `menucardinfo` (`iMenucardInfoId`, `sMenucardInfoHeadline`, `sMenucardInfoParagraph`, `iFK_iMenucardId`, `iMenucardInfoActive`)
 VALUES
-	(1,'Vi er byens bedste pizza bager','Vi har mere end 10 aars erfaring i at bage pizza. Derfor er vi bare de bedste',1,1),
-	(2,'Her er mere ingo','Dette er mere tekst',1,1);
+	(1,'Vi laver firmaaftaler og mad til receptioner','Spydstegte franske kyllinger i ægte rotisserie-over, salatbar, sandwich, bagte kartofter, bigger fries, flødekartofler, biggerfries, flødekartofler, ovnbagte kartofler i kyllingefond, aioli, coleslaw, tzatziki, hjemmelavede saucer, marinader, dressinger',1,1),
+	(2,'Take-away røtisserie','Vi får leveret friske franske kyllinger. Disse bliver marineret i hjemmelavet lage og langtidsstegte i røstisserie-ovne, hvor hovedparten af fedtet steges væk. Der er altså tale om et produkt, som er lækkert og med saftig smag. Vi er leveringdygtige til en',1,1);
 
 /*!40000 ALTER TABLE `menucardinfo` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -178,14 +200,10 @@ LOCK TABLES `menucarditem` WRITE;
 
 INSERT INTO `menucarditem` (`iMenucardItemId`, `sMenucardItemName`, `sMenucardItemNumber`, `sMenucardItemDescription`, `iMenucardItemPrice`, `iMenucardItemActive`, `iFK_iMenucardCategoryId`)
 VALUES
-	(1,'Pizza Hawaii','1','asdasdasd',65,1,1),
-	(2,'Pizza Meatlover','2','asdasdsad',105,1,1),
-	(3,'Pizza Hawaii 2','1','dfdfdf',65,1,2),
-	(4,'Pizza Meatlover 2','2','ewrwer',105,1,2),
-	(5,'Burger 1','1','cvbcvb',65,1,1),
-	(6,'Ost 2','2','asdasdasd',105,1,2),
-	(7,'Pizza Hawaii','1','Tomat, ost, ananas &amp; skinke',65,1,4),
-	(8,'Pizza Meatlover','2','Tomat, ost, peproni, bacon, pølse, ris, tun, gryderet, smør &amp; skinke',105,1,4);
+	(1,'Pizza Hawaii','1','Tomat, ost, ananas &amp; skinke',65,1,1),
+	(2,'Pizza Meatlover','2','Tomat, ost, peproni, bacon, pølse, ris, tun, gryderet, smør &amp; skinke',105,1,1),
+	(3,'sdasd','12','sdsd',12,1,2),
+	(4,'dfsfsdf','232','dsfsfd',4,1,3);
 
 /*!40000 ALTER TABLE `menucarditem` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -211,7 +229,9 @@ LOCK TABLES `openinghours` WRITE;
 INSERT INTO `openinghours` (`iOpeningHoursId`, `iFK_iMenucardId`, `iFK_iDayId`, `iFK_iTimeFromId`, `iFK_iTimeToId`)
 VALUES
 	(1,1,1,25,46),
-	(2,1,2,20,48);
+	(2,1,2,20,48),
+	(3,1,4,10,14),
+	(4,1,5,5,10);
 
 /*!40000 ALTER TABLE `openinghours` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -228,15 +248,19 @@ CREATE TABLE `restuarentinfo` (
   `sRestuarentInfoPhone` varchar(256) DEFAULT NULL,
   `sRestuarentInfoAddress` varchar(256) DEFAULT NULL,
   `iFK_iCompanyInfoId` int(11) DEFAULT NULL,
+  `iRestuarentInfoActive` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`iRestuarentInfoId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `restuarentinfo` WRITE;
 /*!40000 ALTER TABLE `restuarentinfo` DISABLE KEYS */;
 
-INSERT INTO `restuarentinfo` (`iRestuarentInfoId`, `sRestuarentInfoName`, `sRestuarentInfoPhone`, `sRestuarentInfoAddress`, `iFK_iCompanyInfoId`)
+INSERT INTO `restuarentinfo` (`iRestuarentInfoId`, `sRestuarentInfoName`, `sRestuarentInfoPhone`, `sRestuarentInfoAddress`, `iFK_iCompanyInfoId`, `iRestuarentInfoActive`)
 VALUES
-	(1,'Ali Pizza','12345678','Testvej 123',1);
+	(1,'Ali Pizza','12345678','Testvej 123',1,1),
+	(2,'A Burger joint','87654321','Nyvej 321',2,1),
+	(3,'Alle veje pizza','12121212','Gheudfo 23',3,1),
+	(4,'A est','6736253','Gdsudf 4',4,1);
 
 /*!40000 ALTER TABLE `restuarentinfo` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -262,7 +286,10 @@ LOCK TABLES `takeaway` WRITE;
 INSERT INTO `takeaway` (`iTakeAwayId`, `iFK_iMenucardId`, `iFK_iDayId`, `iFK_iTimeFromId`, `iFK_iTimeToId`)
 VALUES
 	(1,1,1,25,46),
-	(2,1,2,30,48);
+	(2,1,2,30,48),
+	(3,1,4,10,14),
+	(4,1,5,10,16),
+	(5,1,3,10,16);
 
 /*!40000 ALTER TABLE `takeaway` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -348,8 +375,8 @@ CREATE TABLE `users` (
   `sUsername` varchar(256) COLLATE utf8_danish_ci NOT NULL DEFAULT '',
   `sUserPassword` varchar(256) COLLATE utf8_danish_ci NOT NULL DEFAULT '',
   `iUserRole` int(11) NOT NULL,
-  `iUserIdHashed` int(11) DEFAULT NULL,
-  `iUserActive` int(11) DEFAULT NULL,
+  `iUserIdHashed` varchar(256) COLLATE utf8_danish_ci DEFAULT NULL,
+  `iUserActive` int(11) DEFAULT '1',
   `iFK_iCompanyId` int(11) DEFAULT NULL,
   PRIMARY KEY (`iUserId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci;
@@ -359,7 +386,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`iUserId`, `sUsername`, `sUserPassword`, `iUserRole`, `iUserIdHashed`, `iUserActive`, `iFK_iCompanyId`)
 VALUES
-	(1,'OleBole','123456',1,NULL,1,1);
+	(1,'admin','$2y$12$539624240529cf1f00395OsHrpz/in8hbqiMVBMYZR4zLFoQD2Q6y',1,'$2y$12$8016158251529cf1f1721uMhHVwzZBEnDpbni1hAu.lC3.5IT665i',1,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
