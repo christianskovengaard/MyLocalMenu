@@ -55,6 +55,7 @@
                 <div class="menuWrapperInner" id="wrapper">
                     <div>                        
 <!--                        <input type="button" value="Gem lister" onclick="SaveSortableLists();"/>-->
+                        <input type="button" value="Opdater menukort" onclick="UpdateMenucard();"/>
                         <!--<div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Rediger Menukort</div>-->
                     </div>
                     <div class="sortablediv" id='restuarantInfo'>                       
