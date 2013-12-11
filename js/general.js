@@ -410,6 +410,16 @@
        $('.newsortablediv').fadeIn();
    }
 
+  function UpdateMenucard()
+  {
+     $('#EditMenuButton').text('');
+      $('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\');"><img src="img/edit.png">Menukort</div>');
+                   
+      $(".DishEditWrapper").slideUp(100);
+      $(".AddLiButton").slideUp(100);
+      $(".newsortablediv").slideUp(100); 
+  }
+    
   function SaveSortableLists()
   {
       $('#EditMenuButton').text('');

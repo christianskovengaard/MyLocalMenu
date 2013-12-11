@@ -475,10 +475,9 @@ class MenucardController
             {
                die($e->getMessage()); 
             }
-            
-            return $aMenucard;
-            
+                   
         }
+        return $aMenucard;
     }
     
     public function ActivateMenucard ()
@@ -505,10 +504,9 @@ class MenucardController
             {
                die($e->getMessage()); 
             }
-            
-            return $aMenucard;
-            
+ 
         }
+        return $aMenucard;
     }
     
     public function GetMenucard ()
