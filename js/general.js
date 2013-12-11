@@ -551,6 +551,141 @@
         {
             //Use admin.php
             //TODO: Get data show with mustache templates
+            //TODO: Maybe pass the login string for security
+             //Get data            
+            $.ajax({
+              type: "GET",
+              url: "API/api.php",
+              dataType: "json",
+              data: {sFunction:"GetMenucardAdmin"}
+             }).done(function(result){
+                 if(result.result === true){
+
+                      //Load the template restuarentinfo_viewmenucard.html into viewmenucard.php
+                      $("#mustache_template").load( "mustache_templates/restuarentinfo_admin.html",function(){
+
+                          var restuarent = {
+                              sRestuarentName: result.sRestuarentName,
+                              sRestuarentInfoDescription: "Felt mangler",
+                              sRestuarentPhone: result.sRestuarentPhone,
+                              sRestuarentAddress: result.sRestuarentAddress,
+                              sRestuarentOpenningHoursToday: result.sRestuarentOpenningHoursToday,
+                              openNow: result.openNow,
+                              sRestuarentTakeAwayHoursToday: result.sRestuarentTakeAwayHoursToday,
+                              takeOutNow: result.takeOutNow
+                          };
+                          //Load template and show
+                          var template = $('#restuarentinfo_admin').html();
+                          var html = Mustache.to_html(template, restuarent);
+                          $('.RestaurantInfo').html(html);
+
+                      });
+                      
+
+                      //Show the menucardinfo //TODO: Get the openinig hours and takeaway hours
+                      $("#mustache_template").load( "mustache_templates/menucardinfo_admin.html",function(){
+
+                          var menucardinfo = {
+                              info: [],
+                              openinghours: [],
+                              takeawayhours: []
+                          };
+
+                          //Foreach menucardinfo insert into the menucarcardinfo
+                          $.each(result.aMenucardInfo, function(key,value){
+                              var obj = {
+                                  headline: value.sMenucardInfoHeadline,
+                                  text: value.sMenucardInfoParagraph
+                              };
+                              //Append the obj to the menucardinfo obj
+                              menucardinfo.info.push(obj);
+                          });
+
+                          //Foreach OpeningHours insert into the menucarcardinfo
+                          $.each(result.aMenucardOpeningHours, function(key,value){
+                              var obj = {
+                                  sDayName: value.sDayName,
+                                  iTimeFrom: value.iTimeFrom,
+                                  iTimeTo: value.iTimeTo
+                              };
+
+                              //Append the obj to the openinghours obj
+                              menucardinfo.openinghours.push(obj);
+                          });
+
+                          //Foreach TakeAwayHours insert into the menucarcardinfo
+                          $.each(result.aMenucardTakeAwayHours, function(key,value){
+                              var obj = {
+                                  sDayName: value.sDayName,
+                                  iTimeFrom: value.iTimeFrom,
+                                  iTimeTo: value.iTimeTo
+                              };
+                              //Append the obj to the takeawayhours obj
+                              menucardinfo.takeawayhours.push(obj);
+                          }); 
+
+                          var template = $('#menucardinfo_admin').html();
+                          var html = Mustache.to_html(template, menucardinfo);
+                          $('#restuarantInfo').html(html);
+                      });
+
+                      //Show the menucard categories and items
+                      $("#mustache_template").load( "mustache_templates/menucard_admin.html",function(){
+
+                          var menucards = {
+                              menucard: []
+                          };
+
+                          //Foreach menucard insert into the menucarcardinfo
+                          $.each(result.aMenucardCategory, function(key,value){
+
+                              //alert('liste index: '+key);
+                              var category = {
+                                  sMenucardCategoryName: value.sMenucardCategoryName,
+                                  sMenucardCategoryDescription: value.sMenucardCategoryDescription,
+                                  iMenucardCategoryId: value.iMenucardCategoryId,
+                                  items:[]
+                              };                                                       
+
+                              //Get all the items and the values name,desc,number,price
+                              $.each(result['aMenucardCategoryItems'+key].sMenucardItemName, function(keyItem,value){
+
+                                  var sMenucardItemName = value;
+                                  var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
+                                  var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
+                                  var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
+
+                                  var item = {
+                                      sMenucardItemName: sMenucardItemName,
+                                      sMenucardItemDescription: sMenucardItemDescription,
+                                      sMenucardItemNumber: sMenucardItemNumber,
+                                      iMenucardItemPrice: iMenucardItemPrice
+                                  };
+
+                                  //Append the item to the items in the category obj
+                                  category.items.push(item);
+                              });
+
+                              //Append the category obj to the menucard obj
+                              menucards.menucard.push(category);
+
+                          });
+
+                          var template = $('#menucard_admin').html();
+                          var html = Mustache.to_html(template, menucards);
+                          $('#restuarantInfo').after(html);
+                          
+                          //Function to initiate all sortable lists 
+                          UpdateSortableLists(); 
+                      });  
+                                          
+                      
+                      
+                }else{
+                    
+                    $('#restuarantInfo').html('Der kunne ikke findes noget menukort');
+                }
+             });
             
         }else{
 
@@ -708,7 +843,7 @@
                           var template = $('#menucard_viewmenucard').html();
                           var html = Mustache.to_html(template, menucards);
                           $('#restuarantInfo').after(html);
-                      });
+                      });                      
                 }else{
                     
                     $('#restuarantInfo').html('Der kunne ikke findes noget menukort');

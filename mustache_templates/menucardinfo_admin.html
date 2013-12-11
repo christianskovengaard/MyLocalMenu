@@ -1,2 +1,31 @@
 <script id="menucardinfo_admin" type="text/template">
+    <h3>Info</h3>
+    <div class="InfoSlide top">
+        <div class="InfoSlidebox">
+            <h3>Åbningstider</h3>
+            {{#openinghours}}
+            <h4>{{sDayName}} {{iTimeFrom}}-{{iTimeTo}}</h4>
+            {{/openinghours}}
+        </div>
+        <div class="InfoSlidebox">
+            <h3>Udbrigning</h3>
+            {{#takeawayhours}}
+            <h4>{{sDayName}} {{iTimeFrom}}-{{iTimeTo}}</h4>
+            {{/takeawayhours}}
+        </div>
+        <div class="InfoSlidebox">
+            <h3>Smileys</h3>
+        </div>
+    </div>
+    {{#info}}
+    <div class="InfoSlide">   
+        <h1>{{headline}}</h1>
+        <h2>{{text}}</h2>
+        <div class="DishEditWrapper">
+            <div class="EditDish" onclick="EditInfo(this)"><img src="img/edit.png"></div>
+            <div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div>
+        </div>
+    </div>
+    {{/info}}
+    <div Class="AddLiButton info" onclick="CreateNewDivresturanatInfo()"><h5>+</h5></div>
 </script>    

@@ -1,2 +1,34 @@
 <script id="menucard_admin" type="text/template">
+    {{#menucard}}
+    <div class="sortablediv sortableList">                  
+    <h3>{{sMenucardCategoryName}}</h3>
+    <h4>{{sMenucardCategoryDescription}}</h4>
+    <div class="DishEditWrapper">
+        <div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div>
+        <div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div>
+    </div>
+    <ul id="sortable{{iMenucardCategoryId}}" class="connectedSortable">
+        {{#items}}
+        <li class="sortableLi">
+            <div class="DishWrapper">    
+                <div class="DishNumber"><h1>{{sMenucardItemNumber}}</h1></div>
+                <div class="DishText">
+                    <div class="DishHeadline"><h1>{{sMenucardItemName}}</h1></div>
+                    <div class="DishDescription"><h2>{{sMenucardItemDescription}}</h2></div>
+                </div>
+                <div class="DishPrice"><h2>...</h2><h2>{{iMenucardItemPrice}}</h2><h2>kr</h2></div>
+                <div class="DishEditWrapper">
+                    <div class="moveDish"><img src="img/moveIcon.png"></div>
+                    <div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div>
+                    <div class="DeleteDish" onclick="DeleteLiSortable(this);"><p>╳</p></div>
+                </div> 
+            </div>
+        </li>
+        {{/items}}
+        <li onclick="CreateNewLiInSortableList('sortable{{iMenucardCategoryId}}')" class="AddLiButton non-dragable">
+            <h5>+</h5>
+        </li>
+    </ul>
+    </div>
+    {{/menucard}}
 </script>    
