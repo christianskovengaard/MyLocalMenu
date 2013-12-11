@@ -37,6 +37,16 @@ class Bcrypt
 		/* Return */
 		return $hash;
 	}
+        
+        public function genRandId($Id)
+        {
+            $id = uniqid().$Id;
+            $hash = $id;
+            
+           $hash = crypt($hash);
+		/* Return */
+		return $id; 
+        }
 	
 	/* Verify Password */
 	public function verify($password, $existingHash) 
