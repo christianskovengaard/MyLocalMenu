@@ -37,12 +37,14 @@ class MenucardController
         $this->oSecurityController = new SecurityController();
         
     }
+    
     //Add a Menucard If there are not previous menucards
     public function AddMenucard () 
     {                               
         if(isset($_GET['sJSONMenucard']))
         {
             
+            //TODO: Change this 
             //Get the iCompanyId based user logged in
             //$iCompanyId = $_SESSION['iCompanyId'];
             $iCompanyId = '1';
@@ -144,7 +146,23 @@ class MenucardController
                 try
                 {
                     $sQuery->execute();
-                    $iMenucardCategoryId = $this->conPDO->lastInsertId();                                                   
+                    $iMenucardCategoryId = $this->conPDO->lastInsertId();
+                    
+                    $iMenucardCategoryHashedId = $this->oBcrypt->genRandId($iMenucardCategoryId);
+
+                    $sQuery = $this->conPDO->prepare("UPDATE menucardcategory SET iMenucardCategoryIdHashed = ? WHERE iMenucardCategoryId = ? LIMIT 1");
+
+                    $sQuery->bindValue(1, $iMenucardCategoryHashedId);
+                    $sQuery->bindValue(2, $iMenucardCategoryId);
+
+                    try
+                    {
+                        $sQuery->execute();
+                    }
+                    catch (PDOException $e)
+                    {
+                       die($e->getMessage()); 
+                    }
                 }
                 catch (PDOException $e)
                 {
@@ -229,7 +247,208 @@ class MenucardController
     
     public function UpdateMenucard ()
     {
-        
+        if(isset($_GET['sJSONMenucard']))
+        {
+            
+            //TODO: Change this, Get the iCompanyId based user logged in
+            //$iCompanyId = $_SESSION['iCompanyId'];
+            $iCompanyId = '1';
+            
+            //Get the $iRestuarentInfoId based on the $iCompanyId
+            $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo WHERE iFK_iCompanyInfoId = :iCompanyId LIMIT 1");
+                
+            $sQuery->bindValue(':iCompanyId', $iCompanyId);
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $iRestuarentInfoId = $aResult['iRestuarentInfoId'];
+            
+            try
+            {
+                $sQuery->execute();
+            }
+            catch (PDOException $e)
+            {
+               die($e->getMessage()); 
+            }
+            
+            //Get the JSON string
+            $sJSONMenucard = $_GET['sJSONMenucard'];
+            //Convert the JSON string into an array
+            $aJSONMenucard = json_decode($sJSONMenucard);
+            
+            //Get MenucardIdHashed
+            $MenucardIdHashed = $aJSONMenucard->iMenucardIdHashed;
+            //Get MenucardName
+            $sMenucardName = $aJSONMenucard->sMenucardname;
+            
+            //Set the MenucardClass
+            $this->oMenucard->SetMenucard($sMenucardName);
+            
+            //Update menucard name and description
+            $sQuery = $this->conPDO->prepare("UPDATE menucard SET sMenucardName = :sMenucardName WHERE iMenucardIdHashed = :iMenucardIdHashed");
+            
+            //Get the menucard
+            $oMenucard = $this->oMenucard->GetMenucard();
+            
+
+            //Bind the values to the ? signs
+            $sQuery->bindValue(':sMenucardName', $oMenucard->sMenucardName);
+            $sQuery->bindValue(':iMenucardIdHashed', $MenucardIdHashed);
+            
+            //Execute the query
+            try
+            {
+                $sQuery->execute();
+            }
+            catch(PDOException $e)
+            {
+                die($e->getMessage());
+            }
+            
+            
+            //Check for which Categories should be deleted, if a category is deleted then delete all the items from that category
+            
+            //Get all categories from database
+            $MenucardCategoriesFromDB = array();
+            $sQuery = $this->conPDO->prepare("SELECT menucardcategory.iMenucardCategoryId FROM menucardcategory
+                                                INNER JOIN menucard
+                                                ON menucard.iMenucardId = menucardcategory.iFK_iMenucardId
+                                                WHERE menucard.iMenucardIdHashed = :iMenucardIdHashed");
+            $sQuery->bindValue(':iMenucardIdHashed', $MenucardIdHashed);
+            
+            while( $aResult = $sQuery->fetch(PDO::FETCH_ASSOC))
+            {
+                $MenucardCategoriesFromDB[] = $aResult['iMenucardCategoryId'];
+            }
+            
+            var_dump($MenucardCategoriesFromDB);
+            
+            //Get all categories from $aJSONMenucard
+                    
+            //Compare the two arrays
+                    
+            //Delete all the categories that are in the database array but not in the ajaxcall array 
+                    
+            
+            //If a there is a new category then insert it
+           
+            //Used hashed id when updating menucard
+            
+            
+            
+            
+            
+            /*
+             
+            //Get the number of MenucardCategories
+            $iNumberOfMenucardCategories = $aJSONMenucard->iLastIndexofMenucardCategories;
+            
+            //Get the first MenucardCategory from MenuCard
+            for($iCategoryIndex=0;$iNumberOfMenucardCategories >= $iCategoryIndex;$iCategoryIndex++)
+            {
+                $sMenucardCategoryName = utf8_decode($aJSONMenucard->$iCategoryIndex->sMenucardCategoryName);
+                //$sMenucardCategoryId = $aJSONMenucard[$iCategoryIndex][''];
+                $sMenucardCategoryDescription = utf8_decode($aJSONMenucard->$iCategoryIndex->sMenucardCategoryDescription);
+                
+                //Set the MenucardCategoryClass
+                $this->oMenucardCategory->SetMenucardCategory($sMenucardCategoryName, $sMenucardCategoryDescription);
+                
+                //Update all the MenucardCategory
+                $sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory (sMenucardCategoryName,sMenucardCategoryDescription,iFK_iMenucardId) VALUES (?,?,?)");
+                
+                //$sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory (sMenucardCategoryName,sMenucardCategoryDescription,iFK_iMenucardId) VALUES (?,?,?)");
+                
+                //Get the Menucard Category
+                $oMenucardCategory = $this->oMenucardCategory->GetMenucardCategory();
+                
+                $sQuery->bindValue(1, $oMenucardCategory->sMenucardCategoryName);
+                $sQuery->bindValue(2, $oMenucardCategory->sMenucardCategoryDescription);
+                $sQuery->bindValue(3, $iMenucardId);
+                
+                try
+                {
+                    $sQuery->execute();
+                    $iMenucardCategoryId = $this->conPDO->lastInsertId();                                                   
+                }
+                catch (PDOException $e)
+                {
+                   die($e->getMessage()); 
+                }
+                         
+                
+                //Get last index of MenucardItem from the MenucardCategory array
+                $iLastMenucardItemIndex = $aJSONMenucard->$iCategoryIndex->iLastMenucardItemIndex;
+
+                //Get all the MenucardItems
+                for($i=0;$iLastMenucardItemIndex >= $i;$i++)
+                { 
+                    $sMenucardItemName = utf8_decode($aJSONMenucard->$iCategoryIndex->$i->sTitle);
+                    //$iMenucardItemId = $aJSONMenucard[$iCategoryIndex][$i][''];
+                    $sMenucardItemNumber = utf8_decode($aJSONMenucard->$iCategoryIndex->$i->iNumber);
+                    $sMenucardItemDescription = utf8_decode($aJSONMenucard->$iCategoryIndex->$i->sDescription);                    
+                    $iMenucardItemPrice = $aJSONMenucard->$iCategoryIndex->$i->iPrice;
+                    
+                    //Set the MenucardItemClass
+                    $this->oMenucardItem->SetMenucardItem($sMenucardItemName, $sMenucardItemNumber, $iMenucardItemPrice, $sMenucardItemDescription);
+                    
+                    
+                    //Get the menucarditem
+                    $oMenucardItem = $this->oMenucardItem->GetMenucardItem();
+                    
+                    //Insert the menucarditem. remember to use the FK ffor menucardcetegory
+                    $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iFK_iMenucardCategoryId) VALUES (?,?,?,?,?)");
+                    $sQuery->bindValue(1, $oMenucardItem->sMenucardItemName);
+                    $sQuery->bindValue(2, $oMenucardItem->sMenucardItemNumber);               
+                    $sQuery->bindValue(3, $oMenucardItem->sMenucardItemDescription);
+                    $sQuery->bindValue(4, $oMenucardItem->iMenucardItemPrice);
+                    $sQuery->bindValue(5, $iMenucardCategoryId);
+                    
+                    try
+                    {
+                        $sQuery->execute();                                                     
+                    }
+                    catch (PDOException $e)
+                    {
+                       die($e->getMessage()); 
+                    }
+                }
+            
+            }
+            
+            //Get last index of menucardinfo
+            $iLastIndexOfmenucardinfo = $aJSONMenucard->menucardinfo->iLastIndexOfmenucardinfo;
+            //Get all the MenucardInfo
+            for($i=1;$iLastIndexOfmenucardinfo >= $i;$i++)
+            {
+                $sMenucardInfoHeadline = utf8_decode($aJSONMenucard->menucardinfo->$i->headline);
+                $sMenucardInfoParagraph = utf8_decode($aJSONMenucard->menucardinfo->$i->text);
+
+                //Set the MenucardInfoClass
+                $this->oMenucardInfo->SetMenucardInfo($sMenucardInfoHeadline, $sMenucardInfoParagraph, $iMenucardId);
+
+
+                //Get the menucardinfo
+                $oMenucardInfo = $this->oMenucardInfo->GetMenucardInfo();
+
+                //Insert the menucarditem. remember to use the FK ffor menucardcetegory
+                $sQuery = $this->conPDO->prepare("INSERT INTO menucardinfo (sMenucardInfoHeadline,sMenucardInfoParagraph,iFK_iMenucardId) VALUES (:sMenucardInfoHeadline,:sMenucardInfoParagraph,:iFK_iMenucardId)");
+                $sQuery->bindValue(':sMenucardInfoHeadline', $oMenucardInfo->sMenucardInfoHeadline);
+                $sQuery->bindValue(':sMenucardInfoParagraph', $oMenucardInfo->sMenucardInfoParagraph);
+                $sQuery->bindValue(':iFK_iMenucardId', $oMenucardInfo->iFK_iMenucardId);
+
+                try
+                {
+                    $sQuery->execute();                                                     
+                }
+                catch (PDOException $e)
+                {
+                   die($e->getMessage()); 
+                }
+            }  
+             
+             */
+                       
+        }
+        return true;
     }
     
     public function DeactivateMenucard ()
@@ -883,7 +1102,7 @@ class MenucardController
             {
                 $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryName'] = utf8_encode($row['sMenucardCategoryName']);
                 $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryDescription'] = utf8_encode($row['sMenucardCategoryDescription']);
-                $aMenucard['aMenucardCategory'][$i]['iMenucardCategoryId'] = $row['iMenucardCategoryId'];
+                $aMenucard['aMenucardCategory'][$i]['iMenucardCategoryIdHashed'] = $row['iMenucardCategoryIdHashed'];
                 $iFK_iMenucardCategoryId = $row['iMenucardCategoryId'];
 
                 
