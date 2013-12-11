@@ -434,8 +434,8 @@
           var aList = {};
           //sMenucardCategoryName
           aList['sMenucardCategoryName'] = $(this).children(":first").html();
-          //iId
-          aList['iId'] = $(this).attr('id');          
+          //iMenucardCategoryIdHashed
+          aList['iId'] = $(this).children("input[type='hidden']:first").val(); //$(this).attr('id');          
           //sMenucardCategoryDescription
           aList['sMenucardCategoryDescription'] = $(this).children().eq(1).html(); 
           
@@ -643,7 +643,7 @@
                               var category = {
                                   sMenucardCategoryName: value.sMenucardCategoryName,
                                   sMenucardCategoryDescription: value.sMenucardCategoryDescription,
-                                  iMenucardCategoryId: value.iMenucardCategoryId,
+                                  iMenucardCategoryIdHashed: value.iMenucardCategoryIdHashed,
                                   items:[]
                               };                                                       
 
@@ -872,7 +872,7 @@
         case 'HideSortableEdits':
             
             $('#EditMenuButton').text('');
-            $('#EditMenuButton').append('<div class="buttonEdit Save" onclick="SaveSortableLists();">✓ Gem menukort</div>')
+            $('#EditMenuButton').append('<div class="buttonEdit Save" onclick="UpdateMenucard();">✓ Gem menukort</div>')
             $(".DishEditWrapper").slideDown(100);
             $(".AddLiButton").slideDown(100);
             $(".newsortablediv").css('display','inline-table').slideDown(100);

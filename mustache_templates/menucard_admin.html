@@ -7,7 +7,8 @@
         <div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div>
         <div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div>
     </div>
-    <ul id="sortable{{iMenucardCategoryId}}" class="connectedSortable">
+    <input type="hidden" value="{{iMenucardCategoryIdHashed}}"/>
+    <ul id="sortable{{iMenucardCategoryIdHashed}}" class="connectedSortable">
         {{#items}}
         <li class="sortableLi">
             <div class="DishWrapper">    
@@ -25,7 +26,7 @@
             </div>
         </li>
         {{/items}}
-        <li onclick="CreateNewLiInSortableList('sortable{{iMenucardCategoryId}}')" class="AddLiButton non-dragable">
+        <li onclick="CreateNewLiInSortableList('sortable{{iMenucardCategoryIdHashed}}')" class="AddLiButton non-dragable">
             <h5>+</h5>
         </li>
     </ul>
