@@ -1,7 +1,8 @@
  /* Sorftable list functions */
   
   function CreateNewSortableList()
-  {      
+  {    
+      /*
       var lastId = $('.sortablediv:last ul').attr('id');
       
       var lastchar = '';
@@ -14,12 +15,16 @@
           }
       }
       lastchar = parseInt(lastchar) +1;
-      var id = 'sortable'+lastchar;
+      */
+     
+      var id = $('.sortableList').length;
+      id = 'sortable'+id;
+      
       $('.sortablediv:last').after('<div class="sortablediv newplaceholder sortableList"></div>');
       $('.newplaceholder').append('<h3><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="Overskrift"></h3>');
       $('.newplaceholder h3 input').focus();
       $('.newplaceholder').append('<h4><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="evt ekstra info"></h4>');
-      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
+      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div><input type="hidden" value="new">');
       $('.DishEditWrapper').hide();
       $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"></ul>');
       $('#'+id).append('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuList(this);"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuListHeadlineToHtml(\''+id+'\');">✓ Updater</a></li>');
@@ -412,15 +417,120 @@
 
   function UpdateMenucard()
   {
-     $('#EditMenuButton').text('');
+      $('#EditMenuButton').text('');
       $('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\');"><img src="img/edit.png">Menukort</div>');
                    
       $(".DishEditWrapper").slideUp(100);
       $(".AddLiButton").slideUp(100);
       $(".newsortablediv").slideUp(100); 
+      
+      
+      var iLastMenucardItemIndex = '';
+      var iLastIndexofMenucardCategories = '';
+      //Array for all the lists, as and assoc array
+      var aAllLists = {};
+      //aLists
+      //aAllLists['allMenuCategories'] = "";     
+      
+      
+      //Loop through for each sMenucardCategory
+      $(".sortableList").each(function(categoryIndex)
+      {
+          //Aray for one list, as and assoc array
+          var aList = {};
+          //sMenucardCategoryName
+          aList['sMenucardCategoryName'] = $(this).children(":first").html();
+          //iMenucardCategoryIdHashed
+          aList['iId'] = $(this).children("input[type='hidden']:first").val(); //$(this).attr('id');          
+          //sMenucardCategoryDescription
+          aList['sMenucardCategoryDescription'] = $(this).children().eq(1).html(); 
+          
+          $(this).children("ul").each(function()
+          {             
+              $(this).children(":not(.AddLiButton)").each(function(index)
+              {
+                  
+                  //Loop through .dishwrapper for each of the sMenucardItems
+                  $(this).children().each(function()
+                  {                      
+                      var sMenucardItemNumber = $(this).children(".DishNumber").children("h1").html();                     
+                      var sMenucardItemDesc = $(this).children(".DishText").children(".DishDescription").children("h2").html(); 
+                      var sMenucardItemName = $(this).children(".DishText").children(".DishHeadline").children("h1").html();
+                      var sMenucardItemPrice = $(this).children(".DishPrice").children(":nth-child(2)").html();
+                      var sMenucardItemIdHashed = $(this).children(".DishId").val();
+                      alert('sMenucardItemIdHashed: ' +sMenucardItemIdHashed);
+                      //Array for li element, as assoc array
+                      var aLiElement = {};
+                      //sTitle
+                      aLiElement['sTitle'] = sMenucardItemName;
+                      //iId
+                      aLiElement['iId'] = sMenucardItemIdHashed;
+                      //sDescription
+                      aLiElement['sDescription'] = sMenucardItemDesc;
+                      //iPrice
+                      aLiElement['iPrice'] = sMenucardItemPrice;
+                      //iNumber
+                      aLiElement['iNumber'] = sMenucardItemNumber;
+                      //Put li array into array for one list
+                      aList[index] = aLiElement;
+
+                      iLastMenucardItemIndex = index;
+                  });
+              });
+          });
+                  
+          //iLastMenucardItemIndex
+          aList['iLastMenucardItemIndex'] = iLastMenucardItemIndex;
+          //Put aList array into aAllLists array on aLists wich is fiels 0
+          aAllLists[categoryIndex] = aList;
+          iLastIndexofMenucardCategories = categoryIndex;
+          
+          
+      });
+      
+
+      //sMenucard name
+      aAllLists['sMenucardname'] = "Menukort navn HARDCODED";
+      //sMenucard description
+      aAllLists['sMenucarddescription'] = "Menukort beskrivelse HARDCODED";
+      aAllLists['iMenucardIdHashed'] = $('#iMenucardIdHashed').val();
+      //iNumberofMenucardCategories
+      aAllLists['iLastIndexofMenucardCategories'] = iLastIndexofMenucardCategories;
+      
+      //restuarantInfo, Get menucardinfo
+      //Loop through for each sMenucardCategory
+      $("#restuarantInfo .InfoSlide > .InfoSlidebox").each(function(index)
+      {   
+          //alert($(this).html());
+          //Getting opening hours
+          
+      });
+      var aAllMenucardInfo = {};
+      $("#restuarantInfo .InfoSlide").each(function(index)
+      {
+          if(index > 0){
+            var aMenucardInfo = {};
+            aMenucardInfo['headline'] = $(this).find('h1').html();;
+            aMenucardInfo['text'] = $(this).find('h2').html();;
+            aAllMenucardInfo[index] = aMenucardInfo;
+            aAllMenucardInfo['iLastIndexOfmenucardinfo'] = index;
+          }
+      }); 
+      aAllLists['menucardinfo'] = aAllMenucardInfo;
+      var sJSONAllLists = JSON.stringify(aAllLists);
+      
+       $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sJSONMenucard:sJSONAllLists}
+       }).done(function(result) 
+       {
+           //console.log('result: '+result.result);
+       });
   }
     
-  function SaveSortableLists()
+  function SaveMenucard()
   {
       $('#EditMenuButton').text('');
       $('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\');"><img src="img/edit.png">Menukort</div>');
@@ -529,7 +639,7 @@
         data: {sFunction:"SaveMenucard",sJSONMenucard:sJSONAllLists}
        }).done(function(result) 
        {
-           console.log('result: '+result.result);
+           //console.log('result: '+result.result);
        });
        
   }
@@ -560,9 +670,7 @@
         if(isAdmin === true)
         {
             //Use admin.php
-            //TODO: Get data show with mustache templates
-            //TODO: Maybe pass the login string for security
-             //Get data            
+            //TODO: Maybe pass the login string for security      
             $.ajax({
               type: "GET",
               url: "API/api.php",
@@ -643,9 +751,10 @@
                       $("#mustache_template").load( "mustache_templates/menucard_admin.html",function(){
 
                           var menucards = {
-                              menucard: []
+                              menucard: [],
+                              iMenucardIdHashed: result.iMenucardIdHashed //This will only work when the user has one menucard.
                           };
-
+                          
                           //Foreach menucard insert into the menucarcardinfo
                           $.each(result.aMenucardCategory, function(key,value){
 
@@ -664,12 +773,14 @@
                                   var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
                                   var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
                                   var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
-
+                                  var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
+                                  
                                   var item = {
                                       sMenucardItemName: sMenucardItemName,
                                       sMenucardItemDescription: sMenucardItemDescription,
                                       sMenucardItemNumber: sMenucardItemNumber,
-                                      iMenucardItemPrice: iMenucardItemPrice
+                                      iMenucardItemPrice: iMenucardItemPrice,
+                                      iMenucardItemIdHashed: iMenucardItemIdHashed 
                                   };
 
                                   //Append the item to the items in the category obj
@@ -900,25 +1011,7 @@
             break;
      }
 }
-   
 
-  function GetMenucardWithSerialNumber()
-    {
-       
-         var iMenucardSerialNumber = $('#iMenucardSerialNumber').val();
-         if(iMenucardSerialNumber != '')
-         {
-             $.ajax({
-                type: "GET",
-                url: "API/api.php",
-                dataType: "json",
-                data: {sFunction:"GetMenucardWithSerialNumber",iMenucardSerialNumber:iMenucardSerialNumber}
-               }).done(function(result) 
-               {
-                   console.log('result: '+result.result);
-               });
-         }
-    }
       
     function getValuesForEditManuInfo(){
         

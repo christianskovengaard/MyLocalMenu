@@ -1,4 +1,5 @@
 <script id="menucard_admin" type="text/template">
+    <input type="hidden" value="{{iMenucardIdHashed}}" id="iMenucardIdHashed">
     {{#menucard}}
     <div class="sortablediv sortableList">                  
     <h3>{{sMenucardCategoryName}}</h3>
@@ -10,8 +11,9 @@
     <input type="hidden" value="{{iMenucardCategoryIdHashed}}"/>
     <ul id="sortable{{iMenucardCategoryIdHashed}}" class="connectedSortable">
         {{#items}}
-        <li class="sortableLi">
-            <div class="DishWrapper">    
+        <li class="sortableLi">           
+            <div class="DishWrapper">
+            <input type="hidden" class="DishId" value="{{iMenucardItemIdHashed}}"/>
                 <div class="DishNumber"><h1>{{sMenucardItemNumber}}</h1></div>
                 <div class="DishText">
                     <div class="DishHeadline"><h1>{{sMenucardItemName}}</h1></div>
