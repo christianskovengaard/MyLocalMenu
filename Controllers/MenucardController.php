@@ -278,7 +278,7 @@ class MenucardController
             //Convert the JSON string into an array
             $aJSONMenucard = json_decode($sJSONMenucard);
             
-            var_dump($aJSONMenucard);
+            //var_dump($aJSONMenucard);
             
             //Get MenucardIdHashed
             $MenucardIdHashed = $aJSONMenucard->iMenucardIdHashed;
@@ -331,8 +331,8 @@ class MenucardController
             {
                 $MenucardCategoriesFromDB[] = $aResult['iMenucardCategoryIdHashed'];
             }
-            echo "Categoris from DB";
-            var_dump($MenucardCategoriesFromDB);
+            //echo "Categoris from DB";
+            //var_dump($MenucardCategoriesFromDB);
             
             //Get all categories from $aJSONMenucard. If the category has value new if should be inseted into the database, as a new category
              //Get the number of MenucardCategories
@@ -344,14 +344,14 @@ class MenucardController
                 $MenucardCategoriesFromaJSONMenucard[] = $aJSONMenucard->$iCategoryIndex->iId;
             }
               
-            echo "<br>Categoris from sJSONMenucard";
-            var_dump($MenucardCategoriesFromaJSONMenucard);
+            //echo "<br>Categoris from sJSONMenucard";
+            //var_dump($MenucardCategoriesFromaJSONMenucard);
             
             //Compare the two arrays
             $diff = array_merge(array_diff($MenucardCategoriesFromaJSONMenucard, $MenucardCategoriesFromDB), array_diff($MenucardCategoriesFromDB, $MenucardCategoriesFromaJSONMenucard));
             
-            echo "<br>Diff";
-            var_dump($diff);
+            //echo "<br>Delete all these Categories";
+            //var_dump($diff);
                     
             //Delete all the categories that are in the diff array, if there is as value with new then insert that into the database
             foreach ($diff as $sMenucardCategoryIdHashed)
@@ -405,7 +405,10 @@ class MenucardController
            
             //Update all categories from the sJSONMenucard array                    
              
-            
+            //Array for getting all the items
+            $aMenucardItemsFromsJSON = array();
+            //Array for checking item not to be deleted
+            $aNotToBeDeletedItem = array();
             //Get the first MenucardCategory from MenuCard
             for($iCategoryIndex=0;$iNumberOfMenucardCategories >= $iCategoryIndex;$iCategoryIndex++)
             {
@@ -482,6 +485,20 @@ class MenucardController
                     try
                     {
                         $sQuery->execute();
+                        
+                        //Get iMenucardCategorId which is used when updating the items
+                        $sQuery = $this->conPDO->prepare("SELECT iMenucardCategoryId FROM menucardcategory WHERE iMenucardCategoryIdHashed = :iMenucardCategoryIdHashed LIMIT 1");
+                        $sQuery->bindValue(":iMenucardCategoryIdHashed", $sMenucardCategoryIdHashed);
+                        try
+                        {
+                            $sQuery->execute();
+                            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                            $iMenucardCategoryId = $aResult['iMenucardCategoryId'];
+                        }
+                        catch (PDOException $e)
+                        {
+                           die($e->getMessage()); 
+                        }
 
                     }
                     catch (PDOException $e)
@@ -493,13 +510,15 @@ class MenucardController
                
                 //Get last index of MenucardItem from the MenucardCategory array
                 $iLastMenucardItemIndex = $aJSONMenucard->$iCategoryIndex->iLastMenucardItemIndex;
-
-                //Get all the MenucardItems //Delte and Update item if the category is old
+                         
+                //Get all the MenucardItem
                 //Insert the new item for the new category
                 for($i=0;$iLastMenucardItemIndex >= $i;$i++)
                 { 
                     $sMenucardItemName = utf8_decode($aJSONMenucard->$iCategoryIndex->$i->sTitle);
                     $iMenucardItemIdHashed = $aJSONMenucard->$iCategoryIndex->$i->iId;
+                    //Save the item to see which item should be deleted later
+                    $aMenucardItemsFromsJSON[] = $aJSONMenucard->$iCategoryIndex->$i->iId;
                     $sMenucardItemNumber = utf8_decode($aJSONMenucard->$iCategoryIndex->$i->iNumber);
                     $sMenucardItemDescription = utf8_decode($aJSONMenucard->$iCategoryIndex->$i->sDescription);                    
                     $iMenucardItemPrice = $aJSONMenucard->$iCategoryIndex->$i->iPrice;
@@ -507,8 +526,10 @@ class MenucardController
                     //Set the MenucardItemClass
                     $this->oMenucardItem->SetMenucardItem($sMenucardItemName, $sMenucardItemNumber, $iMenucardItemPrice, $sMenucardItemDescription);
                     
-                    if($bNewCategory == true)
+                    //Check if the item is new 
+                    if($iMenucardItemIdHashed == '')
                     {
+                        
                         //Insert the new items
                         //Insert the menucarditem. remember to use the FK for menucardcetegory
                         $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iFK_iMenucardCategoryId) VALUES (?,?,?,?,?)");
@@ -530,7 +551,7 @@ class MenucardController
                             $iMenucardItemId = $this->conPDO->lastInsertId();
 
                             $iMenucardItemIdHashed = $this->oBcrypt->genRandId($iMenucardItemId);
-
+                            $aNotToBeDeletedItem[] = $iMenucardItemIdHashed;
                             $sQuery = $this->conPDO->prepare("UPDATE menucarditem SET iMenucardItemIdHashed = :iMenucardItemIdHashed WHERE iMenucardItemId = :iMenucardItemId LIMIT 1");
 
                             $sQuery->bindValue(':iMenucardItemIdHashed', $iMenucardItemIdHashed);
@@ -552,74 +573,139 @@ class MenucardController
                     }
                     else
                     {
-                        //TODO: Check if any items is to be deleted and update the rest of the items
                         
+                        //Update all the item from sJSONMenucard
+                        $sQuery = $this->conPDO->prepare("UPDATE menucarditem SET sMenucardItemName = :sMenucardItemName , sMenucardItemNumber = :sMenucardItemNumber , sMenucardItemDescription = :sMenucardItemDescription , iMenucardItemPrice = :iMenucardItemPrice , iFK_iMenucardCategoryId = :iFK_iMenucardCategoryId WHERE iMenucardItemIdHashed = :iMenucardItemIdHashed LIMIT 1");
                         
-                        //Get iMenucardCategoryId based on the hashed id
-                        $sQuery = $this->conPDO->prepare("SELECT iMenucardCategoryId FROM menucardcategory WHERE iMenucardCategoryIdHashed = :iMenucardIdHashed LIMIT 1");
-                        $sQuery->bindValue(':iMenucardIdHashed', $sMenucardCategoryIdHashed);
+                        //Get the menucarditem
+                        $oMenucardItem = $this->oMenucardItem->GetMenucardItem();                                              
+                        
+                        $sQuery->bindValue(':sMenucardItemName', $oMenucardItem->sMenucardItemName);
+                        $sQuery->bindValue(':sMenucardItemNumber', $oMenucardItem->sMenucardItemNumber);               
+                        $sQuery->bindValue(':sMenucardItemDescription', $oMenucardItem->sMenucardItemDescription);
+                        $sQuery->bindValue(':iMenucardItemPrice', $oMenucardItem->iMenucardItemPrice);
+                        $sQuery->bindValue(':iFK_iMenucardCategoryId', $iMenucardCategoryId);
+                        $sQuery->bindValue(':iMenucardItemIdHashed', $iMenucardItemIdHashed);
+                        
                         try
                         {
                             $sQuery->execute();
                         }
-                        catch(PDOException $e)
+                        catch (PDOException $e)
                         {
-                            die($e->getMessage());
+                           die($e->getMessage()); 
                         }
-                        $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-                        $iMenucardCategoryId = $aResult['iMenucardCategoryId'];
-                        
-                        //Get all item from database for one category
-                        $aMenucardItemsFromDB = array();
-                        $sQuery = $this->conPDO->prepare("SELECT iMenucardItemIdHashed FROM menucarditem WHERE iFK_iMenucardCategoryId = :iMenucardCategoryId");
-                        $sQuery->bindValue(':iMenucardCategoryId', $iMenucardCategoryId);
-
-                        try
-                        {
-                            $sQuery->execute();
-                        }
-                        catch(PDOException $e)
-                        {
-                            die($e->getMessage());
-                        }
-
-                        while( $aResult = $sQuery->fetch(PDO::FETCH_ASSOC))
-                        {
-                            $aMenucardItemsFromDB[] = $aResult['iMenucardItemIdHashed'];
-                        }
-                        echo "Items from DB";
-                        var_dump($aMenucardItemsFromDB);
-                        
-                        //Get item form sJSONMenucard
-                        $aMenucardItemsFromsJSON = array();
-                        for($x=0;$iLastMenucardItemIndex >= $x;$x++)
-                        {
-                            $aMenucardItemsFromsJSON[] = $aJSONMenucard->$iCategoryIndex->$x->iId;
-                        }
-                         echo "Items from sJSONMenucard";
-                        var_dump($aMenucardItemsFromsJSON);
-                        
-                        
-                        //Delete item to be deleted
-                        //Compare the two arrays
-                        $diff = array_merge(array_diff($aMenucardItemsFromsJSON, $aMenucardItemsFromDB), array_diff($aMenucardItemsFromDB, $aMenucardItemsFromsJSON));
-                        echo "Delete all these items";
-                        var_dump($diff);
-                        
-                        
-                        //Update the items
                     }
                                  
                 }
             
             }
-                 
             
+            //Delete all item to be deleted
+            //Get iMenucardId
+            $sQuery = $this->conPDO->prepare("SELECT iMenucardId FROM menucard WHERE iMenucardIdHashed = :iMenucardIdHashed LIMIT 1");
+            $sQuery->bindValue(':iMenucardIdHashed', $MenucardIdHashed);
+
+            try
+            {
+                $sQuery->execute();
+
+                $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                $iMenucardId = $aResult['iMenucardId'];
+            }
+            catch(PDOException $e)
+            {
+                die($e->getMessage());
+            }
+
+
+
+            //Get ALL iMenucardCategoryId based on iMenucardIdHased               
+            $sQuery = $this->conPDO->prepare("SELECT iMenucardCategoryId 
+                                                FROM menucardcategory
+                                                WHERE iFK_iMenucardId = :iMenucardId");
+            $sQuery->bindValue(':iMenucardId', $iMenucardId);
+
+            try
+            {
+                $sQuery->execute();
+                $sCategoriesFromDB = '';
+                while( $aResult = $sQuery->fetch(PDO::FETCH_ASSOC))
+                {
+                    
+                    $sCategoriesFromDB .= $aResult['iMenucardCategoryId'];
+                    $sCategoriesFromDB .= ','; 
+                }
+                //remove last ,
+                $sCategoriesFromDB = substr($sCategoriesFromDB, 0, -1);          
+            }
+            catch(PDOException $e)
+            {
+                die($e->getMessage());
+            }
+            
+            $sQuery = "SELECT iMenucardItemIdHashed
+                        FROM menucarditem
+                        WHERE iFK_iMenucardCategoryId IN (".$sCategoriesFromDB.")";
+            //Get all item from database for ALL categories     
+            $aMenucardItemsFromDB = array();
+            $sQuery = $this->conPDO->prepare($sQuery);
+
+            try
+            {
+                $sQuery->execute();
+            }
+            catch(PDOException $e)
+            {
+                die($e->getMessage());
+            }
+
+            while( $aResult = $sQuery->fetch(PDO::FETCH_ASSOC))
+            {
+                $aMenucardItemsFromDB[] = $aResult['iMenucardItemIdHashed'];
+            }
+
+            //echo "All Items from DB";
+            //var_dump($aMenucardItemsFromDB);
+            
+            //Get ALL items from sJSONMenucard 
+            //echo "Items from sJSONMenucard";
+            //var_dump($aMenucardItemsFromsJSON);
+            
+            //Delete item to be deleted
+            //Compare the two arrays
+            $diff = array_merge(array_diff($aMenucardItemsFromsJSON, $aMenucardItemsFromDB), array_diff($aMenucardItemsFromDB, $aMenucardItemsFromsJSON));
+            //echo "Delete all these items";
+            //var_dump($diff); 
+            
+            
+            //echo "NOT TO DELETE";
+            //var_dump($aNotToBeDeletedItem);
+            
+            foreach ($diff as $iMenucardItemIdHashed)
+            {
+                if($iMenucardItemIdHashed != '')
+                {
+                    //Check if the item is not a new item
+                    if(!in_array($iMenucardItemIdHashed, $aNotToBeDeletedItem))
+                    {
+                        $sQuery = $this->conPDO->prepare("DELETE FROM menucarditem WHERE iMenucardItemIdHashed = :iMenucardItemIdHashed");
+                        $sQuery->bindValue(':iMenucardItemIdHashed', $iMenucardItemIdHashed);
+
+                        try
+                        {
+                            $sQuery->execute();
+                        }
+                        catch (PDOException $e)
+                        {
+                            die($e->getMessage());
+                        }
+                    }
+                }
+            } 
+               
                 
-                
-                
-                
-            /* //TODO: Delete and Update menucardinfo
+            /* //TODO: Delete and Update menucardinfo. Maybe just delete all, and inserted once again
             //Get last index of menucardinfo
             $iLastIndexOfmenucardinfo = $aJSONMenucard->menucardinfo->iLastIndexOfmenucardinfo;
             //Get all the MenucardInfo
