@@ -266,9 +266,14 @@ class MenucardController
     
     public function UpdateMenucard ()
     {
+        $aMenucard = array(
+                'sFunction' => 'UpdateMenucard',
+                'result' => false
+            );
+        
         if(isset($_GET['sJSONMenucard']))
         {              
-            
+            $aMenucard['result'] = true;
             //TODO: Check if user is logged in
             
             
@@ -278,7 +283,7 @@ class MenucardController
             //Convert the JSON string into an array
             $aJSONMenucard = json_decode($sJSONMenucard);
             
-            //var_dump($aJSONMenucard);
+            var_dump($aJSONMenucard);
             
             //Get MenucardIdHashed
             $MenucardIdHashed = $aJSONMenucard->iMenucardIdHashed;
@@ -708,42 +713,55 @@ class MenucardController
             } 
                
                 
-            /* //TODO: Delete and Update menucardinfo. Maybe just delete all, and inserted once again
+            //Delete all menucardinfo
+            $sQuery = $this->conPDO->prepare("DELETE FROM menucardinfo WHERE iFK_iMenucardId");
+            $sQuery->bindValue(":iMenucardId", $iMenucardId);
+            
+            try
+            {
+                $sQuery->execute();
+            }
+            catch (PDOException $e)
+            {
+                die($e->getMessage());
+            }
+            
             //Get last index of menucardinfo
             $iLastIndexOfmenucardinfo = $aJSONMenucard->menucardinfo->iLastIndexOfmenucardinfo;
             //Get all the MenucardInfo
             for($i=1;$iLastIndexOfmenucardinfo >= $i;$i++)
             {
-                $sMenucardInfoHeadline = utf8_decode($aJSONMenucard->menucardinfo->$i->headline);
-                $sMenucardInfoParagraph = utf8_decode($aJSONMenucard->menucardinfo->$i->text);
-
-                //Set the MenucardInfoClass
-                $this->oMenucardInfo->SetMenucardInfo($sMenucardInfoHeadline, $sMenucardInfoParagraph, $iMenucardId);
-
-
-                //Get the menucardinfo
-                $oMenucardInfo = $this->oMenucardInfo->GetMenucardInfo();
-
-                //Insert the menucarditem. remember to use the FK ffor menucardcetegory
-                $sQuery = $this->conPDO->prepare("INSERT INTO menucardinfo (sMenucardInfoHeadline,sMenucardInfoParagraph,iFK_iMenucardId) VALUES (:sMenucardInfoHeadline,:sMenucardInfoParagraph,:iFK_iMenucardId)");
-                $sQuery->bindValue(':sMenucardInfoHeadline', $oMenucardInfo->sMenucardInfoHeadline);
-                $sQuery->bindValue(':sMenucardInfoParagraph', $oMenucardInfo->sMenucardInfoParagraph);
-                $sQuery->bindValue(':iFK_iMenucardId', $oMenucardInfo->iFK_iMenucardId);
-
-                try
+                if(isset($aJSONMenucard->menucardinfo->$i->headline))
                 {
-                    $sQuery->execute();                                                     
+                    $sMenucardInfoHeadline = utf8_decode($aJSONMenucard->menucardinfo->$i->headline);
+                    $sMenucardInfoParagraph = utf8_decode($aJSONMenucard->menucardinfo->$i->text);
+
+                    //Set the MenucardInfoClass
+                    $this->oMenucardInfo->SetMenucardInfo($sMenucardInfoHeadline, $sMenucardInfoParagraph, $iMenucardId);
+
+
+                    //Get the menucardinfo
+                    $oMenucardInfo = $this->oMenucardInfo->GetMenucardInfo();
+
+                    //Insert the menucarditem. remember to use the FK ffor menucardcetegory
+                    $sQuery = $this->conPDO->prepare("INSERT INTO menucardinfo (sMenucardInfoHeadline,sMenucardInfoParagraph,iFK_iMenucardId) VALUES (:sMenucardInfoHeadline,:sMenucardInfoParagraph,:iFK_iMenucardId)");
+                    $sQuery->bindValue(':sMenucardInfoHeadline', $oMenucardInfo->sMenucardInfoHeadline);
+                    $sQuery->bindValue(':sMenucardInfoParagraph', $oMenucardInfo->sMenucardInfoParagraph);
+                    $sQuery->bindValue(':iFK_iMenucardId', $oMenucardInfo->iFK_iMenucardId);
+
+                    try
+                    {
+                        $sQuery->execute();                                                     
+                    }
+                    catch (PDOException $e)
+                    {
+                       die($e->getMessage()); 
+                    }
                 }
-                catch (PDOException $e)
-                {
-                   die($e->getMessage()); 
-                }
-            }  
-             
-             */
+            }
                        
         }
-        return true;
+        return $aMenucard;
     }
     
     public function DeactivateMenucard ()

@@ -24,7 +24,8 @@ if(isset($_GET['sFunction']))
         case "UpdateMenucard":
             require_once '../Controllers/MenucardController.php';
             $oMenucardController = new MenuCardController();
-            if($oMenucardController->UpdateMenucard() == true)
+            $result = $oMenucardController->UpdateMenucard();
+            if($result['result'] == true)
             {
                 $sResult = '{"sFunction":"UpdateMenucard","result":"True"}';
             }
