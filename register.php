@@ -46,18 +46,19 @@
                             <h5>Vælge din kode</h5>
 <!--                            <input type="text" placeholder="Din email">
                             <input type="password" placeholder="Kode fra modtaget email">-->
-                            <input type="password" placeholder="Indtast en kode">
-                            <input type="password" placeholder="Gentag koden">
+                            <input id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
+                            <input type="password" onblur="ValidateRegSwitch('passwordRetype',this);" placeholder="Gentag koden">
                             <div onclick="registerNext(1);" class="button01">næste</div>
                         </div>
 
                         <div class="inputFrame B">
                             <h5>Spisestedet</h5>
                             <input type="text" placeholder="Spisesteds navn">
-                            <input type="text" style="background: #ccc ; " placeholder="evt Spisestets slogan">
+                            <input type="text" style="background: #ddd; " placeholder="evt Spisestets slogan">
                             <input type="text" placeholder="Gadenavn og nummer">
-                            <input type="text" size="4" maxlength="4" placeholder="Postnr">
-                            <input type="text" maxlength="8" placeholder="Telefonnummer">
+                            <input type="text" onblur="ValidateRegSwitch('zipcode',this);" style="display: inline-block;" size="4" maxlength="4" placeholder="Postnr">
+                            <div class="RegCity"></div>
+                            <input type="text" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Telefonnummer">
                             <div onclick="registerNext(0);" class="button01 prev">tilbage</div>
                             <div onclick="registerNext(2);" class="button01">næste</div>
                         </div>
@@ -65,10 +66,10 @@
                         <div class="inputFrame C">
                             <h5>Åbningstider</h5>
                             <div class="Hours Opening"></div>
-                            <h5>Bringer I ud?</h5><div id="TakAwayYes" onclick="makeTakeAwayHours(1);" class="button01 prev">Ja</div><div id="TakAwayNo" onclick="makeTakeAwayHours(0);" class="button01 prev">Nej</div>
+                            <!--<h5>Bringer I ud?</h5><div id="TakAwayYes" onclick="makeTakeAwayHours(1);" class="button01 prev">Ja</div><div id="TakAwayNo" onclick="makeTakeAwayHours(0);" class="button01 prev">Nej</div>-->
                             <br><br>
                             <div class="Hours TakeAway"></div>
-                            <input type="text" style="background: #ccc ; " placeholder="evt Note">
+                            <!--<input type="text" style="background: #ccc ; " placeholder="evt Note">-->
                             <div onclick="registerNext(1);" class="button01 prev">tilbage</div>
                             <div onclick="" class="button01">OK</div>
                         </div>
@@ -90,5 +91,12 @@
             </div>
         </div> 
         
+        <script type="text/javascript" >
+                window.onload = function()
+                {
+                    $('#NewPassword').focus();
+                };
+        </script>
+
     </body>
 </html>

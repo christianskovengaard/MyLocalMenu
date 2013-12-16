@@ -1043,55 +1043,115 @@
 
    // register
 
-  function registerNext(num) {
-    if(num==0){
-         $('.info03 .wrapper h3').remove(); 
-         $('.info03 .wrapper h1').after('<h3>➊ ➁ ➂</h3>');
-         $('.inputFrame.A').css('margin-left','0px');
-         var H = $('.inputFrame.A').height();
-         $('.inputFrameWrapper').css("height",H+20);
+function registerNext(num) {
+    if($('.validationTag').length != 0 ){
     }
-     if(num==1){
-         $('.info03 .wrapper h3').remove();
-         $('.info03 .wrapper h1').after('<h3>➀ ➋ ➂</h3>');
-         $('.inputFrame.A').css('margin-left','-266px');
-         var H = $('.inputFrame.B').height();
-         $('.inputFrameWrapper').css("height",H+20);
-     }
-     if(num==2){
-        $('.info03 .wrapper h3').remove(); 
-        $('.info03 .wrapper h1').after('<h3>➀ ➁ ➌</h3>');
-        $('.inputFrame.A').css('margin-left','-532px');
-        makeOpeningHours();
-        var H = $('.inputFrame.C').height();
-        $('.inputFrameWrapper').css("height",H+20);
-        
+    else{
+        if(num==0){
+             $('.info03 .wrapper h3').remove(); 
+             $('.info03 .wrapper h1').after('<h3>➊ ➁ ➂</h3>');
+            $('.inputFrame.B').hide();
+            $('.inputFrame.C').hide();
+            $('.inputFrame.A').show();
+            var H = $('.inputFrame.A').height();
+            $('.inputFrameWrapper').css("height",H+50);
+            $('.inputFrame input').eq(2).focus();
+        }
+         if(num==1){
+             $('.info03 .wrapper h3').remove();
+             $('.info03 .wrapper h1').after('<h3>➀ ➋ ➂</h3>');
+             $('.inputFrame.A').hide();
+             $('.inputFrame.C').hide();
+             $('.inputFrame.B').show();
+             var H = $('.inputFrame.B').height();
+             $('.inputFrameWrapper').css("height",H+50);
+             $('.inputFrame input').eq(2).focus();
+         }
+         if(num==2){
+            $('.info03 .wrapper h3').remove(); 
+            $('.info03 .wrapper h1').after('<h3>➀ ➁ ➌</h3>');
+            $('.inputFrame.B').hide();
+            $('.inputFrame.A').hide();
+            $('.inputFrame.C').show();
+            makeOpeningHours();
+            var H = $('.inputFrame.C').height();
+            $('.inputFrameWrapper').css("height",H+50);
+        }
     }
 }
 
   function makeOpeningHours() {
+    $('.Hours.Opening').text('');
     
     $('.Hours.Opening').append('<p>Man:</p><select  class="Hours" id=""><option value = "0">01:00</option></select><p> til </p><select  class="Hours" id=""><option value = "0">01:00</option></select><div class="button02">lukket</div>');
+    
 }
 
-  function makeTakeAwayHours(status) {
+//  function makeTakeAwayHours(status) {
+//
+//    if(status == 0 ){
+//        $('#TakAwayNo').toggleClass('prev').toggleClass('Clicked') ;
+//        if($('#TakAwayYes').hasClass('Clicked')){ $('#TakAwayYes').removeClass('Clicked').addClass('prev'); }
+//        $('.Hours.TakeAway').slideUp(200);
+//    }
+//    if(status == 1 ){
+//        $('#TakAwayYes').toggleClass('prev').toggleClass('Clicked');
+//        if($('#TakAwayNo').hasClass('Clicked')){
+//            $('#TakAwayNo').removeClass('Clicked').addClass('prev'); 
+//        }
+//        if( $('.Hours.TakeAway').is(':empty') ){
+//            $('.Hours.TakeAway').append('<p>Man:</p><select  class="Hours" id=""><option value = "0">01:00</option></select><p> til </p>');
+//        }
+//        $('.Hours.TakeAway').slideDown(200);
+//    }
+//}
 
-    if(status == 0 ){
-        $('#TakAwayNo').toggleClass('prev').toggleClass('Clicked') ;
-        if($('#TakAwayYes').hasClass('Clicked')){ $('#TakAwayYes').removeClass('Clicked').addClass('prev'); }
-        $('.Hours.TakeAway').slideUp(200);
-    }
-    if(status == 1 ){
-        $('#TakAwayYes').toggleClass('prev').toggleClass('Clicked');
-        if($('#TakAwayNo').hasClass('Clicked')){
-            $('#TakAwayNo').removeClass('Clicked').addClass('prev'); 
-        }
-        if( $('.Hours.TakeAway').is(':empty') ){
-            $('.Hours.TakeAway').append('<p>Man:</p><select  class="Hours" id=""><option value = "0">01:00</option></select><p> til </p>');
-        }
-        $('.Hours.TakeAway').slideDown(200);
-    }
-}
+function ValidateRegSwitch(CaseName,id){
+    
+    switch(CaseName)
+     {
+        case 'password':
+            $('.validationTag.pass').remove();
+            $('.validationTagImg.pass').remove();
+            var pass = $(id).val();
+            if(pass.length <= 5 ){
+                $(id).before('<div class="validationTag pass">Din kode skal være 6 tegn eller over.</div>')
+            }
+        break;
+        
+        case 'passwordRetype':
+            $('.validationTag.passRe').remove();
+            $('.validationTagImg.passRe').remove();
+            var passRe = $(id).val();
+            if(passRe != $('#NewPassword').val() ){
+                $(id).before('<div class="validationTag passRe">Koderne er ikke ens</div>')
+            }
+        break;
+        
+        case 'zipcode':
+            $('.validationTag.zipcode').remove();
+            $('.validationTagImg.zipcode').remove();
+            var intRegex = /^\d+$/;
+            var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
+            var zipcode = $(id).val();
+            if(zipcode.length <=3 || intRegex.test(zipcode) == false || floatRegex.test(zipcode) == false ){
+                $(id).before('<div class="validationTag zipcode">Ikke Korekt Postnummer</div>')
+            }
+        break;
+        
+        case 'phone':
+            $('.validationTag.phone').remove();
+            $('.validationTagImg.phone').remove();
+            var phone = $(id).val();
+            var intRegex = /^\d+$/;
+            var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
+            if( phone.length <=7 || intRegex.test(phone) == false || floatRegex.test(phone) == false  ){
+                $(id).before('<div class="validationTag phone">Ikke Korekt Tlefonnummer</div>')
+            }
+        break;
+     }
+ }
+
     
     // register end
     

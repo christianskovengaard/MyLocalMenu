@@ -130,5 +130,20 @@ input {
    -webkit-appearance: none;
    vertical-align: middle;
 }
+.RegCity { display: inline-block; width: 130px; margin-left: 0px; }
 .Hours.Opening { vertical-align: middle; }
 .Hours.TakeAway { display: hidden; margin: 0 0 10px 0; }
+.validationTag { 
+    display: table;
+    font-size: 14px;
+    background: #fcf1c4;
+    max-width: 220px;
+    padding: 3px 5px;
+    margin: 5px 10px;
+    float: right;
+}
+.inputFrame.B,.inputFrame.C { display: none; padding-bottom: 45px; } 
+.validationTagImg {
+    position: absolute;
+    right: 20px;
+}
