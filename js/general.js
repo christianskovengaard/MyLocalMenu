@@ -191,10 +191,10 @@
       var Headline = $('.InfoSlide input').val();
       var Description = $('.InfoSlide textarea').val();
 
-      if(Headline != '' && Description !=''){
+      if(Headline !== '' && Description !== ''){
           
-          $('.InfoSlide input').parent().html('<h1>'+Headline+'</h1>');
-          $('.InfoSlide textarea').parent().html('<h2>'+Description+'</h2>');
+          $('.InfoSlide input').parent().html(Headline);
+          $('.InfoSlide textarea').parent().html(Description);
           
 
           $('.SaveMenuDish').fadeOut('normal', function(){ 
