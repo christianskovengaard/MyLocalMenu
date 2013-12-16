@@ -45,7 +45,7 @@
     // Class = + TEMP for at undgå a appende til alle classer med samme navn, denne ændres sidst i funktionen.
     
     $('#'+id+' .AddLiButton').before('<li class="sortableLi sortableLiTEMP"></li>');
-    $('.sortableLiTEMP').append('<div class="DishWrapper DishWrapperTEMP"></div>');
+    $('.sortableLiTEMP').append('<div class="DishWrapper DishWrapperTEMP"><input type="hidden" class="DishId" value="" /></div>');
     $('.sortableLiTEMP').removeClass('sortableLiTEMP');
     
     $('.DishWrapperTEMP').append('<div class="DishNumber"><input type="text" maxlength="4" placeholder="nr"></div>');
@@ -528,7 +528,10 @@
         data: {sFunction:"UpdateMenucard",sJSONMenucard:sJSONAllLists}
        }).done(function(result) 
        {
-           //console.log('result: '+result.result); //TODO: Show result of menucard updated
+           console.log('result: '+result.result); //TODO: Show result of menucard updated
+           
+           //reload the menucard
+           GetMenucard(true);
        });
   }
     
@@ -671,6 +674,10 @@
         //Load the mustache template into viewmenucard
         if(isAdmin === true)
         {
+            
+            //Clear the area
+            $('.sortableList').remove();
+            
             //Use admin.php
             //TODO: Maybe pass the login string for security      
             $.ajax({
