@@ -417,6 +417,8 @@
 
   function UpdateMenucard()
   {
+      //TODO: indicate that the menucard is being updated
+      
       $('#EditMenuButton').text('');
       $('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\');"><img src="img/edit.png">Menukort</div>');
                    
@@ -458,7 +460,7 @@
                       var sMenucardItemName = $(this).children(".DishText").children(".DishHeadline").children("h1").html();
                       var sMenucardItemPrice = $(this).children(".DishPrice").children(":nth-child(2)").html();
                       var sMenucardItemIdHashed = $(this).children(".DishId").val();
-                      alert('sMenucardItemIdHashed: ' +sMenucardItemIdHashed);
+                      
                       //Array for li element, as assoc array
                       var aLiElement = {};
                       //sTitle
@@ -526,7 +528,7 @@
         data: {sFunction:"UpdateMenucard",sJSONMenucard:sJSONAllLists}
        }).done(function(result) 
        {
-           //console.log('result: '+result.result);
+           //console.log('result: '+result.result); //TODO: Show result of menucard updated
        });
   }
     
