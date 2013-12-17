@@ -677,6 +677,7 @@
             
             //Clear the area
             $('.sortableList').remove();
+            $('#iMenucardIdHashed').remove();
             
             //Use admin.php
             //TODO: Maybe pass the login string for security      
@@ -783,13 +784,15 @@
                                   var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
                                   var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
                                   var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
-                                  
+                                  var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
+                                  console.log('iMenucardItemPlaceInList '+iMenucardItemPlaceInList);
                                   var item = {
                                       sMenucardItemName: sMenucardItemName,
                                       sMenucardItemDescription: sMenucardItemDescription,
                                       sMenucardItemNumber: sMenucardItemNumber,
                                       iMenucardItemPrice: iMenucardItemPrice,
-                                      iMenucardItemIdHashed: iMenucardItemIdHashed 
+                                      iMenucardItemIdHashed: iMenucardItemIdHashed,
+                                      iMenucardItemPlaceInList: iMenucardItemPlaceInList
                                   };
 
                                   //Append the item to the items in the category obj
