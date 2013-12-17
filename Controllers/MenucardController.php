@@ -539,6 +539,7 @@ class MenucardController
                             $sMenucardItemNumber = utf8_decode($aJSONMenucard->$iCategoryIndex->$i->iNumber);
                             $sMenucardItemDescription = utf8_decode($aJSONMenucard->$iCategoryIndex->$i->sDescription);                    
                             $iMenucardItemPrice = $aJSONMenucard->$iCategoryIndex->$i->iPrice;
+                            $iMenucardItemPlaceInList = $aJSONMenucard->$iCategoryIndex->$i->iPlaceInList; 
 
                             //Set the MenucardItemClass
                             $this->oMenucardItem->SetMenucardItem($sMenucardItemName, $sMenucardItemNumber, $iMenucardItemPrice, $sMenucardItemDescription);
@@ -549,7 +550,7 @@ class MenucardController
 
                                 //Insert the new items
                                 //Insert the menucarditem. remember to use the FK for menucardcetegory
-                                $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iFK_iMenucardCategoryId) VALUES (?,?,?,?,?)");
+                                $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iMenucardItemPlaceInList,iFK_iMenucardCategoryId) VALUES (?,?,?,?,?,?)");
 
                                 //Get the menucarditem
                                 $oMenucardItem = $this->oMenucardItem->GetMenucardItem();
@@ -558,8 +559,9 @@ class MenucardController
                                 $sQuery->bindValue(2, $oMenucardItem->sMenucardItemNumber);               
                                 $sQuery->bindValue(3, $oMenucardItem->sMenucardItemDescription);
                                 $sQuery->bindValue(4, $oMenucardItem->iMenucardItemPrice);
-                                $sQuery->bindValue(5, $iMenucardCategoryId);
-
+                                $sQuery->bindValue(5, $iMenucardItemPlaceInList); 
+                                $sQuery->bindValue(6, $iMenucardCategoryId);
+                                
                                 try
                                 {
                                     $sQuery->execute();
@@ -592,7 +594,7 @@ class MenucardController
                             {
 
                                 //Update all the item from sJSONMenucard
-                                $sQuery = $this->conPDO->prepare("UPDATE menucarditem SET sMenucardItemName = :sMenucardItemName , sMenucardItemNumber = :sMenucardItemNumber , sMenucardItemDescription = :sMenucardItemDescription , iMenucardItemPrice = :iMenucardItemPrice , iFK_iMenucardCategoryId = :iFK_iMenucardCategoryId WHERE iMenucardItemIdHashed = :iMenucardItemIdHashed LIMIT 1");
+                                $sQuery = $this->conPDO->prepare("UPDATE menucarditem SET sMenucardItemName = :sMenucardItemName , sMenucardItemNumber = :sMenucardItemNumber , sMenucardItemDescription = :sMenucardItemDescription , iMenucardItemPrice = :iMenucardItemPrice , iMenucardItemPlaceInList = :iMenucardItemPlaceInList , iFK_iMenucardCategoryId = :iFK_iMenucardCategoryId WHERE iMenucardItemIdHashed = :iMenucardItemIdHashed LIMIT 1");
 
                                 //Get the menucarditem
                                 $oMenucardItem = $this->oMenucardItem->GetMenucardItem();                                              
@@ -601,6 +603,7 @@ class MenucardController
                                 $sQuery->bindValue(':sMenucardItemNumber', $oMenucardItem->sMenucardItemNumber);               
                                 $sQuery->bindValue(':sMenucardItemDescription', $oMenucardItem->sMenucardItemDescription);
                                 $sQuery->bindValue(':iMenucardItemPrice', $oMenucardItem->iMenucardItemPrice);
+                                $sQuery->bindValue(':iMenucardItemPlaceInList', $iMenucardItemPlaceInList);                               
                                 $sQuery->bindValue(':iFK_iMenucardCategoryId', $iMenucardCategoryId);
                                 $sQuery->bindValue(':iMenucardItemIdHashed', $iMenucardItemIdHashed);
 

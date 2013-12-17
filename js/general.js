@@ -45,7 +45,7 @@
     // Class = + TEMP for at undgå a appende til alle classer med samme navn, denne ændres sidst i funktionen.
     
     $('#'+id+' .AddLiButton').before('<li class="sortableLi sortableLiTEMP"></li>');
-    $('.sortableLiTEMP').append('<div class="DishWrapper DishWrapperTEMP"><input type="hidden" class="DishId" value="" /></div>');
+    $('.sortableLiTEMP').append('<div class="DishWrapper DishWrapperTEMP"><input type="hidden" class="DishId" value="" /><input type="hidden" class="DishPlaceInList" value="" /></div>');
     $('.sortableLiTEMP').removeClass('sortableLiTEMP');
     
     $('.DishWrapperTEMP').append('<div class="DishNumber"><input type="text" maxlength="4" placeholder="nr"></div>');
@@ -65,6 +65,9 @@
     $('.newsortablediv').hide();
     $('.newsortabledivbuffer').css('display', 'inline-block');
     $('#'+id+' .AddLiButton').before('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Updater</a></li>');
+  
+    //Update the items placement
+    UpdatePlacementOfItems();
   }
   
   function CreateNewDivresturanatInfo() {
@@ -270,8 +273,30 @@
                 connectWith: ".connectedSortable",
                 items: "li:not(.non-dragable)",
                 tolerance: "pointer",
-                handle: ".moveDish"
+                handle: ".moveDish",
+                update: function( event, ui ) {UpdatePlacementOfItems();}
       }).disableSelection();
+  }
+  
+  function UpdatePlacementOfItems()
+  {
+     //Loop through for each sMenucardCategory
+      $(".sortableList").each(function(categoryIndex)
+      {         
+          $(this).children("ul").each(function()
+          {             
+              $(this).children(":not(.AddLiButton)").each(function(index)
+              {                
+                  //Loop through .dishwrapper for each of the sMenucardItems
+                  $(this).children().each(function()
+                  {   
+                      //Set the new placement for the item
+                      index++;
+                      $(this).children(".DishPlaceInList").val(index);
+                  });
+              });
+          });
+      });
   }
   
   function DeleteLiSortable(elem)
@@ -460,6 +485,7 @@
                       var sMenucardItemName = $(this).children(".DishText").children(".DishHeadline").children("h1").html();
                       var sMenucardItemPrice = $(this).children(".DishPrice").children(":nth-child(2)").html();
                       var sMenucardItemIdHashed = $(this).children(".DishId").val();
+                      var iMenucardItemPlaceInList = $(this).children(".DishPlaceInList").val();
                       
                       //Array for li element, as assoc array
                       var aLiElement = {};
@@ -473,6 +499,8 @@
                       aLiElement['iPrice'] = sMenucardItemPrice;
                       //iNumber
                       aLiElement['iNumber'] = sMenucardItemNumber;
+                      //iPlaceInList
+                      aLiElement['iPlaceInList'] = iMenucardItemPlaceInList;
                       //Put li array into array for one list
                       aList[index] = aLiElement;
 
@@ -576,7 +604,8 @@
                       var sMenucardItemDesc = $(this).children(".DishText").children(".DishDescription").children("h2").html(); 
                       var sMenucardItemName = $(this).children(".DishText").children(".DishHeadline").children("h1").html();
                       var sMenucardItemPrice = $(this).children(".DishPrice").children(":nth-child(2)").html();
-                    
+                      var iMenucardItemPlaceInList = $(this).children(".DishPlaceInList").val();
+                      
                       //Array for li element, as assoc array
                       var aLiElement = {};
                       //sTitle
@@ -589,6 +618,8 @@
                       aLiElement['iPrice'] = sMenucardItemPrice;
                       //iNumber
                       aLiElement['iNumber'] = sMenucardItemNumber;
+                      //iPlaceInList
+                      aLiElement['iPlaceInList'] = iMenucardItemPlaceInList;
                       //Put li array into array for one list
                       aList[index] = aLiElement;
 
@@ -785,7 +816,7 @@
                                   var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
                                   var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
                                   var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
-                                  console.log('iMenucardItemPlaceInList '+iMenucardItemPlaceInList);
+                                  
                                   var item = {
                                       sMenucardItemName: sMenucardItemName,
                                       sMenucardItemDescription: sMenucardItemDescription,
