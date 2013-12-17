@@ -878,7 +878,9 @@
                               sRestuarentPhone: result.sRestuarentPhone,
                               sRestuarentAddress: result.sRestuarentAddress,
                               sRestuarentOpenningHoursToday: result.sRestuarentOpenningHoursToday,
-                              sRestuarentTakeAwayHoursToday: result.sRestuarentTakeAwayHoursToday
+                              openNow: result.openNow,
+                              sRestuarentTakeAwayHoursToday: result.sRestuarentTakeAwayHoursToday,
+                              takeOutNow: result.takeOutNow,
                           };
                           //Load template and show
                           var template = $('#restuarentinfo_viewmenucard').html();

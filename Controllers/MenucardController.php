@@ -1105,16 +1105,28 @@ class MenucardController
             $i = 0;
             $TodayDayname = $today = date("l");
             $TodayDaynameDanish = $this->GetDanishDayname($TodayDayname);
+            $current_time = date('H:i:s');
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
-                $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
+                $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode(substr($row['sDayName'],0,3));
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
                 
                 //Check for Openinghours hour today               
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
-                    $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                    $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);                  
+
+                    $date1 = DateTime::createFromFormat('H:i:s', $current_time);
+                    $date2 = DateTime::createFromFormat('H:i:s', $row['iTimeFrom']);
+                    $date3 = DateTime::createFromFormat('H:i:s', $row['iTimeTo']);
+
+                    if ($date1 > $date2 && $date1 < $date3)
+                    {
+                      $aMenucard['openNow'] = 'open';
+                    }
+                    else{$aMenucard['openNow'] = 'closed';}
+                    
                 }
                 $i++;
             }
@@ -1141,7 +1153,7 @@ class MenucardController
             $i = 0;
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
-                $aMenucard['aMenucardTakeAwayHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
+                $aMenucard['aMenucardTakeAwayHours'][$i]['sDayName'] = utf8_encode(substr($row['sDayName'],0,3));
                 $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardTakeAwayHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
                 
@@ -1149,6 +1161,16 @@ class MenucardController
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
                     $aMenucard['sRestuarentTakeAwayHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                
+                    $date1 = DateTime::createFromFormat('H:i:s', $current_time);
+                    $date2 = DateTime::createFromFormat('H:i:s', $row['iTimeFrom']);
+                    $date3 = DateTime::createFromFormat('H:i:s', $row['iTimeTo']);
+
+                    if ($date1 > $date2 && $date1 < $date3)
+                    {
+                      $aMenucard['takeOutNow'] = 'open';
+                    }
+                    else{$aMenucard['takeOutNow'] = 'closed';}
                 }
                 $i++;
             }
@@ -1581,6 +1603,7 @@ class MenucardController
             $i = 0;
             $TodayDayname = $today = date("l");
             $TodayDaynameDanish = $this->GetDanishDayname($TodayDayname);
+            $current_time = date('H:i:s');
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
                 $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
@@ -1590,7 +1613,18 @@ class MenucardController
                 //Check for Openinghours hour today               
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
-                    $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                    $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);                  
+
+                    $date1 = DateTime::createFromFormat('H:i:s', $current_time);
+                    $date2 = DateTime::createFromFormat('H:i:s', $row['iTimeFrom']);
+                    $date3 = DateTime::createFromFormat('H:i:s', $row['iTimeTo']);
+
+                    if ($date1 > $date2 && $date1 < $date3)
+                    {
+                      $aMenucard['openNow'] = 'open';
+                    }
+                    else{$aMenucard['openNow'] = 'closed';}
+                    
                 }
                 $i++;
             }
@@ -1624,6 +1658,16 @@ class MenucardController
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
                     $aMenucard['sRestuarentTakeAwayHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);
+                
+                    $date1 = DateTime::createFromFormat('H:i:s', $current_time);
+                    $date2 = DateTime::createFromFormat('H:i:s', $row['iTimeFrom']);
+                    $date3 = DateTime::createFromFormat('H:i:s', $row['iTimeTo']);
+
+                    if ($date1 > $date2 && $date1 < $date3)
+                    {
+                      $aMenucard['takeOutNow'] = 'open';
+                    }
+                    else{$aMenucard['takeOutNow'] = 'closed';}
                 }
                 $i++;
             }
@@ -1702,11 +1746,6 @@ class MenucardController
             return $aMenucard;
         }
         
-    }
-    
-    public function AddMenucardInfo () 
-    {
-        //TODO: Insert menucard info into database
     }
     
     
