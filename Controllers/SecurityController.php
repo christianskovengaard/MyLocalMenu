@@ -51,7 +51,6 @@ class SecurityController
     
     
     //CREATE LOGIN CHECK FUNCTION - Logged Status, check if user is loggede in
-    //TODO: Change to use PDO
     public function login_check() 
     {
         //Check if DatabaseClass is declared, this applies when checking for if user is logged in at admin.php
