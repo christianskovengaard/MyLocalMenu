@@ -19,10 +19,6 @@
         
     </head>
     <body>
-        <?php
-        // put your code here
-        ?>
-        
         <div class="header">
             <div class="wrapper">
                 <div class="logoWrapper">                        
