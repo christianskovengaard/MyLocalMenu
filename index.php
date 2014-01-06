@@ -48,7 +48,7 @@
                 <div class="inputFrame">
                     <form method="GET" action="viewmenucard.php" id="FindMenucardForm">
                         <input type="text" name="iMenucardSerialNumber" placeholder="Find Menukort" class="autocomplete">                   
-                        <div onclick="SubmitForm('FindMenucardForm')" class="FindMenuImg"><img src="img/search.JPG"></div>
+                        <div onclick="SubmitForm('FindMenucardForm');" class="FindMenuImg"><img src="img/search.JPG"></div>
                     </form>
                 </div>
             </div>

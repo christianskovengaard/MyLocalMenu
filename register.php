@@ -26,7 +26,7 @@ if(isset($_GET['sUserToken']))
         
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="js/general.js"></script>
-        
+        <script type="text/javascript" src="js/jsencrypt.js"></script>
     </head>
     <body>
         
@@ -83,7 +83,7 @@ if(isset($_GET['sUserToken']))
                             <div class="Hours TakeAway"></div>
                             <!--<input type="text" style="background: #ccc ; " placeholder="evt Note">-->
                             <div onclick="registerNext(1);" class="button01 prev">tilbage</div>
-                            <div onclick="SubmitForm('register_form');" class="button01">OK</div>
+                            <div onclick="SubmitFormRegister();" class="button01">OK</div>
                         </div>
                     </form>
                 </div>

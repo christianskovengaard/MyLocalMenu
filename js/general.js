@@ -1166,7 +1166,7 @@ function registerNext(num) {
              type : "GET",
              url : 'API/api.php',
              dataType : 'json',
-             data : {sFunction:"GetRestuarentNames"}
+             data : {sFunction:"GetOpeningHours"}
         }).done(function(response){
            
            //TODO: Load template
@@ -1204,7 +1204,7 @@ function ValidateRegSwitch(CaseName,id){
             $('.validationTagImg.pass').remove();
             var pass = $(id).val();
             if(pass.length <= 5 ){
-                $(id).before('<div class="validationTag pass">Din kode skal være 6 tegn eller over.</div>')
+                $(id).before('<div class="validationTag pass">Din kode skal være 6 tegn eller over.</div>');
             }
         break;
         
@@ -1212,8 +1212,8 @@ function ValidateRegSwitch(CaseName,id){
             $('.validationTag.passRe').remove();
             $('.validationTagImg.passRe').remove();
             var passRe = $(id).val();
-            if(passRe != $('#NewPassword').val() ){
-                $(id).before('<div class="validationTag passRe">Koderne er ikke ens</div>')
+            if(passRe !== $('#NewPassword').val() ){
+                $(id).before('<div class="validationTag passRe">Koderne er ikke ens</div>');
             }
         break;
         
@@ -1223,8 +1223,8 @@ function ValidateRegSwitch(CaseName,id){
             var intRegex = /^\d+$/;
             var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
             var zipcode = $(id).val();
-            if(zipcode.length <=3 || intRegex.test(zipcode) == false || floatRegex.test(zipcode) == false ){
-                $(id).before('<div class="validationTag zipcode">Ikke Korekt Postnummer</div>')
+            if(zipcode.length <=3 || intRegex.test(zipcode) === false || floatRegex.test(zipcode) === false ){
+                $(id).before('<div class="validationTag zipcode">Ikke Korrekt Postnummer</div>');
             }
         break;
         
@@ -1234,8 +1234,8 @@ function ValidateRegSwitch(CaseName,id){
             var phone = $(id).val();
             var intRegex = /^\d+$/;
             var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
-            if( phone.length <=7 || intRegex.test(phone) == false || floatRegex.test(phone) == false  ){
-                $(id).before('<div class="validationTag phone">Ikke Korekt Tlefonnummer</div>')
+            if( phone.length <=7 || intRegex.test(phone) === false || floatRegex.test(phone) === false  ){
+                $(id).before('<div class="validationTag phone">Ikke Korrekt Telefonnummer</div>');
             }
         break;
      }
@@ -1244,30 +1244,30 @@ function ValidateRegSwitch(CaseName,id){
  
 function SubmitFormRegister(){
     
-    //POST to Controller, to make it secure
-    jQuery('#register_form').submit(function(e) {
+//submit whole form
 
-        // this code prevents form from actually being submitted
-        e.preventDefault();
-        //e.returnValue = false;
 
-        var $form = $(this);
+    //Encrypt password with jsEncrypt
+    var pubKey = "-----BEGIN PUBLIC KEY-----\r\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4jCNEY3ZyZbhNksbKG+l\r\n+LX9fIEiLkrRy9roGTKJnr2TEuZ28qvwRKeFbAs0wpMUS5\/8hF+Fte2Qywqq9ARG\r\nRNzTcDxjz72VRwTf1tSTKAJUsHYLKbBWPsvZ8FWk9EzJqltdj1mYVKMWcm7Ham5g\r\nwydozgnI3VbX8HMY8EglycKIc43gC+liSUmloWHGCnfKrfSEQ2cuIjnupvodvFw6\r\n5dAanLu+FRuL6hnvt7huxXz5+wbPI5\/aFGWUIHUbHoDFOag8BhVaDjXCrjWt3ry3\r\noFkheO87swYfSmQg4tHM\/2keCrsdHAk2z\/eCuYcbksnmNgTqWgcSHNGM+nq9ngz\/\r\nxXeb1UT+KxBy7K86oCD0a67eDzGvu3XxxW5N3+vvKJnfL6xT0EWTYw9Lczqhl9lp\r\nUdCgrcYe45pRHCqiPGtlYIBCT5lqVZi9zncWmglzl2Fc4fhjwKiK1DH7MSRBO8ut\r\nlgawBFkCprdsmapioTRLOHFRAylSGUiyqYg0NqMuQc5fMRiVPw8Lq3WeAWMAl8pa\r\nksAQHYAoFoX1L+4YkajSVvD5+jQIt3JFUKHngaGoIWnQXPQupmJpdOGMCCu7giiy\r\n0GeCYrSVT8BCXMb4UwIr\/nAziIOMiK87WAwJKysRoZH7daK26qoqpylJ00MMwFMP\r\nvtrpazOcbKmvyjE+Gg\/ckzMCAwEAAQ==\r\n-----END PUBLIC KEY-----";
 
-        $.ajax({
-            type : "post",
-            dataType : "json",
-            url : 'API/api.php',
-            context: $form,
-            data : { sFunction:"RegisterNewUser",data:$form},
-            success: function(result)
-            {
-            },
-            complete: function() {
-                this.off('submit');
-                this.submit();
-            }
-        });
-     });
+    var encrypt = new JSEncrypt();
+    encrypt.setPublicKey(pubKey);
+    var encrypted = encrypt.encrypt($('#NewPassword').val());
+
+    $.ajax({
+        type : "GET",
+        dataType : "json",
+        url : 'API/api.php',
+        /*context: $form,*/
+        data : { sFunction:"RegisterNewUser",data:encrypted},
+        success: function(result)
+        {
+        },
+        complete: function() {
+
+        }
+    });
+     
 }
 
     
