@@ -1044,18 +1044,58 @@
             $(".newsortablediv").css('display','inline-table').slideDown(100);
             
             break;
+            
         case 'Login':
             $("#LoginBox").animate({width: 'toggle'},100);
             $("#LoginEmail").focus();
             break;
+            
         case 'Email':
             var mail = $('#sEmailToSubmit').val();
-            var mailhost = mail.split('@')[1];
-            $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Velkommen</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>')
-            $('.EmailSubmission').hide().slideDown(100);
+            if(validateEmail(mail))
+            {
+                var mailhost = mail.split('@')[1];
+                $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Velkommen</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>')
+                $('.EmailSubmission').hide().slideDown(100);
+                //Create new account and send email to user
+                AddNewUser(mail);
+            }else{
+                $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Brug venligst en rigtigt email adresse</h1><h3 style="cursor:pointer" onclick="HideShowSwitch(\'WrongEmail\')">Tilbage</h3></div>');
+                $('.EmailSubmission').hide().slideDown(100);  
+            }
+            break;
+            
+        case 'WrongEmail':
+            $('.EmailSubmission').slideUp(100);
             break;
      }
 }
+
+    function AddNewUser(mail)
+    {
+       $.ajax({
+             type : "GET",
+             url : 'API/api.php',
+             dataType : 'json',
+             data : {sFunction:"AddNewUser",Email:mail}
+        }).done(function(response){
+           alert('Mail sent'); 
+        }); 
+    }
+
+    function validateEmail(email) {
+        
+        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        if(email !== ''){
+            if( !emailReg.test(email)) {
+              return false;
+            } else {
+              return true;
+            }
+        }else{
+            return false;
+        }
+    }
 
       
     function getValuesForEditManuInfo(){
@@ -1121,6 +1161,19 @@ function registerNext(num) {
     
     $('.Hours.Opening').append('<p>Man:</p><select  class="Hours" id=""><option value = "0">01:00</option></select><p> til </p><select  class="Hours" id=""><option value = "0">01:00</option></select><div class="button02">lukket</div>');
     
+      //TODO: Get data from db and create the element using mustache  template 
+     $.ajax({
+             type : "GET",
+             url : 'API/api.php',
+             dataType : 'json',
+             data : {sFunction:"GetRestuarentNames"}
+        }).done(function(response){
+           
+           //TODO: Load template
+           
+           //TODO: Atacth data
+        });
+  
 }
 
 //  function makeTakeAwayHours(status) {
@@ -1187,6 +1240,35 @@ function ValidateRegSwitch(CaseName,id){
         break;
      }
  }
+ 
+ 
+function SubmitFormRegister(){
+    
+    //POST to Controller, to make it secure
+    jQuery('#register_form').submit(function(e) {
+
+        // this code prevents form from actually being submitted
+        e.preventDefault();
+        //e.returnValue = false;
+
+        var $form = $(this);
+
+        $.ajax({
+            type : "post",
+            dataType : "json",
+            url : 'API/api.php',
+            context: $form,
+            data : { sFunction:"RegisterNewUser",data:$form},
+            success: function(result)
+            {
+            },
+            complete: function() {
+                this.off('submit');
+                this.submit();
+            }
+        });
+     });
+}
 
     
     // register end
