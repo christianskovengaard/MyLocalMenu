@@ -1,3 +1,15 @@
+<?php
+
+//Check if the sUserToken is set
+if(isset($_GET['sUserToken']))
+{
+    //If sUserToken is valid get the user
+    require_once('./Controllers/UserController.php');
+    $oUserController = new UserController();
+    if($oUserController->ChecksUserToken() == true)
+    {
+    
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,7 +53,7 @@
                 <h1>Opret dit menukort</h1>
                 <h3>➊➁➂</h3>
                 <div class="inputFrameWrapper">
-                    
+                    <form action="" method="" id="register_form">
                         <div class="inputFrame A">
                             <h5>Vælge din kode</h5>
 <!--                            <input type="text" placeholder="Din email">
@@ -71,9 +83,9 @@
                             <div class="Hours TakeAway"></div>
                             <!--<input type="text" style="background: #ccc ; " placeholder="evt Note">-->
                             <div onclick="registerNext(1);" class="button01 prev">tilbage</div>
-                            <div onclick="" class="button01">OK</div>
+                            <div onclick="SubmitForm('register_form');" class="button01">OK</div>
                         </div>
-                    
+                    </form>
                 </div>
             </div>
         </div> 
@@ -100,3 +112,12 @@
 
     </body>
 </html>
+<?php
+    }else{
+        header("location: index.php");
+    }
+}
+else{
+    header("location: index.php");
+}
+?>
