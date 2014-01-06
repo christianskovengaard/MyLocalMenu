@@ -205,6 +205,98 @@ class UserController
         }
         
      }
+     
+     public function AddNewUser()
+     {
+         $aUser = array(
+                'sFunction' => 'AddNewUser',
+                'result' => false
+            );
+         
+         if(isset($_GET['Email']))
+         {
+            $mail = $_GET['Email'];
+            
+            //Create the user token
+            $number = uniqid();
+            $sUserToken = $this->oBcrypt->genHash($number);
+            
+            //Opret en bruger med email som brugernavn, med med en token som skal sendes med email, og det er den token som identifisere hvem brugeren er 
+            //Insert the user into the database, prepare statement runs the security
+            $sQuery = $this->conPDO->prepare("INSERT INTO users (sUsername,iUserRole,sUserCreateToken) VALUES (:sUsername, :iUserRole, :sUserToken)");
+            
+            $sQuery->bindValue(':sUsername', $mail);
+            $sQuery->bindValue(':iUserRole', '1');
+            $sQuery->bindValue(':sUserToken', $sUserToken);
+            
+
+            try
+            {
+                $sQuery->execute();
+                $iUserId = $this->conPDO->lastInsertId();
+                //Get last inserted id and generate a hash of that to save in the database (the hash is generate with a random string and the iUserId)
+                //The generated hash is the id to be passed with ajax
+                $iUserIdHashed = $this->oBcrypt->genHash($iUserId);
+
+                //Update the user
+                $sQuery = $this->conPDO->prepare("UPDATE users SET iUserIdHashed = ? WHERE iUserId = ?");
+
+                $sQuery->bindValue(1, $iUserIdHashed);
+                $sQuery->bindValue(2, $iUserId);
+
+                $sQuery->execute();            
+            }
+            catch(PDOException $e)
+            {
+                die($e->getMessage());
+            }
+             
+             
+            
+            mail($mail, "Ny bruger til MyLocal", "Gå til dette <a href='localhost/MyLocalMenu/register.php?sUserToken='.$sUserToken.'>link</a> og opret til menukort'");
+             
+            $aUser['result'] = true;
+         }
+         return $aUser;
+     }
+     
+     public function ChecksUserToken()
+     {
+        if(isset($_GET['sUserToken']))
+        {
+            $sQuery = $this->conPDO->prepare("SELECT * FROM users WHERE sUserCreateToken = :sUserToken LIMIT 1");
+            $sQuery->bindValue('sUserToken', $_GET['sUserToken']);
+            
+            try
+            {
+                $sQuery->execute();
+                
+                if($sQuery->rowCount() == 1)
+                {
+                   return true; 
+                }else{
+                    return false;
+                }
+            }
+            catch(PDOException $e)
+            {
+                die($e->getMessage());
+            }
+     
+        }
+        else{
+            return false;
+        }
+     }
+     
+     public function RegisterNewUser()
+     {
+         if(isset($_POST['data']))
+         {
+             var_dump($_POST['data']);
+         }
+         return true;
+     }
     
 }
 ?>
