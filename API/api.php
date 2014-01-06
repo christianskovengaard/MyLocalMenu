@@ -153,6 +153,39 @@ if(isset($_GET['sFunction']))
 
         break;
         
+        
+        case "AddNewUser":
+            require_once '../Controllers/UserController.php';
+            $oUserController = new UserController();
+            $result = $oUserController->AddNewUser();
+            if($result['result'] == false)
+            {
+                $sResult = '{"sFunction":"AddNewUser","result":"False"}';
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
+        
+        case "RegisterNewUser":
+            require_once '../Controllers/UserController.php';
+            $oUserController = new UserController();
+            $result = $oUserController->RegisterNewUser();
+            if($result['result'] == false)
+            {
+                $sResult = '{"sFunction":"RegisterNewUser","result":"False"}';
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
+        
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
                 echo $result;
