@@ -10,7 +10,7 @@ root {
     display: block;
 }
 
-body,html { width: 100%; height: 100%; margin: 0px; background: #e6e3dd url(../img/back.gif);  }
+body,html { width: 100%; height: 100%; margin: 0px; background: #efeeea;  }
 /*background: #e8e9e8 url(../img/back.gif);*/
 
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
@@ -66,7 +66,7 @@ input {
 
 
 .header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; }
-.RestaurantInfo { position: relative; display: table; width: 100%; margin: 0px; padding: 10px 0 0 0; background: rgba(143,130,121,0.5); overflow: hidden;} /* background: #dedcc9;*/
+.RestaurantInfo { position: relative; display: table; width: 100%; margin: 0px; padding: 10px 0 0 0; background: rgba(143,130,121,0.2); overflow: hidden;} /* background: #dedcc9;*/
 .menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px;}
 .wrapper { position: relative; max-width: 100%; height: 100%; margin: 0 auto; padding: 0 20px; }
 .EditRestaurantInfo { position: absolute; display: none; width: 100%; top: 200px; }
@@ -130,7 +130,7 @@ input {
 {
     position: relative;
     display: inline-table;
-    background: rgba(143,130,121,0.5);
+    background: rgba(143,130,121,0.2);
 /*    background: #ddd;*/
     padding: 10px;
     margin: 5px; 
@@ -175,7 +175,7 @@ input {
 
 .AddLiButton.info { margin-top: 0; }
 
-.DishWrapper { position: relative; padding: 5px; background: #fff; }
+.DishWrapper { position: relative; padding: 5px; background: #efeeea; }
 
 .DishWrapper input,.InfoSlide input { background: #ddd; margin: 0; padding: 0px 3px; transition: width 0.25s;  }
     .DishNumber { display: inline-table; min-width: 25px; margin-right: 8px; }
@@ -214,7 +214,7 @@ input {
 .DishEditWrapperTEMP { display: none; }    
 
 #restuarantInfo h3 { margin-bottom: 7px;}
-.InfoSlide { position: relative; width: 340px; padding: 10px 5px; background: #fff; }
+.InfoSlide { position: relative; width: 340px; padding: 10px 5px; background: #efeeea; }
 .InfoSlide.new input { width: 334px; }
 .InfoSlide.top { margin-bottom: 3px; }
 .InfoSlide.top h3 { font-size: 14px; line-height: 8px; font-weight: bold; }
