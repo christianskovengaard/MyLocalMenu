@@ -59,13 +59,18 @@ if(isset($_GET['sUserToken']))
                             <h5>Vælge din kode</h5>
 <!--                            <input type="text" placeholder="Din email">
                             <input type="password" placeholder="Kode fra modtaget email">-->
-                            <input id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
-                            <input type="password" onblur="ValidateRegSwitch('passwordRetype',this);" placeholder="Gentag koden">
+                            <input value="123123" id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
+                            <input value="123123" type="password" onblur="ValidateRegSwitch('passwordRetype',this);" placeholder="Gentag koden">
                             <div onclick="registerNext(1);" class="button01">næste</div>
                         </div>
 
                         <div class="inputFrame B">
                             <h5>Spisestedet</h5>
+                            <input type="text" id="sCompanyName" placeholder="Firmanavn">
+                            <input type="text" id="sCompanyTelefon" placeholder="Firma telefon">
+                            <input type="text" id="sCompanyAddress" placeholder="Firma adresse">
+                            <input type="text" id="sCompanyZipcode" placeholder="Firma postnummer">
+                            <input type="text" id="sCompanyCVR" placeholder="CVR nr.">
                             <input type="text" id="sRestuarentName" placeholder="Spisesteds navn">
                             <input type="text" id="sRestuarentSlogan" style="background: #ddd; " placeholder="evt Spisestets slogan">
                             <input type="text" id="sRestuarentAddress" placeholder="Gadenavn og nummer">
