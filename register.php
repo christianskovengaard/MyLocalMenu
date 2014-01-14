@@ -27,6 +27,7 @@ if(isset($_GET['sUserToken']))
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="js/general.js"></script>
         <script type="text/javascript" src="js/jsencrypt.js"></script>
+        <script type="text/javascript" src="js/mustache.js"></script>
     </head>
     <body>
         
@@ -65,19 +66,19 @@ if(isset($_GET['sUserToken']))
 
                         <div class="inputFrame B">
                             <h5>Spisestedet</h5>
-                            <input type="text" placeholder="Spisesteds navn">
-                            <input type="text" style="background: #ddd; " placeholder="evt Spisestets slogan">
-                            <input type="text" placeholder="Gadenavn og nummer">
-                            <input type="text" onblur="ValidateRegSwitch('zipcode',this);" style="display: inline-block;" size="4" maxlength="4" placeholder="Postnr">
+                            <input type="text" id="sRestuarentName" placeholder="Spisesteds navn">
+                            <input type="text" id="sRestuarentSlogan" style="background: #ddd; " placeholder="evt Spisestets slogan">
+                            <input type="text" id="sRestuarentAddress" placeholder="Gadenavn og nummer">
+                            <input type="text" id="iRestuarentZipcode" onblur="ValidateRegSwitch('zipcode',this);" style="display: inline-block;" size="4" maxlength="4" placeholder="Postnr">
                             <div class="RegCity"></div>
-                            <input type="text" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Telefonnummer">
+                            <input type="text" id="iRestuarentTel" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Telefonnummer">
                             <div onclick="registerNext(0);" class="button01 prev">tilbage</div>
                             <div onclick="registerNext(2);" class="button01">næste</div>
                         </div>
 
                         <div class="inputFrame C">
                             <h5>Åbningstider</h5>
-                            <div class="Hours Opening"></div>
+                            <div id="OpeningHours" class="Hours Opening"></div>
                             <!--<h5>Bringer I ud?</h5><div id="TakAwayYes" onclick="makeTakeAwayHours(1);" class="button01 prev">Ja</div><div id="TakAwayNo" onclick="makeTakeAwayHours(0);" class="button01 prev">Nej</div>-->
                             <br><br>
                             <div class="Hours TakeAway"></div>
@@ -85,6 +86,7 @@ if(isset($_GET['sUserToken']))
                             <div onclick="registerNext(1);" class="button01 prev">tilbage</div>
                             <div onclick="SubmitFormRegister();" class="button01">OK</div>
                         </div>
+                        <input type="hidden" id="sUserToken" value="<?= $_GET['sUserToken']?>"/>
                     </form>
                 </div>
             </div>
@@ -102,12 +104,17 @@ if(isset($_GET['sUserToken']))
                 <p>ring: 88 88 88 88 </p>
             </div>
         </div> 
-        
+        <div id="mustache_template">
+        </div>
         <script type="text/javascript" >
                 window.onload = function()
                 {
                     $('#NewPassword').focus();
+                    
                 };
+                $(document).ready(function() {
+                    makeOpeningHours();
+                });
         </script>
 
     </body>

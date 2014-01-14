@@ -1149,7 +1149,6 @@ function registerNext(num) {
             $('.inputFrame.B').hide();
             $('.inputFrame.A').hide();
             $('.inputFrame.C').show();
-            makeOpeningHours();
             var H = $('.inputFrame.C').height();
             $('.inputFrameWrapper').css("height",H+50);
         }
@@ -1159,22 +1158,40 @@ function registerNext(num) {
   function makeOpeningHours() {
     $('.Hours.Opening').text('');
     
-    $('.Hours.Opening').append('<p>Man:</p><select  class="Hours" id=""><option value = "0">01:00</option></select><p> til </p><select  class="Hours" id=""><option value = "0">01:00</option></select><div class="button02">lukket</div>');
     
-      //TODO: Get data from db and create the element using mustache  template 
      $.ajax({
              type : "GET",
              url : 'API/api.php',
              dataType : 'json',
              data : {sFunction:"GetOpeningHours"}
-        }).done(function(response){
+        }).done(function(result){
            
-           //TODO: Load template
+           //Load template
+           $("#mustache_template").load( "mustache_templates/openinghours_register.html",function(){
+
+                  var hours = {
+                      hour: []
+                  };
+                  
+                  $.each(result.Hours, function(key,value){
+                              var obj = {
+                                  iTimeId: value.iTimeId,
+                                  iTime: value.iTime
+                                  
+                              };
+                              //Append the obj
+                              hours.hour.push(obj);
+                   });
+                          
+                  var template = $('#openinghours_register').html();               
+                  var html = Mustache.to_html(template, hours);
+                  $('#OpeningHours').append(html);
+           });
            
-           //TODO: Atacth data
         });
   
-}
+ }
+  
 
 //  function makeTakeAwayHours(status) {
 //
@@ -1244,30 +1261,62 @@ function ValidateRegSwitch(CaseName,id){
  
 function SubmitFormRegister(){
     
-//submit whole form
+        //Encrypt password with jsEncrypt
+        var pubKey = "-----BEGIN PUBLIC KEY-----\r\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4jCNEY3ZyZbhNksbKG+l\r\n+LX9fIEiLkrRy9roGTKJnr2TEuZ28qvwRKeFbAs0wpMUS5\/8hF+Fte2Qywqq9ARG\r\nRNzTcDxjz72VRwTf1tSTKAJUsHYLKbBWPsvZ8FWk9EzJqltdj1mYVKMWcm7Ham5g\r\nwydozgnI3VbX8HMY8EglycKIc43gC+liSUmloWHGCnfKrfSEQ2cuIjnupvodvFw6\r\n5dAanLu+FRuL6hnvt7huxXz5+wbPI5\/aFGWUIHUbHoDFOag8BhVaDjXCrjWt3ry3\r\noFkheO87swYfSmQg4tHM\/2keCrsdHAk2z\/eCuYcbksnmNgTqWgcSHNGM+nq9ngz\/\r\nxXeb1UT+KxBy7K86oCD0a67eDzGvu3XxxW5N3+vvKJnfL6xT0EWTYw9Lczqhl9lp\r\nUdCgrcYe45pRHCqiPGtlYIBCT5lqVZi9zncWmglzl2Fc4fhjwKiK1DH7MSRBO8ut\r\nlgawBFkCprdsmapioTRLOHFRAylSGUiyqYg0NqMuQc5fMRiVPw8Lq3WeAWMAl8pa\r\nksAQHYAoFoX1L+4YkajSVvD5+jQIt3JFUKHngaGoIWnQXPQupmJpdOGMCCu7giiy\r\n0GeCYrSVT8BCXMb4UwIr\/nAziIOMiK87WAwJKysRoZH7daK26qoqpylJ00MMwFMP\r\nvtrpazOcbKmvyjE+Gg\/ckzMCAwEAAQ==\r\n-----END PUBLIC KEY-----";
 
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey(pubKey);
+        var encrypted = encrypt.encrypt($('#NewPassword').val());
+        
+        var aData = {};
+        aData['sRestuarentName'] = $('#sRestuarentName').val();
+        aData['sRestuarentSlogan'] = $('#sRestuarentSlogan').val();
+        aData['sRestuarentAddress'] = $('#sRestuarentAddress').val();
+        aData['iRestuarentZipcode'] = $('#iRestuarentZipcode').val();
+        aData['iRestuarentTel'] = $('#iRestuarentTel').val();
 
-    //Encrypt password with jsEncrypt
-    var pubKey = "-----BEGIN PUBLIC KEY-----\r\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4jCNEY3ZyZbhNksbKG+l\r\n+LX9fIEiLkrRy9roGTKJnr2TEuZ28qvwRKeFbAs0wpMUS5\/8hF+Fte2Qywqq9ARG\r\nRNzTcDxjz72VRwTf1tSTKAJUsHYLKbBWPsvZ8FWk9EzJqltdj1mYVKMWcm7Ham5g\r\nwydozgnI3VbX8HMY8EglycKIc43gC+liSUmloWHGCnfKrfSEQ2cuIjnupvodvFw6\r\n5dAanLu+FRuL6hnvt7huxXz5+wbPI5\/aFGWUIHUbHoDFOag8BhVaDjXCrjWt3ry3\r\noFkheO87swYfSmQg4tHM\/2keCrsdHAk2z\/eCuYcbksnmNgTqWgcSHNGM+nq9ngz\/\r\nxXeb1UT+KxBy7K86oCD0a67eDzGvu3XxxW5N3+vvKJnfL6xT0EWTYw9Lczqhl9lp\r\nUdCgrcYe45pRHCqiPGtlYIBCT5lqVZi9zncWmglzl2Fc4fhjwKiK1DH7MSRBO8ut\r\nlgawBFkCprdsmapioTRLOHFRAylSGUiyqYg0NqMuQc5fMRiVPw8Lq3WeAWMAl8pa\r\nksAQHYAoFoX1L+4YkajSVvD5+jQIt3JFUKHngaGoIWnQXPQupmJpdOGMCCu7giiy\r\n0GeCYrSVT8BCXMb4UwIr\/nAziIOMiK87WAwJKysRoZH7daK26qoqpylJ00MMwFMP\r\nvtrpazOcbKmvyjE+Gg\/ckzMCAwEAAQ==\r\n-----END PUBLIC KEY-----";
-
-    var encrypt = new JSEncrypt();
-    encrypt.setPublicKey(pubKey);
-    var encrypted = encrypt.encrypt($('#NewPassword').val());
-
-    $.ajax({
-        type : "GET",
-        dataType : "json",
-        url : 'API/api.php',
-        /*context: $form,*/
-        data : { sFunction:"RegisterNewUser",data:encrypted},
-        success: function(result)
-        {
-        },
-        complete: function() {
-
+        //Get the Openinghours monday-sunday   
+        aData['iMondayTimeFrom'] = $("#iMondayTimeFrom option:selected").val();
+        aData['iMondayTimeTo'] = $("#iMondayTimeTo option:selected").val();
+        aData['iThuesdayTimeFrom'] = $("#iThuesdayTimeFrom option:selected").val();   
+        aData['iThuesdayTimeTo'] = $("#iThuesdayTimeTo option:selected").val();
+        aData['iWednesdaysTimeFrom'] = $("#iWednesdaysTimeFrom option:selected").val();
+        aData['iWednesdaysTimeTo'] = $("#iWednesdaysTimeTo option:selected").val();
+        aData['iThursdayTimeFrom'] = $("#iThursdayTimeFrom option:selected").val();
+        aData['iThursdayTimeTo'] = $("#iThursdayTimeTo option:selected").val();
+        aData['iFridayTimeFrom'] = $("#iFridayTimeFrom option:selected").val();
+        aData['iFridayTimeTo'] = $("#iFridayTimeTo option:selected").val();
+        aData['iSaturdayTimeFrom'] = $("#iSaturdayTimeFrom option:selected").val();
+        aData['iSaturdayTimeTo'] = $("#iSaturdayTimeTo option:selected").val();
+        aData['iSundayTimeFrom'] = $("#iSundayTimeFrom option:selected").val();
+        aData['iSundayTimeTo'] = $("#iSundayTimeTo option:selected").val();
+        
+        
+        
+        //Workaround with encoding issue in IE8 and JSON.stringify
+        for (var i in aData) {
+                aData[i] = encodeURIComponent(aData[i]);
         }
-    });
-     
+        
+        //The password should not be encoded
+        aData['sPassword'] = encrypted;
+        aData['sUserToken'] = $('#sUserToken').val();
+        
+        var sJSON = JSON.stringify(aData);
+
+        $.ajax({
+            type : "GET",
+            dataType : "json",
+            url : 'API/api.php',
+            data : { sFunction:"RegisterNewUser",sJSON:sJSON},
+            success: function(result)
+            {
+            },
+            complete: function() {
+
+            }
+        });
+    
 }
 
     
@@ -1278,8 +1327,8 @@ function SubmitFormRegister(){
 
 
 /* Hook for loge link */
-function PageChange(pagename)
-{
+function PageChange(pagename){
+    
   window.location.href = pagename+'.php';
 }
 /* end */

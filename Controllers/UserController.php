@@ -291,15 +291,13 @@ class UserController
      
      public function RegisterNewUser()
      {
-        if(isset($_GET['data']))
+        if(isset($_GET['sJSON']))
         {
-            var_dump($_GET['data']);
-        }
-
-        $password = $_GET['data'];        
-        
-        
-        $encrypted = base64_decode($password);
+            $aJSONInfo = json_decode($_GET['sJSON']);
+            var_dump($aJSONInfo);
+                    
+            $password = $aJSONInfo->sPassword;       
+            $encrypted = base64_decode($password);
 
 /* DO NOT INDENT THIS CODE */
         $privkey = '-----BEGIN RSA PRIVATE KEY-----
@@ -355,18 +353,39 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
 -----END RSA PRIVATE KEY-----';
 /* DO NOT INDENT THIS CODE end */
         
-        // Decrypt the data using the private key and store the results in $decrypted
-        openssl_private_decrypt($encrypted, $decrypted, $privkey);
-        //Insæt data
-        $sQuery = $this->conPDO->prepare("INSERT INTO test (data) VALUES (:data)");
+            // Decrypt the data using the private key and store the results in $decrypted
+            openssl_private_decrypt($encrypted, $decrypted, $privkey);
+            
+            //Encrypt the password
+            $sUserPassword = $this->oBcrypt->genHash($decrypted);
+        
+            //Update the password for the user
+            $sQuery = $this->conPDO->prepare("UPDATE users SET sUserPassword = :sUserPassword WHERE sUserCreateToken = :sUserToken");
+        
+            $sQuery->bindValue(':sUserPassword', $sUserPassword);
+            $sQuery->bindValue('sUserToken', $aJSONInfo->sUserToken);
+            
+            $sQuery->execute();
+            
+            //Create the new company and restuarent
+            //Give the company the same name,address,phone as the restuarent
+            
+            //TODO: Missing CVR number and general payment info
+            
+            //When data is inserted. log in the user and then redirect user to admin.php, where the user can start creating the menucard
+            
+            echo "Decrypted: ".$decrypted;
+            /*
+            //Insæt data
+            $sQuery = $this->conPDO->prepare("INSERT INTO test (data) VALUES (:data)");
 
-        $sQuery->bindValue(':data', $decrypted);
-        $sQuery->execute();  
+            $sQuery->bindValue(':data', $decrypted);
+            $sQuery->execute();  
+            */
 
-        //Return til ny side
-
-        //return true;
+            //return true;
+        }
      }
-    
+       
 }
 ?>

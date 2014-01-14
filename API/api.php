@@ -186,6 +186,22 @@ if(isset($_GET['sFunction']))
 
         break;
         
+        case "GetOpeningHours":
+            require_once '../Controllers/TimeController.php';
+            $oTimeController = new TimeController();
+            $result = $oTimeController->GetOpeningHours();
+            if($result['result'] == false)
+            {
+                $sResult = '{"sFunction":"GetOpeningHours","result":"False"}';
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
+        
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
                 echo $result;
