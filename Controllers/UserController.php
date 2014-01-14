@@ -192,7 +192,7 @@ class UserController
                     $sQuery->bindValue(':user_id', $user_id);
                     $sQuery->bindValue(':now', $now);
                     $sQuery->execute();
-                    echo 'Login attempt';
+                    //echo 'Login attempt';
                     return false;	
                 }  
            }
@@ -200,7 +200,7 @@ class UserController
         else 
         {
             // No user exists. 
-            echo 'No user';
+            //echo 'No user';
             return false;
         }
         
