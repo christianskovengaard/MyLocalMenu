@@ -1316,12 +1316,19 @@ function SubmitFormRegister(){
             dataType : "json",
             url : 'API/api.php',
             data : { sFunction:"RegisterNewUser",sJSON:sJSON},
-            success: function(result)
-            {
-            },
             complete: function() {
-
+                 
             }
+        }).done(function(result){
+               alert('sdf: '+result.result);
+                if(result.result === true)
+                {
+                    document.location.href = 'admin.php';
+                }
+                else
+                {
+                    alert('TODO: Smid fejl besked');
+                }
         });
     
 }
