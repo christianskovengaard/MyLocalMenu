@@ -1269,6 +1269,13 @@ function SubmitFormRegister(){
         var encrypted = encrypt.encrypt($('#NewPassword').val());
         
         var aData = {};
+        
+        aData['sCompanyName'] = $('#sCompanyName').val();
+        aData['iCompanyTelefon'] = $('#iCompanyTelefon').val();
+        aData['sCompanyAddress'] = $('#sCompanyAddress').val();
+        aData['iCompanyZipcode'] = $('#iCompanyZipcode').val();
+        aData['sCompanyCVR'] = $('#sCompanyCVR').val();
+        
         aData['sRestuarentName'] = $('#sRestuarentName').val();
         aData['sRestuarentSlogan'] = $('#sRestuarentSlogan').val();
         aData['sRestuarentAddress'] = $('#sRestuarentAddress').val();
