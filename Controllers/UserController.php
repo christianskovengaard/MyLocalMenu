@@ -12,11 +12,12 @@ class UserController
     
     public function __construct() 
     {
+
         //Connect to database
-        require 'DatabaseController.php';
+        require_once 'DatabaseController.php';
         $oDatabaseController = new DatabaseController();
         $this->conPDO = $oDatabaseController->ConnectToDatabase();
-        
+
         
         //Initiate the UserClass     
         require_once(ROOT_DIRECTORY . '/Classes/UserClass.php');
@@ -26,8 +27,10 @@ class UserController
         require_once(ROOT_DIRECTORY . '/Classes/bcrypt.php');
         $this->oBcrypt = new Bcrypt();
         
-        require 'SecurityController.php';
+
+        require_once 'SecurityController.php';
         $this->oSecurity = new SecurityController();
+
         
         require 'CompanyController.php';
         $this->oCompany = new CompanyController();
@@ -303,10 +306,16 @@ class UserController
      
      public function RegisterNewUser()
      {
+        
+        $aUser = array(
+                'sFunction' => 'RegisterNewUser',
+                'result' => false
+            ); 
+         
         if(isset($_GET['sJSON']))
         {
             $aJSONInfo = json_decode($_GET['sJSON']);
-            var_dump($aJSONInfo);
+            //var_dump($aJSONInfo);
                     
             $password = $aJSONInfo->sPassword;       
             $encrypted = base64_decode($password);
@@ -368,7 +377,7 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             // Decrypt the data using the private key and store the results in $decrypted
             openssl_private_decrypt($encrypted, $decrypted, $privkey);
             
-            $decrypted = $decryptedPassword;
+            $decryptedPassword = $decrypted;
             
             //Encrypt the password
             $sUserPassword = $this->oBcrypt->genHash($decryptedPassword);
@@ -394,7 +403,7 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             
             //Create Menucard
             //Function return the iMenucardId
-            $iMenucardId = $this->oMenucard->AddNewMenucard($iRestuarentInfoId);
+            $iMenucardId = $this->oMenucard->AddNewMenucard($aJSONInfo->sRestuarentName.' - menukort',$iRestuarentInfoId);
             
             //Insert openinghours
             $aOpeningHours = array(
@@ -417,11 +426,11 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             //Loop through array and insert all the values
             //Counter for the day id. 1=mandag,2=tirsdag,3=onsdag,4=torsdag,5=fredag,6=lørdag,7=søndag
             $iDay = 1;
-            for($i=0;$i>13;$i+=2) {
-                $sQuery = $this->conPDO->prepare("INSERT INTO openinghours (iFK_iMenucardId,iFK_DayId,iFK_iTimeFromId,iFK_iTimeToId) VALUES (:iFK_iMenucardId,:iFK_DayId,:iFK_iTimeFromId,:iFK_iTimeToId)");
-                
+            for($i=0;$i<13;$i+=2) {
+                $sQuery = $this->conPDO->prepare("INSERT INTO openinghours (iFK_iMenucardId,iFK_iDayId,iFK_iTimeFromId,iFK_iTimeToId) VALUES (:iFK_iMenucardId,:iFK_iDayId,:iFK_iTimeFromId,:iFK_iTimeToId)");
+                             
                 $sQuery->bindValue(':iFK_iMenucardId', $iMenucardId);
-                $sQuery->bindValue(':iFK_DayId', $iDay);
+                $sQuery->bindValue(':iFK_iDayId', $iDay);
                 $sQuery->bindValue(':iFK_iTimeFromId', $aOpeningHours[$i]);
                 $i++;
                 $sQuery->bindValue(':iFK_iTimeToId', $aOpeningHours[$i]);
@@ -431,26 +440,38 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
                 if($i == 12){
                     break;
                 }
-            }
+            }                               
             
+            
+            //Get the sUsername based on the sUserCreateToken
+            $sQuery = $this->conPDO->prepare("SELECT sUsername FROM users WHERE sUserCreateToken = :sUserToken");
+            $sQuery->bindValue(':sUserToken', $aJSONInfo->sUserToken);
+            $sQuery->execute();
+            $result = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $sUsername= $result['sUsername'];
+            
+            //Set iFK_iCompanyId for the user
+            $sQuery = $this->conPDO->prepare("UPDATE users SET iFK_iCompanyId = :iCompanyId WHERE sUserCreateToken = :sUserToken");
+            $sQuery->bindValue(':iCompanyId', $iCompanyId);
+            $sQuery->bindValue(':sUserToken', $aJSONInfo->sUserToken);
+            $sQuery->execute(); 
             
             //Remove sUserCreateToken
-            
+            $sQuery = $this->conPDO->prepare("UPDATE users SET sUserCreateToken = '' WHERE sUserCreateToken = :sUserToken");
+            $sQuery->bindValue(':sUserToken', $aJSONInfo->sUserToken);
+            $sQuery->execute();            
             
             //When data is inserted. log in the user and then redirect user to admin.php, where the user can start creating the menucard
             if($this->LogInUser($sUsername, $decryptedPassword) == true)
             {
-                return true;
+                $aUser['result'] = true;
+                return $aUser;
             }else{
-                return "Not logged in";
+                 $aUser['result'] = false;
             }
-            
-            
-            
-            
 
-            //return true;
         }
+        return $aUser;
      }
        
 }
