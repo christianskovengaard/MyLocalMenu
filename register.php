@@ -67,9 +67,9 @@ if(isset($_GET['sUserToken']))
                         <div class="inputFrame B">
                             <h5>Spisestedet</h5>
                             <input type="text" id="sCompanyName" placeholder="Firmanavn">
-                            <input type="text" id="sCompanyTelefon" placeholder="Firma telefon">
+                            <input type="text" id="iCompanyTelefon" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Firma telefon">
                             <input type="text" id="sCompanyAddress" placeholder="Firma adresse">
-                            <input type="text" id="sCompanyZipcode" placeholder="Firma postnummer">
+                            <input type="text" id="iCompanyZipcode" onblur="ValidateRegSwitch('zipcode',this);" maxlength="4" placeholder="Firma postnummer">
                             <input type="text" id="sCompanyCVR" placeholder="CVR nr.">
                             <input type="text" id="sRestuarentName" placeholder="Spisesteds navn">
                             <input type="text" id="sRestuarentSlogan" style="background: #ddd; " placeholder="evt Spisestets slogan">
