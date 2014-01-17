@@ -6,6 +6,9 @@ class UserController
     private $oUser;
     private $oBcrypt;
     private $oSecurity;
+    private $oCompany;
+    private $oRestuarent;
+    private $oMenucard;
     
     public function __construct() 
     {
@@ -25,6 +28,15 @@ class UserController
         
         require 'SecurityController.php';
         $this->oSecurity = new SecurityController();
+        
+        require 'CompanyController.php';
+        $this->oCompany = new CompanyController();
+        
+        require 'RestuarentController.php';
+        $this->oRestuarent = new RestuarentController();
+        
+        require 'MenucardController.php';
+        $this->oMenucard = new MenucardController();
     }
 
 
@@ -252,7 +264,7 @@ class UserController
             }
              
              
-            
+            //TODO: Send mail from EmailController 
             mail($mail, "Ny bruger til MyLocal", "Gå til dette <a href='localhost/MyLocalMenu/register.php?sUserToken='.$sUserToken.'>link</a> og opret til menukort'");
              
             $aUser['result'] = true;
@@ -356,8 +368,10 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             // Decrypt the data using the private key and store the results in $decrypted
             openssl_private_decrypt($encrypted, $decrypted, $privkey);
             
+            $decrypted = $decryptedPassword;
+            
             //Encrypt the password
-            $sUserPassword = $this->oBcrypt->genHash($decrypted);
+            $sUserPassword = $this->oBcrypt->genHash($decryptedPassword);
         
             //Update the password for the user
             $sQuery = $this->conPDO->prepare("UPDATE users SET sUserPassword = :sUserPassword WHERE sUserCreateToken = :sUserToken");
@@ -367,21 +381,73 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             
             $sQuery->execute();
             
-            //Create the new company and restuarent
-            //Give the company the same name,address,phone as the restuarent
+            //Create the new company
+            //Function return iCompanyId
+            //TODO: Missing payment info
+            $iCompanyId = $this->oCompany->AddCompany($aJSONInfo->sCompanyName, $aJSONInfo->iCompanyTelefon,$aJSONInfo->sCompanyAddress, $aJSONInfo->iCompanyZipcode, $aJSONInfo->sCompanyCVR);
             
-            //TODO: Missing CVR number and general payment info
+            //Create the new restuarent
+            //Function return the irestuarentInfoId
+            //TODO: sRestuarentSlogan ????
+            $iRestuarentInfoId = $this->oRestuarent->AddRestuarent($aJSONInfo->sRestuarentName, $aJSONInfo->iRestuarentTel, $aJSONInfo->sRestuarentAddress, $iCompanyId);
+            
+            
+            //Create Menucard
+            //Function return the iMenucardId
+            $iMenucardId = $this->oMenucard->AddNewMenucard($iRestuarentInfoId);
+            
+            //Insert openinghours
+            $aOpeningHours = array(
+                0 => $aJSONInfo->iMondayTimeFrom,
+                1 => $aJSONInfo->iMondayTimeTo,
+                2 => $aJSONInfo->iThuesdayTimeFrom,
+                3 => $aJSONInfo->iThuesdayTimeTo,
+                4 => $aJSONInfo->iWednesdaysTimeFrom,
+                5 => $aJSONInfo->iWednesdaysTimeTo,
+                6 => $aJSONInfo->iThursdayTimeFrom,
+                7 => $aJSONInfo->iThursdayTimeTo,
+                8 => $aJSONInfo->iFridayTimeFrom,
+                9 => $aJSONInfo->iFridayTimeTo,
+                10 => $aJSONInfo->iSaturdayTimeFrom,
+                11 => $aJSONInfo->iSaturdayTimeTo,
+                12 => $aJSONInfo->iSundayTimeFrom,
+                13 => $aJSONInfo->iSundayTimeTo
+            );
+            
+            //Loop through array and insert all the values
+            //Counter for the day id. 1=mandag,2=tirsdag,3=onsdag,4=torsdag,5=fredag,6=lørdag,7=søndag
+            $iDay = 1;
+            for($i=0;$i>13;$i+=2) {
+                $sQuery = $this->conPDO->prepare("INSERT INTO openinghours (iFK_iMenucardId,iFK_DayId,iFK_iTimeFromId,iFK_iTimeToId) VALUES (:iFK_iMenucardId,:iFK_DayId,:iFK_iTimeFromId,:iFK_iTimeToId)");
+                
+                $sQuery->bindValue(':iFK_iMenucardId', $iMenucardId);
+                $sQuery->bindValue(':iFK_DayId', $iDay);
+                $sQuery->bindValue(':iFK_iTimeFromId', $aOpeningHours[$i]);
+                $i++;
+                $sQuery->bindValue(':iFK_iTimeToId', $aOpeningHours[$i]);
+                $sQuery->execute();
+                $i--;
+                $iDay++;
+                if($i == 12){
+                    break;
+                }
+            }
+            
+            
+            //Remove sUserCreateToken
+            
             
             //When data is inserted. log in the user and then redirect user to admin.php, where the user can start creating the menucard
+            if($this->LogInUser($sUsername, $decryptedPassword) == true)
+            {
+                return true;
+            }else{
+                return "Not logged in";
+            }
             
-            echo "Decrypted: ".$decrypted;
-            /*
-            //Insæt data
-            $sQuery = $this->conPDO->prepare("INSERT INTO test (data) VALUES (:data)");
-
-            $sQuery->bindValue(':data', $decrypted);
-            $sQuery->execute();  
-            */
+            
+            
+            
 
             //return true;
         }
