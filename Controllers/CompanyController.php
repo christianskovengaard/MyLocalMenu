@@ -9,10 +9,12 @@ class CompanyController
        
        if(!class_exists('Database') )
        { 
-            require 'DatabaseController.php';
-            $oDatabaseController = new DatabaseController();
-            $this->conPDO = $oDatabaseController->ConnectToDatabase(); 
+            
+                     
        }
+       require_once 'DatabaseController.php';
+       $oDatabaseController = new DatabaseController();   
+       $this->conPDO = $oDatabaseController->ConnectToDatabase(); 
        
        require_once(ROOT_DIRECTORY . '/Classes/CompanyClass.php');
        $this->oCompany = new CompanyClass();

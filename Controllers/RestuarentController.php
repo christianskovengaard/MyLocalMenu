@@ -7,13 +7,11 @@ class RestuarentController
     private $oRestuarent;
     
     public function __construct() {
+
+        require_once 'DatabaseController.php';
+        $oDatabaseController = new DatabaseController();
+        $this->conPDO = $oDatabaseController->ConnectToDatabase();
         
-        if(!class_exists('Database') )
-        {
-            require 'DatabaseController.php';
-            $oDatabaseController = new DatabaseController();
-            $this->conPDO = $oDatabaseController->ConnectToDatabase();
-        }
         require_once(ROOT_DIRECTORY . '/Classes/RestuarentClass.php');
         $this->oRestuarent = new RestuarentClass();
     }

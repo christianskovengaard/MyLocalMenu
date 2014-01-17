@@ -54,10 +54,7 @@ class SecurityController
     public function login_check() 
     {
         //Check if DatabaseClass is declared, this applies when checking for if user is logged in at admin.php
-        if(!class_exists('DatabaseController'))
-        {
-            require 'DatabaseController.php';           
-        }
+        require_once 'DatabaseController.php';   
         $oDatabase = new DatabaseController();
         $this->conPDO = $oDatabase->ConnectToDatabase();
         
