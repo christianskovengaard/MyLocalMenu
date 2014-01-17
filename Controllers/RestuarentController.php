@@ -4,14 +4,18 @@ class RestuarentController
 {
     
     private $conPDO;
+    private $oRestuarent;
     
     public function __construct() {
         
-        require 'DatabaseController.php';
-        $oDatabaseController = new DatabaseController();
-        $this->conPDO = $oDatabaseController->ConnectToDatabase();
-        
+        if(!class_exists('Database') )
+        {
+            require 'DatabaseController.php';
+            $oDatabaseController = new DatabaseController();
+            $this->conPDO = $oDatabaseController->ConnectToDatabase();
+        }
         require_once(ROOT_DIRECTORY . '/Classes/RestuarentClass.php');
+        $this->oRestuarent = new RestuarentClass();
     }
     
     public function GetRestuarentNames()
@@ -43,6 +47,28 @@ class RestuarentController
         }
         return $aRestuarentNames;
     }
+    
+    public function AddRestuarent($sRestuarentInfoName, $sRestuarentInfoPhone, $sRestuarentInfoAddress, $iFK_iCompanyInfoId)
+    {
+        $this->oRestuarent->SetRestaurent($sRestuarentInfoName, $sRestuarentInfoPhone, $sRestuarentInfoAddress, $iFK_iCompanyInfoId);
+        
+        //Insert into database          
+        $sQuery = $this->conPDO->prepare("INSERT INTO restuarentinfo (sRestuarentInfoName, sRestuarentInfoPhone, sRestuarentInfoAddress, iFK_iCompanyInfoId) VALUES (:sRestuarentInfoName, :sRestuarentInfoPhone, :sRestuarentInfoAddress, :iFK_iCompanyInfoId)");
+
+        $oRestuarent = $this->oRestuarent->GetRestuarent();
+        
+        $sQuery->bindValue(':sRestuarentInfoName', $oRestuarent->sRestuarentInfoName);
+        $sQuery->bindValue(':sRestuarentInfoPhone', $oRestuarent->sRestuarentInfoPhone);
+        $sQuery->bindValue(':sRestuarentInfoAddress', $oRestuarent->sRestuarentInfoAddress);
+        $sQuery->bindValue(':iFK_iCompanyInfoId', $oRestuarent->iFK_iCompanyInfoId);
+        $sQuery->execute();
+        
+        //Get the last inserted id
+        $iRestuarentInfoId = $this->conPDO->lastInsertId();
+        
+        return $iRestuarentInfoId;
+    }
+    
 
     public function __destruct() {
         ;
