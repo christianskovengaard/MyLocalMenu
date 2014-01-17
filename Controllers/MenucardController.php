@@ -38,6 +38,27 @@ class MenucardController
         
     }
     
+    //Add menucard when registreting a new user 
+    public function AddNewMenucard($sMenucardName,$iFK_iRestuarentInfoId)
+    {
+        $sQuery = $this->conPDO->prepare("INSERT INTO menucard (sMenucardName,iFK_iRestuarentInfoId) VALUES (:sMenucardName,:iFK_iRestuarentInfoId)");
+        $sQuery->bindValue(":sMenucardName", $sMenucardName);
+        $sQuery->bindValue(':iFK_iRestuarentInfoId', $iFK_iRestuarentInfoId);
+        $sQuery->execute();
+        
+        //Get the last inserted id
+        $iMenucardId = $this->conPDO->lastInsertId();
+
+        $iMenucardIdHashed = $this->oBcrypt->genHash($iMenucardId);
+
+        $sQuery = $this->conPDO->prepare("UPDATE menucard SET iMenucardIdHashed = :iMenucardIdHashed WHERE iMenucardId = :iMenucardId LIMIT 1");
+        $sQuery->bindValue(':iMenucardIdHashed', $iMenucardIdHashed);
+        $sQuery->bindValue(':iMenucardId', $iMenucardId);
+        $sQuery->execute();
+        
+        return $iMenucardId;
+    }
+    
     //Add a Menucard If there are not previous menucards
     public function AddMenucard () 
     {                               
