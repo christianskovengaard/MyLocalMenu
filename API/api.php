@@ -176,7 +176,7 @@ if(isset($_GET['sFunction']))
             $result = $oUserController->RegisterNewUser();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"RegisterNewUser","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
