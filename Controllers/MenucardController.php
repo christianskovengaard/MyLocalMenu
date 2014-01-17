@@ -13,10 +13,11 @@ class MenucardController
 
     public function __construct() 
     {
-        
-        require 'DatabaseController.php';
+
+        require_once 'DatabaseController.php';
         $oDatabaseController = new DatabaseController();
         $this->conPDO = $oDatabaseController->ConnectToDatabase();
+        
         
         require_once(ROOT_DIRECTORY . '/Classes/bcrypt.php');
         $this->oBcrypt = new Bcrypt();
@@ -33,17 +34,20 @@ class MenucardController
         require_once(ROOT_DIRECTORY . '/Classes/MenucardInfoClass.php');
         $this->oMenucardInfo = new MenucardInfoClass();
         
-        require 'SecurityController.php';
-        $this->oSecurityController = new SecurityController();
-        
+        if(!class_exists('SecurityController') )
+        {
+            require 'SecurityController.php';
+            $this->oSecurityController = new SecurityController();
+        }
     }
     
     //Add menucard when registreting a new user 
     public function AddNewMenucard($sMenucardName,$iFK_iRestuarentInfoId)
     {
-        $sQuery = $this->conPDO->prepare("INSERT INTO menucard (sMenucardName,iFK_iRestuarentInfoId) VALUES (:sMenucardName,:iFK_iRestuarentInfoId)");
+        $sQuery = $this->conPDO->prepare("INSERT INTO menucard (sMenucardName,iMenucardSerialNumber,iFK_iRestuarentInfoId) VALUES (:sMenucardName,:iMenucardSerialNumber,:iFK_iRestuarentInfoId)");
         $sQuery->bindValue(":sMenucardName", $sMenucardName);
         $sQuery->bindValue(':iFK_iRestuarentInfoId', $iFK_iRestuarentInfoId);
+        $sQuery->bindValue(':iMenucardSerialNumber', uniqid()); ///TODO: Change this random number to be a reel serial number (AA0001 style)
         $sQuery->execute();
         
         //Get the last inserted id
@@ -55,6 +59,49 @@ class MenucardController
         $sQuery->bindValue(':iMenucardIdHashed', $iMenucardIdHashed);
         $sQuery->bindValue(':iMenucardId', $iMenucardId);
         $sQuery->execute();
+        
+        
+        //Create Default menucardinfo
+        $sQuery = $this->conPDO->prepare("INSERT INTO menucardinfo (sMenucardInfoHeadline,sMenucardInfoParagraph,iFK_iMenucardId) VALUES (:Headline,:Text,:iMenucardId)");
+        $sQuery->bindValue(':Headline', "Overskift");
+        $sQuery->bindValue(':Text', "Her kan du skrive oplysninger om dit sted!");
+        $sQuery->bindValue(':iMenucardId', $iMenucardId);
+        $sQuery->execute();
+        
+        //Create Default menucardcategory 
+        $sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory (sMenucardCategoryName,sMenucardCategoryDesscription,iFK_iMenucardId) VALUES (:Categoryname,:CategoryDesc,:iMenucardId)");
+        $sQuery->bindValue(':Categoryname', "Kategori overskift");
+        $sQuery->bindValue(':CategoryDesc', "Beskrivelse af kategorien");
+        $sQuery->bindValue(':iMenucardId', $iMenucardId);
+        $sQuery->execute();
+       
+        //Create hashed id for Category
+        $iMenucardCategoryId = $this->conPDO->lastInsertId();                   
+        $iMenucardCategoryHashedId = $this->oBcrypt->genRandId($iMenucardCategoryId);
+        $sQuery = $this->conPDO->prepare("UPDATE menucardcategory SET iMenucardCategoryIdHashed = :iMenucardCategoryHashedId WHERE iMenucardCategoryId = :iMenucardCategoryId LIMIT 1");
+        $sQuery->bindValue(':iMenucardCategoryHashedId', $iMenucardCategoryHashedId);
+        $sQuery->bindValue(':iMenucardCategoryId', $iMenucardCategoryId);
+        $sQuery->execute();
+        
+        
+        //Create items (3) for the category
+        $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iMenucardItemPlaceInList,iFK_iMenucardCategoryId) VALUES (:Categoryname,:CategoryDesc,:iMenucardId)");
+        $sQuery->bindValue(':sMenucardItemName', "Produkt navn");
+        $sQuery->bindValue(':sMenucardItemNumber', "1");
+        $sQuery->bindValue(':sMenucardItemDescription', "Beskrivelse");
+        $sQuery->bindValue(':iMenucardItemPrice', 1);
+        $sQuery->bindValue(':iMenucardItemPlaceInList', 1);
+        $sQuery->bindValue(':iFK_iMenucardCategoryId', $iMenucardCategoryId);
+        $sQuery->execute();
+        
+        //Create hashed id for item
+        $iMenucardItemId = $this->conPDO->lastInsertId();
+        $iMenucardItemIdHashed = $this->oBcrypt->genRandId($iMenucardItemId);
+        $sQuery = $this->conPDO->prepare("UPDATE menucarditem SET iMenucardItemIdHashed = :iMenucardItemIdHashed WHERE iMenucardItemId = :iMenucardItemId LIMIT 1");
+        $sQuery->bindValue(':iMenucardItemIdHashed', $iMenucardItemIdHashed);
+        $sQuery->bindValue(':iMenucardItemId', $iMenucardItemId);
+        $sQuery->execute();
+        
         
         return $iMenucardId;
     }
@@ -1302,7 +1349,8 @@ class MenucardController
                                             INNER JOIN users
                                             ON users.iUserIdHashed = :iUserId
                                             INNER JOIN restuarentinfo
-                                            ON restuarentinfo.`iFK_iCompanyInfoId` = users.`iFK_iCompanyId`');
+                                            ON restuarentinfo.`iFK_iCompanyInfoId` = users.`iFK_iCompanyId`
+                                            WHERE menucard.`iFK_iRestuarentInfoId` = restuarentinfo.`iFK_iCompanyInfoId`');
             $sQuery->bindValue(':iUserId', $user_id);
             
             try
