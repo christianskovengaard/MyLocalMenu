@@ -69,7 +69,7 @@ class MenucardController
         $sQuery->execute();
         
         //Create Default menucardcategory 
-        $sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory (sMenucardCategoryName,sMenucardCategoryDesscription,iFK_iMenucardId) VALUES (:Categoryname,:CategoryDesc,:iMenucardId)");
+        $sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory (sMenucardCategoryName,sMenucardCategoryDescription,iFK_iMenucardId) VALUES (:Categoryname,:CategoryDesc,:iMenucardId)");
         $sQuery->bindValue(':Categoryname', "Kategori overskift");
         $sQuery->bindValue(':CategoryDesc', "Beskrivelse af kategorien");
         $sQuery->bindValue(':iMenucardId', $iMenucardId);
@@ -85,7 +85,8 @@ class MenucardController
         
         
         //Create items (3) for the category
-        $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iMenucardItemPlaceInList,iFK_iMenucardCategoryId) VALUES (:Categoryname,:CategoryDesc,:iMenucardId)");
+        $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iMenucardItemPlaceInList,iFK_iMenucardCategoryId) 
+                                            VALUES (:sMenucardItemName,:sMenucardItemNumber,:sMenucardItemDescription,:iMenucardItemPrice,:iMenucardItemPlaceInList,:iFK_iMenucardCategoryId)");
         $sQuery->bindValue(':sMenucardItemName', "Produkt navn");
         $sQuery->bindValue(':sMenucardItemNumber', "1");
         $sQuery->bindValue(':sMenucardItemDescription', "Beskrivelse");
