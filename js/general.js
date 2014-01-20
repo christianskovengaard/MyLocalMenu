@@ -705,7 +705,7 @@
         //Load the mustache template into viewmenucard
         if(isAdmin === true)
         {
-            
+            console.warn('ADMIN');
             //Clear the area
             $('.sortableList').remove();
             $('#iMenucardIdHashed').remove();
@@ -752,7 +752,7 @@
 
                           //Foreach menucardinfo insert into the menucarcardinfo
                           $.each(result.aMenucardInfo, function(key,value){
-                              var obj = {
+                              var obj = {                                 
                                   headline: value.sMenucardInfoHeadline,
                                   text: value.sMenucardInfoParagraph
                               };
@@ -772,7 +772,7 @@
                               menucardinfo.openinghours.push(obj);
                           });
 
-                          //Foreach TakeAwayHours insert into the menucarcardinfo
+                          /*Foreach TakeAwayHours insert into the menucarcardinfo
                           $.each(result.aMenucardTakeAwayHours, function(key,value){
                               var obj = {
                                   sDayName: value.sDayName,
@@ -781,10 +781,10 @@
                               };
                               //Append the obj to the takeawayhours obj
                               menucardinfo.takeawayhours.push(obj);
-                          }); 
+                          });*/ 
 
                           var template = $('#menucardinfo_admin').html();
-                          var html = Mustache.to_html(template, menucardinfo);
+                          var html = Mustache.to_html(template, menucardinfo);                       
                           $('#restuarantInfo').html(html);
                       });
 
