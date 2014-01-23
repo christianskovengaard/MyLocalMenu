@@ -1,3 +1,8 @@
+<?php
+require 'Controllers/SecurityController.php';
+$oSecurityController = new SecurityController();
+$oSecurityController->sec_session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,12 +33,22 @@
                          <h6>Menukort på mobile</h6>
                     </div>
                 </div>
+                <?php if ($oSecurityController->login_check() == false) : ?>
                 <div onclick="HideShowSwitch('Login');" class="button01">Log ind</div>
-                <div id="LoginBox" class="inputFrame">
-                    <input id="LoginEmail" type="text" placeholder="Email">
-                    <input type="Password" placeholder="Kodeord">
-                    <div onclick="HideShowSwitch('Login');" class="button02">Log ind</div>
-                </div>
+                <form name="login" method="POST" action="login.php">
+                    <div id="LoginBox" class="inputFrame">                   
+                        <input name="username" id="LoginEmail" type="text" placeholder="Email">
+                        <input name="password" type="Password" placeholder="Kodeord">
+                        <input type="submit" value="Log ind" class="button02"/> 
+                        <div onclick="HideShowSwitch('Login');" class="button02">Luk</div>
+                    </div>
+                </form>
+                <?php else : ?>
+                <!--<div onclick="" class="button01">Rediger brugerprofil</div>-->
+                <form name="logout" method="POST" action="logout.php">
+                    <input type="submit" value="Log ud" class="button01"/>
+                </form>
+                <?php endif; ?>
             </div>
         </div> 
         
