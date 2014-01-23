@@ -107,13 +107,17 @@ class MenucardController
         return $iMenucardId;
     }
     
-    //Add a Menucard If there are not previous menucards
+    //Add a Menucard If there are not previous menucards //Maybe delete this function if it is not used anymore
     public function AddMenucard () 
-    {                               
+    {  
+        $aMenucard = array(
+                'sFunction' => 'AddMenucard',
+                'result' => false
+            );
+        
         if(isset($_GET['sJSONMenucard']))
         {
-            
-            //TODO: Change this 
+            $aMenucard['result'] = true;
             //Get the iCompanyId based user logged in
             //$iCompanyId = $_SESSION['iCompanyId'];
             $iCompanyId = '1';
@@ -328,7 +332,7 @@ class MenucardController
                 }
             }            
         }
-        return true;
+        return $aMenucard;
     }
     
     
@@ -1829,5 +1833,10 @@ class MenucardController
         if($sDayname == 'Saturday') return 'Lørdag';
         if($sDayname == 'Sunday') return 'Søndag';       
     }
+    
+    private function CreateSerialNumber ()
+    {
+        //TODO: Create serialnumber format AA0000 (2 letter and 4 numbers)
+    }   
 }
 ?>
