@@ -6,5 +6,5 @@
     
     setcookie('sec_session_id', '', time()-3600,'/', '', 0, 0);
     
-    header("location: fakeLogin.php");
+    header("location: index.php");
 ?>
