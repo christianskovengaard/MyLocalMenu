@@ -9,13 +9,16 @@ if(isset($_GET['sFunction']))
         case "SaveMenucard":
             require_once '../Controllers/MenucardController.php';
             $oMenucardController = new MenuCardController();
-            if($oMenucardController->AddMenucard() == true)
+            $result = $oMenucardController->AddMenucard();
+            if($result['result'] == true)
             {
-                $sResult = '{"sFunction":"SaveMenucard","result":"True"}';
+                //$sResult = '{"sFunction":"SaveMenucard","result":"True"}';
+                $sResult = json_encode($result);
             }
             else
             {
-                $sResult = '{"sFunction":"SaveMenucard","result":"False"}';
+                //$sResult = '{"sFunction":"SaveMenucard","result":"False"}';
+                $sResult = json_encode($result);
             }
             echo $sResult;
 
@@ -27,11 +30,13 @@ if(isset($_GET['sFunction']))
             $result = $oMenucardController->UpdateMenucard();
             if($result['result'] == true)
             {
-                $sResult = '{"sFunction":"UpdateMenucard","result":"True"}';
+                //$sResult = '{"sFunction":"UpdateMenucard","result":"True"}';
+                $sResult = json_encode($result);
             }
             else
             {
-                $sResult = '{"sFunction":"UpdateMenucard","result":"False"}';
+                //$sResult = '{"sFunction":"UpdateMenucard","result":"False"}';
+                $sResult = json_encode($result);
             }
             echo $sResult;
 
@@ -43,7 +48,7 @@ if(isset($_GET['sFunction']))
             $result = $oMenucardController->GetMenucardWithSerialNumber();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"GetMenucardWithSerialNumber","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
@@ -60,7 +65,8 @@ if(isset($_GET['sFunction']))
             $result = $oMenucardController->GetMenucardAdmin();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"GetMenucardAdmin","result":"False"}';
+                //$sResult = '{"sFunction":"GetMenucardAdmin","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
@@ -77,7 +83,8 @@ if(isset($_GET['sFunction']))
             $result = $oMenucardController->GetMenucardWithRestuarentName();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"GetMenucardWithRestuarentName","result":"False"}';
+                //$sResult = '{"sFunction":"GetMenucardWithRestuarentName","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
@@ -93,7 +100,8 @@ if(isset($_GET['sFunction']))
             $result = $oMenucardController->GetMenucard();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"GetMenucard","result":"False"}';
+                //$sResult = '{"sFunction":"GetMenucard","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
@@ -110,7 +118,8 @@ if(isset($_GET['sFunction']))
             $result = $oMenucardController->DeactivateMenucard();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"DeactivateMenucard","result":"False"}';
+                //$sResult = '{"sFunction":"DeactivateMenucard","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
@@ -127,7 +136,8 @@ if(isset($_GET['sFunction']))
             $result = $oMenucardController->ActivateMenucard();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"ActivateMenucard","result":"False"}';
+                //$sResult = '{"sFunction":"ActivateMenucard","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
@@ -143,7 +153,8 @@ if(isset($_GET['sFunction']))
             $result = $oRestuarentController->GetRestuarentNames();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"GetRestuarentNames","result":"False"}';
+                //$sResult = '{"sFunction":"GetRestuarentNames","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
@@ -160,7 +171,8 @@ if(isset($_GET['sFunction']))
             $result = $oUserController->AddNewUser();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"AddNewUser","result":"False"}';
+                //$sResult = '{"sFunction":"AddNewUser","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
@@ -192,7 +204,8 @@ if(isset($_GET['sFunction']))
             $result = $oTimeController->GetOpeningHours();
             if($result['result'] == false)
             {
-                $sResult = '{"sFunction":"GetOpeningHours","result":"False"}';
+                //$sResult = '{"sFunction":"GetOpeningHours","result":"False"}';
+                $sResult = json_encode($result);
             }
             if($result['result'] == true)
             {
