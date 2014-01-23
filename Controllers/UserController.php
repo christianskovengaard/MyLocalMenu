@@ -9,6 +9,7 @@ class UserController
     private $oCompany;
     private $oRestuarent;
     private $oMenucard;
+    private $oEmail;
     
     public function __construct() 
     {
@@ -40,6 +41,9 @@ class UserController
         
         require 'MenucardController.php';
         $this->oMenucard = new MenucardController();
+        
+        require 'EmailController.php';
+        $this->oEmail = new EmailController();
     }
 
 
@@ -174,9 +178,12 @@ class UserController
            // We check if the account is locked from too many login attempts
            if($this->oSecurity->checkbrute($user_id,$this->conPDO) == true)
            { 
-                // Account is locked
-                //TODO: Send an email to user saying their account is locked
-                echo 'Account is locked for 2 hours';
+                // Account is locked for 2 hours
+                $sMessage = 'Din konto er blevet spærret i 2 timer. Klik her for at genåbne din konto';
+                $sTo = 'christianskovengaard@gmail.com';
+                $sFrom = 'info@mylocalcafe.dk';
+                $sSubject = 'Konto spærret';
+                $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
                 return false;
            }
            else
@@ -265,10 +272,13 @@ class UserController
             {
                 die($e->getMessage());
             }
-             
-             
-            //TODO: Send mail from EmailController 
-            mail($mail, "Ny bruger til MyLocal", "Gå til dette <a href='localhost/MyLocalMenu/register.php?sUserToken='.$sUserToken.'>link</a> og opret til menukort'");
+            
+            $sMessage = "Ny bruger til MyLocal, Gå til dette <a href='localhost/MyLocalMenu/register.php?sUserToken='.$sUserToken.'>link</a> og opret et nyt menukort";
+            $sTo = $mail;
+            $sFrom = 'info@mylocalcafe.dk';
+            $sSubject = 'Ny konto hos MyLocal';
+                    
+            $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
              
             $aUser['result'] = true;
          }
@@ -472,6 +482,11 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
 
         }
         return $aUser;
+     }
+     
+     public function ResetPassword()
+     {
+         //TODO: Create new password for user
      }
        
 }
