@@ -8,12 +8,11 @@ if(isset($_POST['username']) && isset($_POST['password']))
     $loggedIn = $oUserController->LogInUser($_POST['username'], $_POST['password']);
    if($loggedIn == true){
         header('location: admin.php');
-   }else{echo "Kunne ikke logge ind! Prøv igen";
-   echo "<a href='fakeLogin.php'>Login side</a>";
+   }else{
+       header("location: index.php?login=false");
    }
 }
 else {
-    echo "Indtast brugernavn og kodeord. Prøv igen!";
-    echo "<a href='fakeLogin.php'>Login side</a>";
+    header("location: index.php?login=false");
 }
 ?>
