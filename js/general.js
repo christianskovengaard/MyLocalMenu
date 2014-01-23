@@ -682,7 +682,10 @@
   
   /* Sortable list functions end */
 
-
+  function UpdateRestuarentInfo()
+  {
+      //TODO: Get restuarant info and update it
+  }
 
   /* GetMenucard function */
   
@@ -705,13 +708,12 @@
         //Load the mustache template into viewmenucard
         if(isAdmin === true)
         {
-            console.warn('ADMIN');
+            //console.warn('ADMIN');
             //Clear the area
             $('.sortableList').remove();
             $('#iMenucardIdHashed').remove();
             
-            //Use admin.php
-            //TODO: Maybe pass the login string for security      
+            //Use admin.php    
             $.ajax({
               type: "GET",
               url: "API/api.php",
@@ -741,7 +743,7 @@
                       });
                       
 
-                      //Show the menucardinfo //TODO: Get the openinig hours and takeaway hours
+                      //Show the menucardinfo
                       $("#mustache_template").load( "mustache_templates/menucardinfo_admin.html",function(){
 
                           var menucardinfo = {
@@ -889,7 +891,7 @@
 
                       });
 
-                      //Show the menucardinfo //TODO: Get the openinig hours and takeaway hours
+                      //Show the menucardinfo
                       $("#mustache_template").load( "mustache_templates/menucardinfo_viewmenucard.html",function(){
 
                           var menucardinfo = {
@@ -1108,11 +1110,13 @@
         var MenuAdress = $('.RestaurantAdresse h4').html();
         var MenuAdress = MenuAdress.split('<br>');
         $("#MenuAdress").val(MenuAdress[0]);
-        var MenuZip = MenuAdress[1].slice(0,4);
+        
+        /*var MenuZip = MenuAdress[1].slice(0,4);
         $("#MenuZip").val(MenuZip);
         var MenuTown = MenuAdress[1].slice(5);
-        $("#MenuTown").val(MenuTown);
-        var MenuPhone = $('.RestaurantPhone h2').text();
+        $("#MenuTown").val(MenuTown);*/
+        
+        var MenuPhone = $('.RestaurantPhone h2').html();
         $("#MenuPhone").val(MenuPhone);
 
     }
@@ -1320,14 +1324,14 @@ function SubmitFormRegister(){
                  
             }
         }).done(function(result){
-               alert('sdf: '+result.result);
+               alert('Reg. complete: '+result.result);
                 if(result.result === true)
                 {
                     document.location.href = 'admin.php';
                 }
                 else
                 {
-                    alert('TODO: Smid fejl besked');
+                    alert('Smid fejl besked');
                 }
         });
     
