@@ -378,12 +378,12 @@
                 alert("Beklager, Der er en fejl. Du skal hente en nyrere Browser");
           }
           
-          headline.html('<h3><input id="headEditHeadline" type=text value="'+headlineText+'"></h3>');
+          headline.html('<input id="headEditHeadline" type=text value="'+headlineText+'">');
           if( descriptionText == "" ){
-            description.html('<h4><input id="HeadEditDescription" type=text placeholder="evt ekstra info"></h4>');
+            description.html('<input id="HeadEditDescription" type=text placeholder="evt ekstra info">');
           }
           else{
-              description.html('<h4><input id="HeadEditDescription" type=text value="'+descriptionText+'"></h4>');
+              description.html('<input id="HeadEditDescription" type=text value="'+descriptionText+'">');
           }
                     
           $('.EditDish').hide();
@@ -471,7 +471,7 @@
           aList['iId'] = $(this).children("input[type='hidden']:first").val(); //$(this).attr('id');          
           //sMenucardCategoryDescription
           aList['sMenucardCategoryDescription'] = $(this).children().eq(1).html(); 
-          
+
           $(this).children("ul").each(function()
           {             
               $(this).children(":not(.AddLiButton)").each(function(index)
@@ -1195,7 +1195,66 @@ function registerNext(num) {
         });
   
  }
-  
+
+
+ function GetUserinformation()
+ {
+     $.ajax({
+             type : "GET",
+             url : 'API/api.php',
+             dataType : 'json',
+             data : {sFunction:"GetUserinformation"}
+        }).done(function(result){
+            if(result.result === true)
+            {
+                $('#sUsername').val(result.sUsername);
+                
+                $('#sCompanyName').val(result.sCompanyName);
+                $('#iCompanyTelefon').val(result.sCompanyPhone);
+                $('#sCompanyAddress').val(result.sCompanyAddress);
+                $('#iCompanyZipcode').val(result.sCompanyZipcode);
+                $('#sCompanyCVR').val(result.sCompanyCVR);
+            }
+        });
+ }
+ 
+ function UpdateUserinformation()
+ {
+     
+     var aData = {};
+     
+     aData['sUsername'] = $('#sUsername').val();               
+     aData['sCompanyName'] = $('#sCompanyName').val();
+     aData['sCompanyPhone'] = $('#iCompanyTelefon').val();
+     aData['sCompanyAddress'] = $('#sCompanyAddress').val();
+     aData['sCompanyZipcode'] = $('#iCompanyZipcode').val();
+     aData['sCompanyCVR'] = $('#sCompanyCVR').val();
+     
+     //Workaround with encoding issue in IE8 and JSON.stringify
+     for (var i in aData) {
+             aData[i] = encodeURIComponent(aData[i]);
+     }
+    
+     var sJSON = JSON.stringify(aData);
+     
+     $.ajax({
+            type : "GET",
+            dataType : "json",
+            url : 'API/api.php',
+            data : { sFunction:"UpdateUserinformation",sJSON:sJSON},
+            complete: function() {}
+        }).done(function(result){
+
+                if(result.result === true)
+                {
+                    document.location.href = 'user.php';
+                }
+                else
+                {
+                    alert('Smid fejl besked');
+                }
+        });
+ }
 
 //  function makeTakeAwayHours(status) {
 //
@@ -1340,7 +1399,43 @@ function SubmitFormRegister(){
     
     // register end
     
+function SubmitFormNewPassword(){
     
+    //Encrypt password with jsEncrypt
+        var pubKey = "-----BEGIN PUBLIC KEY-----\r\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4jCNEY3ZyZbhNksbKG+l\r\n+LX9fIEiLkrRy9roGTKJnr2TEuZ28qvwRKeFbAs0wpMUS5\/8hF+Fte2Qywqq9ARG\r\nRNzTcDxjz72VRwTf1tSTKAJUsHYLKbBWPsvZ8FWk9EzJqltdj1mYVKMWcm7Ham5g\r\nwydozgnI3VbX8HMY8EglycKIc43gC+liSUmloWHGCnfKrfSEQ2cuIjnupvodvFw6\r\n5dAanLu+FRuL6hnvt7huxXz5+wbPI5\/aFGWUIHUbHoDFOag8BhVaDjXCrjWt3ry3\r\noFkheO87swYfSmQg4tHM\/2keCrsdHAk2z\/eCuYcbksnmNgTqWgcSHNGM+nq9ngz\/\r\nxXeb1UT+KxBy7K86oCD0a67eDzGvu3XxxW5N3+vvKJnfL6xT0EWTYw9Lczqhl9lp\r\nUdCgrcYe45pRHCqiPGtlYIBCT5lqVZi9zncWmglzl2Fc4fhjwKiK1DH7MSRBO8ut\r\nlgawBFkCprdsmapioTRLOHFRAylSGUiyqYg0NqMuQc5fMRiVPw8Lq3WeAWMAl8pa\r\nksAQHYAoFoX1L+4YkajSVvD5+jQIt3JFUKHngaGoIWnQXPQupmJpdOGMCCu7giiy\r\n0GeCYrSVT8BCXMb4UwIr\/nAziIOMiK87WAwJKysRoZH7daK26qoqpylJ00MMwFMP\r\nvtrpazOcbKmvyjE+Gg\/ckzMCAwEAAQ==\r\n-----END PUBLIC KEY-----";
+
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey(pubKey);
+        var encrypted = encrypt.encrypt($('#NewPassword').val());
+        
+        var aData = {};
+        
+        //The password should not be encoded
+        aData['sPassword'] = encrypted;
+        aData['sUserToken'] = $('#sUserToken').val();
+        
+        var sJSON = JSON.stringify(aData);
+
+        $.ajax({
+            type : "GET",
+            dataType : "json",
+            url : 'API/api.php',
+            data : { sFunction:"ResetPassword",sJSON:sJSON},
+            complete: function() {
+                 
+            }
+        }).done(function(result){
+               alert('Password reset: '+result.result);
+                if(result.result === true)
+                {
+                    document.location.href = 'index.php';
+                }
+                else
+                {
+                    alert('Smid fejl besked');
+                }
+        });
+}    
 
 
 
