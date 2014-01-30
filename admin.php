@@ -104,8 +104,7 @@ if($oSecurityController->login_check() == true) { ?>
     </body>
 </html>
 <?php  } else {
-   echo 'You are not authorized to access this page, please login. <br/>';
-   echo "Login <a href='fakeLogin.php'>here</a> with username: admin and password: admin";
+      header("location: index.php");
 }
 
 ?>
