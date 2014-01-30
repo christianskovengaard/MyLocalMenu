@@ -86,11 +86,14 @@ if($oSecurityController->login_check() == true) { ?>
                     <input id="MenuTown" type="text" value="">
                     <p>Telefonnr.</p>
                     <input id="MenuPhone" type="text" value="">
+                    <input type="button" value="Opdater"/>
                 </div>
+                
                 <div>
                     <p>Åbningstider</p>
-                    <p>Udbringning</p>     
+                    <div id="OpeningHours" class="Hours Opening"></div>
                 </div>
+                
             </div>             
         </div>
         
@@ -99,6 +102,7 @@ if($oSecurityController->login_check() == true) { ?>
     <script type="text/javascript">
         $(document).ready(function() {
             GetMenucard(true);
+            makeOpeningHours();
         });
     </script>    
     </body>

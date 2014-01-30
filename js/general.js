@@ -739,6 +739,21 @@
                           var template = $('#restuarentinfo_admin').html();
                           var html = Mustache.to_html(template, restuarent);
                           $('.RestaurantInfo').html(html);
+                          
+                          //Get restuarent info from database opening hours
+                          $("#MenuName").val(result.sRestuarentName);
+                          $("#MenuName").focus();
+
+                          $("#MenuSubName").val("Felt mangler HARDCODED");
+                          
+                          $("#MenuAdress").val(result.sRestuarentAddress);
+
+                          /*
+                          $("#MenuZip").val(MenuZip);
+                          $("#MenuTown").val(MenuTown);
+                          */
+
+                          $("#MenuPhone").val(result.sRestuarentPhone);
 
                       });
                       
@@ -769,7 +784,9 @@
                                   iTimeFrom: value.iTimeFrom,
                                   iTimeTo: value.iTimeTo
                               };
-
+                              
+                              //TODO: Set opening hours
+                              
                               //Append the obj to the openinghours obj
                               menucardinfo.openinghours.push(obj);
                           });
@@ -842,11 +859,8 @@
                           $('#restuarantInfo').after(html);
                           
                           //Function to initiate all sortable lists 
-                          UpdateSortableLists(); 
-                      });  
-                                          
-                      
-                      
+                          UpdateSortableLists();                                                    
+                      });
                 }else{
                     
                     $('#restuarantInfo').html('Der kunne ikke findes noget menukort');
@@ -1035,12 +1049,12 @@
      {
         case 'PopUpWindowEditManuInfo':
             $("#EditRestaurantInfo").animate({height: 'toggle'},200);
-            getValuesForEditManuInfo();
             break;
-        case 'HideSortableEdits':
+        
+       case 'HideSortableEdits':
             
             $('#EditMenuButton').text('');
-            $('#EditMenuButton').append('<div class="buttonEdit Save" onclick="UpdateMenucard();">✓ Gem menukort</div>')
+            $('#EditMenuButton').append('<div class="buttonEdit Save" onclick="UpdateMenucard();">✓ Gem menukort</div>');
             $(".DishEditWrapper").slideDown(100);
             $(".AddLiButton").slideDown(100);
             $(".newsortablediv").css('display','inline-table').slideDown(100);
@@ -1100,26 +1114,29 @@
     }
 
       
-    function getValuesForEditManuInfo(){
-        
-        var MenuName = $('.Restaurant.Name h1').text();
-        $("#MenuName").val(MenuName);
-        $("#MenuName").focus();
-        var MenuSubName = $('.Restaurant.Name h2').text();
-        $("#MenuSubName").val(MenuSubName);
-        var MenuAdress = $('.RestaurantAdresse h4').html();
-        var MenuAdress = MenuAdress.split('<br>');
-        $("#MenuAdress").val(MenuAdress[0]);
-        
-        /*var MenuZip = MenuAdress[1].slice(0,4);
-        $("#MenuZip").val(MenuZip);
-        var MenuTown = MenuAdress[1].slice(5);
-        $("#MenuTown").val(MenuTown);*/
-        
-        var MenuPhone = $('.RestaurantPhone h2').html();
-        $("#MenuPhone").val(MenuPhone);
-
-    }
+//    function getValuesForEditManuInfo(){
+//        
+//        var MenuName = $('.Restaurant.Name h1').text();
+//        $("#MenuName").val(MenuName);
+//        $("#MenuName").focus();
+//        var MenuSubName = $('.Restaurant.Name h2').text();
+//        $("#MenuSubName").val(MenuSubName);
+//        var MenuAdress = $('.RestaurantAdresse h4').html();
+//        var MenuAdress = MenuAdress.split('<br>');
+//        $("#MenuAdress").val(MenuAdress[0]);
+//        
+//        /*var MenuZip = MenuAdress[1].slice(0,4);
+//        $("#MenuZip").val(MenuZip);
+//        var MenuTown = MenuAdress[1].slice(5);
+//        $("#MenuTown").val(MenuTown);*/
+//        
+//        var MenuPhone = $('.RestaurantPhone h2').html();
+//        $("#MenuPhone").val(MenuPhone);
+//        
+//        //Get restuarent info from database opening hours
+//        
+//
+//    }
 
    // register
 
