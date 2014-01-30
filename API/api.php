@@ -197,11 +197,62 @@ if(isset($_GET['sFunction']))
             echo $sResult;
 
         break;
+               
+        case "ResetPassword":
+            require_once '../Controllers/UserController.php';
+            $oUserController = new UserController();
+            $result = $oUserController->ResetPassword();
+            if($result['result'] == false)
+            {
+                $sResult = json_encode($result);
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
         
         case "GetOpeningHours":
             require_once '../Controllers/TimeController.php';
             $oTimeController = new TimeController();
             $result = $oTimeController->GetOpeningHours();
+            if($result['result'] == false)
+            {
+                //$sResult = '{"sFunction":"GetOpeningHours","result":"False"}';
+                $sResult = json_encode($result);
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
+        
+        case "GetUserinformation":
+            require_once '../Controllers/UserController.php';
+            $oUserController = new UserController();
+            $result = $oUserController->GetUserinformation();
+            if($result['result'] == false)
+            {
+                //$sResult = '{"sFunction":"GetOpeningHours","result":"False"}';
+                $sResult = json_encode($result);
+            }
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+
+        break;
+        
+        
+        case "UpdateUserinformation":
+            require_once '../Controllers/UserController.php';
+            $oUserController = new UserController();
+            $result = $oUserController->UpdateUserinformation();
             if($result['result'] == false)
             {
                 //$sResult = '{"sFunction":"GetOpeningHours","result":"False"}';
