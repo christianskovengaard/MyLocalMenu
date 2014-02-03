@@ -45,7 +45,7 @@ class MenucardController
     public function AddNewMenucard($sMenucardName,$iFK_iRestuarentInfoId)
     {
         $sQuery = $this->conPDO->prepare("INSERT INTO menucard (sMenucardName,iMenucardSerialNumber,iFK_iRestuarentInfoId) VALUES (:sMenucardName,:iMenucardSerialNumber,:iFK_iRestuarentInfoId)");
-        $sQuery->bindValue(":sMenucardName", $sMenucardName);
+        $sQuery->bindValue(":sMenucardName", utf8_decode(urldecode($sMenucardName)));
         $sQuery->bindValue(':iFK_iRestuarentInfoId', $iFK_iRestuarentInfoId);
         $sQuery->bindValue(':iMenucardSerialNumber', uniqid()); ///TODO: Change this random number to be a reel serial number (AA0001 style)
         $sQuery->execute();
@@ -1311,6 +1311,7 @@ class MenucardController
             
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $aMenucard['sRestuarentName'] = utf8_encode($aResult['sRestuarentInfoName']);
+            $aMenucard['sRestuarentSlogan'] = utf8_encode($aResult['sRestuarentInfoSlogan']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
             
@@ -1332,7 +1333,7 @@ class MenucardController
                 'sFunction' => 'GetMenucardAdmin',
                 'result' => false
             );
-        
+        //return $aMenucard;
         //Check if a session is NOT started
         if(!isset($_SESSION['sec_session_id']))
         { 
@@ -1415,7 +1416,7 @@ class MenucardController
             
             
             //Get openning hours
-            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName FROM `openinghours`
+            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName,`openinghours`.`iFK_iTimeFromId`,`openinghours`.`iFK_iTimeToId` FROM `openinghours`
                                                 LEFT JOIN `day`
                                                 ON `day`.`iDayId` = `openinghours`.`iFK_iDayId`
                                                 LEFT JOIN `time` as timeFrom
@@ -1434,6 +1435,8 @@ class MenucardController
                die($e->getMessage()); 
             }
             $i = 0;
+            //Counter used for seeting the day and time front-end
+            $x = 1;
             $TodayDayname = $today = date("l");
             $TodayDaynameDanish = $this->GetDanishDayname($TodayDayname);
             $current_time = date('H:i:s');
@@ -1442,7 +1445,9 @@ class MenucardController
                 $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode(substr($row['sDayName'],0,3));
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
-                
+                $aMenucard['aMenucardOpeningHours'][$i]['iTimeFromId'] = $row['iFK_iTimeFromId'];
+                $aMenucard['aMenucardOpeningHours'][$i]['iTimeToId'] = $row['iFK_iTimeToId'];
+                $aMenucard['aMenucardOpeningHours'][$i]['iTimeCounter'] = $x;
                 //Check for Openinghours hour today               
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
@@ -1460,6 +1465,7 @@ class MenucardController
                     
                 }
                 $i++;
+                $x++;
             }
             
             //Get takeaway hours
@@ -1572,6 +1578,7 @@ class MenucardController
             
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $aMenucard['sRestuarentName'] = utf8_encode($aResult['sRestuarentInfoName']);
+            $aMenucard['sRestuarentInfoSlogan'] = utf8_encode($aResult['sRestuarentInfoSlogan']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']); 
             

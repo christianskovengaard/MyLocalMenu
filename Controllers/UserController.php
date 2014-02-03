@@ -184,10 +184,13 @@ class UserController
            { 
                
                 //Create user token for the user to reset there password
+                $number = uniqid();
+                $sUserToken = $this->oBcrypt->genHash($number);
                 
+               
                 // Account is locked for 2 hours
-                $sMessage = 'Din konto er blevet spærret i 2 timer. Klik <a href="localhost/MyLocalMenu/user.php?sUserToken=123">her</a> for at genåbne din konto';
-                $sTo = 'christianskovengaard@gmail.com';
+                $sMessage = "Din konto er blevet spærret i 2 timer. Klik <a href='localhost/MyLocalMenu/user.php?sUserToken=$sUserToken'>her</a> for at genåbne din konto";
+                $sTo = 'christianskovengaard@gmail.com'; //TODO: Get user email
                 $sFrom = 'info@mylocalcafe.dk';
                 $sSubject = 'Konto spærret';
                 $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
@@ -207,7 +210,7 @@ class UserController
 
                     //$user_id_hashed = preg_replace("/[^0-9]+/", "", $user_id_hashed); // XSS protection as we might print this value
                     $_SESSION['user_id'] = $user_id_hashed; 
-                    $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
+                    //$username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
                     $_SESSION['username'] = $username;
                     $_SESSION['login_string'] = hash('sha512', $password.$ip_address.$user_browser);
                     // Login successful.
@@ -283,7 +286,7 @@ class UserController
                 die($e->getMessage());
             }
             
-            $sMessage = "Ny bruger til MyLocal, Gå til dette <a href='localhost/MyLocalMenu/register.php?sUserToken='.$sUserToken.'>link</a> og opret et nyt menukort";
+            $sMessage = "Ny bruger til MyLocal, Gå til dette <a href='localhost/MyLocalMenu/register.php?sUserToken=$sUserToken'>link</a> og opret et nyt menukort";
             $sTo = $mail;
             $sFrom = 'info@mylocalcafe.dk';
             $sSubject = 'Ny konto hos MyLocal';
@@ -324,6 +327,7 @@ class UserController
         }
      }
      
+     /* Function for adding a company and a restuarent for a new user */
      public function RegisterNewUser()
      {
         
@@ -411,18 +415,17 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             $sQuery->execute();
             
             //Create the new company
-            //Function return iCompanyId
+            //Function returns iCompanyId
             //TODO: Missing payment info
             $iCompanyId = $this->oCompany->AddCompany($aJSONInfo->sCompanyName, $aJSONInfo->iCompanyTelefon,$aJSONInfo->sCompanyAddress, $aJSONInfo->iCompanyZipcode, $aJSONInfo->sCompanyCVR);
             
             //Create the new restuarent
-            //Function return the irestuarentInfoId
-            //TODO: sRestuarentSlogan ????
-            $iRestuarentInfoId = $this->oRestuarent->AddRestuarent($aJSONInfo->sRestuarentName, $aJSONInfo->iRestuarentTel, $aJSONInfo->sRestuarentAddress, $iCompanyId);
+            //Function returns the irestuarentInfoId
+            $iRestuarentInfoId = $this->oRestuarent->AddRestuarent($aJSONInfo->sRestuarentName, $aJSONInfo->sRestuarentSlogan ,$aJSONInfo->iRestuarentTel, $aJSONInfo->sRestuarentAddress, $iCompanyId);
             
             
             //Create Menucard
-            //Function return the iMenucardId
+            //Function returns the iMenucardId
             $iMenucardId = $this->oMenucard->AddNewMenucard($aJSONInfo->sRestuarentName.' - menukort',$iRestuarentInfoId);
             
             //Insert openinghours
@@ -611,18 +614,18 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             );
          
          //Check if a session is NOT started
-        if(!isset($_SESSION['sec_session_id']))
-        { 
+         if(!isset($_SESSION['sec_session_id']))
+         { 
             $this->oSecurity->sec_session_start();
-        }
+         }
         
-        //Check if user is logged in
-        if($this->oSecurity->login_check() == true)
-        {
+         //Check if user is logged in
+         if($this->oSecurity->login_check() == true)
+         {
             $aUser['result'] = true;
 
             $sUsername = $_SESSION['username'];
-            
+           
             $aUser['sUsername'] = $sUsername;
                        
             //Get iFK_iCompanyId
@@ -631,19 +634,19 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $iFK_iCompanyId = $aResult['iFK_iCompanyId'];
-            
+             
             //Get company info
             $sQuery = $this->conPDO->prepare("SELECT * FROM company WHERE iCompanyId = :iFK_iCompanyId");
             $sQuery->bindValue(":iFK_iCompanyId", $iFK_iCompanyId);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-            
-            $aUser['sCompanyName'] = $aResult['sCompanyName'];
+
+            $aUser['sCompanyName'] = utf8_encode($aResult['sCompanyName']);
             $aUser['sCompanyPhone'] = $aResult['sCompanyPhone'];
-            $aUser['sCompanyAddress'] = $aResult['sCompanyAddress'];
+            $aUser['sCompanyAddress'] = utf8_encode($aResult['sCompanyAddress']);
             $aUser['sCompanyZipcode'] = $aResult['sCompanyZipcode'];
             $aUser['sCompanyCVR'] = $aResult['sCompanyCVR'];
-        }
+         }
         
         return $aUser;
          
@@ -682,25 +685,22 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
                 $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
                 $iFK_iCompanyId = $aResult['iFK_iCompanyId'];
 
-                //Update the userinfo and the business info
-                $sQuery = $this->conPDO->prepare("UPDATE users SET sUsername = :sUsername WHERE sUsername = :sessionsUsername LIMIT 1");
-                $sQuery->bindValue(":sUsername", $aJSONUserinfo->sUsername);
-                $sQuery->bindValue(":sessionsUsername", $_SESSION['username']);
-                $sQuery->execute();
-
+                
+                //TODO: Find out if the user info should be updated to
+                
+//                //Update the userinfo and the company info
+//                $sQuery = $this->conPDO->prepare("UPDATE users SET sUsername = :sUsername WHERE sUsername = :sessionsUsername LIMIT 1");
+//                $sQuery->bindValue(":sUsername", urldecode($aJSONUserinfo->sUsername));
+//                $sQuery->bindValue(":sessionsUsername", $_SESSION['username']);
+//                $sQuery->execute();
+                
+                
                 //Update company info
-                $sQuery = $this->conPDO->prepare("UPDATE company SET 
-                    sCompanyName = :sCompanyName, sCompanyPhone = :sCompanyPhone, sCompanyAddress = :sCompanyAdress, sCompanyZipcode = :sCompanyZipcode, sCompanyCVR = :sCompanyCVR LIMIT 1");
-                $sQuery->bindValue(":sCompanyName", urldecode($aJSONUserinfo->sCompanyName));
-                $sQuery->bindValue(":sCompanyPhone", urldecode($aJSONUserinfo->sCompanyPhone));
-                $sQuery->bindValue(":sCompanyAdress", urldecode($aJSONUserinfo->sCompanyAddress));
-                $sQuery->bindValue(":sCompanyZipcode", urldecode($aJSONUserinfo->sCompanyZipcode));
-                $sQuery->bindValue(":sCompanyCVR", urldecode($aJSONUserinfo->sCompanyCVR));
-                $sQuery->execute();
+                $this->oCompany->UpdateCompany($aJSONUserinfo->sCompanyName, $aJSONUserinfo->sCompanyPhone, $aJSONUserinfo->sCompanyAddress, $aJSONUserinfo->sCompanyZipcode, $aJSONUserinfo->sCompanyCVR, $iFK_iCompanyId);
                 
-                
+                //TODO: If user info is updated then set the new username in the session
                 //Set the new username in the session
-                $_SESSION['username'] = $aJSONUserinfo->sUsername;
+                //$_SESSION['username'] = $aJSONUserinfo->sUsername;
                 
                 $aUser['result'] = true;
             }

@@ -28,7 +28,7 @@ class TimeController
         while ($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) 
         {
             $aOpeningHours['Hours'][$i]['iTimeId'] = $aResult['iTimeId'];
-            $aOpeningHours['Hours'][$i]['iTime'] = $aResult['iTime'];
+            $aOpeningHours['Hours'][$i]['iTime'] = substr($aResult['iTime'],0, -3);
             $i++;
         }
         

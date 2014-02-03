@@ -685,6 +685,70 @@
   function UpdateRestuarentInfo()
   {
       //TODO: Get restuarant info and update it
+      
+      alert('UpdateRestuarentInfo');
+      
+      var aData = {};
+      
+      //Get restuarent info from database opening hours
+      aData['sRestuarentName'] = $("#MenuName").val();
+      aData['sRestuarentSlogan'] = $("#MenuSubName").val();
+      aData['sRestuarentAddress'] = $("#MenuAdress").val();
+
+      /*
+       aData['sRestuarentZipcode'] =$("#MenuZip").val();
+       aData['sRestuarentCity'] = $("#MenuTown").val();
+      */
+
+      aData['sRestuarentPhone'] = $("#MenuPhone").val();
+      
+     //Get the Openinghours monday-sunday   
+     aData['iMondayTimeFrom'] = $("#iMondayTimeFrom option:selected").val();
+     aData['iMondayTimeTo'] = $("#iMondayTimeTo option:selected").val();
+     aData['iThuesdayTimeFrom'] = $("#iThuesdayTimeFrom option:selected").val();   
+     aData['iThuesdayTimeTo'] = $("#iThuesdayTimeTo option:selected").val();
+     aData['iWednesdaysTimeFrom'] = $("#iWednesdaysTimeFrom option:selected").val();
+     aData['iWednesdaysTimeTo'] = $("#iWednesdaysTimeTo option:selected").val();
+     aData['iThursdayTimeFrom'] = $("#iThursdayTimeFrom option:selected").val();
+     aData['iThursdayTimeTo'] = $("#iThursdayTimeTo option:selected").val();
+     aData['iFridayTimeFrom'] = $("#iFridayTimeFrom option:selected").val();
+     aData['iFridayTimeTo'] = $("#iFridayTimeTo option:selected").val();
+     aData['iSaturdayTimeFrom'] = $("#iSaturdayTimeFrom option:selected").val();
+     aData['iSaturdayTimeTo'] = $("#iSaturdayTimeTo option:selected").val();
+     aData['iSundayTimeFrom'] = $("#iSundayTimeFrom option:selected").val();
+     aData['iSundayTimeTo'] = $("#iSundayTimeTo option:selected").val();
+     
+      
+      
+     //Workaround with encoding issue in IE8 and JSON.stringify
+     for (var i in aData) {
+             aData[i] = encodeURIComponent(aData[i]);
+     }
+    
+     var sJSON = JSON.stringify(aData);
+      
+      //Use admin.php    
+        $.ajax({
+          type: "GET",
+          url: "API/api.php",
+          dataType: "json",
+          data: {sFunction:"UpdateRestuarentInfo",sJSON:sJSON}
+         }).done(function(result){
+             if(result.result === true){
+
+                //Update information
+                alert('Update done');
+                
+                //Update info in DOM
+                $('.Restaurant.Name h1').html($("#MenuName").val());
+                $('.Restaurant.Name h2').html($("#MenuSubName").val());
+                $('.RestaurantPhone h2').html($("#MenuPhone").val());
+                $('.RestaurantAdresse h4').html($("#MenuAdress").val());
+                
+                //TODO: Update opening hours
+             }
+         });
+      
   }
 
   /* GetMenucard function */
@@ -727,7 +791,7 @@
 
                           var restuarent = {
                               sRestuarentName: result.sRestuarentName,
-                              sRestuarentInfoDescription: "Felt mangler",
+                              sRestuarentInfoDescription: result.sRestuarentInfoSlogan,
                               sRestuarentPhone: result.sRestuarentPhone,
                               sRestuarentAddress: result.sRestuarentAddress,
                               sRestuarentOpenningHoursToday: result.sRestuarentOpenningHoursToday,
@@ -744,7 +808,7 @@
                           $("#MenuName").val(result.sRestuarentName);
                           $("#MenuName").focus();
 
-                          $("#MenuSubName").val("Felt mangler HARDCODED");
+                          $("#MenuSubName").val(result.sRestuarentInfoSlogan);
                           
                           $("#MenuAdress").val(result.sRestuarentAddress);
 
@@ -786,7 +850,8 @@
                               };
                               
                               //TODO: Set opening hours
-                              
+                              $('[name="Day'+value.iTimeCounter+'"] option[value="'+value.iTimeFromId+'"]').attr('selected', 'selected');
+                              $('[name="Day'+value.iTimeCounter+'_'+value.iTimeCounter+'"] option[value="'+value.iTimeToId+'"]').attr('selected', 'selected');
                               //Append the obj to the openinghours obj
                               menucardinfo.openinghours.push(obj);
                           });
@@ -890,7 +955,7 @@
 
                           var restuarent = {
                               sRestuarentName: result.sRestuarentName,
-                              sRestuarentInfoDescription: "Felt mangler",
+                              sRestuarentInfoDescription: result.sRestuarentSlogan,
                               sRestuarentPhone: result.sRestuarentPhone,
                               sRestuarentAddress: result.sRestuarentAddress,
                               sRestuarentOpenningHoursToday: result.sRestuarentOpenningHoursToday,
@@ -936,16 +1001,16 @@
                               menucardinfo.openinghours.push(obj);
                           });
 
-                          //Foreach TakeAwayHours insert into the menucarcardinfo
-                          $.each(result.aMenucardTakeAwayHours, function(key,value){
-                              var obj = {
-                                  sDayName: value.sDayName,
-                                  iTimeFrom: value.iTimeFrom,
-                                  iTimeTo: value.iTimeTo
-                              };
-                              //Append the obj to the takeawayhours obj
-                              menucardinfo.takeawayhours.push(obj);
-                          }); 
+//                          //Foreach TakeAwayHours insert into the menucarcardinfo
+//                          $.each(result.aMenucardTakeAwayHours, function(key,value){
+//                              var obj = {
+//                                  sDayName: value.sDayName,
+//                                  iTimeFrom: value.iTimeFrom,
+//                                  iTimeTo: value.iTimeTo
+//                              };
+//                              //Append the obj to the takeawayhours obj
+//                              menucardinfo.takeawayhours.push(obj);
+//                          }); 
 
                           var template = $('#menucardinfo_viewmenucard').html();
                           var html = Mustache.to_html(template, menucardinfo);
@@ -1240,7 +1305,7 @@ function registerNext(num) {
      
      var aData = {};
      
-     aData['sUsername'] = $('#sUsername').val();               
+     //aData['sUsername'] = $('#sUsername').val();               
      aData['sCompanyName'] = $('#sCompanyName').val();
      aData['sCompanyPhone'] = $('#iCompanyTelefon').val();
      aData['sCompanyAddress'] = $('#sCompanyAddress').val();

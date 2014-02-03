@@ -75,7 +75,7 @@ if($oSecurityController->login_check() == true) { ?>
                 <h3>Ret oplysninger</h3>
                 <div>
                     <div class="buttonEdit" onclick="HideShowSwitch('PopUpWindowEditManuInfo');">[X]</div>
-                    <p>Menukorts navn</p>
+                    <p>Restuarent navn</p>
                     <input id="MenuName" type="text" value="">
                     <p>evt Slogan</p>
                     <input id="MenuSubName" type="text" value="">
@@ -86,7 +86,7 @@ if($oSecurityController->login_check() == true) { ?>
                     <input id="MenuTown" type="text" value="">
                     <p>Telefonnr.</p>
                     <input id="MenuPhone" type="text" value="">
-                    <input type="button" value="Opdater"/>
+                    <input type="button" onclick="UpdateRestuarentInfo()" value="Opdater"/>
                 </div>
                 
                 <div>
