@@ -190,7 +190,7 @@ class UserController
                
                 // Account is locked for 2 hours
                 $sMessage = "Din konto er blevet spærret i 2 timer. Klik <a href='localhost/MyLocalMenu/user.php?sUserToken=$sUserToken'>her</a> for at genåbne din konto";
-                $sTo = 'christianskovengaard@gmail.com'; //TODO: Get user email
+                $sTo = 'christianskovengaard@gmail.com'; //TODO: Change to $username when in production mode
                 $sFrom = 'info@mylocalcafe.dk';
                 $sSubject = 'Konto spærret';
                 $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
@@ -252,50 +252,60 @@ class UserController
          {
             $mail = $_GET['Email'];
             
-            //Create the user token
-            $number = uniqid();
-            $sUserToken = $this->oBcrypt->genHash($number);
+            //Check if user is allready created with that username
+            $sQuery = $this->conPDO->prepare("SELECT sUsername FROM users WHERE sUsername = :email LIMIT 1");
+            $sQuery->bindValue(":email", $mail);
+            $sQuery->execute();
             
-            //Opret en bruger med email som brugernavn, med med en token som skal sendes med email, og det er den token som identifisere hvem brugeren er 
-            //Insert the user into the database, prepare statement runs the security
-            $sQuery = $this->conPDO->prepare("INSERT INTO users (sUsername,iUserRole,sUserCreateToken) VALUES (:sUsername, :iUserRole, :sUserToken)");
-            
-            $sQuery->bindValue(':sUsername', $mail);
-            $sQuery->bindValue(':iUserRole', '1');
-            $sQuery->bindValue(':sUserToken', $sUserToken);
-            
-
-            try
+            if($sQuery->rowCount() == 0)
             {
-                $sQuery->execute();
-                $iUserId = $this->conPDO->lastInsertId();
-                //Get last inserted id and generate a hash of that to save in the database (the hash is generate with a random string and the iUserId)
-                //The generated hash is the id to be passed with ajax
-                $iUserIdHashed = $this->oBcrypt->genHash($iUserId);
+            
+                //Create the user token
+                $number = uniqid();
+                $sUserToken = $this->oBcrypt->genHash($number);
 
-                //Update the user
-                $sQuery = $this->conPDO->prepare("UPDATE users SET iUserIdHashed = ? WHERE iUserId = ?");
+                //Opret en bruger med email som brugernavn, med med en token som skal sendes med email, og det er den token som identifisere hvem brugeren er 
+                //Insert the user into the database, prepare statement runs the security
+                $sQuery = $this->conPDO->prepare("INSERT INTO users (sUsername,iUserRole,sUserCreateToken) VALUES (:sUsername, :iUserRole, :sUserToken)");
 
-                $sQuery->bindValue(1, $iUserIdHashed);
-                $sQuery->bindValue(2, $iUserId);
+                $sQuery->bindValue(':sUsername', $mail);
+                $sQuery->bindValue(':iUserRole', '1');
+                $sQuery->bindValue(':sUserToken', $sUserToken);
 
-                $sQuery->execute();            
-            }
-            catch(PDOException $e)
-            {
-                die($e->getMessage());
+
+                try
+                {
+                    $sQuery->execute();
+                    $iUserId = $this->conPDO->lastInsertId();
+                    //Get last inserted id and generate a hash of that to save in the database (the hash is generate with a random string and the iUserId)
+                    //The generated hash is the id to be passed with ajax
+                    $iUserIdHashed = $this->oBcrypt->genHash($iUserId);
+
+                    //Update the user
+                    $sQuery = $this->conPDO->prepare("UPDATE users SET iUserIdHashed = ? WHERE iUserId = ?");
+
+                    $sQuery->bindValue(1, $iUserIdHashed);
+                    $sQuery->bindValue(2, $iUserId);
+
+                    $sQuery->execute();            
+                }
+                catch(PDOException $e)
+                {
+                    die($e->getMessage());
+                }
+
+                $sMessage = "Ny bruger til MyLocal, Gå til dette <a href='localhost/MyLocalMenu/register.php?sUserToken=$sUserToken'>link</a> og opret et nyt menukort";
+                $sTo = $mail;
+                $sFrom = 'info@mylocalcafe.dk';
+                $sSubject = 'Ny konto hos MyLocal';
+
+                $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
+
+                $aUser['result'] = true;
             }
             
-            $sMessage = "Ny bruger til MyLocal, Gå til dette <a href='localhost/MyLocalMenu/register.php?sUserToken=$sUserToken'>link</a> og opret et nyt menukort";
-            $sTo = $mail;
-            $sFrom = 'info@mylocalcafe.dk';
-            $sSubject = 'Ny konto hos MyLocal';
-                    
-            $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
-             
-            $aUser['result'] = true;
+            return $aUser;
          }
-         return $aUser;
      }
      
      public function ChecksUserToken()
@@ -420,8 +430,8 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             $iCompanyId = $this->oCompany->AddCompany($aJSONInfo->sCompanyName, $aJSONInfo->iCompanyTelefon,$aJSONInfo->sCompanyAddress, $aJSONInfo->iCompanyZipcode, $aJSONInfo->sCompanyCVR);
             
             //Create the new restuarent
-            //Function returns the irestuarentInfoId
-            $iRestuarentInfoId = $this->oRestuarent->AddRestuarent($aJSONInfo->sRestuarentName, $aJSONInfo->sRestuarentSlogan ,$aJSONInfo->iRestuarentTel, $aJSONInfo->sRestuarentAddress, $iCompanyId);
+            //Function returns the irestuarentInfoId           
+            $iRestuarentInfoId = $this->oRestuarent->AddRestuarent($aJSONInfo->sRestuarentName, $aJSONInfo->sRestuarentSlogan ,$aJSONInfo->iRestuarentTel, $aJSONInfo->sRestuarentAddress, $aJSONInfo->iRestuarentZipcode, $iCompanyId);
             
             
             //Create Menucard
