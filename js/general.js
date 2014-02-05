@@ -556,7 +556,7 @@
         data: {sFunction:"UpdateMenucard",sJSONMenucard:sJSONAllLists}
        }).done(function(result) 
        {
-           console.log('result: '+result.result); //TODO: Show result of menucard updated
+           //TODO: Show result of menucard updated
            
            //reload the menucard
            GetMenucard(true);
@@ -683,11 +683,7 @@
   /* Sortable list functions end */
 
   function UpdateRestuarentInfo()
-  {
-      //TODO: Get restuarant info and update it
-      
-      alert('UpdateRestuarentInfo');
-      
+  {    
       var aData = {};
       
       //Get restuarent info from database opening hours
@@ -695,8 +691,9 @@
       aData['sRestuarentSlogan'] = $("#MenuSubName").val();
       aData['sRestuarentAddress'] = $("#MenuAdress").val();
 
+      
+      aData['sRestuarentZipcode'] =$("#MenuZip").val();
       /*
-       aData['sRestuarentZipcode'] =$("#MenuZip").val();
        aData['sRestuarentCity'] = $("#MenuTown").val();
       */
 
@@ -745,8 +742,11 @@
                 $('.RestaurantPhone h2').html($("#MenuPhone").val());
                 $('.RestaurantAdresse h4').html($("#MenuAdress").val());
                 
-                //TODO: Update opening hours
-             }
+                //TODO: Update opening hours in the DOM
+                $('#Openinghours').html('');
+                $('#Openinghours').append('<h3>Åbningstider</h3><h4>Man '+$("#iMondayTimeFrom option:selected").text()+'-'+$("#iMondayTimeTo option:selected").text()+'</h4>');
+                //Update the rest of the days
+            }
          });
       
   }
@@ -809,11 +809,10 @@
                           $("#MenuName").focus();
 
                           $("#MenuSubName").val(result.sRestuarentInfoSlogan);
-                          
                           $("#MenuAdress").val(result.sRestuarentAddress);
-
+                          $("#MenuZip").val(result.iRestuarentZipcode);
+                          
                           /*
-                          $("#MenuZip").val(MenuZip);
                           $("#MenuTown").val(MenuTown);
                           */
 
@@ -849,7 +848,7 @@
                                   iTimeTo: value.iTimeTo
                               };
                               
-                              //TODO: Set opening hours
+                              //Set opening hours
                               $('[name="Day'+value.iTimeCounter+'"] option[value="'+value.iTimeFromId+'"]').attr('selected', 'selected');
                               $('[name="Day'+value.iTimeCounter+'_'+value.iTimeCounter+'"] option[value="'+value.iTimeToId+'"]').attr('selected', 'selected');
                               //Append the obj to the openinghours obj
@@ -1134,12 +1133,19 @@
         case 'Email':
             var mail = $('#sEmailToSubmit').val();
             if(validateEmail(mail))
-            {
+            {   
+                if(AddNewUser(mail) === true){
                 var mailhost = mail.split('@')[1];
                 $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Velkommen</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>')
                 $('.EmailSubmission').hide().slideDown(100);
                 //Create new account and send email to user
-                AddNewUser(mail);
+                }else{
+                   $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Der opstod en fejl</h1><h3>Der kunne ikke oprettes nogen bruger. Prøv med en anden email</h3></div>');
+                   $('.EmailSubmission').hide().slideDown(100);
+                   setTimeout(function(){$('.EmailSubmission').slideUp(200);},2500);
+                   setTimeout(function(){$('.EmailSubmission').remove();},2700);
+                   $('#sEmailToSubmit').val('');
+                }
             }else{
                 $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Brug venligst en rigtigt email adresse</h1><h3 style="cursor:pointer" onclick="HideShowSwitch(\'WrongEmail\')">Tilbage</h3></div>');
                 $('.EmailSubmission').hide().slideDown(100);  
@@ -1159,8 +1165,12 @@
              url : 'API/api.php',
              dataType : 'json',
              data : {sFunction:"AddNewUser",Email:mail}
-        }).done(function(response){
-           alert('Mail sent'); 
+        }).done(function(result){
+            if(result.result === 'true'){
+                return true;
+            }else{
+                return false;
+            } 
         }); 
     }
 
