@@ -47,11 +47,12 @@ class MenucardController
         $sQuery = $this->conPDO->prepare("INSERT INTO menucard (sMenucardName,iMenucardSerialNumber,iFK_iRestuarentInfoId) VALUES (:sMenucardName,:iMenucardSerialNumber,:iFK_iRestuarentInfoId)");
         $sQuery->bindValue(":sMenucardName", utf8_decode(urldecode($sMenucardName)));
         $sQuery->bindValue(':iFK_iRestuarentInfoId', $iFK_iRestuarentInfoId);
-        $sQuery->bindValue(':iMenucardSerialNumber', uniqid()); ///TODO: Change this random number to be a reel serial number (AA0001 style)
+        $sQuery->bindValue(':iMenucardSerialNumber', $this->CreateSerialNumber($iFK_iRestuarentInfoId));
         $sQuery->execute();
         
         //Get the last inserted id
         $iMenucardId = $this->conPDO->lastInsertId();
+        
 
         $iMenucardIdHashed = $this->oBcrypt->genHash($iMenucardId);
 
@@ -107,7 +108,7 @@ class MenucardController
         return $iMenucardId;
     }
     
-    //Add a Menucard If there are not previous menucards //Maybe delete this function if it is not used anymore
+    //Add a Menucard If there are not previous menucards //TODO: Maybe delete this function if it is not used anymore
     public function AddMenucard () 
     {  
         $aMenucard = array(
@@ -907,6 +908,7 @@ class MenucardController
         return $aMenucard;
     }
     
+    /* TODO: Check if this function is used anywhere maybe delete it*/
     public function GetMenucard ()
     {
         $aMenucard = array(
@@ -1091,6 +1093,7 @@ class MenucardController
         }
     }
     
+    /* TODO: check allow origin */
     public function GetMenucardWithSerialNumber ()
     {
         //Allow all, NOT SAFE
@@ -1581,6 +1584,7 @@ class MenucardController
             $aMenucard['sRestuarentInfoSlogan'] = utf8_encode($aResult['sRestuarentInfoSlogan']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']); 
+            $aMenucard['iRestuarentZipcode'] = utf8_encode($aResult['iRestuarentInfoZipcode']); 
             
         } 
         
@@ -1841,9 +1845,25 @@ class MenucardController
         if($sDayname == 'Sunday') return 'Søndag';       
     }
     
-    private function CreateSerialNumber ()
+    private function CreateSerialNumber ($iFK_iRestuarentInfoId)
     {
-        //TODO: Create serialnumber format AA0000 (2 letter and 4 numbers)
+        //Serialnumber format AA0000 (2 letter and 4 numbers)
+        //In the table serialnumbers are 10.000 serialnumbers from AA0000 - AA9999
+        
+        //Get serialnumber
+        $sQuery = $this->conPDO->prepare("SELECT sSerialnumber FROM serialnumbers WHERE iSerialnumberActive = 1 LIMIT 1");
+        $sQuery->execute();
+        $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+        $sSerialnumber = $aResult['sSerialnumber'];
+        
+        //Set serialnumber Deactive and set the reference to the menucard        
+        $sQuery = $this->conPDO->prepare("UPDATE serialnumbers SET iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId, iSerialnumberActive = 0 WHERE sSerialnumber = :sSerialnumber LIMIT 1");
+        $sQuery->bindValue(":sSerialnumber", $sSerialnumber);
+        $sQuery->bindValue(":iFK_iRestuarentInfoId", $iFK_iRestuarentInfoId);
+        $sQuery->execute();
+        
+        //Return serialnumber
+        return $sSerialnumber;
     }   
 }
 ?>
