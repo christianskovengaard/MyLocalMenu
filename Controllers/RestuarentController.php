@@ -54,12 +54,12 @@ class RestuarentController
         return $aRestuarentNames;
     }
     
-    public function AddRestuarent($sRestuarentInfoName, $sRestuarentSlogan,$sRestuarentInfoPhone, $sRestuarentInfoAddress, $iFK_iCompanyInfoId)
+    public function AddRestuarent($sRestuarentInfoName, $sRestuarentSlogan,$sRestuarentInfoPhone, $sRestuarentInfoAddress, $iRestuarentZipcode, $iFK_iCompanyInfoId)
     {
         $this->oRestuarent->SetRestaurent($sRestuarentInfoName, $sRestuarentInfoPhone, $sRestuarentInfoAddress, $iFK_iCompanyInfoId);
         
         //Insert into database          
-        $sQuery = $this->conPDO->prepare("INSERT INTO restuarentinfo (sRestuarentInfoName, sRestuarentInfoSlogan,sRestuarentInfoPhone, sRestuarentInfoAddress, iFK_iCompanyInfoId) VALUES (:sRestuarentInfoName, :sRestuarentSlogan, :sRestuarentInfoPhone, :sRestuarentInfoAddress, :iFK_iCompanyInfoId)");
+        $sQuery = $this->conPDO->prepare("INSERT INTO restuarentinfo (sRestuarentInfoName, sRestuarentInfoSlogan,sRestuarentInfoPhone, sRestuarentInfoAddress, iRestuarentInfoZipcode ,iFK_iCompanyInfoId) VALUES (:sRestuarentInfoName, :sRestuarentSlogan, :sRestuarentInfoPhone, :sRestuarentInfoAddress, :iRestuarentInfoZipcode, :iFK_iCompanyInfoId)");
 
         $oRestuarent = $this->oRestuarent->GetRestuarent();
         
@@ -67,6 +67,7 @@ class RestuarentController
         $sQuery->bindValue(':sRestuarentSlogan', utf8_decode(urldecode($sRestuarentSlogan)));
         $sQuery->bindValue(':sRestuarentInfoPhone', $oRestuarent->sRestuarentInfoPhone);
         $sQuery->bindValue(':sRestuarentInfoAddress', utf8_decode(urldecode($oRestuarent->sRestuarentInfoAddress)));
+        $sQuery->bindValue(':iRestuarentInfoZipcode', $iRestuarentZipcode);     
         $sQuery->bindValue(':iFK_iCompanyInfoId', $oRestuarent->iFK_iCompanyInfoId);
         $sQuery->execute();
         
@@ -109,11 +110,12 @@ class RestuarentController
                 $iFK_iCompanyId = $aResult['iFK_iCompanyId'];
 
 
-                $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoName = :sRestuarentInfoName, sRestuarentInfoSlogan = :sRestuarentInfoSlogan, sRestuarentInfoPhone = :sRestuarentInfoPhone, sRestuarentInfoAddress = :sRestuarentInfoAddress WHERE iFK_iCompanyInfoId = :iFK_iCompanyId LIMIT 1");
+                $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoName = :sRestuarentInfoName, sRestuarentInfoSlogan = :sRestuarentInfoSlogan, sRestuarentInfoPhone = :sRestuarentInfoPhone, sRestuarentInfoAddress = :sRestuarentInfoAddress, iRestuarentInfoZipcode = :iRestuarentInfoZipcode WHERE iFK_iCompanyInfoId = :iFK_iCompanyId LIMIT 1");
                 $sQuery->bindValue(":sRestuarentInfoName", urldecode($aJSONRestuarent->sRestuarentName));
                 $sQuery->bindValue(":sRestuarentInfoSlogan", utf8_decode(urldecode($aJSONRestuarent->sRestuarentSlogan)));      
                 $sQuery->bindValue(":sRestuarentInfoPhone", urldecode($aJSONRestuarent->sRestuarentPhone));
                 $sQuery->bindValue(":sRestuarentInfoAddress", urldecode($aJSONRestuarent->sRestuarentAddress));
+                $sQuery->bindValue(':iRestuarentInfoZipcode', $aJSONRestuarent->sRestuarentZipcode); 
                 $sQuery->bindValue(":iFK_iCompanyId", $iFK_iCompanyId);
                 $sQuery->execute();
                 
@@ -129,7 +131,7 @@ class RestuarentController
                 $iFK_iMenucardId = $aResult['iMenucardId'];
 
                 
-                //TODO: Update opening hours
+                //Update opening hours
                 $aOpeningHours = array(
                     0 => $aJSONRestuarent->iMondayTimeFrom,
                     1 => $aJSONRestuarent->iMondayTimeTo,
