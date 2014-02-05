@@ -270,6 +270,14 @@ if(isset($_GET['sFunction']))
 
         break;
         
+        case "GenerateQRcode":
+            require_once '../Controllers/QRcodeController.php';
+            $oQRcodeController = new QRcodeController();
+            $result = $oQRcodeController->GenerateQRcode();
+            $sResult = json_encode($result);
+            echo $sResult;
+
+        break;
         
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
