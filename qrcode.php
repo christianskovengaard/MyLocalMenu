@@ -1,6 +1,3 @@
-<?php
-//header('Content-type:image/png');
-?>
 <h2>QR koder</h2>
 <div>
     <span>Brug denne QRcode til stempelkort</span>
