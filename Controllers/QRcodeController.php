@@ -2,8 +2,14 @@
 
 class QRcodeController
 {
+    
+    private $conPDO;
+    
     public function __construct() {
-        ;
+        
+        require_once 'DatabaseController.php';
+        $oDatabaseController = new DatabaseController();
+        $this->conPDO = $oDatabaseController->ConnectToDatabase();
     }
     
     public function GenerateQRcode()
