@@ -278,7 +278,26 @@ if(isset($_GET['sFunction']))
             echo $sResult;
 
         break;
-        
+    
+        case "GetMessages":
+            require_once '../Controllers/MessageController.php';
+            $oMessageController = new MessageController();
+            $result = $oMessageController->GetMessages();
+            $sResult = json_encode($result);
+            echo $sResult;
+
+        break;
+    
+        case "SaveMessage":
+            require_once '../Controllers/MessageController.php';
+            $oMessageController = new MessageController();
+            $result = $oMessageController->SaveMessage();
+            $sResult = json_encode($result);
+            echo $sResult;
+
+        break;
+    
+       
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
                 echo $result;
