@@ -241,6 +241,13 @@ class UserController
         
      }
      
+     /*
+      * 
+      * Function that add a new user in the register flow
+      * 
+      * 
+      * 
+     */
      public function AddNewUser()
      {
          $aUser = array(
@@ -337,7 +344,15 @@ class UserController
         }
      }
      
-     /* Function for adding a company and a restuarent for a new user */
+     /* 
+      * 
+      * 
+      * 
+      * Function for adding a company and a restuarent for a new user in the register flow
+      * 
+      * 
+      * 
+      */
      public function RegisterNewUser()
      {
         
