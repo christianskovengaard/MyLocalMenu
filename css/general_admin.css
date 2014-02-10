@@ -5,12 +5,15 @@
     Description:
         Purpose of the stylesheet follows.
 */
+@import url(http://fonts.googleapis.com/css?family=Exo+2:400,100,200,300,500,600,700,800,900);
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,900,100,200,300,500,600,700,800);
+
 
 root { 
     display: block;
 }
 
-body,html { width: 100%; height: 100%; margin: 0px; background: #efeeea;  }
+body,html { width: 100%;  margin: 0px; background: #dddddd;  }
 /*background: #e8e9e8 url(../img/back.gif);*/
 
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
@@ -32,6 +35,9 @@ h4 { font-size: 12px; line-height: 5px; }
 h5 { font-size: 18px; margin: 0px; }
 h6 { font-size: 14px; margin: 0px; }
 div { font-size: 15px; }
+
+.button { display: table; background: #333; color: #fff; padding: 5px 10px; cursor: pointer; }
+.button:hover {  }
 
 input { 
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; color:#333; 
@@ -69,12 +75,36 @@ input {
 .RestaurantInfo { position: relative; display: table; width: 100%; margin: 0px; padding: 10px 0 0 0; background: rgba(143,130,121,0.2); overflow: hidden;}  background: #dedcc9;
 .menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px;}*/
 .header { position: fixed; background: #fff; width: 100%; height: 80px; margin: 0px; top: 0px; left: 0px; z-index: 1; }
-.RestaurantInfo { position: fixed; width: 100%; margin: 0px; padding: 10px 0 0 0; background: #dbd7d2; border-bottom: 1px solid #cec9c4; border-top: 1px solid #cec9c4; overflow: hidden; top: 80px; left: 0px; z-index: 1; } /* background: #dedcc9;*/
-.menuWrapper { position: relative; display: table; width: 100%; margin-top: 180px; z-index: 0; }
+.RestaurantInfo { position: fixed; width: 100%; margin: 0px; padding: 10px 0 0 0; background: #dddddd; border-bottom: 1px solid #cec9c4; border-top: 1px solid #cec9c4; overflow: hidden; top: 80px; left: 0px; z-index: 1; } /* background: #dedcc9;*/
+.menuWrapper { position: relative; display: table; width: 100%; margin-top: 210px; z-index: 0;}
 
+.TabMenu { 
+    position: fixed;
+    width: 100%; height: 30px;
+    top: 172px; 
+    background: #eee; 
+    box-shadow: inset 0px 6px 6px -2px #ddd;
+    z-index: 1;
+}
+.TabMenu div { display: inline-table; }
+.Tab { 
+    margin: 0px -4px 0 0; 
+    width: 110px; 
+    height: 100%; 
+    text-align: center; 
+    padding-top: 6px; 
+    color: #ccc;
+    border-left: 1px solid #dcdcdc; 
+    cursor: pointer;
+    o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s; 
+}
+.Tab:hover { background: #ddd; color: #333; border-left: 1px solid #ccc; }
+.Tab.On { 
+    background: #ddd; color: #333; box-shadow: none;
+    box-shadow: 4px 0px 4px -2px #ddd;
+}
 
-
-.wrapper { position: relative; max-width: 100%; height: 100%; margin: 0 auto; padding: 0 20px; }
+.wrapper { position: relative; max-width: 100%; margin: 0 auto; padding: 0 20px; }
 .EditRestaurantInfo { position: absolute; display: none; width: 100%; top: 200px; }
 .EditRestaurantInfoWrapper { position: relative; width: 500px; margin: 0 auto; background: #999; padding: 20px;}
 .EditRestaurantInfoWrapper p { font-size: 15px; margin: 3px 0; }
@@ -95,6 +125,40 @@ input {
 .appGetInfo img:hover { opacity:0.7; }
 
 .menuWrapperInner { display: table; margin: 0 auto; min-width: 400px;}
+.menuWrapperInner textarea { 
+            font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+            font-size: 18px; line-height: 14px; 
+            display: block;
+            background: #fff; 
+            border: 0px; 
+            padding: 12px; 
+            outline: none;  overflow: hidden;
+            margin: 20px 0 0 0;  
+            width: 400px; height: 100px;
+            resize: none;
+            -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;
+}
+.menuWrapperInner p { display: inline-table; vertical-align: middle; }
+.menuWrapperInner select { display: inline-table; width: 80px; margin: 2px 0 0 10px; }
+.menuWrapperInner .button { display: inline-table; float: right; margin: 8px 0px 0 0; }
+.oldMessenge {
+    position: relative;
+    width: 400px;;
+    background: #F4A720;
+    padding: 5px 10px;
+}
+/*.oldMessenge:after {
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 11px 12px;
+border-color: #F4A720 transparent;
+display: block;
+width: 0;
+z-index: 1;
+top: -12px;
+left: 9px;
+}*/
 
 /* ::::::::::::::::: Restaurant INFO :::::::::::::::::::::  */
 
@@ -136,14 +200,13 @@ input {
 {
     position: relative;
     display: inline-table;
-    background: rgba(143,130,121,0.2);
-/*    background: #ddd;*/
+    background: #333;
     padding: 10px;
     margin: 5px; 
     vertical-align: top;
 }
-.sortablediv h3 { max-width: 280px; margin: 0; line-height: 25px;}
-.sortablediv h4 { line-height: 20px; margin: 6px 0; line-height: 13px; min-height: 2px; max-width: 350px; }
+.sortablediv h3 { max-width: 280px; margin: 0; line-height: 25px; color: #fff; }
+.sortablediv h4 { line-height: 20px; margin: 6px 0; line-height: 13px; min-height: 2px; max-width: 350px; color: #fff; }
 .sortablediv h3 input { width: 280px; background:#eee; margin: 0; }
 .sortablediv h4 input { width: 325px; background:#ccc; margin: 0; font-size: 18px; padding: 0px 5px;}
 
@@ -181,7 +244,7 @@ input {
 
 .AddLiButton.info { margin-top: 0; }
 
-.DishWrapper { position: relative; padding: 5px; background: #efeeea; }
+.DishWrapper { position: relative; padding: 5px; background: #fff; }
 
 .DishWrapper input,.InfoSlide input { background: #ddd; margin: 0; padding: 0px 3px; transition: width 0.25s;  }
     .DishNumber { display: inline-table; min-width: 25px; margin-right: 8px; }
@@ -220,11 +283,11 @@ input {
 .DishEditWrapperTEMP { display: none; }    
 
 #restuarantInfo h3 { margin-bottom: 7px;}
-.InfoSlide { position: relative; width: 340px; padding: 10px 5px; background: #efeeea; }
+.InfoSlide { position: relative; width: 340px; padding: 10px 5px; background: #fff; }
 .InfoSlide.new input { width: 334px; }
 .InfoSlide.top { margin-bottom: 3px; }
-.InfoSlide.top h3 { font-size: 14px; line-height: 8px; font-weight: bold; }
-.InfoSlide.top h4 { margin:1px 0; }
+.InfoSlide.top h3 { font-size: 14px; line-height: 8px; font-weight: bold; color: #333; }
+.InfoSlide.top h4 { margin:1px 0; color: #333; }
 .InfoSlidebox { display: inline-block; margin-right: 5px; vertical-align: top; }
 
 .SaveMenuDish { text-align: center; padding: 5px 0; display: block; min-width: 345px;}

@@ -50,7 +50,14 @@ if($oSecurityController->login_check() == true) { ?>
         <div class="RestaurantInfo">                  
         </div>
         
-        <div class="menuWrapper">
+        <div class="TabMenu">
+            <div id="TabsMenu" class="Tab On" onclick="TapChange('sMenu');">Menu</div>
+            <div id="TabsMessenger" class="Tab" onclick="TapChange('sMessenger');">Beskeder</div>
+            <div id="TabsStamp" class="Tab" onclick="TapChange('sStamp');">Stemplekort</div>
+            <div id="TabsEdit" class="Tab" onclick="TapChange('sEdit');">Indstillinger</div>
+        </div>
+        
+        <div id="TabWrappersMenu" class="menuWrapper">
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">                   
                     <div>                        
@@ -67,6 +74,38 @@ if($oSecurityController->login_check() == true) { ?>
             </div> 
         </div>
         
+        <div id="TabWrappersMessenger" class="menuWrapper" style="display: none;" >
+            <div class="wrapper">
+                <div class="menuWrapperInner" id="wrapper">
+                    
+                    <textarea id="sMessengerTextarea" placeholder="Skriv en ny besked"></textarea>
+                    <p>Hvor længe skal beskeden vises:</p>
+                    <select style="width: 80px;" id="iNewEventRsvp">
+                           <option value = "0">1 dag</option>
+                           <option value = "1">2 dage</option>
+                           <option value = "2">3 dage</option>
+                    </select> 
+                    <div class="button">Send</div>
+                    <h2>Gamle beskeder:</h2>
+                    <div class="oldMessenge">EN GAMMEL BESKED</div>
+                          
+                </div>
+            </div>
+        </div>
+        <div id="TabWrappersStamp" class="menuWrapper" style="display: none;">
+            <div class="wrapper">
+                <div class="menuWrapperInner" id="wrapper">
+                    <p>Stempler</p>
+                </div>
+            </div>
+        </div>
+        <div id="TabWrappersEdit" class="menuWrapper" style="display: none;">
+            <div class="wrapper">
+                <div class="menuWrapperInner" id="wrapper">
+                    <p>Indstillinger</p>
+                </div>
+            </div>
+        </div>
         
                 <!--        POPUP WINDOWS        -->
         

@@ -1576,3 +1576,11 @@ $(document).ready(function(){
 });
 
  end */
+
+function TapChange(subject) {
+    $(".Tab").removeClass("On");
+    $("#Tab"+subject).addClass("On");
+    $(".menuWrapper").hide();
+    $("#TabWrapper"+subject).show();
+    if( subject == "sMessenger" ) { $("#sMessengerTextarea").focus(); }
+}
