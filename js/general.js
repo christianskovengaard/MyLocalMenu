@@ -1117,6 +1117,10 @@
         
        case 'HideSortableEdits':
             
+            $(".menuWrapper").hide();
+            $("#TabWrappersMenu").show();
+            $(".Tab").removeClass("On");
+            $("#TabsMenu").addClass("On");
             $('#EditMenuButton').text('');
             $('#EditMenuButton').append('<div class="buttonEdit Save" onclick="UpdateMenucard();">✓ Gem menukort</div>');
             $(".DishEditWrapper").slideDown(100);
@@ -1578,9 +1582,14 @@ $(document).ready(function(){
  end */
 
 function TapChange(subject) {
-    $(".Tab").removeClass("On");
-    $("#Tab"+subject).addClass("On");
-    $(".menuWrapper").hide();
-    $("#TabWrapper"+subject).show();
-    if( subject == "sMessenger" ) { $("#sMessengerTextarea").focus(); }
+    
+    if( $(".buttonEdit.Save").length == 0 ) {
+    
+        $(".Tab").removeClass("On");
+        $("#Tab"+subject).addClass("On");
+        $(".menuWrapper").hide();
+        $("#TabWrapper"+subject).show();
+        if( subject == "sMessenger" ) { $("#sMessengerTextarea").focus(); }
+    }
+    else{  }
 }
