@@ -1112,9 +1112,9 @@
      
      switch(CaseName)
      {
-        case 'PopUpWindowEditManuInfo':
-            $("#EditRestaurantInfo").animate({height: 'toggle'},200);
-            break;
+//        case 'PopUpWindowEditManuInfo':
+//            $("#EditRestaurantInfo").animate({height: 'toggle'},200);
+//            break;
         
        case 'HideSortableEdits':
             

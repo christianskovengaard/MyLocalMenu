@@ -105,8 +105,8 @@ input {
 }
 
 .wrapper { position: relative; max-width: 100%; margin: 0 auto; padding: 0 20px; }
-.EditRestaurantInfo { position: absolute; display: none; width: 100%; top: 200px; }
-.EditRestaurantInfoWrapper { position: relative; width: 500px; margin: 0 auto; background: #999; padding: 20px;}
+.EditRestaurantInfo { /*position: absolute;*/ /*display: none;*/ width: 100%; /*top: 200px;*/ }
+.EditRestaurantInfoWrapper { position: relative; width: 500px; /*margin: 0 auto;*/ background: #999; padding: 20px;}
 .EditRestaurantInfoWrapper p { font-size: 15px; margin: 3px 0; }
 .EditRestaurantInfoWrapper input { width: 280px; }
 .EditRestaurantInfoWrapper div { display: inline-table; margin-right: 10px; }
