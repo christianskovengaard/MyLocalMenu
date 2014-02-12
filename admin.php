@@ -102,16 +102,13 @@ if($oSecurityController->login_check() == true) { ?>
                     <div>
                         <span>Brug denne QRcode til stempelkort</span>
                         <div id="currentQRcode"></div>
-                        <button>Print QRkode</button>
+                        <button onclick="PrintQRcode();">Print QRkode</button>
                     </div>
                     <h2>Lav ny QR kode</h2>
                     <div>
                         <span>Her kan du lave en ny QR kode</span>
                         <br>
                         <button onclick='GenerateQRcode();'>Lav ny QR kode</button>
-                        <div id="newQRcode">
-
-                        </div>
                     </div>
                 </div>
             </div>

@@ -1566,6 +1566,7 @@ class MenucardController
                  $i++;
             }
             
+            //TODO: Move this function to the RestuarentController
             //Get restuarent info for the menucard
             $sQuery = $this->conPDO->prepare("SELECT * FROM `restuarentinfo`
                                                 WHERE `iRestuarentInfoId` = :iFK_RestuarentInfoId LIMIT 1");
@@ -1585,6 +1586,7 @@ class MenucardController
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']); 
             $aMenucard['iRestuarentZipcode'] = utf8_encode($aResult['iRestuarentInfoZipcode']); 
+            $aMenucard['sRestuarentInfoQRcode'] = $aResult['sRestuarentInfoQRcode']; 
             
         } 
         

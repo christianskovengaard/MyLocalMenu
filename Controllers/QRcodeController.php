@@ -4,16 +4,34 @@ class QRcodeController
 {
     
     private $conPDO;
-    
+    private $oSecurityController;
+
+
     public function __construct() {
         
+        require_once 'SecurityController.php';
+        $this->oSecurityController = new SecurityController();
+                
         require_once 'DatabaseController.php';
         $oDatabaseController = new DatabaseController();
         $this->conPDO = $oDatabaseController->ConnectToDatabase();
     }
     
-    public function GenerateQRcode()
-    {
+    
+    
+    /*
+     * 
+     * 
+     * Get QRcode for the Restuarant for the user logged in
+     * 
+     */
+    
+    public function GetQRcode() {
+        
+    }
+
+    public function GenerateQRcode() {
+        
         $oQRcode = array(
                 'sFunction' => 'GenerateQRcode',
                 'result' => false
@@ -34,11 +52,57 @@ class QRcodeController
         
         $oQRcode['url'] = $url;
         
-        $oQRcode['result'] = true;
+       
+        
+        if($this->UpdateQRcode($url) == true)
+        {
+            $oQRcode['result'] = true;
+        }else{
+            $oQRcode['result'] = false;
+        }
         
         return $oQRcode;
     }
-
+    
+    /*
+     * 
+     * Update the restuarant/bar/shop current QRcode
+     * 
+     * 
+     */
+    
+    private function UpdateQRcode($url) {
+        
+        //Check if session is started
+        if(!isset($_SESSION['sec_session_id']))
+        { 
+            $this->oSecurityController->sec_session_start();
+        }
+        
+        //Check if user is logged in
+        if($this->oSecurityController->login_check() == true)
+        {
+            
+            //Get iCompanyId
+            $sQuery = $this->conPDO->prepare("SELECT iFK_iCompanyId FROM users WHERE sUsername = :sUsername");
+            $sQuery->bindValue(':sUsername', $_SESSION['username']);
+            $sQuery->execute();
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $iCompanyId = $aResult['iFK_iCompanyId'];
+            
+            $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoQRcode = :url WHERE iFK_iCompanyInfoId = :iCompanyId");
+            $sQuery->bindValue(':url', $url);
+            $sQuery->bindValue(':iCompanyId', $iCompanyId);
+            $sQuery->execute();
+            
+            return true;
+        }else{
+            return false;
+        }
+        
+        
+        
+    }
 
     public function __destruct() {
         ;

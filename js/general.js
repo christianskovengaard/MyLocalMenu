@@ -811,6 +811,7 @@
                           $("#MenuSubName").val(result.sRestuarentInfoSlogan);
                           $("#MenuAdress").val(result.sRestuarentAddress);
                           $("#MenuZip").val(result.iRestuarentZipcode);
+                          $("#currentQRcode").append('<img src='+result.sRestuarentInfoQRcode+'>');
                           
                           /*
                           $("#MenuTown").val(MenuTown);
@@ -1584,13 +1585,13 @@ $(document).ready(function(){
 
 function TapChange(subject) {
     
-    if( $(".buttonEdit.Save").length == 0 ) {
+    if( $(".buttonEdit.Save").length === 0 ) {
     
         $(".Tab").removeClass("On");
         $("#Tab"+subject).addClass("On");
         $(".menuWrapper").hide();
         $("#TabWrapper"+subject).show();
-        if( subject == "sMessenger" ) { $("#sMessengerTextarea").focus(); }
+        if( subject === "sMessenger" ) { $("#sMessengerTextarea").focus(); }
     }
     else{  }
 }
@@ -1605,7 +1606,14 @@ function GenerateQRcode() {
     data: {sFunction:"GenerateQRcode"}
    }).done(function(result) 
    {
-       $('#newQRcode').html('');
-       $('#newQRcode').append('<img src="'+result.url+'">');
+       $('#currentQRcode').html('');
+       $('#currentQRcode').append('<img src="'+result.url+'">');
    });
+}
+
+function PrintQRcode() {
+    var  w = window.open();
+    w.document.write($('#currentQRcode').html());
+    w.print();
+    w.close();
 }
