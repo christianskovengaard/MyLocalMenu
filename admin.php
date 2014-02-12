@@ -68,7 +68,7 @@ if($oSecurityController->login_check() == true) { ?>
         <div id="TabWrappersMessenger" class="menuWrapper" style="display: none;" >
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
-                    
+                    <input id="sMessageHeadline" type="text" value="" placeholder="Overskrift"/>
                     <textarea id="sMessengerTextarea" placeholder="Skriv en ny besked"></textarea>
                     <p>Hvor længe skal beskeden vises:</p>
                     <select style="width: 80px;" id="iNewEventRsvp">
@@ -76,9 +76,9 @@ if($oSecurityController->login_check() == true) { ?>
                            <option value = "1">2 dage</option>
                            <option value = "2">3 dage</option>
                     </select> 
-                    <div class="button">Send</div>
+                    <div class="button" onclick="SaveMessage();">Send</div>
                     <h2>Gamle beskeder:</h2>
-                    <div class="oldMessenge">EN GAMMEL BESKED</div>
+                    <div id="oldMessages" class="oldMessenge"></div>
                           
                 </div>
             </div>
@@ -157,6 +157,7 @@ if($oSecurityController->login_check() == true) { ?>
         $(document).ready(function() {
             GetMenucard(true);
             makeOpeningHours();
+            GetMessages();
         });
     </script>    
     </body>

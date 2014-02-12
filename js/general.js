@@ -1617,3 +1617,51 @@ function PrintQRcode() {
     w.print();
     w.close();
 }
+
+function GetMessages() {
+    
+   $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"GetMessages"}
+       }).done(function(result) 
+       {
+
+          $('#oldMessages').html('');
+
+          $.each(result.Messages, function(key,value){
+              $('#oldMessages').append('<div><h3>'+value.sMessageHeadline+'</h3><span>'+value.dtMessageDate+'</span><br><span>'+value.sMessageBodyText+'</span></div>');
+          });
+           
+       });
+   
+}
+
+function SaveMessage() {
+    
+       var aData = {};
+       
+       aData['sMessageHeadnline'] = $('#sMessageHeadline').val(); 
+       aData['sMessageBodyText'] = $('#sMessengerTextarea').val();
+       
+       //Workaround with encoding issue in IE8 and JSON.stringify
+       for (var i in aData) {
+           aData[i] = encodeURIComponent(aData[i]);
+       }
+
+       var sJSON = JSON.stringify(aData);
+       
+       $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"SaveMessage",sJSON:sJSON}
+       }).done(function(result) 
+       {
+           //alert('Besked gemt: '+result.result);
+           $('#sMessageHeadline').val(''); 
+           $('#sMessengerTextarea').val(''); 
+           GetMessages();
+       });
+}

@@ -27,7 +27,7 @@ class MessageController
         //TODO: Check if user is logged in
         
          
-        $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
+        $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId ORDER BY dtMessageDate DESC");
         $sQuery->bindValue(":iRestuarentInfoId", '1');
         $sQuery->execute();
         $i = 0;
