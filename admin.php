@@ -22,15 +22,9 @@ if($oSecurityController->login_check() == true) { ?>
         <script type="text/javascript" src="js/general.js"></script>
         <script type="text/javascript" src="js/mustache.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/jquery.autogrow.js"></script>
-        
-    
+        <script type="text/javascript" src="js/jquery.autogrow.js"></script> 
     </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-        
+    <body>       
         <div class="header">
             <div class="wrapper">
                 <div class="logoWrapper">                        
@@ -59,11 +53,7 @@ if($oSecurityController->login_check() == true) { ?>
         
         <div id="TabWrappersMenu" class="menuWrapper">
             <div class="wrapper">
-                <div class="menuWrapperInner" id="wrapper">                   
-                    <div>                        
-<!--                        <input type="button" value="Gem lister" onclick="SaveSortableLists();"/>-->
-                        <!--<div class="buttonEdit" onclick="HideShowSwitch('HideSortableEdits','0');"><img src="img/edit.png">Rediger Menukort</div>-->
-                    </div>
+                <div class="menuWrapperInner" id="wrapper">
                     <div class="sortablediv" id='restuarantInfo'>                       
                     </div>
                     
@@ -74,6 +64,7 @@ if($oSecurityController->login_check() == true) { ?>
             </div> 
         </div>
         
+        <!-- Messages -->
         <div id="TabWrappersMessenger" class="menuWrapper" style="display: none;" >
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
@@ -92,6 +83,9 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
             </div>
         </div>
+        <!-- end Messages -->
+        
+        <!-- Stampcard and QRcode -->
         <div id="TabWrappersStamp" class="menuWrapper" style="display: none;">
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
@@ -106,9 +100,9 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
             </div>
         </div>
+        <!-- end Stampcard and QRcode -->
         
-                <!--        POPUP WINDOWS        -->
-        
+        <!-- Restuarent info -->        
         <div id="EditRestaurantInfo" class="EditRestaurantInfo">
             <div class="EditRestaurantInfoWrapper">
                 <h3>Ret oplysninger</h3>
@@ -135,6 +129,7 @@ if($oSecurityController->login_check() == true) { ?>
                 
             </div>             
         </div>
+        <!-- end Restuarent info -->
         
     <div id="mustache_template">           
     </div>
