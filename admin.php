@@ -113,43 +113,51 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
             </div>
         </div>
+        <!-- end Stampcard and QRcode -->
+        
+        <!-- Settings -->
         <div id="TabWrappersEdit" class="menuWrapper" style="display: none;">
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
                     <p>Indstillinger</p>
+                    <div id="EditRestaurantInfo" class="EditRestaurantInfo">
+                        <div class="EditRestaurantInfoWrapper">
+                            <h3>Ret oplysninger</h3>
+                            <div>
+                                <div class="buttonEdit" onclick="HideShowSwitch('PopUpWindowEditManuInfo');">Luk</div>
+                                <p>Restuarent navn</p>
+                                <input id="MenuName" type="text" value="" placeholder="Restuarent navn">
+                                <p>evt Slogan</p>
+                                <input id="MenuSubName" type="text" value="" placeholder="slogan">
+                                <p>Vejnavn og nummer</p>
+                                <input id="MenuAdress" type="text" value="" placeholder="Adresse">
+                                <p>Postnr. og by</p>
+                                <input id="MenuZip" type="text" value="" placeholder="Post nr." maxlength="4">
+                                <input id="MenuTown" type="text" value="">
+                                <p>Telefonnr.</p>
+                                <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="8">
+                                <input type="button" onclick="UpdateRestuarentInfo()" value="Opdater"/>
+                            </div>
+
+                            <div>
+                                <p>Åbningstider</p>
+                                <div id="OpeningHours" class="Hours Opening"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- end Stampcard and QRcode -->
+        <!-- end Settings -->
         
-        <!-- Restuarent info -->        
-        <div id="EditRestaurantInfo" class="EditRestaurantInfo">
-            <div class="EditRestaurantInfoWrapper">
-                <h3>Ret oplysninger</h3>
-                <div>
-                    <div class="buttonEdit" onclick="HideShowSwitch('PopUpWindowEditManuInfo');">Luk</div>
-                    <p>Restuarent navn</p>
-                    <input id="MenuName" type="text" value="" placeholder="Restuarent navn">
-                    <p>evt Slogan</p>
-                    <input id="MenuSubName" type="text" value="" placeholder="slogan">
-                    <p>Vejnavn og nummer</p>
-                    <input id="MenuAdress" type="text" value="" placeholder="Adresse">
-                    <p>Postnr. og by</p>
-                    <input id="MenuZip" type="text" value="" placeholder="Post nr." maxlength="4">
-                    <input id="MenuTown" type="text" value="">
-                    <p>Telefonnr.</p>
-                    <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="8">
-                    <input type="button" onclick="UpdateRestuarentInfo()" value="Opdater"/>
-                </div>
+     
+        <!-- Restuarent info        
+        
                 
-                <div>
-                    <p>Åbningstider</p>
-                    <div id="OpeningHours" class="Hours Opening"></div>
-                </div>
                 
             </div>             
         </div>
-        <!-- end Restuarent info -->
+        end Restuarent info -->
         
     <div id="mustache_template">           
     </div>
