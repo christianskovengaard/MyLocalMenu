@@ -18,17 +18,6 @@ class QRcodeController
     }
     
     
-    
-    /*
-     * 
-     * 
-     * Get QRcode for the Restuarant for the user logged in
-     * 
-     */
-    
-    public function GetQRcode() {
-        
-    }
 
     public function GenerateQRcode() {
         
@@ -94,6 +83,8 @@ class QRcodeController
             $sQuery->bindValue(':url', $url);
             $sQuery->bindValue(':iCompanyId', $iCompanyId);
             $sQuery->execute();
+            
+            //TODO: Update the QRcode url for the stampcard
             
             return true;
         }else{
