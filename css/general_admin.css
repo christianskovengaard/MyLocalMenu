@@ -297,3 +297,5 @@ left: 9px;
 .saveMenuDishButton.Cancel { margin: 0 10px 0 0; background: #555;}
 .saveMenuDishButton:hover { background: #ff9000;  }
 .saveMenuDishButton.Cancel:hover { background: #333;}
+
+#currentQRcode img { height: 120px; }
