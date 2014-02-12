@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.33)
 # Database: MyLocalMenu
-# Generation Time: 2014-02-07 15:58:21 +0000
+# Generation Time: 2014-02-12 10:19:05 +0000
 # ************************************************************
 
 
@@ -158,7 +158,7 @@ LOCK TABLES `menucardinfo` WRITE;
 
 INSERT INTO `menucardinfo` (`iMenucardInfoId`, `sMenucardInfoHeadline`, `sMenucardInfoParagraph`, `iFK_iMenucardId`, `iMenucardInfoActive`)
 VALUES
-	(4,'Overskift','Her kan du skrive oplysninger om dit sted!',1,1);
+	(5,'Overskift','Her kan du skrive oplysninger om dit sted!',1,1);
 
 /*!40000 ALTER TABLE `menucardinfo` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -264,6 +264,7 @@ CREATE TABLE `restuarentinfo` (
   `sRestuarentInfoPhone` varchar(256) DEFAULT NULL,
   `sRestuarentInfoAddress` varchar(256) DEFAULT NULL,
   `iRestuarentInfoZipcode` int(11) DEFAULT NULL,
+  `sRestuarentInfoQRcode` varchar(256) DEFAULT NULL,
   `iFK_iCompanyInfoId` int(11) DEFAULT NULL,
   `iRestuarentInfoActive` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`iRestuarentInfoId`)
@@ -272,9 +273,9 @@ CREATE TABLE `restuarentinfo` (
 LOCK TABLES `restuarentinfo` WRITE;
 /*!40000 ALTER TABLE `restuarentinfo` DISABLE KEYS */;
 
-INSERT INTO `restuarentinfo` (`iRestuarentInfoId`, `sRestuarentInfoName`, `sRestuarentInfoSlogan`, `sRestuarentInfoPhone`, `sRestuarentInfoAddress`, `iRestuarentInfoZipcode`, `iFK_iCompanyInfoId`, `iRestuarentInfoActive`)
+INSERT INTO `restuarentinfo` (`iRestuarentInfoId`, `sRestuarentInfoName`, `sRestuarentInfoSlogan`, `sRestuarentInfoPhone`, `sRestuarentInfoAddress`, `iRestuarentInfoZipcode`, `sRestuarentInfoQRcode`, `iFK_iCompanyInfoId`, `iRestuarentInfoActive`)
 VALUES
-	(1,'Spisenavn ','spise slogan','12121256','Spisevej 12',4322,1,1);
+	(1,'Spisenavn ','spise slogan','12121256','Spisevej 12',4322,'https://chart.googleapis.com/chart?chs=500x500&chld=H&cht=qr&chl=TYCXUuAHF74G1x6ZO0qSIEFh0DSVuk',1,1);
 
 /*!40000 ALTER TABLE `restuarentinfo` ENABLE KEYS */;
 UNLOCK TABLES;
