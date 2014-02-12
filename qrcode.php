@@ -28,7 +28,7 @@
            
            $('#newQRcode').html('');
            $('#newQRcode').append('<img src="'+result.url+'">');
-       })
+       });
     };
 
 </script>
