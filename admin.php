@@ -89,7 +89,30 @@ if($oSecurityController->login_check() == true) { ?>
         <div id="TabWrappersStamp" class="menuWrapper" style="display: none;">
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
-                    <p>Stempler</p>
+                    <h1>Stempler</h1>
+                    <div>
+                        <p>Her skal der vises info om stempler</p><br/>
+                        <p>Hvor mange stempler er blevet givet ud</p><br/>
+                        <p>Hvor mange koppe gratis mad/kaffe giver det</p><br/>
+                        <p>Lav evt. noget lev graf med Google Chart API</p><br/>
+                        <p>Info om de enkelte brugere som har fået stempler og kaffe</p>
+                    </div>
+                    <span><------------------------------------------------------></span>
+                    <h1>QR koder</h1>
+                    <div>
+                        <span>Brug denne QRcode til stempelkort</span>
+                        <div id="currentQRcode"></div>
+                        <button>Print QRkode</button>
+                    </div>
+                    <h2>Lav ny QR kode</h2>
+                    <div>
+                        <span>Her kan du lave en ny QR kode</span>
+                        <br>
+                        <button onclick='GenerateQRcode();'>Lav ny QR kode</button>
+                        <div id="newQRcode">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

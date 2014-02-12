@@ -1594,3 +1594,18 @@ function TapChange(subject) {
     }
     else{  }
 }
+
+
+function GenerateQRcode() {
+
+   $.ajax({
+    type: "GET",
+    url: "API/api.php",
+    dataType: "json",
+    data: {sFunction:"GenerateQRcode"}
+   }).done(function(result) 
+   {
+       $('#newQRcode').html('');
+       $('#newQRcode').append('<img src="'+result.url+'">');
+   });
+}
