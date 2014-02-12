@@ -124,16 +124,15 @@ if($oSecurityController->login_check() == true) { ?>
                         <div class="EditRestaurantInfoWrapper">
                             <h3>Ret oplysninger</h3>
                             <div>
-                                <div class="buttonEdit" onclick="HideShowSwitch('PopUpWindowEditManuInfo');">Luk</div>
                                 <p>Restuarent navn</p>
-                                <input id="MenuName" type="text" value="" placeholder="Restuarent navn">
+                                <input id="MenuName" type="text" value="" placeholder="Restuarent navn"> <br/>
                                 <p>evt Slogan</p>
-                                <input id="MenuSubName" type="text" value="" placeholder="slogan">
+                                <input id="MenuSubName" type="text" value="" placeholder="slogan"> <br/>
                                 <p>Vejnavn og nummer</p>
-                                <input id="MenuAdress" type="text" value="" placeholder="Adresse">
+                                <input id="MenuAdress" type="text" value="" placeholder="Adresse"> <br/>
                                 <p>Postnr. og by</p>
                                 <input id="MenuZip" type="text" value="" placeholder="Post nr." maxlength="4">
-                                <input id="MenuTown" type="text" value="">
+                                <input id="MenuTown" type="text" value=""> <br/>
                                 <p>Telefonnr.</p>
                                 <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="8">
                                 <input type="button" onclick="UpdateRestuarentInfo()" value="Opdater"/>
@@ -145,6 +144,7 @@ if($oSecurityController->login_check() == true) { ?>
                             </div>
                         </div>
                     </div>
+                   <button onclick="document.location = 'user.php';">Bruger og firmainfo</button>
                 </div>
             </div>
         </div>
