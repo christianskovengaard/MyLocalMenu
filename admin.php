@@ -150,14 +150,6 @@ if($oSecurityController->login_check() == true) { ?>
         </div>
         <!-- end Settings -->
         
-     
-        <!-- Restuarent info        
-        
-                
-                
-            </div>             
-        </div>
-        end Restuarent info -->
         
     <div id="mustache_template">           
     </div>
