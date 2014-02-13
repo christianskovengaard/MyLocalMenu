@@ -742,10 +742,28 @@
                 $('.RestaurantPhone h2').html($("#MenuPhone").val());
                 $('.RestaurantAdresse h4').html($("#MenuAdress").val());
                 
-                //TODO: Update opening hours in the DOM
+                //Update opening hours in the DOM
                 $('#Openinghours').html('');
-                $('#Openinghours').append('<h3>Åbningstider</h3><h4>Man '+$("#iMondayTimeFrom option:selected").text()+'-'+$("#iMondayTimeTo option:selected").text()+'</h4>');
-                //Update the rest of the days
+                $('#Openinghours').append('<h3>Åbningstider</h3>\n\
+                                           <h4>Man '+$("#iMondayTimeFrom option:selected").text()+'-'+$("#iMondayTimeTo option:selected").text()+'</h4>\n\
+                                           <h4>Tir '+$("#iThuesdayTimeFrom option:selected").text()+'-'+$("#iThuesdayTimeTo option:selected").text()+'</h4>\n\
+                                           <h4>Ons '+$("#iWednesdaysTimeFrom option:selected").text()+'-'+$("#iWednesdaysTimeTo option:selected").text()+'</h4>\n\
+                                           <h4>Tor '+$("#iThursdayTimeFrom option:selected").text()+'-'+$("#iThursdayTimeTo option:selected").text()+'</h4>\n\
+                                           <h4>Fre '+$("#iFridayTimeFrom option:selected").text()+'-'+$("#iFridayTimeTo option:selected").text()+'</h4>\n\
+                                           <h4>Lør '+$("#iSaturdayTimeFrom option:selected").text()+'-'+$("#iSaturdayTimeTo option:selected").text()+'</h4>\n\
+                                           <h4>Søn '+$("#iSundayTimeFrom option:selected").text()+'-'+$("#iSundayTimeTo option:selected").text()+'</h4>');
+                //Update the day today
+                //0 = Sunday, 1 = Monday, 2 = Thuesday and so on up to 6 = Saturday
+                var day =  new Date().getDay();
+                if(day === 0){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iSundayTimeFrom option:selected").text()+'-'+$("#iSundayTimeTo option:selected").text()+'</h4>');} 
+                if(day === 1){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iMondayTimeFrom option:selected").text()+'-'+$("#iMondayTimeTo option:selected").text()+'</h4>');} 
+                if(day === 2){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iThuesdayTimeFrom option:selected").text()+'-'+$("#iThuesdayTimeTo option:selected").text()+'</h4>');}
+                if(day === 3){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iWednesdaysTimeFrom option:selected").text()+'-'+$("#iWednesdaysTimeTo option:selected").text()+'</h4>');}
+                if(day === 4){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iThursdayTimeFrom option:selected").text()+'-'+$("#iThursdayTimeTo option:selected").text()+'</h4>');}
+                if(day === 5){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iFridayTimeFrom option:selected").text()+'-'+$("#iFridayTimeTo option:selected").text()+'</h4>');}
+                if(day === 6){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iSaturdayTimeFrom option:selected").text()+'-'+$("#iSaturdayTimeTo option:selected").text()+'</h4>');}
+                
+                //TODO: Check if the new time is in between the time now and update open class
             }
          });
       
