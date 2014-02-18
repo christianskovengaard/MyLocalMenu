@@ -21,7 +21,7 @@ class SecurityController
             session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly); 
             session_name($session_name); // Sets the session name to the one set above.
             session_start(); // Start the php session
-            session_regenerate_id(true); // regenerated the session, delete the old one.     
+            //session_regenerate_id(true); // regenerated the session, delete the old one.     //TODO: This causes problems on localhost with WAMP server
     }
     
     // LOGIN CHECK FUNCTION - BRUTE FORCE
@@ -87,18 +87,22 @@ class SecurityController
                     return true;
                 } else {
                     // Not logged in
+                    //return 1;
                     return false;
                 }
                 } else {
                     // Not logged in
+                    //return 2;
                     return false;
                 }
             } else {
                 // Not logged in
+                //return 3;
                 return false;
             }
         } else {
             // Not logged in
+            //return 4;
             return false;
         }
     }
