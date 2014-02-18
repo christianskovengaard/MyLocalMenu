@@ -18,7 +18,7 @@ class QRcodeController
     }
     
     
-
+    
     public function GenerateQRcode() {
         
         $oQRcode = array(
@@ -35,6 +35,7 @@ class QRcodeController
         }
         $data = $randomString;
         
+        //TODO: This may not work anymore as of  April 20, 2015, https://developers.google.com/chart/terms?hl=da 
         $errorcorrection = 'H'; //Handle 30% dataloss
         $url = 'https://chart.googleapis.com/chart?chs='.$heightandwidth.'x'.$heightandwidth.'&chld='.$errorcorrection.'&cht=qr&chl='.$data;
 
