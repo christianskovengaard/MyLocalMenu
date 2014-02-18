@@ -294,9 +294,15 @@ if(isset($_GET['sFunction']))
             $result = $oMessageController->SaveMessage();
             $sResult = json_encode($result);
             echo $sResult;
-
         break;
     
+        case "GetStampcard":
+            require_once '../Controllers/StampcardController.php';
+            $oStampcard = new StampcardController();
+            $result = $oStampcard->GetStampcard();
+            $sResult = json_encode($result);
+            echo $sResult;
+        break;
        
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';

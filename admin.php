@@ -91,10 +91,11 @@ if($oSecurityController->login_check() == true) { ?>
                 <div class="menuWrapperInner" id="wrapper">
                     <h1>Stempler</h1>
                     <div>
-                        <p>Her skal der vises info om stempler</p><br/>
-                        <p>Hvor mange stempler er blevet givet ud</p><br/>
-                        <p>Hvor mange koppe gratis mad/kaffe giver det</p><br/>
-                        <p>Lav evt. noget lev graf med Google Chart API</p><br/>
+                        <div>Plads til antal stempler på stempelkortet <input value="" placeholder="1" id="iMaxStamps"></div><br/>
+                        <div>Stempler givet <span id="iStampsgiven"></span></div><br/>
+                        <p>Hvor mange kopper gratis mad/kaffe giver det</p><br/>
+                        <p>Stempler uddelt i år</p>
+                        <img src="" id="stampchart" title="Uddelte stempler" alt="Chart"><br/>
                         <p>Info om de enkelte brugere som har fået stempler og kaffe</p>
                     </div>
                     <span><------------------------------------------------------></span>
@@ -158,12 +159,18 @@ if($oSecurityController->login_check() == true) { ?>
             GetMenucard(true);
             makeOpeningHours();
             GetMessages();
+            GetStampcard();
         });
     </script>    
     </body>
 </html>
 <?php  } else {
-      header("location: index.php");
+      //header("location: index.php");
+    $asd = $oSecurityController->login_check();
+    var_dump($asd);
+    echo $_SESSION['user_id'] .'<br>'; 
+    echo $_SESSION['username'] .'<br>';
+    echo $_SESSION['login_string'] .'<br>';
 }
 
 ?>

@@ -1683,3 +1683,19 @@ function SaveMessage() {
            GetMessages();
        });
 }
+
+
+function GetStampcard() {
+   
+    $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"GetStampcard"}
+       }).done(function(result) 
+       {
+           $('#iStampsgiven').html(result.stampcard.iStampcardNumberOfGivenStamps);
+           $('#iMaxStamps').val(result.stampcard.iStampcardMaxStamps);
+           $('#stampchart').attr('src',result.stampcard.charturl);
+       });
+}
