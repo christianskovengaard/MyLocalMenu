@@ -57,6 +57,9 @@ class StampcardController
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             
+            
+            //TODO: Get all stamps given 
+            
             //Create GoogleChart
             $charturl = $this->CreateGoogleChart();
             

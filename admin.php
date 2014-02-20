@@ -92,6 +92,7 @@ if($oSecurityController->login_check() == true) { ?>
                     <h1>Stempler</h1>
                     <div>
                         <div>Plads til antal stempler på stempelkortet <input value="" placeholder="1" id="iMaxStamps"></div><br/>
+                        <button onclick="UpdateStamcard">Gem stempelkort</button>
                         <div>Stempler givet <span id="iStampsgiven"></span></div><br/>
                         <p>Hvor mange kopper gratis mad/kaffe giver det</p><br/>
                         <p>Stempler uddelt i år</p>
