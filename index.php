@@ -24,7 +24,34 @@ $oSecurityController->sec_session_start();
         
     </head>
     <body>
-        <div class="header">
+        
+        <img class="logo" src="img/logo_4.png">
+        <h2>MyLocalCafe</h2>
+        <?php if ($oSecurityController->login_check() == false) : ?>
+<!--        <div onclick="HideShowSwitch('Login');" class="button01">Log</div>-->
+        <form name="login" method="POST" action="login.php">
+            <div id="LoginBox" class="inputFrame">                   
+                <input name="username" id="LoginEmail" type="text" placeholder="Email">
+                <input name="password" type="Password" placeholder="Kodeord">
+                <input type="submit" value="Log ind" class="button02"/> 
+                <!--<div onclick="HideShowSwitch('Login');" class="button02">Luk</div>-->
+            </div>
+        </form>
+        <?php else : ?>
+        <!--<div onclick="" class="button01">Rediger brugerprofil</div>-->
+        <form name="logout" method="POST" action="logout.php">
+            <input type="submit" value="Log ud" class="button01"/>
+        </form>
+        <?php endif; ?>
+        
+        <form method="GET" action="viewmenucard.php" id="FindMenucardForm">
+                <input type="text" name="iMenucardSerialNumber" placeholder="Find Menukort" class="autocomplete">                   
+                <div onclick="SubmitForm('FindMenucardForm');" class="FindMenuImg"><img src="img/search.JPG"></div>
+        </form>
+        
+        
+        
+<!--        <div class="header">
             <div class="wrapper">
                 <div class="logoWrapper">                        
                     <img src="img/logo.png">
@@ -33,22 +60,7 @@ $oSecurityController->sec_session_start();
                          <h6>Menukort på mobile</h6>
                     </div>
                 </div>
-                <?php if ($oSecurityController->login_check() == false) : ?>
-                <div onclick="HideShowSwitch('Login');" class="button01">Log ind</div>
-                <form name="login" method="POST" action="login.php">
-                    <div id="LoginBox" class="inputFrame">                   
-                        <input name="username" id="LoginEmail" type="text" placeholder="Email">
-                        <input name="password" type="Password" placeholder="Kodeord">
-                        <input type="submit" value="Log ind" class="button02"/> 
-                        <div onclick="HideShowSwitch('Login');" class="button02">Luk</div>
-                    </div>
-                </form>
-                <?php else : ?>
-                <!--<div onclick="" class="button01">Rediger brugerprofil</div>-->
-                <form name="logout" method="POST" action="logout.php">
-                    <input type="submit" value="Log ud" class="button01"/>
-                </form>
-                <?php endif; ?>
+                
             </div>
         </div> 
         
@@ -56,15 +68,12 @@ $oSecurityController->sec_session_start();
             <div class="wrapper">
                 <div class="Info01Img">
                     <img src="img/info01.png">
-<!--                    <h2 class="Info01Txt01">Første gang tastes det unikke nummer ind på mobilen</h2>
+                    <h2 class="Info01Txt01">Første gang tastes det unikke nummer ind på mobilen</h2>
                     <h2 class="Info01Txt02">Så er menukortet altid på mobilen</h2>
-                    <h2 class="Info01Txt03">Alle ændringer på menukorten kommer med det sammen ud på mobilen</h2>  -->
+                    <h2 class="Info01Txt03">Alle ændringer på menukorten kommer med det sammen ud på mobilen</h2>  
                 </div>
                 <div class="inputFrame">
-                    <form method="GET" action="viewmenucard.php" id="FindMenucardForm">
-                        <input type="text" name="iMenucardSerialNumber" placeholder="Find Menukort" class="autocomplete">                   
-                        <div onclick="SubmitForm('FindMenucardForm');" class="FindMenuImg"><img src="img/search.JPG"></div>
-                    </form>
+
                 </div>
             </div>
         </div> 
@@ -75,8 +84,8 @@ $oSecurityController->sec_session_start();
                 <h3>...det er helt gratis</h3>
                 <div class="inputFrame" id="EmailSubmission">
                     <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
-<!--                    <input type="Password" placeholder="Indtast et kodeord">
-                    <input type="Password" placeholder="Gentag kodeorden">-->
+                    <input type="Password" placeholder="Indtast et kodeord">
+                    <input type="Password" placeholder="Gentag kodeorden">
                     <div onclick="HideShowSwitch('Email');" class="button01">Opret</div>
                 </div>           
             </div>
@@ -98,7 +107,7 @@ $oSecurityController->sec_session_start();
                 <h2>Virker på det hele</h2>
                 <p>[logoer]</p>
             </div>
-        </div> 
+        </div> -->
         
     </body>
 </html>

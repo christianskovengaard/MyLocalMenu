@@ -10,11 +10,35 @@ root {
     display: block;
 }
 
-body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; }
+body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; text-align: center; }
+
+h2, h3, h4, h5, h6, a, div  { 
+    font-family: "Bariol", "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight : normal; color:#333; 
+}
+
+h1, p {
+    font-family: "Bariol-Light", "Bariol Light", "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, "Lucida Grande", sans-serif;
+    font-weight : normal; color:#333; 
+}
+
+.logo { display: block; width: 150px; margin: 30px auto; }
+
+input { 
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; color:#333; 
+    display: block; font-size: 21px; height: 35px; border: 0px; margin: 5px auto; padding: 5px 10px; vertical-align: middle; outline: none; 
+    -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; 
+}
+.inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; z-index: 100;}
+form { position: relative; width: 250px; display: block; margin: 0 auto 10px auto; }
+.FindMenuImg { position: absolute; top: 0; right: 10px; width: 40px; height: 45px; background: #fff; margin: 0 0 0 -20px; vertical-align: middle; cursor: pointer;}
+.FindMenuImg img { vertical-align: middle; margin: 6px 10px 0 0; }
+.FindMenuImg img:hover { opacity: 0.15; filter:alpha(opacity=15); }
+
 
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
-h2, h3, h4, h5, h6, a, div  { 
+/*h2, h3, h4, h5, h6, a, div  { 
     font-family: "Bariol", "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
@@ -52,7 +76,7 @@ input {
 }
 .button01:hover { background: #fff; color: #333; }
 
-/* ::::::::::::::::: SIDE OPDELING :::::::::::::::::::::  */
+ ::::::::::::::::: SIDE OPDELING :::::::::::::::::::::  
 
 .header { position: relative; display: table; width: 100%; height: 80px; margin: 0px; background: #fff; box-shadow: 0px 0px 20px #898989; z-index: 100; }
 .info01 { position: relative; display: table; width: 100%; margin: 0px; padding: 0 0 20px 0; background: #7b1544 url(../img/backPurple.gif) ; text-align: center; }
@@ -62,7 +86,7 @@ input {
 
 .wrapper { position: relative; min-width: 240px; max-width: 1240px; height: 100%; margin: 0 auto; padding: 0 20px;}
 
-/* ::::::::::::::::: ANDET :::::::::::::::::::::  */
+ ::::::::::::::::: ANDET :::::::::::::::::::::  
 
 .header .inputFrame { position: absolute; right: 20px; top:-2px; background: #ddd; z-index: 10; display: none; height: 45px; }
 .header .button01 { position: absolute; right: 20px; top:17px; }
@@ -99,7 +123,7 @@ input {
 .EmailSubmission span { color: #ff9000; }
 .EmailSubmission a { color: #ff9000; text-decoration: none; } 
 
-/* ::::::::::::::::: rigister :::::::::::::::::::::  */
+ ::::::::::::::::: rigister :::::::::::::::::::::  
 
 #info03register { background: #bbb url(../img/backpurple.gif); }
 #info03register h1 { color: #333; margin-top: 20px; }
@@ -146,4 +170,4 @@ input {
 .validationTagImg {
     position: absolute;
     right: 20px;
-}
+}*/
