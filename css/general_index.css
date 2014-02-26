@@ -10,27 +10,57 @@ root {
     display: block;
 }
 
-body,html { width: 100%; height: 100%; margin: 0px; background: #e8e9e8; text-align: center; }
+body,html { width: 100%; max-height: 100%; margin: 0px; background: #333; }
 
-h2, h3, h4, h5, h6, a, div  { 
+h3, h4, h5, h6, a, div  { 
     font-family: "Bariol", "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight : normal; color:#333; 
 }
 
-h1, p {
+h1, h2, p {
     font-family: "Bariol-Light", "Bariol Light", "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, "Lucida Grande", sans-serif;
-    font-weight : normal; color:#333; 
+    font-weight : normal;
 }
+h1 { color:#686868; display: table; margin: 0 auto 20px auto; }
+h2 { color: #959490; display: table; margin: 0px auto 30px auto; font-size: 40px; }
 
-.logo { display: block; width: 150px; margin: 30px auto; }
+.logo { display: block; width: 150px; margin: 50px auto 10px auto; }
 
 input { 
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; color:#333; 
-    display: block; font-size: 21px; height: 35px; border: 0px; margin: 5px auto; padding: 5px 10px; vertical-align: middle; outline: none; 
-    -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; 
+    font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    color: #959490; 
+    display: block; 
+    font-size: 17px;
+    height: 35px; width: 300px;
+    border: 0px; 
+    margin: 20px auto; 
+    padding: 5px 10px; 
+    vertical-align: middle; 
+    outline: none; 
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; 
 }
-.inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; z-index: 100;}
-form { position: relative; width: 250px; display: block; margin: 0 auto 10px auto; }
+
+::-webkit-input-placeholder {color: #e8e6e1;}
+:-moz-placeholder { /* Firefox 18- */ color: #e8e6e1;}
+::-moz-placeholder {  /* Firefox 19+ */ color: #e8e6e1; }
+:-ms-input-placeholder { color: #e8e6e1;}
+
+.inputFrame { display: table; background: #f1f0ec; margin: 0 auto; padding: 70px; z-index: 100; }
+.inputFrame.small { padding: 20px 70px; }
+.inputFrame.small h2 { margin: 0px auto 0px auto; }
+
+form { position: relative; display: block; margin: 0 auto 10px auto; }
+
+.button { 
+    font-family: "Bariol-Light", "Bariol Light", "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, "Lucida Grande", sans-serif;
+    font-size: 21px;
+    width: 320px; height: 45px; 
+    color: #fff; background: #f7a53f;
+    cursor: pointer;
+    -o-transition:.5s; -ms-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s; 
+}
+.button:hover { background: #f9ac4d; }
+
 .FindMenuImg { position: absolute; top: 0; right: 10px; width: 40px; height: 45px; background: #fff; margin: 0 0 0 -20px; vertical-align: middle; cursor: pointer;}
 .FindMenuImg img { vertical-align: middle; margin: 6px 10px 0 0; }
 .FindMenuImg img:hover { opacity: 0.15; filter:alpha(opacity=15); }

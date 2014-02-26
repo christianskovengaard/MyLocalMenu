@@ -26,27 +26,31 @@ $oSecurityController->sec_session_start();
     <body>
         
         <img class="logo" src="img/logo_4.png">
-        <h2>MyLocalCafe</h2>
+        <h1>MyLocalCafé</h1>
         <?php if ($oSecurityController->login_check() == false) : ?>
 <!--        <div onclick="HideShowSwitch('Login');" class="button01">Log</div>-->
         <form name="login" method="POST" action="login.php">
-            <div id="LoginBox" class="inputFrame">                   
+            <div id="LoginBox" class="inputFrame">
+                <h2>Log Ind</h2>
                 <input name="username" id="LoginEmail" type="text" placeholder="Email">
                 <input name="password" type="Password" placeholder="Kodeord">
-                <input type="submit" value="Log ind" class="button02"/> 
+                <input type="submit" value="Log Ind" class="button"/> 
                 <!--<div onclick="HideShowSwitch('Login');" class="button02">Luk</div>-->
             </div>
         </form>
         <?php else : ?>
         <!--<div onclick="" class="button01">Rediger brugerprofil</div>-->
         <form name="logout" method="POST" action="logout.php">
-            <input type="submit" value="Log ud" class="button01"/>
+            <input type="submit" value="Log ud" class="button"/>
         </form>
         <?php endif; ?>
         
         <form method="GET" action="viewmenucard.php" id="FindMenucardForm">
-                <input type="text" name="iMenucardSerialNumber" placeholder="Find Menukort" class="autocomplete">                   
-                <div onclick="SubmitForm('FindMenucardForm');" class="FindMenuImg"><img src="img/search.JPG"></div>
+            <div id="LoginBox" class="inputFrame small">
+                <h2>Find Menukort</h2>
+                <input type="text" name="iMenucardSerialNumber" placeholder="cafékode" class="autocomplete">                   
+<!--                <div onclick="SubmitForm('FindMenucardForm');" class="FindMenuImg"><img src="img/search.JPG"></div>-->
+            </div>
         </form>
         
         
