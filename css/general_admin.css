@@ -143,10 +143,15 @@ input {
 .menuWrapperInner .button { display: inline-table; float: right; margin: 8px 0px 0 0; }
 .oldMessenge {
     position: relative;
-    width: 400px;;
+    width: 400px;
+}
+.oldMessenge div {
+    position: relative;
     background: #F4A720;
     padding: 5px 10px;
+    margin-bottom: 10px;
 }
+
 /*.oldMessenge:after {
 content: '';
 position: absolute;
