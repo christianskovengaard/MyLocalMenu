@@ -140,58 +140,23 @@ if($oSecurityController->login_check() == true) { ?>
             
             <div class='line'>.</div>
             
-            <div class="EditRestaurantInfoWrapper">
-                <?php if(isset($_GET['sUserToken']) && $oUserController->ChecksUserToken() == true) : ?>
-
-                <div class="info03" id="info03register">
-                    <div class="wrapper">
-                        <h3>Sæt dit nye kodeord</h3>
-
-                        <div class="inputFrameWrapper">
-                            <form action="" method="" id="register_form">
-                                <div class="inputFrame A">
-                                    <h5>Vælg din kode</h5>
-                                    <input value="" id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
-                                    <input value="" type="password" onblur="ValidateRegSwitch('passwordRetype',this);" placeholder="Gentag koden">
-                                    <div onclick="SubmitFormNewPassword();" class="button01">OK</div>
-                                </div>
-                                <input type="hidden" id="sUserToken" value="<?= $_GET['sUserToken']?>"/>
-                            </form>
-                        </div>
-                    </div>
+            <div class="EditRestaurantInfoWrapper">        
+                <h3>Bruger & firma information</h3>
+                <div>
+                    <p>Brugernavn</p>
+                    <input type="text" id="sUsername" placeholder="Brugernavn"><br/>
+                    <p>Firmanavn</p>
+                    <input type="text" id="sCompanyName" placeholder="Firmanavn"><br/>
+                    <p>CVR nr.</p>
+                    <input type="text" id="sCompanyCVR" placeholder="CVR nr.">     <br/>  
+                    <p>Firma telefonnr.</p>
+                    <input type="text" id="iCompanyTelefon" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Firma telefon"><br/>
+                    <p>Firma adresse</p>
+                    <input type="text" id="sCompanyAddress" placeholder="Firma adresse"><br/>
+                    <p>Postnr.</p>
+                    <input type="text" id="iCompanyZipcode" onblur="ValidateRegSwitch('zipcode',this);" maxlength="4" placeholder="Firma postnummer"><br/>                    
+                    <input type="button" class="button" onclick="UpdateUserinformation();" value="Opdater informationer"/>
                 </div>
-                <script type="text/javascript" >
-                        $(document).ready(function() {
-                            $('#NewPassword').focus();                   
-                        });
-                </script>
-                <?php elseif($oSecurityController->login_check() == true) :?>         
-                        <h3>Bruger & firma information</h3>
-                            <div>
-                                <p>Brugernavn</p>
-                                <input type="text" id="sUsername" placeholder="Brugernavn"><br/>
-                                <p>Firmanavn</p>
-                                <input type="text" id="sCompanyName" placeholder="Firmanavn"><br/>
-                                <p>CVR nr.</p>
-                                <input type="text" id="sCompanyCVR" placeholder="CVR nr.">     <br/>  
-                                <p>Firma telefonnr.</p>
-                                <input type="text" id="iCompanyTelefon" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Firma telefon"><br/>
-                                <p>Firma adresse</p>
-                                <input type="text" id="sCompanyAddress" placeholder="Firma adresse"><br/>
-                                <p>Postnr.</p>
-                                <input type="text" id="iCompanyZipcode" onblur="ValidateRegSwitch('zipcode',this);" maxlength="4" placeholder="Firma postnummer"><br/>                    
-                                <input type="button" class="button" onclick="UpdateUserinformation();" value="Opdater informationer"/>
-                            </div>
-
-      
-                    <script type="text/javascript" >
-                        $(document).ready(function() {
-                           $('#sUsername').focus();
-                           GetUserinformation();
-                        });
-                    </script>  
-                <?php else: header("location: index.php"); endif;?>
-            
             </div>
             
         </div>
@@ -206,17 +171,18 @@ if($oSecurityController->login_check() == true) { ?>
             makeOpeningHours();
             GetMessages();
             GetStampcard();
+            GetUserinformation();
         });
     </script>    
     </body>
 </html>
 <?php  } else {
-      //header("location: index.php");
-    $asd = $oSecurityController->login_check();
-    var_dump($asd);
+    header("location: index.php");
+    //$asd = $oSecurityController->login_check();
+    /*var_dump($asd);
     echo $_SESSION['user_id'] .'<br>'; 
     echo $_SESSION['username'] .'<br>';
-    echo $_SESSION['login_string'] .'<br>';
+    echo $_SESSION['login_string'] .'<br>';*/
 }
 
 ?>
