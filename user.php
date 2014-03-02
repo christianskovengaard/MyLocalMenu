@@ -8,7 +8,7 @@ $oSecurityController->sec_session_start();
 //If sUserToken is valid get the user
 require_once('./Controllers/UserController.php');
 $oUserController = new UserController();
-
+if(isset($_GET['sUserToken']) && $oUserController->ChecksUserToken() == true) :  
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,27 +29,7 @@ $oUserController = new UserController();
         <script type="text/javascript" src="js/jsencrypt.js"></script>
     </head>
     <body>
-        
-        <div class="header">
-            <div class="wrapper">
-                <div class="logoWrapper">                        
-                    <img src="img/logo.png">
-                    <div class="logoText">
-                         <h5>MyLocalMenu</h5>
-                         <h6>Menukort på mobile</h6>
-                    </div>
-                </div>
-            </div>
-        </div> 
-        
-<!--        <div class="info01">
-            <div class="wrapper">
-
-            </div>
-        </div> -->
-        
-        <?php if(isset($_GET['sUserToken']) && $oUserController->ChecksUserToken() == true) : ?>
-    
+         
         <div class="info03" id="info03register">
             <div class="wrapper">
                 <h1>Sæt dit nye kodeord</h1>
@@ -60,7 +40,7 @@ $oUserController = new UserController();
                             <h5>Vælg din kode</h5>
                             <input value="" id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
                             <input value="" type="password" onblur="ValidateRegSwitch('passwordRetype',this);" placeholder="Gentag koden">
-                            <div onclick="SubmitFormNewPassword();" class="button01">OK</div>
+                            <input type="button" onclick="SubmitFormNewPassword();" class="button" value="Ok">
                         </div>
                         <input type="hidden" id="sUserToken" value="<?= $_GET['sUserToken']?>"/>
                     </form>
@@ -72,43 +52,8 @@ $oUserController = new UserController();
                     $('#NewPassword').focus();                   
                 });
         </script>
-        <?php elseif($oSecurityController->login_check() == true) :?>         
-            <div class="info03" id="info03register">
-                <div class="wrapper">
-                    <h1>Bruger & firma information</h1>
-                    <div class="inputFrameWrapper" style="height: 400px;">
-                        <div class="inputFrame">
-                            <input type="text" id="sUsername" placeholder="Brugernavn">
-                            <input type="text" id="sCompanyName" placeholder="Firmanavn">
-                            <input type="text" id="iCompanyTelefon" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Firma telefon">
-                            <input type="text" id="sCompanyAddress" placeholder="Firma adresse">
-                            <input type="text" id="iCompanyZipcode" onblur="ValidateRegSwitch('zipcode',this);" maxlength="4" placeholder="Firma postnummer">
-                            <input type="text" id="sCompanyCVR" placeholder="CVR nr.">                           
-                            <div onclick="UpdateUserinformation();" class="button01">Opdater</div>
-                        </div>
-                    </div>
-                </div>
-            </div>        
-            <script type="text/javascript" >
-                $(document).ready(function() {
-                   $('#sUsername').focus();
-                   GetUserinformation();
-                });
-            </script>  
-        <?php else: header("location: index.php"); endif;?>
-<!--        <div class="info03">
-            <div class="wrapper">
-                  
-            </div>
-        </div>-->
-        
-        <div class="footer">
-            <div class="wrapper">
-                <h2>Sprøgsmål?</h2>
-                <p>ring: 88 88 88 88 </p>
-            </div>
-        </div> 
-
-
     </body>
 </html>
+<?php
+else : header('location index.php'); endif;
+?>
