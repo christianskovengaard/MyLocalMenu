@@ -1362,11 +1362,11 @@ function registerNext(num) {
 
                 if(result.result === true)
                 {
-                    document.location.href = 'user.php';
+                    alert('Det er nu opdateret');
                 }
                 else
                 {
-                    alert('Smid fejl besked');
+                    alert('Der er sket en fejl - prøv venlist igen');
                 }
         });
  }

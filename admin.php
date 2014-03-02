@@ -69,12 +69,8 @@ if($oSecurityController->login_check() == true) { ?>
                 <div class="menuWrapperInner" id="wrapper">
                     <input id="sMessageHeadline" type="text" value="" placeholder="Overskrift"/>
                     <textarea id="sMessengerTextarea" placeholder="Skriv en ny besked"></textarea>
-                    <p>Hvor længe skal beskeden vises:</p>
-                    <select style="width: 80px;" id="iNewEventRsvp">
-                           <option value = "0">1 dag</option>
-                           <option value = "1">2 dage</option>
-                           <option value = "2">3 dage</option>
-                    </select> 
+                    <p>Beskeden skal være aktiv frem til:</p>
+                    <a href="#">[DD MM YYYY]</a>
                     <div class="button" onclick="SaveMessage();">Send</div>
                     <h2>Gamle beskeder:</h2>
                     <div id="oldMessages" class="oldMessenge"></div>
@@ -119,9 +115,9 @@ if($oSecurityController->login_check() == true) { ?>
         <!-- Settings -->
         <div id="TabWrappersEdit" class="menuWrapper" style="display: none;">   
             <div class="EditRestaurantInfoWrapper">
-                    <h3>Ret oplysninger</h3>
+                    <h3>Ret Café oplysninger</h3>
                     <div>
-                        <p>Restuarent navn</p>
+                        <p>Café navn</p>
                         <input id="MenuName" type="text" value="" placeholder="Restuarent navn"> <br/>
                         <p>evt Slogan</p>
                         <input id="MenuSubName" type="text" value="" placeholder="slogan"> <br/>
@@ -130,7 +126,7 @@ if($oSecurityController->login_check() == true) { ?>
                         <p>Postnr. og by</p>
                         <input id="MenuZip" type="text" value="" placeholder="Post nr." maxlength="4">
                         <input id="MenuTown" type="text" value=""> <br/>
-                        <p>Telefonnr.</p>
+                        <p>Caféns telefonnr.</p>
                         <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="8">
                         
                     </div>
@@ -138,10 +134,66 @@ if($oSecurityController->login_check() == true) { ?>
                     <div>
                         <p>Åbningstider</p>
                         <div id="OpeningHours" class="Hours Opening"></div>
-                        <input type="button" class="button" onclick="UpdateRestuarentInfo()" value="Opdater oplysninger"/>
+                        <input type="button" class="button pushdown" onclick="UpdateUserinformation();" value="Opdater oplysninger"/>
                     </div>
-                    <button onclick="document.location = 'user.php';">Bruger og firmainfo</button>  
-              </div>
+            </div>
+            
+            <div class='line'>.</div>
+            
+            <div class="EditRestaurantInfoWrapper">
+                <?php if(isset($_GET['sUserToken']) && $oUserController->ChecksUserToken() == true) : ?>
+
+                <div class="info03" id="info03register">
+                    <div class="wrapper">
+                        <h3>Sæt dit nye kodeord</h3>
+
+                        <div class="inputFrameWrapper">
+                            <form action="" method="" id="register_form">
+                                <div class="inputFrame A">
+                                    <h5>Vælg din kode</h5>
+                                    <input value="" id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
+                                    <input value="" type="password" onblur="ValidateRegSwitch('passwordRetype',this);" placeholder="Gentag koden">
+                                    <div onclick="SubmitFormNewPassword();" class="button01">OK</div>
+                                </div>
+                                <input type="hidden" id="sUserToken" value="<?= $_GET['sUserToken']?>"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript" >
+                        $(document).ready(function() {
+                            $('#NewPassword').focus();                   
+                        });
+                </script>
+                <?php elseif($oSecurityController->login_check() == true) :?>         
+                        <h3>Bruger & firma information</h3>
+                            <div>
+                                <p>Brugernavn</p>
+                                <input type="text" id="sUsername" placeholder="Brugernavn"><br/>
+                                <p>Firmanavn</p>
+                                <input type="text" id="sCompanyName" placeholder="Firmanavn"><br/>
+                                <p>CVR nr.</p>
+                                <input type="text" id="sCompanyCVR" placeholder="CVR nr.">     <br/>  
+                                <p>Firma telefonnr.</p>
+                                <input type="text" id="iCompanyTelefon" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Firma telefon"><br/>
+                                <p>Firma adresse</p>
+                                <input type="text" id="sCompanyAddress" placeholder="Firma adresse"><br/>
+                                <p>Postnr.</p>
+                                <input type="text" id="iCompanyZipcode" onblur="ValidateRegSwitch('zipcode',this);" maxlength="4" placeholder="Firma postnummer"><br/>                    
+                                <input type="button" class="button" onclick="UpdateUserinformation();" value="Opdater informationer"/>
+                            </div>
+
+      
+                    <script type="text/javascript" >
+                        $(document).ready(function() {
+                           $('#sUsername').focus();
+                           GetUserinformation();
+                        });
+                    </script>  
+                <?php else: header("location: index.php"); endif;?>
+            
+            </div>
+            
         </div>
     <!-- end Settings -->
         

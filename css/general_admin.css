@@ -106,11 +106,15 @@ input {
 
 .wrapper { position: relative; max-width: 100%; margin: 0 auto; padding: 0 20px; }
 .EditRestaurantInfo { /*position: absolute;*/ /*display: none;*/ width: 100%; /*top: 200px;*/ }
-.EditRestaurantInfoWrapper { position: relative; margin-top: 30px; padding: 0 20px; }
+.EditRestaurantInfoWrapper { display: inline-table; position: relative; margin-top: 30px; padding: 0 20px; }
 .EditRestaurantInfoWrapper p { display: block; font-size: 15px; margin: 3px 0; width: 300px; }
 .EditRestaurantInfoWrapper input { width: 280px; }
 .EditRestaurantInfoWrapper div { display: inline-table; margin-right: 10px; }
-.EditRestaurantInfoWrapper div .button { width: 200px; margin-top: 84px; background: #f9ac4d; }
+.EditRestaurantInfoWrapper div .button { width: 200px; margin-top: 10px; background: #f9ac4d; }
+.EditRestaurantInfoWrapper div .button.pushdown { margin-top: 84px; }
+.EditRestaurantInfoWrapper div .button:hover { color: #333; -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s; }
+.line { display: inline-table; width: 2px; height: 100%; background: #d1d1d1; color: #d1d1d1; font-size: 1px; }
+
 #MenuZip { width: 63px; }
 #MenuTown { width: 186px; }
 .EditmenuWrapperInner { display: table; margin: 0 auto;  }
