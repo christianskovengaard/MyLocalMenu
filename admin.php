@@ -134,7 +134,7 @@ if($oSecurityController->login_check() == true) { ?>
                     <div>
                         <p>Åbningstider</p>
                         <div id="OpeningHours" class="Hours Opening"></div>
-                        <input type="button" class="button pushdown" onclick="UpdateUserinformation();" value="Opdater oplysninger"/>
+                        <input type="button" class="button pushdown" onclick="UpdateRestuarentInfo();" value="Opdater oplysninger"/>
                     </div>
             </div>
             
