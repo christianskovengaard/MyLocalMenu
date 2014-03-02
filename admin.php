@@ -28,13 +28,12 @@ if($oSecurityController->login_check() == true) { ?>
         <div class="header">
             <div class="wrapper">
                 <div class="logoWrapper">                        
-                    <img src="img/logo.png">
+                    <img src="img/logo_4.png">
                     <div class="logoText">
-                         <h5>MyLocalMenu</h5>
-                         <h6>Menukort på mobile</h6>
+                         <h5>MyLocalCafé</h5>
                     </div>
                     <div class="appGetInfo">
-                        <h6>Hent MyLocalMenu appen nu</h6>
+                        <h6>Hent MyLocalCafé appen nu</h6>
                         <img src="img/getAppleApp.png"><img src="img/getAndroidApp.png"><img src="img/getWindowsApp.png">
                     </div>
                 </div>

@@ -40,9 +40,11 @@ $oSecurityController->sec_session_start();
         </form>
         <?php else : ?>
         <!--<div onclick="" class="button01">Rediger brugerprofil</div>-->
-        <form name="logout" method="POST" action="logout.php">
+        <h6>Du er logget ind</h6>
+        <a href="admin.php">gå til redigering af menukort</a>
+<!--        <form name="logout" method="POST" action="logout.php">
             <input type="submit" value="Log ud" class="button"/>
-        </form>
+        </form>-->
         <?php endif; ?>
         
         <form method="GET" action="viewmenucard.php" id="FindMenucardForm">

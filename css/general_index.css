@@ -23,6 +23,8 @@ h1, h2, p {
 }
 h1 { color:#686868; display: table; margin: 0 auto 20px auto; }
 h2 { color: #959490; display: table; margin: 0px auto 30px auto; font-size: 40px; }
+h6,a  { display: table; color: #e8e6e1; font-size: 18px; margin: 0 auto 0px auto; }
+a { color: #f7a53f; margin: 0 auto 20px auto; text-decoration: none; }
 
 .logo { display: block; width: 150px; margin: 50px auto 10px auto; }
 

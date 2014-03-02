@@ -46,7 +46,7 @@ input {
 }
 .inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; }
 
-.buttonEdit.top { top: 0px; bottom: auto; }
+.buttonEdit.top { top: 0px; bottom: auto; font-size: 15px; line-height: 15px; padding: 0px 9px; height: 30px; margin: 0; background: #bbb; }
 .buttonEdit {       
       position: absolute;
       bottom: 10px; right: 10px;
@@ -122,7 +122,8 @@ input {
 /* ::::::::::::::::: ANDET :::::::::::::::::::::  */
 
 .logoWrapper { display: block; width: 200px; margin: 10px 0 0 0; }
-.logoWrapper img { display: inline-table; width: 40px;  vertical-align: middle; }
+.logoWrapper img { display: inline-table; width: 50px;  vertical-align: middle; }
+.logoWrapper h5 { margin: 8px 0px; }
 .logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
 
 .appGetInfo { position: absolute; right: 20px; top: 0px; }
