@@ -118,39 +118,33 @@ if($oSecurityController->login_check() == true) { ?>
         <!-- end Stampcard and QRcode -->
         
         <!-- Settings -->
-        <div id="TabWrappersEdit" class="menuWrapper" style="display: none;">
-            <div class="wrapper">
-                <div class="menuWrapperInner" id="wrapper">
-                    <p>Indstillinger</p>
-                    <div id="EditRestaurantInfo" class="EditRestaurantInfo">
-                        <div class="EditRestaurantInfoWrapper">
-                            <h3>Ret oplysninger</h3>
-                            <div>
-                                <p>Restuarent navn</p>
-                                <input id="MenuName" type="text" value="" placeholder="Restuarent navn"> <br/>
-                                <p>evt Slogan</p>
-                                <input id="MenuSubName" type="text" value="" placeholder="slogan"> <br/>
-                                <p>Vejnavn og nummer</p>
-                                <input id="MenuAdress" type="text" value="" placeholder="Adresse"> <br/>
-                                <p>Postnr. og by</p>
-                                <input id="MenuZip" type="text" value="" placeholder="Post nr." maxlength="4">
-                                <input id="MenuTown" type="text" value=""> <br/>
-                                <p>Telefonnr.</p>
-                                <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="8">
-                                <input type="button" onclick="UpdateRestuarentInfo()" value="Opdater"/>
-                            </div>
-
-                            <div>
-                                <p>Åbningstider</p>
-                                <div id="OpeningHours" class="Hours Opening"></div>
-                            </div>
-                        </div>
+        <div id="TabWrappersEdit" class="menuWrapper" style="display: none;">   
+            <div class="EditRestaurantInfoWrapper">
+                    <h3>Ret oplysninger</h3>
+                    <div>
+                        <p>Restuarent navn</p>
+                        <input id="MenuName" type="text" value="" placeholder="Restuarent navn"> <br/>
+                        <p>evt Slogan</p>
+                        <input id="MenuSubName" type="text" value="" placeholder="slogan"> <br/>
+                        <p>Vejnavn og nummer</p>
+                        <input id="MenuAdress" type="text" value="" placeholder="Adresse"> <br/>
+                        <p>Postnr. og by</p>
+                        <input id="MenuZip" type="text" value="" placeholder="Post nr." maxlength="4">
+                        <input id="MenuTown" type="text" value=""> <br/>
+                        <p>Telefonnr.</p>
+                        <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="8">
+                        
                     </div>
-                   <button onclick="document.location = 'user.php';">Bruger og firmainfo</button>
-                </div>
-            </div>
+
+                    <div>
+                        <p>Åbningstider</p>
+                        <div id="OpeningHours" class="Hours Opening"></div>
+                        <input type="button" class="button" onclick="UpdateRestuarentInfo()" value="Opdater oplysninger"/>
+                    </div>
+                    <button onclick="document.location = 'user.php';">Bruger og firmainfo</button>  
+              </div>
         </div>
-        <!-- end Settings -->
+    <!-- end Settings -->
         
         
     <div id="mustache_template">           

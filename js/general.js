@@ -1649,7 +1649,7 @@ function GetMessages() {
           $('#oldMessages').html('');
 
           $.each(result.Messages, function(key,value){
-              $('#oldMessages').append('<div><h3>'+value.sMessageHeadline+'</h3><span>'+value.dtMessageDate+'</span><br><span>'+value.sMessageBodyText+'</span></div>');
+              $('#oldMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+value.dtMessageDate+'</h3><h2>'+value.sMessageBodyText+'</h2></div>');
           });
            
        });
