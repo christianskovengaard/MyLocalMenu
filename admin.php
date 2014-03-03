@@ -72,6 +72,7 @@ if($oSecurityController->login_check() == true) { ?>
                     <p>Beskeden skal være aktiv frem til:</p>
                     <a href="#">[DD MM YYYY]</a>
                     <div class="button" onclick="SaveMessage();">Send</div>
+                    <br><br>
                     <h2>Gamle beskeder:</h2>
                     <div id="oldMessages" class="oldMessenge"></div>
                           
@@ -84,29 +85,34 @@ if($oSecurityController->login_check() == true) { ?>
         <div id="TabWrappersStamp" class="menuWrapper" style="display: none;">
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
-                    <h1>Stempler</h1>
-                    <div>
-                        <div>Plads til antal stempler på stempelkortet <input value="" placeholder="1" id="iMaxStamps"></div><br/>
+                    <p>Sådan ser dit stemplkort ud:</p>
+                    <div class='StampEX' id='StampEX'>
+                        <h3>STEMPLEKORT</h3>
+                        <h4></h4>
+                    </div>
+                    <div class='StampWrapper'>
+                        <div>Plads til antal stempler på stempelkortet <input value="" placeholder="" onkeyup='MakeStampcard();' id="iMaxStamps"></div><br/>
                         <button onclick="UpdateStamcard">Gem stempelkort</button>
                         <div>Stempler givet <span id="iStampsgiven"></span></div><br/>
                         <p>Hvor mange kopper gratis mad/kaffe giver det</p><br/>
                         <p>Stempler uddelt i år</p>
                         <img src="" id="stampchart" title="Uddelte stempler" alt="Chart"><br/>
                         <p>Info om de enkelte brugere som har fået stempler og kaffe</p>
-                    </div>
-                    <span><------------------------------------------------------></span>
-                    <h1>QR koder</h1>
-                    <div>
-                        <span>Brug denne QRcode til stempelkort</span>
-                        <div id="currentQRcode"></div>
-                        <button onclick="PrintQRcode();">Print QRkode</button>
-                    </div>
-                    <h2>Lav ny QR kode</h2>
-                    <div>
-                        <span>Her kan du lave en ny QR kode</span>
-                        <br>
-                        <button onclick='GenerateQRcode();'>Lav ny QR kode</button>
-                    </div>
+                    
+   
+                        <h1>QR koder</h1>
+                        <div>
+                            <span>Brug denne QRcode til stempelkort</span>
+                            <div id="currentQRcode"></div>
+                            <button onclick="PrintQRcode();">Print QRkode</button>
+                        </div>
+                        <h2>Lav ny QR kode</h2>
+                        <div>
+                            <span>Her kan du lave en ny QR kode</span>
+                            <br>
+                            <button onclick='GenerateQRcode();'>Lav ny QR kode</button>
+                        </div>
+                    </div>    
                 </div>
             </div>
         </div>

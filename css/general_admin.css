@@ -148,7 +148,7 @@ input {
             resize: none;
             -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;
 }
-.menuWrapperInner p { /*display: inline-table; */ vertical-align: middle; }
+.menuWrapperInner p { display: inline-table; vertical-align: middle; }
 .menuWrapperInner select { display: inline-table; width: 80px; margin: 2px 0 0 10px; }
 .menuWrapperInner .button { display: inline-table; float: right; margin: 8px 0px 0 0; }
 .oldMessenge {
@@ -207,6 +207,44 @@ left: 9px;
 .RestaurantAdresse h4 { display: inline-block; line-height: 13px; margin: 5px 0; } 
 .RestaurantPhone img { display: inline-block; width: 15px; vertical-align: middle; margin:0 5px 3px 0; }
 .RestaurantPhone h2 { display: inline-block;  } 
+
+/* ::::::::::::::::: Stamp :::::::::::::::::::::  */
+.StampEX {
+    display: table;
+    width: 315px;
+    min-height: 129px;
+    background: #fff;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+.Stamp{
+    position: relative;
+    background: #d1d1d1; 
+    display: inline-table;
+    width: 23px; height: 23px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    vertical-align: middle;
+    margin: 0 12px 10px 0;
+    box-shadow: inset 1px 1px 2px -2px #000,1px 1px 5px -3px #333;
+    border: 5px solid #ddd;
+}
+.Stamp:after {
+    content: ""; 
+    position: absolute;
+    top: 50%; right: -12px;
+    margin-top: -4px; 
+    width: 10px; height: 8px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background: #ddd;
+    z-index: 0;  
+}
+.Stamp.Full{
+    background: #473a35;
+}
 
 /* ::::::::::::::::: Sortabel :::::::::::::::::::::  */
 

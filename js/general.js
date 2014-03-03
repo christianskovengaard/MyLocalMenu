@@ -1697,5 +1697,17 @@ function GetStampcard() {
            $('#iStampsgiven').html(result.stampcard.iStampcardNumberOfGivenStamps);
            $('#iMaxStamps').val(result.stampcard.iStampcardMaxStamps);
            $('#stampchart').attr('src',result.stampcard.charturl);
+           MakeStampcard();
        });
+}
+
+function MakeStampcard() {
+   $('#StampEX h4').nextAll().remove()
+   var NumStamps = $("#iMaxStamps").val();
+   var NumStampsPlusOne = parseInt(NumStamps) + 1;
+   $('#StampEX h4').text('Køb '+NumStamps+' kopper kaffe og få den '+NumStampsPlusOne+'. gratis')
+   
+   for(var i=1; i <= NumStamps; i++) {
+       $('#StampEX h4').after("<div class='Stamp'></div>");
+   }
 }
