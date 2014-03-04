@@ -1631,10 +1631,15 @@ function GenerateQRcode() {
 
 function PrintQRcode() {
     var  w = window.open();
+    w.document.write("<style> @media print { img { max-width:40% !important; margin: 0; } } .wrapper { width: 250px; text-align: center; } h2,h3 { margin: 5px 0; } body { font-family: 'HelveticaNeue, 'Helvetica Neue', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; } </style>");
     w.document.write($('#currentQRcode').html());
+    w.document.write("<div class='wrapper'><h3>Stemplekort QR kode</h3><h2>"+$('.Restaurant.Name h1').html()+"</h2></div>");
+    
     w.print();
     w.close();
 }
+
+
 
 function GetMessages() {
     

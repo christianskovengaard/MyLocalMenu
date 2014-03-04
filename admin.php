@@ -91,27 +91,33 @@ if($oSecurityController->login_check() == true) { ?>
                         <h4></h4>
                     </div>
                     <div class='StampWrapper'>
-                        <div>Plads til antal stempler på stempelkortet <input value="" placeholder="" onkeyup='MakeStampcard();' id="iMaxStamps"></div><br/>
-                        <button onclick="UpdateStamcard">Gem stempelkort</button>
-                        <div>Stempler givet <span id="iStampsgiven"></span></div><br/>
-                        <p>Hvor mange kopper gratis mad/kaffe giver det</p><br/>
-                        <p>Stempler uddelt i år</p>
-                        <img src="" id="stampchart" title="Uddelte stempler" alt="Chart"><br/>
-                        <p>Info om de enkelte brugere som har fået stempler og kaffe</p>
-                    
-   
-                        <h1>QR koder</h1>
-                        <div>
-                            <span>Brug denne QRcode til stempelkort</span>
-                            <div id="currentQRcode"></div>
-                            <button onclick="PrintQRcode();">Print QRkode</button>
+                        <p>Antal stempler på stempelkortet:</p>
+                        <input value="" placeholder="" id="iMaxStamps">
+                        <div class='button StampButton' onclick="MakeStampcard();">Gem</div>
+                        
+                        <div class='StampStat'>
+                            <div> <span id="iStampsgiven"></span> stempler er uddelt</div><br/>
+                            <p>Hvor mange kopper gratis mad/kaffe giver det</p><br/>
+                            <p>Stempler uddelt i år</p>
+                            <img src="" id="stampchart" title="Uddelte stempler" alt="Chart"><br/>
+                            <p>Info om de enkelte brugere som har fået stempler og kaffe</p>
                         </div>
+   
+                        <h3>QR kode</h3>
+                        <div>
+                            <!--<span>Brug denne QR kode til stempelkort</span>-->
+                            <!--<div id="currentQRcode"></div>-->
+                            
+                            <div class='button StampButton' onclick="PrintQRcode();">Print din QR kode</div>
+<!--                        </div>
                         <h2>Lav ny QR kode</h2>
                         <div>
                             <span>Her kan du lave en ny QR kode</span>
-                            <br>
-                            <button onclick='GenerateQRcode();'>Lav ny QR kode</button>
+                            <br>-->
+                            <div class='button StampButton'onclick='GenerateQRcode();'>Lav en ny QR kode</div>
+                            <div id="currentQRcode"></div>
                         </div>
+                        <br><br><br>
                     </div>    
                 </div>
             </div>

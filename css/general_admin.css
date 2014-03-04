@@ -245,7 +245,34 @@ left: 9px;
 .Stamp.Full{
     background: #473a35;
 }
-
+.StampWrapper {
+    max-width: 355px;
+}
+.StampWrapper input {
+    width: 30px;
+    text-align: center;
+    margin: 0 10px;
+}
+.button.StampButton {
+    display: inline-table;
+    float: none;
+    margin: 0 0 1px 0;
+}
+.button.StampButton:hover {
+    background: #aaa;
+}
+.StampStat {
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    margin: 30px 0;
+    padding: 10px 0;
+}
+#currentQRcode {
+    margin: 10px 0px;
+    width: 289px;
+    background: #fff;
+    text-align: center;
+}
 /* ::::::::::::::::: Sortabel :::::::::::::::::::::  */
 
 .sortableLi 
