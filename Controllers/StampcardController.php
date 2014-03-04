@@ -20,6 +20,8 @@ class StampcardController
         
     }
     
+    
+    
     public function SaveStampcard() {
         
         $oStampcard = array(
@@ -72,6 +74,26 @@ class StampcardController
         return $oStampcard;
         
     }
+    
+    public function GetStampcardApp() {
+        
+        //TODO: Get stampcard based on the menucard serialnumber
+        
+        //Return to MenucardController
+        
+    }
+    
+    //Function for when user scan QRcode
+    public function UseStamp() {
+        //TODO: Create function
+    }
+    
+    //Function for when user redems the stamcard to get free cup of coffe
+    public function RedemeStampcard() {
+        //TODO: Create function
+    }
+    
+    
 
     public function GetStampcard() {
 
