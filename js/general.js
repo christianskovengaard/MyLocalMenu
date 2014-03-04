@@ -1707,12 +1707,33 @@ function GetStampcard() {
 }
 
 function MakeStampcard() {
-   $('#StampEX h4').nextAll().remove()
+   $('#StampEX h4').nextAll().remove();
    var NumStamps = $("#iMaxStamps").val();
    var NumStampsPlusOne = parseInt(NumStamps) + 1;
-   $('#StampEX h4').text('Køb '+NumStamps+' kopper kaffe og få den '+NumStampsPlusOne+'. gratis')
+   $('#StampEX h4').text('Køb '+NumStamps+' kopper kaffe og få den '+NumStampsPlusOne+'. gratis');
    
    for(var i=1; i <= NumStamps; i++) {
        $('#StampEX h4').after("<div class='Stamp'></div>");
    }
+   
+   var aData = {};
+   
+   aData['iStampcardMaxStamps'] = $('#iMaxStamps').val();
+       
+   for (var i in aData) {
+       aData[i] = encodeURIComponent(aData[i]);
+   }
+
+   var sJSON = JSON.stringify(aData);
+   
+   //Make ajax call
+   $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"SaveStampcard",sJSONStampcard:sJSON}
+       }).done(function(result) 
+       {
+           
+       });
 }
