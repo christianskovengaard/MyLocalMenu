@@ -96,8 +96,7 @@ if($oSecurityController->login_check() == true) { ?>
                         <div class='button StampButton' onclick="MakeStampcard();">Gem</div>
                         
                         <div class='StampStat'>
-                            <div> <span id="iStampsgiven"></span> stempler er uddelt</div><br/>
-                            <p>Hvor mange kopper gratis mad/kaffe giver det</p><br/>
+                            <div> <span id="iStampsgiven"></span> stempler er blevet uddelt</div><br/>
                             <p>Stempler uddelt i år</p>
                             <img src="" id="stampchart" title="Uddelte stempler" alt="Chart"><br/>
                             <p>Info om de enkelte brugere som har fået stempler og kaffe</p>
