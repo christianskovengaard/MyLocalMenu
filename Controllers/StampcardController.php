@@ -86,6 +86,10 @@ class StampcardController
     //Function for when user scan QRcode
     public function UseStamp() {
         
+        $oStampcard = array(
+                'sFunction' => 'UseStamp',
+                'result' => false
+            );
         
         //TODO: Get $sCustomerId from the App API call
         $sCustomerId = 'changethis';
@@ -143,37 +147,65 @@ class StampcardController
             }
         
         }else {
-            return false;
+            $oStampcard['result'] = false;
         }
-     
+        return $oStampcard;
     }
     
     //Function for when user redems the stamcard to get free cup of coffe
     public function RedemeStampcard() {
         
+        $oStampcard = array(
+                'sFunction' => 'RedemeStampcard',
+                'result' => false
+            );
+        
         //TODO: Change this to Get iFK_iRestuarentInfoId from the API call from App, maybe use the iMenucardSerialNumber
         $iRestuarentInfoId = '1';
         
         //Check for iStampcardMaxStamps to see how many stamps it takes to get one free cup of coffe
-        $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps FROM stampcard WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
+        $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps,iStampcardId FROM stampcard WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
         $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
         $sQuery->execute();
         $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-        $iStampcardMaxStamps = $aResult['iStampcardMaxStamps'];
-        
-        //Count number of stamps for the user
+        //Convert string to int
+        $iStampcardMaxStamps = intval($aResult['iStampcardMaxStamps']);
+        $iStampcardId = $aResult['iStampcardId'];
         
         //TODO: Get the iCustomerId from API call from App
-        $iCustomerId = 'abc123';
+        $sCustomerId = 'abc123';
         
+        //Count number of stamps for the user
         //Check if there are enough stamps to get one free cup of coffe
-        $sQuery = $this->conPDO->prepare("SELECT COUNT(*) FROM stamp WHERE iCustomerId = :iCustomerId AND iStampUsed = '0'");
-        $sQuery->bindValue(":iCustomerId", $iCustomerId);
+        $sQuery = $this->conPDO->prepare("SELECT COUNT(*) as number FROM stamp WHERE sCustomerId = :sCustomerId AND iStampUsed = '0'");
+        $sQuery->bindValue(":sCustomerId", $sCustomerId);
         $sQuery->execute();
+        $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
         
+        //Convert string to int
+        $iStamps = intval($aResult['number']);
         
-        //Set all the stamps used to used
-        
+
+        //Calculate if there is enough stamps for one free cup of coffe.
+        //Antal stempler divideret med antal stempler det kræver at få en kop gratis kaffe
+        if($iStamps/$iStampcardMaxStamps >= 1) {
+            
+            
+            
+            
+            //Set $iStampcardMaxStamps number of stamps to used
+            $sQuery = $this->conPDO->prepare("UPDATE stamp SET iStampUsed = '1'
+                                                WHERE sCustomerId = :sCustomerId 
+                                                AND iStampUsed = '0' AND iFK_iStampcardId = :iStampcardId");
+            $sQuery->bindValue(":sCustomerId", $sCustomerId);
+            $sQuery->bindValue(":iStampcardId", $iStampcardId);
+            $sQuery->execute();
+            
+        } else {
+            $oStampcard['result'] = false;
+        }
+       
+        return $oStampcard;
     }
     
     

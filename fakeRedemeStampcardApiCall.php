@@ -2,6 +2,7 @@
 
     
     if(isset($_POST['redemestampcard'])) {
+        
     require_once 'Controllers/StampcardController.php';
     $oStampcardController = new StampcardController();
     $oStampcardController->RedemeStampcard();
