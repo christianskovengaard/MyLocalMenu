@@ -284,13 +284,13 @@ class StampcardController
         $url = 'https://chart.googleapis.com/chart?cht=lc';
         
         //TODO: Data to change
-        $stamps_pr_month = '&chd=t:27,25,60,31,25,39,25,31,26,28,80,28|12,12';
+        $stamps_pr_month = '&chd=t:27,25,20,31,25,39,25,31,26,28,17,28|2,4,8,2,5,9,2,5,7,2,8,1';
         
         //Data labels
-        $datalabels = '&chdl=Antal stempler givet i alt 227|Antal gratis kopper kaffe givet ud 25|Mar 60|Apr 31|Maj 25|Jun 39|Jul 25|Aug 31|Sep 26|Okt 28|Nov 80|Dec 28';
+        $datalabels = '&chdl=Antal stempler givet i alt 227|Antal gratis kopper kaffe givet ud 25';
         
         //Data show on line
-        $datavalueonline = '&chm=N,000000,0,0,10,,e|N,000000,0,1,10,,e|N,000000,0,2,10,,e|N,000000,0,3,10,,e|N,000000,0,4,10,,e|N,000000,0,5,10,,e|N,000000,0,6,10,,e|N,000000,0,7,10,,e|N,000000,0,8,10,,e|N,000000,0,9,10,,e|N,000000,0,10,10,,e|N,000000,0,11,10,,e';
+        $datavalueonline = '&chm=N,000000,0,0,10,,e|N,000000,0,1,10,,e|N,000000,0,2,10,,e|N,000000,0,3,10,,e|N,000000,0,4,10,,e|N,000000,0,5,10,,e|N,000000,0,6,10,,e|N,000000,0,7,10,,e|N,000000,0,8,10,,e|N,000000,0,9,10,,e|N,000000,0,10,10,,e|N,000000,0,11,10,,e|N,000000,1,0,10,,e|N,000000,1,1,10,,e|N,000000,1,2,10,,e|N,000000,1,3,10,,e|N,000000,1,4,10,,e|N,000000,1,5,10,,e|N,000000,1,6,10,,e|N,000000,1,7,10,,e|N,000000,1,8,10,,e|N,000000,1,9,10,,e|N,000000,1,10,10,,e|N,000000,1,11,10,,e|N,000000,1,12,10,,e';
         
         //Set color of data legend and line colorto blue and green
         $chatlegendlinecolor = '&chco=0000FF,00FF00';
