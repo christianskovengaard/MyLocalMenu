@@ -312,6 +312,22 @@ if(isset($_GET['sFunction']))
             echo $sResult;
         break;
     
+        case "UseStamp":
+            require_once '../Controllers/StampcardController.php';
+            $oStampcard = new StampcardController();
+            $result = $oStampcard->UseStamp();
+            $sResult = json_encode($result);
+            echo $sResult;
+        break;
+    
+        case "RedemeStampcard":
+            require_once '../Controllers/StampcardController.php';
+            $oStampcard = new StampcardController();
+            $result = $oStampcard->RedemeStampcard();
+            $sResult = json_encode($result);
+            echo $sResult;
+        break;
+    
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
                 echo $result;
