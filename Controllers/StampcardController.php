@@ -91,64 +91,52 @@ class StampcardController
                 'result' => false
             );
         
-        //TODO: Get $sCustomerId from the App API call
-        $sCustomerId = 'changethis';
+         //Allow all, NOT SAFE
+        header('Access-Control-Allow-Origin: *');  
         
-        //TODO: This will not work when using API call from App
-        //Check if session is started
-        if(!isset($_SESSION['sec_session_id']))
-        { 
-            $this->oSecurityController->sec_session_start();
-        }
-        //TODO: This will not work when using API call from App, find out a way to get the iRestuarentInfoId
-        //Check if user is logged in
-        if($this->oSecurityController->login_check() == true)
-        {
+        /* Only allow trusted, MUCH more safe
+        header('Access-Control-Allow-Origin: spjæl.dk');
+        header('Access-Control-Allow-Origin: xn--spjl-xoa.sk');
+        header('Access-Control-Allow-Origin: www.spjæl.dk');
+        header('Access-Control-Allow-Origin: www.xn--spjl-xoa.dk');
+        */
+        
+        
+        //Get $sCustomerId  and iMenucardSerialNumber from the App API call
+        if(isset($_GET['QRcodeData']) && isset($_GET['sCustomerId'])) {
+            
+            $sCustomerId = $_GET['sCustomerId'];
+            $sQRcodeData = $_GET['QRcodeData'];
+
             $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo 
-                                                INNER JOIN users
-                                                ON users.sUsername = :sUsername
-                                                INNER JOIN company
-                                                ON company.iCompanyId = users.iFK_iCompanyId");
-            $sQuery->bindValue(':sUsername', $_SESSION['username']);
+                                                WHERE sRestuarentInfoQrcodeData = :QRcodeData");
+            $sQuery->bindValue(':QRcodeData', $sQRcodeData);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $iRestuarentInfoId = $aResult['iRestuarentInfoId'];
-
-            //Get the current QRcode value from database
-            $sQuery = $this->conPDO->prepare("SELECT sRestuarentInfoQrcodeData FROM restuarentInfo WHERE iRestuarentInfoId = :iRestuarentInfoId");
+            
+            //Get stampcardid
+            $sQuery = $this->conPDO->prepare("SELECT iStampcardId FROM stampcard WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
             $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-            $QrcodeData = $aResult['sRestuarentInfoQrcodeData'];
+            $iStampcardId = $aResult['iStampcardId'];
 
-            //Check for QrcodeData
-            $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId,iStampcardId FROM restuarentinfo
-                                        INNER JOIN stampcard
-                                        ON restuarentinfo.iRestuarentInfoId = stampcard.iFK_iRestuarentInfoId
-                                        WHERE sRestuarentInfoQrcodeData = :QrcodeDate");
-            $sQuery->bindValue(":QrcodeDate", $QrcodeData);
+            //Update stampcard card and increment number og given stamps by 1
+            $sQuery = $this->conPDO->prepare("UPDATE stampcard SET iStampcardNumberOfGivenStamps = iStampcardNumberOfGivenStamps + 1 WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
+            $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
             $sQuery->execute();
-            if($sQuery->rowCount() == 1) {
 
-                //Get iRestuarentInfoId
-                $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            //Insert stamp used into stamp table
+            $sQuery = $this->conPDO->prepare("INSERT INTO stamp (dtStampDateTime,sCustomerId,iFK_iStampcardId) VALUES (NOW(),:sCustomerId,:iStampcardId)");
+            $sQuery->bindValue(':iStampcardId', $iStampcardId);
+            $sQuery->bindValue(':sCustomerId', $sCustomerId);
+            $sQuery->execute();
 
-                //Update stampcard card and increment number og given stamps by 1
-                $sQuery = $this->conPDO->prepare("UPDATE stampcard SET iStampcardNumberOfGivenStamps = iStampcardNumberOfGivenStamps + 1 WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
-                $sQuery->bindValue(":iRestuarentInfoId", $aResult['iRestuarentInfoId']);
-                $sQuery->execute();
-
-                //Insert stamp used into stamp table
-                $sQuery = $this->conPDO->prepare("INSERT INTO stamp (dtStampDateTime,sCustomerId,iFK_iStampcardId) VALUES (NOW(),:sCustomerId,:iStampcardId)");
-                $sQuery->bindValue(':iStampcardId', $aResult['iStampcardId']);
-                $sQuery->bindValue(':sCustomerId', $sCustomerId);
-                $sQuery->execute();
-
-            }
-        
-        }else {
-            $oStampcard['result'] = false;
+            $oStampcard['result'] = 'true';
+            
         }
+       
         return $oStampcard;
     }
     
@@ -160,51 +148,65 @@ class StampcardController
                 'result' => false
             );
         
-        //TODO: Change this to Get iFK_iRestuarentInfoId from the API call from App, maybe use the iMenucardSerialNumber
-        $iRestuarentInfoId = '1';
+         //Allow all, NOT SAFE
+        header('Access-Control-Allow-Origin: *');  
         
-        //Check for iStampcardMaxStamps to see how many stamps it takes to get one free cup of coffe
-        $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps,iStampcardId FROM stampcard WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
-        $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
-        $sQuery->execute();
-        $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-        //Convert string to int
-        $iStampcardMaxStamps = intval($aResult['iStampcardMaxStamps']);
-        $iStampcardId = $aResult['iStampcardId'];
+        /* Only allow trusted, MUCH more safe
+        header('Access-Control-Allow-Origin: spjæl.dk');
+        header('Access-Control-Allow-Origin: xn--spjl-xoa.sk');
+        header('Access-Control-Allow-Origin: www.spjæl.dk');
+        header('Access-Control-Allow-Origin: www.xn--spjl-xoa.dk');
+        */
         
-        //TODO: Get the iCustomerId from API call from App
-        $sCustomerId = 'abc123';
+        if(isset($_GET['iMenucardSerialNumber']) && isset($_GET['sCustomerId'])) {
         
-        //Count number of stamps for the user
-        //Check if there are enough stamps to get one free cup of coffe
-        $sQuery = $this->conPDO->prepare("SELECT COUNT(*) as number FROM stamp WHERE sCustomerId = :sCustomerId AND iStampUsed = '0'");
-        $sQuery->bindValue(":sCustomerId", $sCustomerId);
-        $sQuery->execute();
-        $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-        
-        //Convert string to int
-        $iStamps = intval($aResult['number']);
-        
-
-        //Calculate if there is enough stamps for one free cup of coffe.
-        //Antal stempler divideret med antal stempler det kræver at få en kop gratis kaffe
-        if($iStamps/$iStampcardMaxStamps >= 1) {
+            $iMenucardSerialNumber = $_GET['iMenucardSerialNumber'];
+            $sCustomerId = $_GET['sCustomerId'];
             
-            
-            
-            
-            //Set $iStampcardMaxStamps number of stamps to used
-            $sQuery = $this->conPDO->prepare("UPDATE stamp SET iStampUsed = '1'
-                                                WHERE sCustomerId = :sCustomerId 
-                                                AND iStampUsed = '0' AND iFK_iStampcardId = :iStampcardId");
-            $sQuery->bindValue(":sCustomerId", $sCustomerId);
-            $sQuery->bindValue(":iStampcardId", $iStampcardId);
+            //Get iRestuarentInfoId
+            $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
+            $sQuery->bindValue(":iMenucardSerialNumber", $iMenucardSerialNumber);
             $sQuery->execute();
-            
-        } else {
-            $oStampcard['result'] = false;
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $iRestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
+                    
+            //Check for iStampcardMaxStamps to see how many stamps it takes to get one free cup of coffe
+            $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps,iStampcardId FROM stampcard WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
+            $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
+            $sQuery->execute();
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            //Convert string to int
+            $iStampcardMaxStamps = intval($aResult['iStampcardMaxStamps']);
+            $iStampcardId = $aResult['iStampcardId'];
+
+            //Count number of stamps for the user
+            //Check if there are enough stamps to get one free cup of coffe
+            $sQuery = $this->conPDO->prepare("SELECT COUNT(*) as number FROM stamp WHERE sCustomerId = :sCustomerId AND iStampUsed = '0'");
+            $sQuery->bindValue(":sCustomerId", $sCustomerId);
+            $sQuery->execute();
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+
+            //Convert string to int
+            $iStamps = intval($aResult['number']);
+
+
+            //Calculate if there is enough stamps for one free cup of coffe.
+            //Antal stempler divideret med antal stempler det kræver at få en kop gratis kaffe
+            if($iStamps/$iStampcardMaxStamps >= 1) {
+
+                //Set $iStampcardMaxStamps number of stamps to used
+                $sQuery = $this->conPDO->prepare("UPDATE stamp SET iStampUsed = '1'
+                                                    WHERE sCustomerId = :sCustomerId 
+                                                    AND iStampUsed = '0' AND iFK_iStampcardId = :iStampcardId");
+                $sQuery->bindValue(":sCustomerId", $sCustomerId);
+                $sQuery->bindValue(":iStampcardId", $iStampcardId);
+                $sQuery->execute();
+                
+                $oStampcard['result'] = 'true';
+            } else {
+                $oStampcard['result'] = false;
+            }
         }
-       
         return $oStampcard;
     }
     
