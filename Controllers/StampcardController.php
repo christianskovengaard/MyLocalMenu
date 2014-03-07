@@ -75,12 +75,27 @@ class StampcardController
         
     }
     
-    public function GetStampcardApp() {
+    public function GetStampcardApp($iMenucardSerialNumber) {
+        
+        $oStampcard = array(
+                'iStampcardMaxStamps' => ''
+            );
         
         //TODO: Get stampcard based on the menucard serialnumber
+        $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps FROM stampcard
+                                            INNER JOIN `menucard`
+                                            ON menucard.`iMenucardSerialNumber` = :iMenucardSerialNumber
+                                            WHERE stampcard.`iFK_iRestuarentInfoId` = menucard.`iFK_iRestuarentInfoId`");
+        $sQuery->bindValue(":iMenucardSerialNumber", $iMenucardSerialNumber);
+        $sQuery->execute();
+        $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+        $iStampcardMaxStamps = $aResult['iStampcardMaxStamps'];
+        
+        $oStampcard['iStampcardMaxStamps'] = $iStampcardMaxStamps;
         
         //Return to MenucardController
-        
+        return $oStampcard;
+    
     }
     
     //Function for when user scan QRcode
