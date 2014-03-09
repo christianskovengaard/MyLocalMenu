@@ -19,7 +19,7 @@
     </head>
     <body>
         <p>API call for Use stamp</p>
-        <p>http://www.spjæl.dk/MyLocalMenu/API/api.php?sFunction=UseStamp&&sCustomerId=abc123&QRcodeData=LGi9Cv7imHvjZzOH3Z2bm4QDqs9EnN</p>
+        <p>http://www.spjæl.dk/MyLocalMenu/API/api.php?sFunction=UseStamp&sCustomerId=abc123&QRcodeData=LGi9Cv7imHvjZzOH3Z2bm4QDqs9EnN</p>
         <a href="http://localhost/MyLocalMenu/API/api.php?sFunction=UseStamp&sCustomerId=abc123&QRcodeData=LGi9Cv7imHvjZzOH3Z2bm4QDqs9EnN">Use stamp</a>
         
         <p>API call for redeme stampcard</p>
