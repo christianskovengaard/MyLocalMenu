@@ -13,7 +13,7 @@ if($oSecurityController->login_check() == true) { ?>
         <link rel="stylesheet" type="text/css" href="css/general_admin.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 800px)" href="css/general_admin_small.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:801px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
-                
+        <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>        
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -69,8 +69,13 @@ if($oSecurityController->login_check() == true) { ?>
                 <div class="menuWrapperInner" id="wrapper">
                     <input id="sMessageHeadline" type="text" value="" placeholder="Overskrift"/>
                     <textarea id="sMessengerTextarea" placeholder="Skriv en ny besked"></textarea>
-                    <p>Beskeden skal være aktiv frem til:</p>
-                    <a href="#">[DD MM YYYY]</a>
+                    <p>Beskeden skal være aktiv</p>
+                    <br>
+                    <p>fra</p>
+                    <input type='text' class="datepicker" placeholder="fra">
+                    <p>til</p>
+                    <input type='text' class="datepicker" placeholder="til">
+                    <br>
                     <div class="button" onclick="SaveMessage();">Send</div>
                     <br><br>
                     <h2>Gamle beskeder:</h2>
@@ -183,6 +188,7 @@ if($oSecurityController->login_check() == true) { ?>
             GetMessages();
             GetStampcard();
             GetUserinformation();
+            $('.datepicker').datepicker();
         });
     </script>    
     </body>
