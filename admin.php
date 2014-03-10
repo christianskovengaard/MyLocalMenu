@@ -72,9 +72,9 @@ if($oSecurityController->login_check() == true) { ?>
                     <p>Beskeden skal være aktiv</p>
                     <br>
                     <p>fra</p>
-                    <input type='text' class="datepicker" placeholder="fra">
+                    <input type='text' id='dMessageStart' class="datepicker" placeholder="fra">
                     <p>til</p>
-                    <input type='text' class="datepicker" placeholder="til">
+                    <input type='text' id='dMessageEnd' class="datepicker" placeholder="til">
                     <br>
                     <div class="button" onclick="SaveMessage();">Send</div>
                     <br><br>
@@ -188,7 +188,7 @@ if($oSecurityController->login_check() == true) { ?>
             GetMessages();
             GetStampcard();
             GetUserinformation();
-            $('.datepicker').datepicker();
+            $('.datepicker').datepicker({ dateFormat: 'dd-mm-yy' });
         });
     </script>    
     </body>

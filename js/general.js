@@ -1665,6 +1665,8 @@ function SaveMessage() {
     
        var aData = {};
        
+       aData['dMessageStart'] = $('#dMessageStart').val();
+       aData['dMessageEnd'] = $('#dMessageEnd').val();
        aData['sMessageHeadnline'] = $('#sMessageHeadline').val(); 
        aData['sMessageBodyText'] = $('#sMessengerTextarea').val();
        
