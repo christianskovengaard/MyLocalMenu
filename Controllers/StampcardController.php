@@ -81,7 +81,7 @@ class StampcardController
                 'iStampcardMaxStamps' => ''
             );
         
-        //TODO: Get stampcard based on the menucard serialnumber
+        //Get stampcard based on the menucard serialnumber
         $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps FROM stampcard
                                             INNER JOIN `menucard`
                                             ON menucard.`iMenucardSerialNumber` = :iMenucardSerialNumber
