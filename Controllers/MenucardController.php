@@ -1328,14 +1328,14 @@ class MenucardController
             
             
             //TODO: Get messages for the menucard
-            $oMessage = $this->oMessageController->GetMessagesApp($iMenucardSerialNumber);
+            $oMessage = $this->oMessageController->GetMessagesAppFromMenucard($iMenucardSerialNumber);
             $aMenucard['oMessages'] = $oMessage;
             
             //Get the stampcard
             $aStampcard = $this->oStampcardController->GetStampcardApp($iMenucardSerialNumber);
             $aMenucard['oStampcard'] = $aStampcard;
                   
-            var_dump($aMenucard);
+            //var_dump($aMenucard);
             return $aMenucard;
         }
         else
