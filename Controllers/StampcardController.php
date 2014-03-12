@@ -53,7 +53,7 @@ class StampcardController
                 $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
                 $iRestuarentInfoId = $aResult['iRestuarentInfoId'];
                 
-                //TODO: Check if stamcard all ready exsists
+                //Check if stamcard all ready exsists
                 $sQuery = $this->conPDO->prepare("SELECT COUNT(*) AS number FROM stampcard WHERE iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId");
                 $sQuery->bindValue(':iFK_iRestuarentInfoId', $iRestuarentInfoId);
                 $sQuery->execute();
@@ -259,9 +259,6 @@ class StampcardController
             $sQuery->bindValue(':iRestuarentInfoId', $iRestuarentInfoId);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-            
-            
-            //TODO: Get all stamps given 
             
             //Create GoogleChart
             $charturl = $this->CreateGoogleChart();
