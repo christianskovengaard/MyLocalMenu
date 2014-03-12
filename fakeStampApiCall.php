@@ -16,6 +16,8 @@
     
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+         <script type="text/javascript" src="GetMessagesApp.js"></script>
     </head>
     <body>
         <p>API call for Use stamp</p>
@@ -25,6 +27,9 @@
         <p>API call for redeme stampcard</p>
         <p>http://www.spjæl.dk/MylocalMenu?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123</p>
         <a href="http://localhost/MyLocalMenu/API/api.php?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123">Redeme stampcard</a>
+        
+        
+        <input type="button" onclick="GetMessagesApp();" value="GetMessagesApp">
         
     </body>
 </html>

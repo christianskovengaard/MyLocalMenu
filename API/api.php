@@ -296,6 +296,15 @@ if(isset($_GET['sFunction']))
             echo $sResult;
         break;
     
+        case "GetMessagesApp":
+            require_once '../Controllers/MessageController.php';
+            $oMessageController = new MessageController();
+            $result = $oMessageController->GetMessagesApp();
+            $sResult = json_encode($result);
+            echo $sResult;
+
+        break;
+    
         case "GetStampcard":
             require_once '../Controllers/StampcardController.php';
             $oStampcard = new StampcardController();
@@ -327,6 +336,8 @@ if(isset($_GET['sFunction']))
             $sResult = json_encode($result);
             echo $sResult;
         break;
+    
+        
     
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';

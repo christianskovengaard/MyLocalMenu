@@ -67,9 +67,58 @@ class MessageController
         
     }
     
+    //Get Messages for each menucard in App 
+    public function GetMessagesApp()
+    {
+         $oMessages = array(
+                'sFunction' => 'GetMessagesApp',
+                'result' => false,
+                'Menucards' => ''
+            );
+         
+         
+        //Get the menucards serialnumbers
+        //Get the JSON string
+        $sJSONMenucards = $_GET['sJSONMenucards'];
+        //Convert the JSON string into an array
+        $aJSONMenucards = json_decode($sJSONMenucards);
+        
+        
+        foreach ($aJSONMenucards as $value) {
+            
+            $iMenucardSerialNumber =  $value;   
+        
+            //Get the messages based on the menucard serialnumber 
+            $sQuery = $this->conPDO->prepare("SELECT iFk_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
+            $sQuery->bindValue(":iMenucardSerialNumber", $iMenucardSerialNumber);
+            $sQuery->execute();
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $iRestuarentInfoId = $aResult['iFk_iRestuarentInfoId'];
+
+            //Get all message that are active (fits the time span based on the time now)
+            $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC");
+            $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
+            $sQuery->execute();
+            $i = 0;
+            while($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
+
+                $oMessages['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['sMessageHeadline'] = utf8_encode($aResult['sMessageHeadline']);
+                $oMessages['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['sMessageBodyText'] = utf8_encode($aResult['sMessageBodyText']);
+                //$oMessages['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['dtMessageDate'] = utf8_encode($aResult['dtMessageDate']);
+                $i++;
+            }
+        
+        }
+        
+        $oMessages['result'] = true;
+        //var_dump($oMessages);
+        return $oMessages;
+            
+        
+    }
     
-    //Get Message App
-    public function GetMessagesApp($iMenucardSerialNumber)
+    //Get Message App together with a menucard 
+    public function GetMessagesAppFromMenucard($iMenucardSerialNumber)
     {
         $oMessages = array();
         
@@ -81,7 +130,7 @@ class MessageController
         $iRestuarentInfoId = $aResult['iFk_iRestuarentInfoId'];
         
         //Get all message that are active (fits the time span based on the time now)
-        $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE()");
+        $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC");
         $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
         $sQuery->execute();
         $i = 0;
