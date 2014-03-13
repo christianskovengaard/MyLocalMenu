@@ -1789,3 +1789,18 @@ function MakeStampcard() {
            
        });
 }
+
+//Detech browser close
+window.addEventListener("beforeunload", function (e) {
+  
+  var confirmationMessage = "Vent på at menukortet gemmes..!";
+  
+  if(sessionStorage.bMenucardChanged === 'true' && $.active === 0) {
+    UpdateMenucard();   
+    
+    return confirmationMessage;  //Webkit, Safari, Chrome etc.
+  
+    (e || window.event).returnValue = confirmationMessage;     //Gecko + IE ' Chrome(Apple Mac)
+  }
+                            
+});
