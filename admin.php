@@ -167,6 +167,7 @@ if($oSecurityController->login_check() == true) { ?>
                 <div>
                     <p>Brugernavn</p>
                     <input type="text" id="sUsername" placeholder="Brugernavn"><br/>
+                    <input type="button" class="button" onclick="" value="Skift adgangskode">
                     <p>Firmanavn</p>
                     <input type="text" id="sCompanyName" placeholder="Firmanavn"><br/>
                     <p>CVR nr.</p>
