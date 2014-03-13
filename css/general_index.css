@@ -51,6 +51,9 @@ input {
 .inputFrame.small { padding: 20px 70px; }
 .inputFrame.small h2 { margin: 0px auto 0px auto; }
 
+.inputFrame.ligth { position: relative; background: #333; color: #fff; padding: 0; }
+.inputFrame.ligth h3 { color: #fff; }
+
 form { position: relative; display: block; margin: 0 auto 10px auto; }
 
 .button { 
@@ -67,7 +70,15 @@ form { position: relative; display: block; margin: 0 auto 10px auto; }
 .FindMenuImg img { vertical-align: middle; margin: 6px 10px 0 0; }
 .FindMenuImg img:hover { opacity: 0.15; filter:alpha(opacity=15); }
 
-
+#WrongPassword p {
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-size: 19px;
+}
+.EmailSubmission { 
+}
+.EmailSubmission span { color: #ff9000; }
+.EmailSubmission a { color: #ff9000; text-decoration: none; } 
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
 /*h2, h3, h4, h5, h6, a, div  { 

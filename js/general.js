@@ -1205,29 +1205,30 @@
             break;
             
         case 'Email':
+            $('.EmailSubmission').remove();
             var mail = $('#sEmailToSubmit').val();
             if(validateEmail(mail))
             {   
-                if(AddNewUser(mail) === true){
+//                if(AddNewUser(mail) === true){
+                    if(10 == 10){
+                $('#NewUser').html('');
                 var mailhost = mail.split('@')[1];
-                $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Velkommen</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>')
-                $('.EmailSubmission').hide().slideDown(100);
+                $('#NewUser').append('<div class="EmailSubmission"><h1>jayyy</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>')
+//                $('.EmailSubmission').hide().slideDown(200);
                 //Create new account and send email to user
                 }else{
-                   $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Der opstod en fejl</h1><h3>Der kunne ikke oprettes nogen bruger. Prøv med en anden email</h3></div>');
-                   $('.EmailSubmission').hide().slideDown(100);
-                   setTimeout(function(){$('.EmailSubmission').slideUp(200);},2500);
-                   setTimeout(function(){$('.EmailSubmission').remove();},2700);
+                   $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Emailen er allerede i brug</h1><h3>Prøv med en anden email eller log ind nedenfor</h3></div>');
+                   $('.EmailSubmission').hide().slideDown(200);
+//                   setTimeout(function(){$('.EmailSubmission').slideUp(200);},2500);
+//                   setTimeout(function(){$('.EmailSubmission').remove();},2700);
                    $('#sEmailToSubmit').val('');
                 }
             }else{
-                $('.info02 .wrapper ').append('<div class="EmailSubmission"><h1>Brug venligst en rigtigt email adresse</h1><h3 style="cursor:pointer" onclick="HideShowSwitch(\'WrongEmail\')">Tilbage</h3></div>');
-                $('.EmailSubmission').hide().slideDown(100);  
+                $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Ikke en korrekt Email</h1></div>');
+                $('.EmailSubmission').hide().slideDown(200);
+//                setTimeout(function(){$('.EmailSubmission').slideUp(200);},2500);
+//                setTimeout(function(){$('.EmailSubmission').remove();},2700);
             }
-            break;
-            
-        case 'WrongEmail':
-            $('.EmailSubmission').slideUp(100);
             break;
      }
 }
@@ -1242,8 +1243,10 @@
         }).done(function(result){
             if(result.result === 'true'){
                 return true;
+                
             }else{
                 return false;
+                
             } 
         }); 
     }

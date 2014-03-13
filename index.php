@@ -21,12 +21,20 @@ $oSecurityController->sec_session_start();
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>
         <script type="text/javascript" src="js/general.js"></script>
-        
+
     </head>
     <body>
         
         <img class="logo" src="img/logo_4.png">
         <h1>MyLocalCafé</h1>
+        <div id="NewUser" class="inputFrame ligth">
+                    <h2>Velkommen</h2>
+                    <p>På MyLocalCafé kan du ......  (skal layoutes - når teksten er på plads)</p>
+                    <h3>Opret en gratis bruger</h3>
+                    <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
+                    <!--<div onclick="HideShowSwitch('Email');" class="button01">Opret</div>-->
+                    <input type="submit" onclick="HideShowSwitch('Email');" value="Opret en bruger" class="button"/>
+        </div> 
         <?php if ($oSecurityController->login_check() == false) : ?>
 <!--        <div onclick="HideShowSwitch('Login');" class="button01">Log</div>-->
         <form name="login" method="POST" action="login.php">
@@ -34,7 +42,7 @@ $oSecurityController->sec_session_start();
                 <h2>Log Ind</h2>
                 <input name="username" id="LoginEmail" type="text" placeholder="Email">
                 <input name="password" type="Password" placeholder="Kodeord">
-                <input type="submit" value="Log Ind" class="button"/> 
+                <input id="loginButton" type="submit" value="Log Ind" class="button"/> 
                 <!--<div onclick="HideShowSwitch('Login');" class="button02">Luk</div>-->
             </div>
         </form>
@@ -55,7 +63,12 @@ $oSecurityController->sec_session_start();
             </div>
         </form>
         
-        
+        <script type="text/javascript">
+           var url = window.location.search.substring(7);
+           if (url == "false") {
+               $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p><a href='#'>Glemt kodeord?</a></div>");
+           }
+        </script>
         
 <!--        <div class="header">
             <div class="wrapper">
