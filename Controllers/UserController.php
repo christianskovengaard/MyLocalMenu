@@ -33,16 +33,16 @@ class UserController
         $this->oSecurity = new SecurityController();
 
         
-        require 'CompanyController.php';
+        require_once 'CompanyController.php';
         $this->oCompany = new CompanyController();
         
-        require 'RestuarentController.php';
+        require_once 'RestuarentController.php';
         $this->oRestuarent = new RestuarentController();
         
-        require 'MenucardController.php';
+        require_once 'MenucardController.php';
         $this->oMenucard = new MenucardController();
         
-        require 'EmailController.php';
+        require_once 'EmailController.php';
         $this->oEmail = new EmailController();
     }
 

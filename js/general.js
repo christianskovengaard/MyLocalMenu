@@ -2,6 +2,10 @@
   
   function CreateNewSortableList()
   {    
+      
+      //Set bMenucardchaged to 'true'
+      sessionStorage.bMenucardChanged = 'true';
+      
       /*
       var lastId = $('.sortablediv:last ul').attr('id');
       
@@ -87,6 +91,10 @@
   }
   
   function SaveMenuDishToHtml() {
+      
+      //Set sessionStorage bMenucardChaged to 'true'
+      sessionStorage.bMenucardChanged = 'true';
+      
       var Number = $('.DishNumber input').val();
       var Headline = $('.DishHeadline input').val();
       var Description = $('.DishDescription textarea').val();
@@ -114,6 +122,9 @@
 }
  
   function SaveInfoToHtml(){
+      
+      //Set session storage bmenucardchanged to 'true'
+     sessionStorage.bMenucardChanged = 'true';
      
       var infoHeadline = $('.InfoSlide.new input').val();
       var infoDescription = $('.InfoSlide.new textarea').val();
@@ -191,6 +202,10 @@
  }
  
  function SaveEditedInfoToHtml(id){
+     
+     //Set session storage bmenucardchanged to 'true'
+     sessionStorage.bMenucardChanged = 'true';
+     
       var Headline = $('.InfoSlide input').val();
       var Description = $('.InfoSlide textarea').val();
 
@@ -442,14 +457,13 @@
 
   function UpdateMenucard()
   {
-      //TODO: indicate that the menucard is being updated
       
-      $('#EditMenuButton').text('');
-      $('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\');"><img src="img/edit.png">Menukort</div>');
+      //$('#EditMenuButton').text('');
+      //$('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\');"><img src="img/edit.png">Menukort</div>');
                    
-      $(".DishEditWrapper").slideUp(100);
-      $(".AddLiButton").slideUp(100);
-      $(".newsortablediv").slideUp(100); 
+      //$(".DishEditWrapper").slideUp(100);
+      //$(".AddLiButton").slideUp(100);
+      //$(".newsortablediv").slideUp(100); 
       
       
       var iLastMenucardItemIndex = '';
@@ -556,11 +570,47 @@
         data: {sFunction:"UpdateMenucard",sJSONMenucard:sJSONAllLists}
        }).done(function(result) 
        {
-           //TODO: Show result of menucard updated
+           //Set sessionStorage.bMenucardChanged = 'false';
+           sessionStorage.bMenucardChanged = 'false';
            
            //reload the menucard
-           GetMenucard(true);
+           //GetMenucard(true);
        });
+  }
+  
+  
+  function AutomaticUpdateMenucard()
+  {
+      //console.log('AutomaticUpdateMenucard');
+     
+      //Set session storage
+     
+      if(typeof(Storage)!=="undefined") {
+          //Set value when the page is loaded
+          if(sessionStorage.bMenucardChanged === undefined){
+              sessionStorage.bMenucardChanged = 'false';
+          }
+      }
+      else {
+        alert('Sorry! No Web Storage support..');
+      }
+      
+      //console.log('bMenucardChanged '+sessionStorage.bMenucardChanged);
+      //console.log('$.active '+$.active);
+      //Check if the menucard has been changed
+      //If changed the run the ajax call
+      if(sessionStorage.bMenucardChanged === 'true') {
+          
+        //Check if a ajax call is all ready running
+        if($.active === 0){ 
+            alert('run ajax call');
+            UpdateMenucard();
+        }else {
+            console.log('Det kører allerede et ajax call');
+        }      
+      }
+      //Run every 10 second
+      setTimeout(function(){AutomaticUpdateMenucard();},10000);
   }
     
   function SaveMenucard()
@@ -1140,8 +1190,8 @@
             $("#TabWrappersMenu").show();
             $(".Tab").removeClass("On");
             $("#TabsMenu").addClass("On");
-            $('#EditMenuButton').text('');
-            $('#EditMenuButton').append('<div class="buttonEdit Save" onclick="UpdateMenucard();">✓ Gem menukort</div>');
+            //$('#EditMenuButton').text('');
+            //$('#EditMenuButton').append('<div class="buttonEdit Save" onclick="UpdateMenucard();">✓ Gem menukort</div>');
             $(".DishEditWrapper").slideDown(100);
             $(".AddLiButton").slideDown(100);
             $(".newsortablediv").css('display','inline-table').slideDown(100);
@@ -1665,6 +1715,8 @@ function SaveMessage() {
     
        var aData = {};
        
+       aData['dMessageStart'] = $('#dMessageStart').val();
+       aData['dMessageEnd'] = $('#dMessageEnd').val();
        aData['sMessageHeadnline'] = $('#sMessageHeadline').val(); 
        aData['sMessageBodyText'] = $('#sMessengerTextarea').val();
        
@@ -1707,12 +1759,33 @@ function GetStampcard() {
 }
 
 function MakeStampcard() {
-   $('#StampEX h4').nextAll().remove()
+   $('#StampEX h4').nextAll().remove();
    var NumStamps = $("#iMaxStamps").val();
    var NumStampsPlusOne = parseInt(NumStamps) + 1;
-   $('#StampEX h4').text('Køb '+NumStamps+' kopper kaffe og få den '+NumStampsPlusOne+'. gratis')
+   $('#StampEX h4').text('Køb '+NumStamps+' kopper kaffe og få den '+NumStampsPlusOne+'. gratis');
    
    for(var i=1; i <= NumStamps; i++) {
        $('#StampEX h4').after("<div class='Stamp'></div>");
    }
+   
+   var aData = {};
+   
+   aData['iStampcardMaxStamps'] = $('#iMaxStamps').val();
+       
+   for (var i in aData) {
+       aData[i] = encodeURIComponent(aData[i]);
+   }
+
+   var sJSON = JSON.stringify(aData);
+   
+   //Make ajax call
+   $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"SaveStampcard",sJSONStampcard:sJSON}
+       }).done(function(result) 
+       {
+           
+       });
 }

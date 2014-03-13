@@ -9,11 +9,17 @@ if($oSecurityController->login_check() == true) { ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimun-scale=1.0, initial-scale=1.0" />
-        <title>My Local Menu</title>
+        <title>MyLocalCafé - Admin</title>
         <link rel="stylesheet" type="text/css" href="css/general_admin.css" />
+<<<<<<< HEAD
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 700px)" href="css/general_admin_small.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:701px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
                 
+=======
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 800px)" href="css/general_admin_small.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:801px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
+        <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>        
+>>>>>>> FETCH_HEAD
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -69,8 +75,13 @@ if($oSecurityController->login_check() == true) { ?>
                 <div class="menuWrapperInner" id="wrapper">
                     <input id="sMessageHeadline" type="text" value="" placeholder="Overskrift"/>
                     <textarea id="sMessengerTextarea" placeholder="Skriv en ny besked"></textarea>
-                    <p>Beskeden skal være aktiv frem til:</p>
-                    <a href="#">[DD MM YYYY]</a>
+                    <p>Beskeden skal være aktiv</p>
+                    <br>
+                    <p>fra</p>
+                    <input type='text' id='dMessageStart' class="datepicker" placeholder="fra">
+                    <p>til</p>
+                    <input type='text' id='dMessageEnd' class="datepicker" placeholder="til">
+                    <br>
                     <div class="button" onclick="SaveMessage();">Send</div>
                     <br><br>
                     <h2>Gamle beskeder:</h2>
@@ -96,8 +107,7 @@ if($oSecurityController->login_check() == true) { ?>
                         <div class='button StampButton' onclick="MakeStampcard();">Gem</div>
                         
                         <div class='StampStat'>
-                            <div> <span id="iStampsgiven"></span> stempler er uddelt</div><br/>
-                            <p>Hvor mange kopper gratis mad/kaffe giver det</p><br/>
+                            <div> <span id="iStampsgiven"></span> stempler er blevet uddelt</div><br/>
                             <p>Stempler uddelt i år</p>
                             <img src="" id="stampchart" title="Uddelte stempler" alt="Chart"><br/>
                             <p>Info om de enkelte brugere som har fået stempler og kaffe</p>
@@ -184,6 +194,13 @@ if($oSecurityController->login_check() == true) { ?>
             GetMessages();
             GetStampcard();
             GetUserinformation();
+            $('.datepicker').datepicker({ dateFormat: 'dd-mm-yy' });
+            AutomaticUpdateMenucard();
+            
+            //TODO: Changed this Quick fix
+            //Set menucard in edit mode 
+            setTimeout(function(){ HideShowSwitch('HideSortableEdits');},1000);
+           
         });
     </script>    
     </body>

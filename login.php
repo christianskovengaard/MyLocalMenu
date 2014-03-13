@@ -3,7 +3,7 @@
 if(isset($_POST['username']) && isset($_POST['password']))
 {
     //echo $_POST['username']. ' ' .$_POST['password'];
-    require 'Controllers/UserController.php';
+    require_once 'Controllers/UserController.php';
     $oUserController = new UserController();
     $loggedIn = $oUserController->LogInUser($_POST['username'], $_POST['password']);
    if($loggedIn['result'] == 'true'){

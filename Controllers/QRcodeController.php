@@ -44,7 +44,7 @@ class QRcodeController
         
        
         
-        if($this->UpdateQRcode($url) == true)
+        if($this->UpdateQRcode($url,$data) == true)
         {
             $oQRcode['result'] = true;
         }else{
@@ -61,7 +61,7 @@ class QRcodeController
      * 
      */
     
-    private function UpdateQRcode($url) {
+    private function UpdateQRcode($url,$data) {
         
         //Check if session is started
         if(!isset($_SESSION['sec_session_id']))
@@ -73,6 +73,8 @@ class QRcodeController
         if($this->oSecurityController->login_check() == true)
         {
             
+            //TODO: Check if there is no QRcode. Create INSERT SQL statement
+            
             //Get iCompanyId
             $sQuery = $this->conPDO->prepare("SELECT iFK_iCompanyId FROM users WHERE sUsername = :sUsername");
             $sQuery->bindValue(':sUsername', $_SESSION['username']);
@@ -80,12 +82,13 @@ class QRcodeController
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $iCompanyId = $aResult['iFK_iCompanyId'];
             
-            $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoQRcode = :url WHERE iFK_iCompanyInfoId = :iCompanyId");
+            $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoQRcode = :url, sRestuarentInfoQrcodeData = :data WHERE iFK_iCompanyInfoId = :iCompanyId");
             $sQuery->bindValue(':url', $url);
+            $sQuery->bindValue(":data", $data);
             $sQuery->bindValue(':iCompanyId', $iCompanyId);
             $sQuery->execute();
             
-            //TODO: Update the QRcode url for the stampcard
+            
             
             return true;
         }else{

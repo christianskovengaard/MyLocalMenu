@@ -7,6 +7,8 @@ class MenucardController
     private $oMenucardItem;
     private $oMenucardInfo;
     private $oSecurityController;
+    private $oStampcardController;
+    private $oMessageController;
     
     private $oBcrypt;
     private $conPDO;
@@ -39,6 +41,12 @@ class MenucardController
             require 'SecurityController.php';
             $this->oSecurityController = new SecurityController();
         }
+        
+        require_once 'StampcardController.php';
+        $this->oStampcardController = new StampcardController();
+        
+        require_once 'MessageController.php';
+        $this->oMessageController = new MessageController();
     }
     
     //Add menucard when registreting a new user 
@@ -1318,6 +1326,15 @@ class MenucardController
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
             
+            
+            //TODO: Get messages for the menucard
+            $oMessage = $this->oMessageController->GetMessagesAppFromMenucard($iMenucardSerialNumber);
+            $aMenucard['oMessages'] = $oMessage;
+            
+            //Get the stampcard
+            $aStampcard = $this->oStampcardController->GetStampcardApp($iMenucardSerialNumber);
+            $aMenucard['oStampcard'] = $aStampcard;
+                  
             //var_dump($aMenucard);
             return $aMenucard;
         }
