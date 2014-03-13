@@ -55,13 +55,13 @@ $oSecurityController->sec_session_start();
         </form>-->
         <?php endif; ?>
         
-        <form method="GET" action="viewmenucard.php" id="FindMenucardForm">
+<!--        <form method="GET" action="viewmenucard.php" id="FindMenucardForm">
             <div id="LoginBox" class="inputFrame small">
                 <h2>Find Menukort</h2>
                 <input type="text" name="iMenucardSerialNumber" placeholder="cafékode" class="autocomplete">                   
-<!--                <div onclick="SubmitForm('FindMenucardForm');" class="FindMenuImg"><img src="img/search.JPG"></div>-->
+                <div onclick="SubmitForm('FindMenucardForm');" class="FindMenuImg"><img src="img/search.JPG"></div>
             </div>
-        </form>
+        </form>-->
         
         <script type="text/javascript">
            var url = window.location.search.substring(7);
