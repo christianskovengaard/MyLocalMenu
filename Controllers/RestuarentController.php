@@ -111,7 +111,7 @@ class RestuarentController
 
 
                 $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoName = :sRestuarentInfoName, sRestuarentInfoSlogan = :sRestuarentInfoSlogan, sRestuarentInfoPhone = :sRestuarentInfoPhone, sRestuarentInfoAddress = :sRestuarentInfoAddress, iRestuarentInfoZipcode = :iRestuarentInfoZipcode WHERE iFK_iCompanyInfoId = :iFK_iCompanyId LIMIT 1");
-                $sQuery->bindValue(":sRestuarentInfoName", urldecode($aJSONRestuarent->sRestuarentName));
+                $sQuery->bindValue(":sRestuarentInfoName", utf8_decode(urldecode($aJSONRestuarent->sRestuarentName)));
                 $sQuery->bindValue(":sRestuarentInfoSlogan", utf8_decode(urldecode($aJSONRestuarent->sRestuarentSlogan)));      
                 $sQuery->bindValue(":sRestuarentInfoPhone", urldecode($aJSONRestuarent->sRestuarentPhone));
                 $sQuery->bindValue(":sRestuarentInfoAddress", urldecode($aJSONRestuarent->sRestuarentAddress));
