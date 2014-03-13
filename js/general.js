@@ -3,9 +3,6 @@
   function CreateNewSortableList()
   {    
       
-      //Set bMenucardchaged to 'true'
-      sessionStorage.bMenucardChanged = 'true';
-      
       /*
       var lastId = $('.sortablediv:last ul').attr('id');
       
@@ -147,7 +144,7 @@
       }    
  }   
   
-  function SaveMenuListHeadlineToHtml(id){
+  function SaveMenuListHeadlineToHtml(id){    
       var listHeadline = $('.sortablediv h3 input').val();
       var listDescription = $('.sortablediv h4 input').val();
 
