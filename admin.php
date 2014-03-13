@@ -189,6 +189,12 @@ if($oSecurityController->login_check() == true) { ?>
             GetStampcard();
             GetUserinformation();
             $('.datepicker').datepicker({ dateFormat: 'dd-mm-yy' });
+            AutomaticUpdateMenucard();
+            
+            //TODO: Changed this Quick fix
+            //Set menucard in edit mode 
+            setTimeout(function(){ HideShowSwitch('HideSortableEdits');},1000);
+           
         });
     </script>    
     </body>
