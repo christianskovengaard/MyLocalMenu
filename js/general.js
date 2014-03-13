@@ -109,7 +109,7 @@
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
           $('.EditDish').show();
-          
+          $(".DishEditWrapper").show();
           $('.DishEditWrapperTEMP').removeClass('DishEditWrapperTEMP');
       }
       
@@ -277,7 +277,7 @@
       var ids = '';
       $(".sortablediv ul").each(function()
       {
-                ids += '#'
+                ids += '#';
                 ids += $(this).attr('id');  
                 ids += ',';             
       });
@@ -286,6 +286,7 @@
                 items: "li:not(.non-dragable)",
                 tolerance: "pointer",
                 handle: ".moveDish",
+                change: function( event, ui ) {sessionStorage.bMenucardChanged = 'true';},
                 update: function( event, ui ) {UpdatePlacementOfItems();}
       }).disableSelection();
   }
@@ -957,27 +958,30 @@
                               };                                                       
 
                               //Get all the items and the values name,desc,number,price
-                              $.each(result['aMenucardCategoryItems'+key].sMenucardItemName, function(keyItem,value){
+                              //Check for items
+                              if(typeof result['aMenucardCategoryItems'+key] !== "undefined") {                             
+                                $.each(result['aMenucardCategoryItems'+key].sMenucardItemName, function(keyItem,value){
 
-                                  var sMenucardItemName = value;
-                                  var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
-                                  var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
-                                  var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
-                                  var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
-                                  var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
-                                  
-                                  var item = {
-                                      sMenucardItemName: sMenucardItemName,
-                                      sMenucardItemDescription: sMenucardItemDescription,
-                                      sMenucardItemNumber: sMenucardItemNumber,
-                                      iMenucardItemPrice: iMenucardItemPrice,
-                                      iMenucardItemIdHashed: iMenucardItemIdHashed,
-                                      iMenucardItemPlaceInList: iMenucardItemPlaceInList
-                                  };
+                                    var sMenucardItemName = value;
+                                    var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
+                                    var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
+                                    var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
+                                    var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
+                                    var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
 
-                                  //Append the item to the items in the category obj
-                                  category.items.push(item);
-                              });
+                                    var item = {
+                                        sMenucardItemName: sMenucardItemName,
+                                        sMenucardItemDescription: sMenucardItemDescription,
+                                        sMenucardItemNumber: sMenucardItemNumber,
+                                        iMenucardItemPrice: iMenucardItemPrice,
+                                        iMenucardItemIdHashed: iMenucardItemIdHashed,
+                                        iMenucardItemPlaceInList: iMenucardItemPlaceInList
+                                    };
+
+                                    //Append the item to the items in the category obj
+                                    category.items.push(item);
+                                });                            
+                              }
 
                               //Append the category obj to the menucard obj
                               menucards.menucard.push(category);
