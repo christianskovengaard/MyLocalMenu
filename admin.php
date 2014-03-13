@@ -11,15 +11,12 @@ if($oSecurityController->login_check() == true) { ?>
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimun-scale=1.0, initial-scale=1.0" />
         <title>MyLocalCafé - Admin</title>
         <link rel="stylesheet" type="text/css" href="css/general_admin.css" />
-<<<<<<< HEAD
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 700px)" href="css/general_admin_small.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:701px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
                 
-=======
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 800px)" href="css/general_admin_small.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:801px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
         <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>        
->>>>>>> FETCH_HEAD
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
