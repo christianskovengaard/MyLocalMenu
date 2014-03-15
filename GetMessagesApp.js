@@ -25,3 +25,5 @@ var aData = {};
        });
        
 }
+
+//TODO: Return stamps for user to based on the sCustomerId
