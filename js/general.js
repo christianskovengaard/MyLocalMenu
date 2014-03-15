@@ -1210,8 +1210,8 @@
             var mail = $('#sEmailToSubmit').val();
             if(validateEmail(mail))
             {   
-//                if(AddNewUser(mail) === true){
-                    if(10 == 10){
+                if(AddNewUser(mail) === true){
+                    //if(10 == 10){
                 $('#NewUser').html('');
                 var mailhost = mail.split('@')[1];
                 $('#NewUser').append('<div class="EmailSubmission"><h1>jayyy</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>')

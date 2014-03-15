@@ -61,7 +61,7 @@ if(isset($_GET['sUserToken']))
                             <input type="password" placeholder="Kode fra modtaget email">-->
                             <input value="" id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
                             <input value="" type="password" onblur="ValidateRegSwitch('passwordRetype',this);" placeholder="Gentag koden">
-                            <div onclick="registerNext(1);" class="button01">næste</div>
+                            <div onclick="registerNext(1);" class="button">næste</div>
                         </div>
 
                         <div class="inputFrame B">
@@ -77,8 +77,8 @@ if(isset($_GET['sUserToken']))
                             <input type="text" id="iRestuarentZipcode" onblur="ValidateRegSwitch('zipcode',this);" style="display: inline-block;" size="4" maxlength="4" placeholder="Postnr">
                             <div class="RegCity"></div>
                             <input type="text" id="iRestuarentTel" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Telefonnummer">
-                            <div onclick="registerNext(0);" class="button01 prev">tilbage</div>
-                            <div onclick="registerNext(2);" class="button01">næste</div>
+                            <div onclick="registerNext(0);" class="button prev">tilbage</div>
+                            <div onclick="registerNext(2);" class="button">næste</div>
                         </div>
 
                         <div class="inputFrame C">
@@ -88,8 +88,8 @@ if(isset($_GET['sUserToken']))
                             <br><br>
                             <div class="Hours TakeAway"></div>
                             <!--<input type="text" style="background: #ccc ; " placeholder="evt Note">-->
-                            <div onclick="registerNext(1);" class="button01 prev">tilbage</div>
-                            <div onclick="SubmitFormRegister();" class="button01">OK</div>
+                            <div onclick="registerNext(1);" class="button prev">tilbage</div><br>
+                            <div onclick="SubmitFormRegister();" class="button">OK</div>
                         </div>
                         <input type="hidden" id="sUserToken" value="<?= $_GET['sUserToken']?>"/>
                     </form>
