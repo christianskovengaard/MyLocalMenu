@@ -70,6 +70,19 @@ class MessageController
     //Get Messages for each menucard in App 
     public function GetMessagesApp()
     {
+        
+        
+        //Allow all, NOT SAFE
+        header('Access-Control-Allow-Origin: *');  
+        
+        /* Only allow trusted, MUCH more safe
+        header('Access-Control-Allow-Origin: spjæl.dk');
+        header('Access-Control-Allow-Origin: xn--spjl-xoa.sk');
+        header('Access-Control-Allow-Origin: www.spjæl.dk');
+        header('Access-Control-Allow-Origin: www.xn--spjl-xoa.dk');
+        */
+        
+        
          $oMessages = array(
                 'sFunction' => 'GetMessagesApp',
                 'result' => false,

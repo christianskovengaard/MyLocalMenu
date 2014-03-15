@@ -13,19 +13,13 @@ if($oSecurityController->login_check() == true) { ?>
         <link rel="stylesheet" type="text/css" href="css/general_admin.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 700px)" href="css/general_admin_small.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:701px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
-                
+        
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 800px)" href="css/general_admin_small.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:801px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
         <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>        
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        
-        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="js/general.js"></script>
-        <script type="text/javascript" src="js/mustache.js"></script>
-        <script type="text/javascript" src="js/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/jquery.autogrow.js"></script> 
     </head>
     <body>       
         <div class="header">
@@ -164,7 +158,7 @@ if($oSecurityController->login_check() == true) { ?>
                 <div>
                     <p>Brugernavn</p>
                     <input type="text" id="sUsername" placeholder="Brugernavn"><br/>
-                    <input type="button" class="button" onclick="" value="Skift adgangskode">
+                    <input type="button" class="button" onclick="SubmitFormNewPasswordNoToken();" value="Skift adgangskode">
                     <p>Firmanavn</p>
                     <input type="text" id="sCompanyName" placeholder="Firmanavn"><br/>
                     <p>CVR nr.</p>
@@ -185,6 +179,11 @@ if($oSecurityController->login_check() == true) { ?>
         
     <div id="mustache_template">           
     </div>
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/general.js"></script>
+    <script type="text/javascript" src="js/mustache.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/jquery.autogrow.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             GetMenucard(true);
@@ -194,11 +193,12 @@ if($oSecurityController->login_check() == true) { ?>
             GetUserinformation();
             $('.datepicker').datepicker({ dateFormat: 'dd-mm-yy' });
             AutomaticUpdateMenucard();
+            InitiateAutocomplete();
             
             //TODO: Changed this Quick fix
             //Set menucard in edit mode 
             setTimeout(function(){ HideShowSwitch('HideSortableEdits');},1000);
-           
+            
         });
     </script>    
     </body>

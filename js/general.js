@@ -91,7 +91,7 @@
       
       //Set sessionStorage bMenucardChaged to 'true'
       sessionStorage.bMenucardChanged = 'true';
-      
+        
       var Number = $('.DishNumber input').val();
       var Headline = $('.DishHeadline input').val();
       var Description = $('.DishDescription textarea').val();
@@ -114,6 +114,7 @@
       }
       
       else{
+          //TODO: Create better looking alert box
           alert("udfyld venlist et nummer, en overskrift og en pris");
       }
 }
@@ -781,8 +782,7 @@
          }).done(function(result){
              if(result.result === true){
 
-                //Update information
-                alert('Update done');
+                //TDOD: Show information was updated
                 
                 //Update info in DOM
                 $('.Restaurant.Name h1').html($("#MenuName").val());
@@ -877,6 +877,7 @@
                           $("#MenuSubName").val(result.sRestuarentInfoSlogan);
                           $("#MenuAdress").val(result.sRestuarentAddress);
                           $("#MenuZip").val(result.iRestuarentZipcode);
+                          $("#MenuTown").val(result.sRestuarentCityname);
                           $("#currentQRcode").append('<img src='+result.sRestuarentInfoQRcode+'>');
                           
                           /*
@@ -1568,6 +1569,44 @@ function SubmitFormRegister(){
     
     // register end
     
+    
+function SubmitFormNewPasswordNoToken() {
+   //Encrypt password with jsEncrypt
+    //DO NOT CHANGE code on line below as this is the Public Key
+        var pubKey = "-----BEGIN PUBLIC KEY-----\r\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4jCNEY3ZyZbhNksbKG+l\r\n+LX9fIEiLkrRy9roGTKJnr2TEuZ28qvwRKeFbAs0wpMUS5\/8hF+Fte2Qywqq9ARG\r\nRNzTcDxjz72VRwTf1tSTKAJUsHYLKbBWPsvZ8FWk9EzJqltdj1mYVKMWcm7Ham5g\r\nwydozgnI3VbX8HMY8EglycKIc43gC+liSUmloWHGCnfKrfSEQ2cuIjnupvodvFw6\r\n5dAanLu+FRuL6hnvt7huxXz5+wbPI5\/aFGWUIHUbHoDFOag8BhVaDjXCrjWt3ry3\r\noFkheO87swYfSmQg4tHM\/2keCrsdHAk2z\/eCuYcbksnmNgTqWgcSHNGM+nq9ngz\/\r\nxXeb1UT+KxBy7K86oCD0a67eDzGvu3XxxW5N3+vvKJnfL6xT0EWTYw9Lczqhl9lp\r\nUdCgrcYe45pRHCqiPGtlYIBCT5lqVZi9zncWmglzl2Fc4fhjwKiK1DH7MSRBO8ut\r\nlgawBFkCprdsmapioTRLOHFRAylSGUiyqYg0NqMuQc5fMRiVPw8Lq3WeAWMAl8pa\r\nksAQHYAoFoX1L+4YkajSVvD5+jQIt3JFUKHngaGoIWnQXPQupmJpdOGMCCu7giiy\r\n0GeCYrSVT8BCXMb4UwIr\/nAziIOMiK87WAwJKysRoZH7daK26qoqpylJ00MMwFMP\r\nvtrpazOcbKmvyjE+Gg\/ckzMCAwEAAQ==\r\n-----END PUBLIC KEY-----";
+
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey(pubKey);
+        var encrypted = encrypt.encrypt($('#NewPassword').val());
+        
+        var aData = {};
+        
+        //The password should not be encoded
+        aData['sPassword'] = encrypted;
+        
+        var sJSON = JSON.stringify(aData);
+
+        $.ajax({
+            type : "GET",
+            dataType : "json",
+            url : 'API/api.php',
+            data : { sFunction:"ResetPasswordNoToken"},
+            complete: function() {
+                 
+            }
+        }).done(function(result){
+               alert('Password reset: '+result.result);
+                if(result.result === true)
+                {
+                    document.location.href = 'index.php';
+                }
+                else
+                {
+                    alert('Smid fejl besked');
+                }
+        }); 
+}    
+    
 function SubmitFormNewPassword(){
     
     //Encrypt password with jsEncrypt
@@ -1794,17 +1833,73 @@ function MakeStampcard() {
        });
 }
 
-//Detech browser close
-window.addEventListener("beforeunload", function (e) {
-  
-  var confirmationMessage = "Vent på at menukortet gemmes..!";
-  
-  if(sessionStorage.bMenucardChanged === 'true' && $.active === 0) {
-    UpdateMenucard();   
+
+function InitiateAutocomplete() {
     
-    return confirmationMessage;  //Webkit, Safari, Chrome etc.
-  
-    (e || window.event).returnValue = confirmationMessage;     //Gecko + IE ' Chrome(Apple Mac)
-  }
-                            
-});
+    //Initiate the auto complete for zipcode
+    $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"GetZipcodesAndCities"}
+       }).done(function(result) 
+       {
+           $( "#MenuZip" ).autocomplete({
+                delay: 150,
+                source: function(req, responseFn) {
+                    if(req.term.length >= 1){
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp( "^" + re, "i" );
+                    var a = $.grep( result.iZipcode, function(item,index){
+                        return matcher.test(item);
+                    });
+                        responseFn( a );
+                    }
+                },
+                select: function (event, ui) {
+                    //alert('select: '+ui.item.value);
+                    var iZipcode = ui.item.value;
+                    //Get cityname
+                     $.ajax({
+                        type: "GET",
+                        url: "API/api.php",
+                        dataType: "json",
+                        data: {sFunction:"GetCityname",iZipcode:iZipcode}
+                       }).done(function(result) {
+                           $( "#MenuTown" ).val(result);
+                       });
+                }
+           });
+           
+           $( "#MenuTown" ).autocomplete({
+                delay: 150,
+                source: function(req, responseFn) {
+                    if(req.term.length >= 2){
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp( "^" + re, "i" );
+                    var a = $.grep( result.sCityname, function(item,index){
+                        return matcher.test(item);
+                    });
+                        responseFn( a );
+                    }
+                },
+                select: function (event, ui) {
+                    //alert('select: '+ui.item.value);
+                    //TODO: Get zipcode 
+                    //TODO: Find out what to do with Frederiksberg C, København C, København K, København V, Odense C, Ringsted, Aalborg, Århus C. The same city have multiple zipcodes 
+                    
+                    var sCityname = ui.item.value; 
+                    $.ajax({
+                        type: "GET",
+                        url: "API/api.php",
+                        dataType: "json",
+                        data: {sFunction:"GetZipcode",sCityname:sCityname}
+                       }).done(function(result) {
+                           $( "#MenuZip" ).val(result);
+                       });
+                }
+           });
+           
+       });
+    
+}

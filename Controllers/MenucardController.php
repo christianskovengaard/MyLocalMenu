@@ -9,6 +9,7 @@ class MenucardController
     private $oSecurityController;
     private $oStampcardController;
     private $oMessageController;
+    private $oZipcodeCityController;
     
     private $oBcrypt;
     private $conPDO;
@@ -47,6 +48,9 @@ class MenucardController
         
         require_once 'MessageController.php';
         $this->oMessageController = new MessageController();
+        
+        require_once 'ZipcodeCityController.php';
+        $this->oZipcodeCityController = new ZipcodeCityController();
     }
     
     //Add menucard when registreting a new user 
@@ -1349,6 +1353,8 @@ class MenucardController
     {
         //Get menucard for the user logged in
         
+        //TODO: Return the SerialMenucard number to
+        
         $aMenucard = array(
                 'sFunction' => 'GetMenucardAdmin',
                 'result' => false
@@ -1602,7 +1608,8 @@ class MenucardController
             $aMenucard['sRestuarentInfoSlogan'] = utf8_encode($aResult['sRestuarentInfoSlogan']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']); 
-            $aMenucard['iRestuarentZipcode'] = utf8_encode($aResult['iRestuarentInfoZipcode']); 
+            $aMenucard['iRestuarentZipcode'] = utf8_encode($aResult['iRestuarentInfoZipcode']);
+            $aMenucard['sRestuarentCityname'] = $this->oZipcodeCityController->GetCitynamePriv($aResult['iRestuarentInfoZipcode']);
             $aMenucard['sRestuarentInfoQRcode'] = $aResult['sRestuarentInfoQRcode']; 
             
         } 

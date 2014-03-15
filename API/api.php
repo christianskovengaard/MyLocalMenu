@@ -337,7 +337,39 @@ if(isset($_GET['sFunction']))
             echo $sResult;
         break;
     
+        case "GetZipcodesAndCities":
+            require_once '../Controllers/ZipcodeCityController.php';
+            $oStampcard = new ZipcodeCityController();
+            $result = $oStampcard->GetZipcodesAndCities();
+            $sResult = json_encode($result);
+            echo $sResult;
+        break;
+    
+        case "GetZipcode":
+            require_once '../Controllers/ZipcodeCityController.php';
+            $oStampcard = new ZipcodeCityController();
+            $result = $oStampcard->GetZipcode();
+            $sResult = json_encode($result);
+            echo $sResult;
+        break;
+
+        case "GetCityname":
+            require_once '../Controllers/ZipcodeCityController.php';
+            $oStampcard = new ZipcodeCityController();
+            $result = $oStampcard->GetCityname();
+            $sResult = json_encode($result);
+            echo $sResult;
+        break;
+    
         
+        case "ResetPasswordNoToken":
+            require_once '../Controllers/UserController.php';
+            $oStampcard = new UserController();
+            $result = $oStampcard->ResetPasswordNoToken();
+            $sResult = json_encode($result);
+            echo $sResult;
+        break;
+    
     
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';

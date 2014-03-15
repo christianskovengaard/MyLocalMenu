@@ -522,6 +522,11 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
         return $aUser;
      }
      
+     public function ResetPasswordNoToken() {
+         
+     }
+
+
      public function ResetPassword()
      {
          $aUser = array(

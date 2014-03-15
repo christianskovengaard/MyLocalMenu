@@ -16,7 +16,7 @@ var aData = {};
        //Make ajax call
    $.ajax({
         type: "GET",
-        url: "API/api.php",
+        url: "http://xn--spjl-xoa.dk/MyLocalMenu/API/api.php",
         dataType: "json",
         data: {sFunction:"GetMessagesApp",sJSONMenucards:sJSON}
        }).done(function(result) 
