@@ -1200,7 +1200,7 @@ class MenucardController
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
                 
-                //Check for Openinghours hour today               
+                //Check for Openinghours hour today   
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
                     $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);                  
@@ -1474,7 +1474,7 @@ class MenucardController
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFromId'] = $row['iFK_iTimeFromId'];
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeToId'] = $row['iFK_iTimeToId'];
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeCounter'] = $x;
-                //Check for Openinghours hour today               
+                //Check for Openinghours hour today        
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
                     $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);                  
@@ -1867,8 +1867,8 @@ class MenucardController
         if($sDayname == 'Wednesday') return 'Onsdag';
         if($sDayname == 'Thursday') return 'Torsdag';
         if($sDayname == 'Friday') return 'Fredag';
-        if($sDayname == 'Saturday') return 'Lørdag';
-        if($sDayname == 'Sunday') return 'Søndag';       
+        if($sDayname == 'Saturday') return 'Loerdag';
+        if($sDayname == 'Sunday') return 'Soendag';       
     }
     
     private function CreateSerialNumber ($iFK_iRestuarentInfoId)
