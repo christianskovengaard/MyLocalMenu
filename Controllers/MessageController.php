@@ -43,7 +43,8 @@ class MessageController
                                                     INNER JOIN users
                                                     ON users.sUsername = :sUsername
                                                     INNER JOIN company
-                                                    ON company.iCompanyId = users.iFK_iCompanyId");
+                                                    ON company.iCompanyId = users.iFK_iCompanyId
+                                                    WHERE restuarentinfo.iFK_iCompanyInfoId =  company.iCompanyId");
                 $sQuery->bindValue(':sUsername', $_SESSION['username']);
                 $sQuery->execute();
                 $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
@@ -182,7 +183,8 @@ class MessageController
                                                     INNER JOIN users
                                                     ON users.sUsername = :sUsername
                                                     INNER JOIN company
-                                                    ON company.iCompanyId = users.iFK_iCompanyId");
+                                                    ON company.iCompanyId = users.iFK_iCompanyId
+                                                    WHERE restuarentinfo.iFK_iCompanyInfoId =  company.iCompanyId");
                     $sQuery->bindValue(':sUsername', $_SESSION['username']);
                     $sQuery->execute();
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
