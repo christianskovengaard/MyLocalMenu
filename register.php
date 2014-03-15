@@ -1,6 +1,6 @@
 <?php
 
-//Check if the sUserToken is set
+/*Check if the sUserToken is set
 if(isset($_GET['sUserToken']))
 {
     //If sUserToken is valid get the user
@@ -8,7 +8,7 @@ if(isset($_GET['sUserToken']))
     $oUserController = new UserController();
     if($oUserController->ChecksUserToken() == true)
     {
-    
+  */  
 ?>
 <!DOCTYPE html>
 <html>
@@ -89,7 +89,7 @@ if(isset($_GET['sUserToken']))
                             <div class="Hours TakeAway"></div>
                             <!--<input type="text" style="background: #ccc ; " placeholder="evt Note">-->
                             <div onclick="registerNext(1);" class="button prev">tilbage</div><br>
-                            <div onclick="SubmitFormRegister();" class="button">OK</div>
+                            <div onclick="//SubmitFormRegister();" class="button">OK</div>
                         </div>
                         <input type="hidden" id="sUserToken" value="<?= $_GET['sUserToken']?>"/>
                     </form>
@@ -103,12 +103,12 @@ if(isset($_GET['sUserToken']))
             </div>
         </div>-->
         
-        <div class="footer">
+        <!--<div class="footer">
             <div class="wrapper">
                 <h2>Sprøgsmål?</h2>
                 <p>ring: 88 88 88 88 </p>
             </div>
-        </div> 
+        </div> -->
         <div id="mustache_template">
         </div>
         <script type="text/javascript" >
@@ -125,11 +125,12 @@ if(isset($_GET['sUserToken']))
     </body>
 </html>
 <?php
+/*
     }else{
         header("location: index.php");
     }
 }
 else{
     header("location: index.php");
-}
+}*/
 ?>
