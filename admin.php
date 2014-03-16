@@ -158,6 +158,10 @@ if($oSecurityController->login_check() == true) { ?>
                 <div>
                     <p>Brugernavn</p>
                     <input type="text" id="sUsername" placeholder="Brugernavn"><br/>
+                    <p>Ny adgangskode</p>
+                    <input type='password' id='NewPassword' placeholder="Adgangskode">
+                    <p>Gentag ny adgangskode</p>
+                    <input type="password" id='NewPasswordRepeat' placeholder="Gentag adgangskode"><br>
                     <input type="button" class="button" onclick="SubmitFormNewPasswordNoToken();" value="Skift adgangskode">
                     <p>Firmanavn</p>
                     <input type="text" id="sCompanyName" placeholder="Firmanavn"><br/>
@@ -184,6 +188,7 @@ if($oSecurityController->login_check() == true) { ?>
     <script type="text/javascript" src="js/mustache.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/jquery.autogrow.js"></script>
+    <script type="text/javascript" src="js/jsencrypt.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             GetMenucard(true);

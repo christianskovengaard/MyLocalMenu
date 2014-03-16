@@ -1571,6 +1571,11 @@ function SubmitFormRegister(){
     
     
 function SubmitFormNewPasswordNoToken() {
+    
+    if($('#NewPassword').val() !== '' && $('#NewPasswordRepeat').val() !== '') {
+    
+    if($('#NewPassword').val() === $('#NewPasswordRepeat').val()){
+        
    //Encrypt password with jsEncrypt
     //DO NOT CHANGE code on line below as this is the Public Key
         var pubKey = "-----BEGIN PUBLIC KEY-----\r\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4jCNEY3ZyZbhNksbKG+l\r\n+LX9fIEiLkrRy9roGTKJnr2TEuZ28qvwRKeFbAs0wpMUS5\/8hF+Fte2Qywqq9ARG\r\nRNzTcDxjz72VRwTf1tSTKAJUsHYLKbBWPsvZ8FWk9EzJqltdj1mYVKMWcm7Ham5g\r\nwydozgnI3VbX8HMY8EglycKIc43gC+liSUmloWHGCnfKrfSEQ2cuIjnupvodvFw6\r\n5dAanLu+FRuL6hnvt7huxXz5+wbPI5\/aFGWUIHUbHoDFOag8BhVaDjXCrjWt3ry3\r\noFkheO87swYfSmQg4tHM\/2keCrsdHAk2z\/eCuYcbksnmNgTqWgcSHNGM+nq9ngz\/\r\nxXeb1UT+KxBy7K86oCD0a67eDzGvu3XxxW5N3+vvKJnfL6xT0EWTYw9Lczqhl9lp\r\nUdCgrcYe45pRHCqiPGtlYIBCT5lqVZi9zncWmglzl2Fc4fhjwKiK1DH7MSRBO8ut\r\nlgawBFkCprdsmapioTRLOHFRAylSGUiyqYg0NqMuQc5fMRiVPw8Lq3WeAWMAl8pa\r\nksAQHYAoFoX1L+4YkajSVvD5+jQIt3JFUKHngaGoIWnQXPQupmJpdOGMCCu7giiy\r\n0GeCYrSVT8BCXMb4UwIr\/nAziIOMiK87WAwJKysRoZH7daK26qoqpylJ00MMwFMP\r\nvtrpazOcbKmvyjE+Gg\/ckzMCAwEAAQ==\r\n-----END PUBLIC KEY-----";
@@ -1590,7 +1595,7 @@ function SubmitFormNewPasswordNoToken() {
             type : "GET",
             dataType : "json",
             url : 'API/api.php',
-            data : { sFunction:"ResetPasswordNoToken"},
+            data : { sFunction:"ResetPasswordNoToken",sJSON:sJSON},
             complete: function() {
                  
             }
@@ -1598,13 +1603,22 @@ function SubmitFormNewPasswordNoToken() {
                alert('Password reset: '+result.result);
                 if(result.result === true)
                 {
-                    document.location.href = 'index.php';
+                    //document.location.href = 'index.php';
+                    $('#NewPassword').val('');
+                    $('#NewPasswordRepeat').val('');
                 }
                 else
                 {
                     alert('Smid fejl besked');
                 }
         }); 
+    }else {
+        alert('Koderne skal være ens');
+    }
+    
+    }else {
+        alert('Begge felter skal udfyldes');
+    }
 }    
     
 function SubmitFormNewPassword(){
