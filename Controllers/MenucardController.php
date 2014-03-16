@@ -65,6 +65,7 @@ class MenucardController
         //Get the last inserted id
         $iMenucardId = $this->conPDO->lastInsertId();
         
+        //TODO: Create new stampcard and Qrcode for the new user
 
         $iMenucardIdHashed = $this->oBcrypt->genHash($iMenucardId);
 
@@ -1611,7 +1612,7 @@ class MenucardController
             $aMenucard['iRestuarentZipcode'] = utf8_encode($aResult['iRestuarentInfoZipcode']);
             $aMenucard['sRestuarentCityname'] = $this->oZipcodeCityController->GetCitynamePriv($aResult['iRestuarentInfoZipcode']);
             $aMenucard['sRestuarentInfoQRcode'] = $aResult['sRestuarentInfoQRcode']; 
-            
+            $aMenucard['iMenucardSerialNumber'] = $iMenucardSerialNumber;
         } 
         
         return $aMenucard;
