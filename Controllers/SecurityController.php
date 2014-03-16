@@ -20,7 +20,8 @@ class SecurityController
             $cookieParams = session_get_cookie_params(); // Gets current cookies params.
             session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly); 
             session_name($session_name); // Sets the session name to the one set above.
-            session_start(); // Start the php session
+            //Only start session if no session has been started
+            if (session_status() == PHP_SESSION_NONE) {session_start();} // Start the php session
             //session_regenerate_id(true); // regenerated the session, delete the old one.     //TODO: This causes problems on localhost with WAMP server
     }
     
