@@ -18,6 +18,46 @@ class QRcodeController
     }
     
     
+    public function CreateNewQrCode($iRestuarentInfoId) {
+       
+       $aQRcode = $this->GenerateNewQRcode(); 
+        
+       $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoQRcode = :url, sRestuarentInfoQrcodeData = :data WHERE iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId");
+       $sQuery->bindValue(':url', $aQRcode['url']);
+       $sQuery->bindValue(":data", $aQRcode['data']);
+       $sQuery->bindValue(':iFK_iRestuarentInfoId', $iRestuarentInfoId);
+       
+       try {
+                $sQuery->execute();
+                return true;
+        }
+        catch(PDOException $e)
+        {
+            die($e->getMessage());
+        }
+    }
+    
+    private function GenerateNewQRcode() {
+        
+        $heightandwidth = '500';
+
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+        for ($i = 0; $i < 30; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        $data = $randomString;
+        
+        //TODO: This may not work anymore as of  April 20, 2015, https://developers.google.com/chart/terms?hl=da 
+        $errorcorrection = 'H'; //Handle 30% dataloss
+        $url = 'https://chart.googleapis.com/chart?chs='.$heightandwidth.'x'.$heightandwidth.'&chld='.$errorcorrection.'&cht=qr&chl='.$data;
+
+        
+        $oQRcode['url'] = $url;  
+        $oQRcode['data'] = $data;  
+        return $oQRcode;
+    
+    }
     
     public function GenerateQRcode() {
         
@@ -72,8 +112,6 @@ class QRcodeController
         //Check if user is logged in
         if($this->oSecurityController->login_check() == true)
         {
-            
-            //TODO: Check if there is no QRcode. Create INSERT SQL statement
             
             //Get iCompanyId
             $sQuery = $this->conPDO->prepare("SELECT iFK_iCompanyId FROM users WHERE sUsername = :sUsername");

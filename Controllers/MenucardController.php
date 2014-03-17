@@ -64,8 +64,6 @@ class MenucardController
         
         //Get the last inserted id
         $iMenucardId = $this->conPDO->lastInsertId();
-        
-        //TODO: Create new stampcard and Qrcode for the new user
 
         $iMenucardIdHashed = $this->oBcrypt->genHash($iMenucardId);
 
