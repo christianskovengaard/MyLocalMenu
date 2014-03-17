@@ -1294,12 +1294,10 @@
    // register
 
 function registerNext(num) {
-    if($('.validationTag').length != 0 ){
-    }
-    else{
+//    if($('.validationTag').length != 0 ){
+//    }
+//    else{
         if(num==0){
-             $('.info03 .wrapper h3').remove(); 
-             $('.info03 .wrapper h1').after('<h3>➊ ➁ ➂</h3>');
             $('.inputFrame.B').hide();
             $('.inputFrame.C').hide();
             $('.inputFrame.A').show();
@@ -1308,25 +1306,19 @@ function registerNext(num) {
             $('.inputFrame input').eq(2).focus();
         }
          if(num==1){
-             $('.info03 .wrapper h3').remove();
-             $('.info03 .wrapper h1').after('<h3>➀ ➋ ➂</h3>');
-             $('.inputFrame.A').hide();
-             $('.inputFrame.C').hide();
              $('.inputFrame.B').show();
-             var H = $('.inputFrame.B').height();
-             $('.inputFrameWrapper').css("height",H+50);
+            $('.inputFrame.C').hide();
+            $('.inputFrame.A').hide();
              $('.inputFrame input').eq(2).focus();
          }
          if(num==2){
-            $('.info03 .wrapper h3').remove(); 
-            $('.info03 .wrapper h1').after('<h3>➀ ➁ ➌</h3>');
             $('.inputFrame.B').hide();
             $('.inputFrame.A').hide();
             $('.inputFrame.C').show();
             var H = $('.inputFrame.C').height();
             $('.inputFrameWrapper').css("height",H+50);
         }
-    }
+//    }
 }
 
   function makeOpeningHours() {
@@ -1488,6 +1480,15 @@ function ValidateRegSwitch(CaseName,id){
                 $(id).before('<div class="validationTag phone">Ikke Korrekt Telefonnummer</div>');
             }
         break;
+        
+        case 'MustFill':
+            $('.validationTag.MustFill').remove();
+            $('.validationTagImg.MustFill').remove();
+            var pass = $(id).val();
+            if(pass.length < 1 ){
+                $(id).before('<div class="validationTag MustFill">Skal udfyldes</div>');
+            }
+        break;  
      }
  }
  

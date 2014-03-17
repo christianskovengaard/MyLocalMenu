@@ -27,6 +27,7 @@ h6,a  { display: table; color: #e8e6e1; font-size: 18px; margin: 0 auto 0px auto
 a { color: #f7a53f; margin: 0 auto 20px auto; text-decoration: none; }
 
 .logo { display: block; width: 150px; margin: 50px auto 10px auto; }
+.logo.M { display: block; width: 100px; margin: 20px auto px auto; }
 
 input { 
     font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
@@ -214,3 +215,66 @@ input {
     position: absolute;
     right: 20px;
 }*/
+
+/*  ::::::::::::::::: rigister :::::::::::::::::::::  */  
+
+.Register {
+    width: 460px;
+    background: red;
+    margin: 0 auto;
+}
+
+.button.Reg {
+    text-align: center;
+    width: 40%; 
+    height: auto;
+    float: right;
+    padding: 5px;
+}
+.button.prev {
+    text-align: center;
+    width: 40%; 
+    height: auto;
+    float: left;
+    padding: 5px;
+    background: #aaa;
+}
+.Hours.Opening { 
+    vertical-align: middle;
+    width: 210px;
+    margin-bottom: 20px; 
+}
+.Hours.Opening h2 {
+    font-size: 20px;
+    color: #333;
+    display: inline-table;
+    margin: 0px;
+    width: 40px;
+}
+.Hours.Opening p {
+    font-size: 20px;
+    color: #333;
+    display: inline-table;
+    margin: 0px 5px 0px 5px;
+}
+.Hours.Opening select{
+    margin-bottom: 8px;
+}
+
+.RegCity { display: inline-block; width: 130px; margin-left: 0px; }
+.Hours.Opening { vertical-align: middle; }
+.Hours.TakeAway { display: hidden; margin: 0 0 10px 0; }
+/*.validationTag { 
+    display: table;
+    font-size: 14px;
+    background: #fcf1c4;
+    max-width: 220px;
+    padding: 3px 5px;
+    margin: 5px 10px;
+    float: right;
+}*/
+.inputFrame.B,.inputFrame.C { display: none; padding-bottom: 45px; } 
+.validationTagImg {
+    position: absolute;
+    right: 20px;
+}
