@@ -303,7 +303,7 @@ class UserController
 
                 $sMessage = "Ny bruger til MyLocal, Gå til dette <a href='localhost/MyLocalMenu/register.php?sUserToken=$sUserToken'>link</a> og opret et nyt menukort";
                 $sTo = $mail;
-                $sFrom = 'info@mylocalcafe.dk';
+                $sFrom = 'support@mylocalcafe.dk';
                 $sSubject = 'Ny konto hos MyLocal';
 
                 $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
@@ -843,6 +843,40 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
         
         return $aUser;
         
+     }
+     
+     
+     public function SendResetPasswordRequest() {
+         
+         $aUser = array(
+                'sFunction' => 'SendResetPasswordRequest',
+                'result' => false
+            );
+         
+         //Get the JSON string
+         $sJSON = $_GET['sJSON'];
+         //Convert the JSON string into an array
+         $oJSON = json_decode($sJSON);
+         
+         //Create random hashed string
+         $randomHash = $this->oBcrypt->genHash($oJSON->email);
+         
+         //Crete sUserToken based on the Email
+         $sQuery = $this->conPDO->prepare("UPDATE users SET sUserCreateToken = :sUserCreateToken WHERE sUsername = :sUsername");
+         $sQuery->bindValue(":sUserCreateToken", $randomHash);
+         $sQuery->bindValue(":sUsername", $oJSON->email);
+         $sQuery->execute();
+         
+         $sTo = $oJSON->email;
+         $sFrom = 'support@mylocalcafe.dk';
+         $sSubject = 'Nyt kodeord';
+         $sMessage = "Reset dit kodeord til din bruger hos MyLocalCafé, Gå til dette <a href='localhost/MyLocalMenu/user.php?sUserToken=$randomHash'>link</a> og sæt dit nye kodeord";
+         //Send email with link to reset password
+         $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
+         
+         $aUser['result'] = true;
+         
+         return $aUser;
      }
        
 }

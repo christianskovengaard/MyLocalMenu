@@ -369,7 +369,15 @@ if(isset($_GET['sFunction']))
             $sResult = json_encode($result);
             echo $sResult;
         break;
-    
+        
+        case "SendResetPasswordRequest":
+            require_once '../Controllers/UserController.php';
+            $oStampcard = new UserController();
+            $result = $oStampcard->SendResetPasswordRequest();
+            $sResult = json_encode($result);
+            echo $sResult;
+        break;
+        
     
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';

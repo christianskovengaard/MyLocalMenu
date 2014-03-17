@@ -1651,7 +1651,7 @@ function SubmitFormNewPassword(){
                alert('Password reset: '+result.result);
                 if(result.result === true)
                 {
-                    document.location.href = 'index.php';
+                    document.location.href = 'admin.php';
                 }
                 else
                 {
@@ -1660,7 +1660,41 @@ function SubmitFormNewPassword(){
         });
 }    
 
-
+function SendResetPasswordRequest() {
+    
+    if($('#forgotpassMail').val() !== '') {
+        
+        if(validateEmail($('#forgotpassMail').val()) === true) {
+    
+            var aData = {};
+            aData['email'] = $('#forgotpassMail').val();
+            var sJSON = JSON.stringify(aData);
+            
+            $.ajax({
+                    type : "GET",
+                    dataType : "json",
+                    url : 'API/api.php',
+                    data : { sFunction:"SendResetPasswordRequest",sJSON:sJSON},
+                    complete: function() {
+                        
+                    }
+                }).done(function(result){
+                        if(result.result === true) {
+                           alert('Check din mail for link til reset password'); 
+                        }
+                        else {
+                            alert('Smid fejl besked');
+                        }
+                });
+               
+        }else {
+            alert('Email ikke gyldig');
+        }
+        
+    }else {
+        alert('Email skal udfyldes');
+    }
+}
 
 /* Hook for loge link */
 function PageChange(pagename){
