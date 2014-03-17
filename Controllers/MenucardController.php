@@ -65,6 +65,7 @@ class MenucardController
         //Get the last inserted id
         $iMenucardId = $this->conPDO->lastInsertId();
         
+        //TODO: Create new stampcard and Qrcode for the new user
 
         $iMenucardIdHashed = $this->oBcrypt->genHash($iMenucardId);
 
@@ -1331,7 +1332,7 @@ class MenucardController
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
             
             
-            //TODO: Get messages for the menucard
+            //Get messages for the menucard
             $oMessage = $this->oMessageController->GetMessagesAppFromMenucard($iMenucardSerialNumber);
             $aMenucard['oMessages'] = $oMessage;
             
@@ -1353,8 +1354,7 @@ class MenucardController
     {
         //Get menucard for the user logged in
         
-        //TODO: Return the SerialMenucard number to
-        
+
         $aMenucard = array(
                 'sFunction' => 'GetMenucardAdmin',
                 'result' => false
@@ -1611,7 +1611,7 @@ class MenucardController
             $aMenucard['iRestuarentZipcode'] = utf8_encode($aResult['iRestuarentInfoZipcode']);
             $aMenucard['sRestuarentCityname'] = $this->oZipcodeCityController->GetCitynamePriv($aResult['iRestuarentInfoZipcode']);
             $aMenucard['sRestuarentInfoQRcode'] = $aResult['sRestuarentInfoQRcode']; 
-            
+            $aMenucard['iMenucardSerialNumber'] = $iMenucardSerialNumber;
         } 
         
         return $aMenucard;

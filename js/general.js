@@ -1572,6 +1572,11 @@ function SubmitFormRegister(){
     
     
 function SubmitFormNewPasswordNoToken() {
+    
+    if($('#NewPassword').val() !== '' && $('#NewPasswordRepeat').val() !== '') {
+    
+    if($('#NewPassword').val() === $('#NewPasswordRepeat').val()){
+        
    //Encrypt password with jsEncrypt
     //DO NOT CHANGE code on line below as this is the Public Key
         var pubKey = "-----BEGIN PUBLIC KEY-----\r\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4jCNEY3ZyZbhNksbKG+l\r\n+LX9fIEiLkrRy9roGTKJnr2TEuZ28qvwRKeFbAs0wpMUS5\/8hF+Fte2Qywqq9ARG\r\nRNzTcDxjz72VRwTf1tSTKAJUsHYLKbBWPsvZ8FWk9EzJqltdj1mYVKMWcm7Ham5g\r\nwydozgnI3VbX8HMY8EglycKIc43gC+liSUmloWHGCnfKrfSEQ2cuIjnupvodvFw6\r\n5dAanLu+FRuL6hnvt7huxXz5+wbPI5\/aFGWUIHUbHoDFOag8BhVaDjXCrjWt3ry3\r\noFkheO87swYfSmQg4tHM\/2keCrsdHAk2z\/eCuYcbksnmNgTqWgcSHNGM+nq9ngz\/\r\nxXeb1UT+KxBy7K86oCD0a67eDzGvu3XxxW5N3+vvKJnfL6xT0EWTYw9Lczqhl9lp\r\nUdCgrcYe45pRHCqiPGtlYIBCT5lqVZi9zncWmglzl2Fc4fhjwKiK1DH7MSRBO8ut\r\nlgawBFkCprdsmapioTRLOHFRAylSGUiyqYg0NqMuQc5fMRiVPw8Lq3WeAWMAl8pa\r\nksAQHYAoFoX1L+4YkajSVvD5+jQIt3JFUKHngaGoIWnQXPQupmJpdOGMCCu7giiy\r\n0GeCYrSVT8BCXMb4UwIr\/nAziIOMiK87WAwJKysRoZH7daK26qoqpylJ00MMwFMP\r\nvtrpazOcbKmvyjE+Gg\/ckzMCAwEAAQ==\r\n-----END PUBLIC KEY-----";
@@ -1591,7 +1596,7 @@ function SubmitFormNewPasswordNoToken() {
             type : "GET",
             dataType : "json",
             url : 'API/api.php',
-            data : { sFunction:"ResetPasswordNoToken"},
+            data : { sFunction:"ResetPasswordNoToken",sJSON:sJSON},
             complete: function() {
                  
             }
@@ -1599,13 +1604,22 @@ function SubmitFormNewPasswordNoToken() {
                alert('Password reset: '+result.result);
                 if(result.result === true)
                 {
-                    document.location.href = 'index.php';
+                    //document.location.href = 'index.php';
+                    $('#NewPassword').val('');
+                    $('#NewPasswordRepeat').val('');
                 }
                 else
                 {
                     alert('Smid fejl besked');
                 }
         }); 
+    }else {
+        alert('Koderne skal være ens');
+    }
+    
+    }else {
+        alert('Begge felter skal udfyldes');
+    }
 }    
     
 function SubmitFormNewPassword(){
@@ -1638,7 +1652,7 @@ function SubmitFormNewPassword(){
                alert('Password reset: '+result.result);
                 if(result.result === true)
                 {
-                    document.location.href = 'index.php';
+                    document.location.href = 'admin.php';
                 }
                 else
                 {
@@ -1647,7 +1661,41 @@ function SubmitFormNewPassword(){
         });
 }    
 
-
+function SendResetPasswordRequest() {
+    
+    if($('#forgotpassMail').val() !== '') {
+        
+        if(validateEmail($('#forgotpassMail').val()) === true) {
+    
+            var aData = {};
+            aData['email'] = $('#forgotpassMail').val();
+            var sJSON = JSON.stringify(aData);
+            
+            $.ajax({
+                    type : "GET",
+                    dataType : "json",
+                    url : 'API/api.php',
+                    data : { sFunction:"SendResetPasswordRequest",sJSON:sJSON},
+                    complete: function() {
+                        
+                    }
+                }).done(function(result){
+                        if(result.result === true) {
+                           alert('Check din mail for link til reset password'); 
+                        }
+                        else {
+                            alert('Smid fejl besked');
+                        }
+                });
+               
+        }else {
+            alert('Email ikke gyldig');
+        }
+        
+    }else {
+        alert('Email skal udfyldes');
+    }
+}
 
 /* Hook for loge link */
 function PageChange(pagename){
@@ -1834,6 +1882,46 @@ function MakeStampcard() {
        });
 }
 
+function InitiateAutocompleteForRegister() {
+     
+    $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"GetZipcodesAndCities"}
+       }).done(function(result) 
+       {
+           $("#iRestuarentZipcode").autocomplete({
+                delay: 150,
+                source: function(req, responseFn) {
+                    if(req.term.length >= 1){
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp( "^" + re, "i" );
+                    var a = $.grep( result.iZipcode, function(item,index){
+                        return matcher.test(item);
+                    });
+                        responseFn( a );
+                    }
+                } 
+           });
+           
+           $("#iCompanyZipcode").autocomplete({
+                delay: 150,
+                source: function(req, responseFn) {
+                    if(req.term.length >= 1){
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp( "^" + re, "i" );
+                    var a = $.grep( result.iZipcode, function(item,index){
+                        return matcher.test(item);
+                    });
+                        responseFn( a );
+                    }
+                }
+           });
+           
+       });
+}
+
 
 function InitiateAutocomplete() {
     
@@ -1886,7 +1974,7 @@ function InitiateAutocomplete() {
                 },
                 select: function (event, ui) {
                     //alert('select: '+ui.item.value);
-                    //TODO: Get zipcode 
+                    //Get zipcode 
                     //TODO: Find out what to do with Frederiksberg C, København C, København K, København V, Odense C, Ringsted, Aalborg, Århus C. The same city have multiple zipcodes 
                     
                     var sCityname = ui.item.value; 

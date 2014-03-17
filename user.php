@@ -1,5 +1,4 @@
 <?php
-ob_start(); 
 require 'Controllers/SecurityController.php';
 $oSecurityController = new SecurityController();
 $oSecurityController->sec_session_start();
@@ -55,5 +54,5 @@ if(isset($_GET['sUserToken']) && $oUserController->ChecksUserToken() == true) :
     </body>
 </html>
 <?php
-else : header('location index.php'); endif;
+else : header('location: index.php'); endif;
 ?>
