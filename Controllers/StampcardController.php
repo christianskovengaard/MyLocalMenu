@@ -16,10 +16,22 @@ class StampcardController
         $this->oSecurityController = new SecurityController();
     }
     
-    public function SetMaxNumberOfStamps () {
-        
-    }
     
+    public function CreateStampcard($iFK_iRestuarentInfoId) {
+        
+        $sQuery = $this->conPDO->prepare("INSERT INTO stampcard (iStampcardMaxStamps,iFK_iRestuarentInfoId) VALUES (:iStampcardMaxStamps,:iFK_iRestuarentInfoId)");
+        $sQuery->bindValue(":iStampcardMaxStamps", '5');
+        $sQuery->bindValue(":iFK_iRestuarentInfoId", $iFK_iRestuarentInfoId);
+        
+        try {
+                $sQuery->execute();
+                return true;
+        }
+        catch(PDOException $e)
+        {
+            die($e->getMessage());
+        }       
+    }
     
     
     public function SaveStampcard() {

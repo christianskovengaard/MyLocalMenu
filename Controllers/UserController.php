@@ -10,6 +10,8 @@ class UserController
     private $oRestuarent;
     private $oMenucard;
     private $oEmail;
+    private $oStampcard;
+    private $oQrcode;
     
     public function __construct() 
     {
@@ -44,6 +46,12 @@ class UserController
         
         require_once 'EmailController.php';
         $this->oEmail = new EmailController();
+        
+        require_once 'StampcardController.php';
+        $this->oStampcard = new StampcardController();
+        
+        require_once 'QRcodeController.php';
+        $this->oQrcode = new QRcodeController();
     }
 
 
@@ -328,7 +336,7 @@ class UserController
                 
                 if($sQuery->rowCount() == 1)
                 {
-                   return true; 
+                   return true;
                 }else{
                     return false;
                 }
@@ -452,6 +460,13 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             //Create Menucard
             //Function returns the iMenucardId
             $iMenucardId = $this->oMenucard->AddNewMenucard($aJSONInfo->sRestuarentName.' - menukort',$iRestuarentInfoId);
+            
+            
+            //Create stampcard
+            $this->oStampcard->CreateStampcard($iRestuarentInfoId);
+            
+            //Create Qrcode
+            $this->oQrcode->CreateNewQrCode($iRestuarentInfoId);
             
             //Insert openinghours
             $aOpeningHours = array(
