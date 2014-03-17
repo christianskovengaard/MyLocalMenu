@@ -5,6 +5,8 @@ class MessageController
     private $conPDO;
     
     private $oSecurityController;
+    private $oStampcard;
+
 
     public function __construct() {
         
@@ -14,6 +16,9 @@ class MessageController
         
         require_once 'SecurityController.php';
         $this->oSecurityController = new SecurityController();
+        
+        require_once 'StampcardController.php';
+        $this->oStampcard = new StampcardController();
     }
     
     
@@ -68,8 +73,8 @@ class MessageController
         
     }
     
-    //Get Messages for each menucard in App 
-    public function GetMessagesApp()
+    //Get Messages And Stamps for each menucard in App 
+    public function GetMessagesAndStampsApp()
     {
         
         
@@ -84,8 +89,8 @@ class MessageController
         */
         
         
-         $oMessages = array(
-                'sFunction' => 'GetMessagesApp',
+         $oMenucards = array(
+                'sFunction' => 'GetMessagesAndStampsApp',
                 'result' => false,
                 'Menucards' => ''
             );
@@ -100,7 +105,7 @@ class MessageController
         
         foreach ($aJSONMenucards as $value) {
             
-            $iMenucardSerialNumber =  $value;   
+            $iMenucardSerialNumber =  $value;
         
             //Get the messages based on the menucard serialnumber 
             $sQuery = $this->conPDO->prepare("SELECT iFk_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
@@ -108,7 +113,7 @@ class MessageController
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $iRestuarentInfoId = $aResult['iFk_iRestuarentInfoId'];
-
+            
             //Get all message that are active (fits the time span based on the time now)
             $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC");
             $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
@@ -116,17 +121,27 @@ class MessageController
             $i = 0;
             while($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
 
-                $oMessages['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['sMessageHeadline'] = utf8_encode($aResult['sMessageHeadline']);
-                $oMessages['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['sMessageBodyText'] = utf8_encode($aResult['sMessageBodyText']);
+                $oMenucards['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['sMessageHeadline'] = utf8_encode($aResult['sMessageHeadline']);
+                $oMenucards['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['sMessageBodyText'] = utf8_encode($aResult['sMessageBodyText']);
                 //$oMessages['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['dtMessageDate'] = utf8_encode($aResult['dtMessageDate']);
                 $i++;
             }
-        
+            
+            //Get all the stamps that are not used
+            $sQuery = $this->conPDO->prepare("SELECT COUNT(*) as antal FROM stamp WHERE sCustomerId = :sCustomerId AND iFK_iMenucardSerialNumber = :iMenucardSerialNumber AND iStampUsed = '0'");
+            $sQuery->bindValue(":sCustomerId", $aJSONMenucards->sCustomerId);
+            $sQuery->bindValue(":iMenucardSerialNumber", $iMenucardSerialNumber);          
+            $sQuery->execute();
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $oMenucards['Menucards'][$iMenucardSerialNumber]['iNumberOfStamps'] = $aResult['antal']; 
         }
         
-        $oMessages['result'] = true;
-        //var_dump($oMessages);
-        return $oMessages;
+        //Remove the last place in the $oMenucards
+        unset($oMenucards['Menucards'][$iMenucardSerialNumber]);
+        
+        $oMenucards['result'] = true;
+        //var_dump($oMenucards);
+        return $oMenucards;
             
         
     }

@@ -29,7 +29,7 @@
         <a href="http://localhost/MyLocalMenu/API/api.php?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123">Redeme stampcard</a>
         
         
-        <input type="button" onclick="GetMessagesApp();" value="GetMessagesApp">
+        <input type="button" onclick="GetMessagesAndStampsApp();" value="GetMessagesApp">
         
     </body>
 </html>

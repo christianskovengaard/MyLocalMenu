@@ -87,6 +87,7 @@ class StampcardController
         
     }
     
+    /* Get the stampcard for the restuarent/menucard to show max number of stamps to redeme a cup of coffe*/
     public function GetStampcardApp($iMenucardSerialNumber) {
         
         $oStampcard = array(
@@ -130,10 +131,11 @@ class StampcardController
         
         
         //Get $sCustomerId  and iMenucardSerialNumber from the App API call
-        if(isset($_GET['QRcodeData']) && isset($_GET['sCustomerId'])) {
+        if(isset($_GET['QRcodeData']) && isset($_GET['sCustomerId']) && isset($_GET['iMenucardSerialNumber'])) {
             
             $sCustomerId = $_GET['sCustomerId'];
             $sQRcodeData = $_GET['QRcodeData'];
+            $iMenucardSerialNumber = $_GET['iMenucardSerialNumber'];
 
             $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo 
                                                 WHERE sRestuarentInfoQrcodeData = :QRcodeData");
@@ -155,9 +157,10 @@ class StampcardController
             $sQuery->execute();
 
             //Insert stamp used into stamp table
-            $sQuery = $this->conPDO->prepare("INSERT INTO stamp (dtStampDateTime,sCustomerId,iFK_iStampcardId) VALUES (NOW(),:sCustomerId,:iStampcardId)");
+            $sQuery = $this->conPDO->prepare("INSERT INTO stamp (dtStampDateTime,sCustomerId,iFK_iStampcardId,iFK_iMenucardSerialNumber) VALUES (NOW(),:sCustomerId,:iStampcardId,:iFK_iMenucardSerialNumber)");
             $sQuery->bindValue(':iStampcardId', $iStampcardId);
             $sQuery->bindValue(':sCustomerId', $sCustomerId);
+            $sQuery->bindValue(":iFK_iMenucardSerialNumber", $iMenucardSerialNumber);
             $sQuery->execute();
 
             $oStampcard['result'] = 'true';
@@ -238,7 +241,7 @@ class StampcardController
     }
     
     
-
+    /* Get stampcard for the restuarant/menucard*/
     public function GetStampcard() {
 
          $oStampcard = array(
@@ -283,8 +286,7 @@ class StampcardController
             return $oStampcard;
         }
     }
-    
-    
+      
     private function CreateGoogleChart () {
         
         //TODO: get all stamps given 

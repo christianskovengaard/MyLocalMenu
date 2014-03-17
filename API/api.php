@@ -296,10 +296,10 @@ if(isset($_GET['sFunction']))
             echo $sResult;
         break;
     
-        case "GetMessagesApp":
+        case "GetMessagesAndStampsApp":
             require_once '../Controllers/MessageController.php';
             $oMessageController = new MessageController();
-            $result = $oMessageController->GetMessagesApp();
+            $result = $oMessageController->GetMessagesAndStampsApp();
             $sResult = json_encode($result);
             echo $sResult;
 
