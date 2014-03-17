@@ -66,7 +66,7 @@ $oSecurityController->sec_session_start();
         <script type="text/javascript">
            var url = window.location.search.substring(7);
            if (url == "false") {
-               $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p><a href='#'>Glemt kodeord?</a></div>");
+               $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p><input type='text' placeholder='Email' id='forgotpassMail' ><a href='#'>Glemt kodeord?</a></div>");
            }
         </script>
         

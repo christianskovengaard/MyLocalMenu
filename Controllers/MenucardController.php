@@ -1332,7 +1332,7 @@ class MenucardController
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
             
             
-            //TODO: Get messages for the menucard
+            //Get messages for the menucard
             $oMessage = $this->oMessageController->GetMessagesAppFromMenucard($iMenucardSerialNumber);
             $aMenucard['oMessages'] = $oMessage;
             
@@ -1354,8 +1354,7 @@ class MenucardController
     {
         //Get menucard for the user logged in
         
-        //TODO: Return the SerialMenucard number to
-        
+
         $aMenucard = array(
                 'sFunction' => 'GetMenucardAdmin',
                 'result' => false
