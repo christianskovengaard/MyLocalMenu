@@ -10,6 +10,7 @@ if($oSecurityController->login_check() == true) { ?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimun-scale=1.0, initial-scale=1.0" />
         <title>MyLocalCafé - Admin</title>
+        <link rel="icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/general_admin.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 700px)" href="css/general_admin_small.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:701px) and (max-width: 1170px)" href="css/general_admin_medium.css" />

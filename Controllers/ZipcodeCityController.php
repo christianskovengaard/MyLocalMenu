@@ -32,7 +32,7 @@ class ZipcodeCityController {
         $sQuery->bindValue(":iZipcode", $_GET['iZipcode']);
         $sQuery->execute();
         $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-        return $aResult['sCityname'];
+        return utf8_encode($aResult['sCityname']);
     }
     
     public function GetZipcode() {
