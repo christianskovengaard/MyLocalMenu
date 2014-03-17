@@ -19,15 +19,11 @@ if(isset($_GET['sUserToken']))
         <link rel="stylesheet" type="text/css" href="css/general_index.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 500px)" href="css/general_index_small.css" />
         <link rel="stylesheet" type="text/css" media="only screen and (min-width:501px) and (max-width: 850px)" href="css/general_index_medium.css" />
-                
+        <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>          
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         
-        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="js/general.js"></script>
-        <script type="text/javascript" src="js/jsencrypt.js"></script>
-        <script type="text/javascript" src="js/mustache.js"></script>
     </head>
     <body>
         
@@ -111,6 +107,11 @@ if(isset($_GET['sUserToken']))
         </div> -->
         <div id="mustache_template">
         </div>
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/general.js"></script>
+        <script type="text/javascript" src="js/jsencrypt.js"></script>
+        <script type="text/javascript" src="js/mustache.js"></script>
         <script type="text/javascript" >
                 window.onload = function()
                 {
@@ -119,6 +120,7 @@ if(isset($_GET['sUserToken']))
                 };
                 $(document).ready(function() {
                     makeOpeningHours();
+                    InitiateAutocompleteForRegister();
                 });
         </script>
 

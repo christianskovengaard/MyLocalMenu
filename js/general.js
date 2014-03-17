@@ -1881,6 +1881,46 @@ function MakeStampcard() {
        });
 }
 
+function InitiateAutocompleteForRegister() {
+     
+    $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"GetZipcodesAndCities"}
+       }).done(function(result) 
+       {
+           $("#iRestuarentZipcode").autocomplete({
+                delay: 150,
+                source: function(req, responseFn) {
+                    if(req.term.length >= 1){
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp( "^" + re, "i" );
+                    var a = $.grep( result.iZipcode, function(item,index){
+                        return matcher.test(item);
+                    });
+                        responseFn( a );
+                    }
+                } 
+           });
+           
+           $("#iCompanyZipcode").autocomplete({
+                delay: 150,
+                source: function(req, responseFn) {
+                    if(req.term.length >= 1){
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp( "^" + re, "i" );
+                    var a = $.grep( result.iZipcode, function(item,index){
+                        return matcher.test(item);
+                    });
+                        responseFn( a );
+                    }
+                }
+           });
+           
+       });
+}
+
 
 function InitiateAutocomplete() {
     
@@ -1933,7 +1973,7 @@ function InitiateAutocomplete() {
                 },
                 select: function (event, ui) {
                     //alert('select: '+ui.item.value);
-                    //TODO: Get zipcode 
+                    //Get zipcode 
                     //TODO: Find out what to do with Frederiksberg C, København C, København K, København V, Odense C, Ringsted, Aalborg, Århus C. The same city have multiple zipcodes 
                     
                     var sCityname = ui.item.value; 
