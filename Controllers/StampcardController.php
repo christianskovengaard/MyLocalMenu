@@ -291,7 +291,7 @@ class StampcardController
       
     private function CreateGoogleChart ($iStampcardId,$iStampcardMaxStamps) {
         
-        //TODO: Get all stamps given pr. month based on $iStampcardId
+        //Get all stamps given pr. month based on $iStampcardId
         $sQuery = $this->conPDO->prepare("SELECT MONTH(dtStampDateTime) as datemonth,sCustomerId,iStampUsed FROM stamp WHERE iFK_iStampcardId = :iFK_iStampcardId");
         $sQuery->bindValue(":iFK_iStampcardId", $iStampcardId);
         $sQuery->execute();
@@ -428,21 +428,21 @@ class StampcardController
         $stamps_pr_month = '&chd=t:'.$iNumberJan.','.$iNumberFeb.','.$iNumberMar.','.$iNumberApr.','.$iNumberMaj.','.$iNumberJun.','.$iNumberJul.','.$iNumberAug.','.$iNumberSep.','.$iNumberOkt.','.$iNumberNov.','.$iNumberDec.'|';
         
         
-        $iFreebiesJanTotal = round($iNumberJan/$iStampcardMaxStamps);
-        $iFreebiesFebTotal = round($iNumberFeb/$iStampcardMaxStamps);
-        $iFreebiesMarTotal = round($iNumberMar/$iStampcardMaxStamps);
-        $iFreebiesAprTotal = round($iNumberApr/$iStampcardMaxStamps);
-        $iFreebiesMajTotal = round($iNumberMaj/$iStampcardMaxStamps);
-        $iFreebiesJunTotal = round($iNumberJun/$iStampcardMaxStamps);
-        $iFreebiesJulTotal = round($iNumberJul/$iStampcardMaxStamps);
-        $iFreebiesAugTotal = round($iNumberAug/$iStampcardMaxStamps);
-        $iFreebiesSepTotal = round($iNumberSep/$iStampcardMaxStamps);
-        $iFreebiesOktTotal = round($iNumberOkt/$iStampcardMaxStamps);
-        $iFreebiesNovTotal = round($iNumberNov/$iStampcardMaxStamps);
-        $iFreebiesDecTotal = round($iNumberDec/$iStampcardMaxStamps);
+        $iFreebiesJanTotal = floor($iNumberJan/$iStampcardMaxStamps);
+        $iFreebiesFebTotal = floor($iNumberFeb/$iStampcardMaxStamps);
+        $iFreebiesMarTotal = floor($iNumberMar/$iStampcardMaxStamps);
+        $iFreebiesAprTotal = floor($iNumberApr/$iStampcardMaxStamps);
+        $iFreebiesMajTotal = floor($iNumberMaj/$iStampcardMaxStamps);
+        $iFreebiesJunTotal = floor($iNumberJun/$iStampcardMaxStamps);
+        $iFreebiesJulTotal = floor($iNumberJul/$iStampcardMaxStamps);
+        $iFreebiesAugTotal = floor($iNumberAug/$iStampcardMaxStamps);
+        $iFreebiesSepTotal = floor($iNumberSep/$iStampcardMaxStamps);
+        $iFreebiesOktTotal = floor($iNumberOkt/$iStampcardMaxStamps);
+        $iFreebiesNovTotal = floor($iNumberNov/$iStampcardMaxStamps);
+        $iFreebiesDecTotal = floor($iNumberDec/$iStampcardMaxStamps);
         
         $iTotalNumberOfFreebies = $iFreebiesJan+$iFreebiesFeb+$iFreebiesMar+$iFreebiesApr+$iFreebiesMaj+$iFreebiesJun+$iFreebiesJul+$iFreebiesAug+$iFreebiesSep+$iFreebiesOkt+$iFreebiesNov+$iFreebiesDec;
-        $iTotalNumberOfFreebies = round($iTotalNumberOfFreebies);
+        $iTotalNumberOfFreebies = floor($iTotalNumberOfFreebies);
         
         $freebies_pr_month = ''.$iFreebiesJanTotal.','.$iFreebiesFebTotal.','.$iFreebiesMarTotal.','.$iFreebiesAprTotal.','.$iFreebiesMajTotal.','.$iFreebiesJunTotal.','.$iFreebiesJulTotal.','.$iFreebiesAugTotal.','.$iFreebiesSepTotal.','.$iFreebiesOktTotal.','.$iFreebiesNovTotal.','.$iFreebiesDecTotal.'';
         
@@ -453,17 +453,19 @@ class StampcardController
         $datalabels = '&chdl=Antal stempler givet i alt '.$iNumberOfStampsGiven.'|Antal gratis kopper kaffe givet ud '.$iTotalNumberOfFreebies;
         
         //Data show on line
-        $datavalueonline = '&chm=N,000000,0,0,10,,e|N,000000,0,1,10,,e|N,000000,0,2,10,,e|N,000000,0,3,10,,e|N,000000,0,4,10,,e|N,000000,0,5,10,,e|N,000000,0,6,10,,e|N,000000,0,7,10,,e|N,000000,0,8,10,,e|N,000000,0,9,10,,e|N,000000,0,10,10,,e|N,000000,0,11,10,,e|N,000000,1,0,10,,e|N,000000,1,1,10,,e|N,000000,1,2,10,,e|N,000000,1,3,10,,e|N,000000,1,4,10,,e|N,000000,1,5,10,,e|N,000000,1,6,10,,e|N,000000,1,7,10,,e|N,000000,1,8,10,,e|N,000000,1,9,10,,e|N,000000,1,10,10,,e|N,000000,1,11,10,,e|N,000000,1,12,10,,e';
+        $datavalueonline = '&chm=N,000000,0,0,10,,h::30|N,000000,0,1,10,,h::30|N,000000,0,2,10,,h::30|N,000000,0,3,10,,h::30|N,000000,0,4,10,,h::30|N,000000,0,5,10,,h::30|N,000000,0,6,10,,h::30|N,000000,0,7,10,,h::30|N,000000,0,8,10,,h::30|N,000000,0,9,10,,h::30|N,000000,0,10,10,,h::30|N,000000,0,11,10,,h::30|N,000000,1,0,10,,e|N,000000,1,1,10,,e|N,000000,1,2,10,,e|N,000000,1,3,10,,e|N,000000,1,4,10,,e|N,000000,1,5,10,,e|N,000000,1,6,10,,e|N,000000,1,7,10,,e|N,000000,1,8,10,,e|N,000000,1,9,10,,e|N,000000,1,10,10,,e|N,000000,1,11,10,,e|N,000000,1,12,10,,e';
         
         //Set color of data legend and line colorto blue and green
         $chatlegendlinecolor = '&chco=0000FF,00FF00';
         
         $chartsize = '&chs=550x300';
-
+        
+        $chartmargin = '&chma=20,20,20,30|100,100';
+        
         $x_axis = '0:|Jan|Feb|Mar|Apr|Maj|Jun|Jul|Aug|Sep|Okt|Nov|Dec|';
         $y_axis = '1:|0|5|10|25|50|75|100';
         
-        $url = $url.$chartsize.$chatlegendlinecolor.$stamps_pr_month.$freebies_pr_month.'&chxt=x,y&chxl='.$x_axis.$y_axis.$datalabels.$datavalueonline;
+        $url = $url.$chartsize.$chatlegendlinecolor.$chartmargin.$stamps_pr_month.$freebies_pr_month.'&chxt=x,y&chxl='.$x_axis.$y_axis.$datalabels.$datavalueonline;
         
         return $url;
         

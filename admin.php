@@ -100,9 +100,8 @@ if($oSecurityController->login_check() == true) { ?>
                         
                         <div class='StampStat'>
                             <div> <span id="iStampsgiven"></span> stempler er blevet uddelt</div><br/>
-                            <p>Stempler uddelt i år</p>
+                            <h3>Stempler uddelt i år</h3>
                             <img src="" id="stampchart" title="Uddelte stempler" alt="Chart"><br/>
-                            <p>Info om de enkelte brugere som har fået stempler og kaffe</p>
                         </div>
    
                         <h3>QR kode</h3>
