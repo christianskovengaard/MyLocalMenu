@@ -441,8 +441,8 @@ class StampcardController
         $iFreebiesNovTotal = floor($iNumberNov/$iStampcardMaxStamps);
         $iFreebiesDecTotal = floor($iNumberDec/$iStampcardMaxStamps);
         
-        $iTotalNumberOfFreebies = $iFreebiesJan+$iFreebiesFeb+$iFreebiesMar+$iFreebiesApr+$iFreebiesMaj+$iFreebiesJun+$iFreebiesJul+$iFreebiesAug+$iFreebiesSep+$iFreebiesOkt+$iFreebiesNov+$iFreebiesDec;
-        $iTotalNumberOfFreebies = floor($iTotalNumberOfFreebies);
+        $iTotalNumberOfFreebies = $iFreebiesJanTotal+$iFreebiesFebTotal+$iFreebiesMarTotal+$iFreebiesAprTotal+$iFreebiesMajTotal+$iFreebiesJunTotal+$iFreebiesJulTotal+$iFreebiesAugTotal+$iFreebiesSepTotal+$iFreebiesOktTotal+$iFreebiesNovTotal+$iFreebiesDecTotal;
+        //$iTotalNumberOfFreebies = floor($iTotalNumberOfFreebies);
         
         $freebies_pr_month = ''.$iFreebiesJanTotal.','.$iFreebiesFebTotal.','.$iFreebiesMarTotal.','.$iFreebiesAprTotal.','.$iFreebiesMajTotal.','.$iFreebiesJunTotal.','.$iFreebiesJulTotal.','.$iFreebiesAugTotal.','.$iFreebiesSepTotal.','.$iFreebiesOktTotal.','.$iFreebiesNovTotal.','.$iFreebiesDecTotal.'';
         

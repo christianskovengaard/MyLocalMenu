@@ -857,6 +857,7 @@
 
                           var restuarent = {
                               sRestuarentName: result.sRestuarentName,
+                              iMenucardSerialNumber: result.iMenucardSerialNumber,
                               sRestuarentInfoDescription: result.sRestuarentInfoSlogan,
                               sRestuarentPhone: result.sRestuarentPhone,
                               sRestuarentAddress: result.sRestuarentAddress,
