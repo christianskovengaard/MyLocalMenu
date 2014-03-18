@@ -197,9 +197,9 @@ class UserController
                 
                
                 // Account is locked for 2 hours
-                $sMessage = "Din konto er blevet spærret i 2 timer. Klik <a href='localhost/MyLocalMenu/user.php?sUserToken=$sUserToken'>her</a> for at genåbne din konto";
+                $sMessage = "Din konto er blevet spærret i 2 timer. Klik <a href='localhost/MyLocalMenu/user.php?sUserToken=$sUserToken'>her</a> for at genåbne din konto"; //TODO: Change this when in production mode
                 $sTo = 'christianskovengaard@gmail.com'; //TODO: Change to $username when in production mode
-                $sFrom = 'info@mylocalcafe.dk';
+                $sFrom = 'support@mylocalcafe.dk';
                 $sSubject = 'Konto spærret';
                 $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
                 $aLogin['result'] = 'Account locked';
