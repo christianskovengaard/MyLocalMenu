@@ -428,22 +428,23 @@ class StampcardController
         $stamps_pr_month = '&chd=t:'.$iNumberJan.','.$iNumberFeb.','.$iNumberMar.','.$iNumberApr.','.$iNumberMaj.','.$iNumberJun.','.$iNumberJul.','.$iNumberAug.','.$iNumberSep.','.$iNumberOkt.','.$iNumberNov.','.$iNumberDec.'|';
         
         
-        $iFreebiesJan = $iNumberJan/$iStampcardMaxStamps;
-        $iFreebiesFeb = $iNumberFeb/$iStampcardMaxStamps;
-        $iFreebiesMar = $iNumberMar/$iStampcardMaxStamps;
-        $iFreebiesApr = $iNumberApr/$iStampcardMaxStamps;
-        $iFreebiesMaj = $iNumberMaj/$iStampcardMaxStamps;
-        $iFreebiesJun = $iNumberJun/$iStampcardMaxStamps;
-        $iFreebiesJul = $iNumberJul/$iStampcardMaxStamps;
-        $iFreebiesAug = $iNumberAug/$iStampcardMaxStamps;
-        $iFreebiesSep = $iNumberSep/$iStampcardMaxStamps;
-        $iFreebiesOkt = $iNumberOkt/$iStampcardMaxStamps;
-        $iFreebiesNov = $iNumberNov/$iStampcardMaxStamps;
-        $iFreebiesDec = $iNumberDec/$iStampcardMaxStamps;
+        $iFreebiesJanTotal = round($iNumberJan/$iStampcardMaxStamps);
+        $iFreebiesFebTotal = round($iNumberFeb/$iStampcardMaxStamps);
+        $iFreebiesMarTotal = round($iNumberMar/$iStampcardMaxStamps);
+        $iFreebiesAprTotal = round($iNumberApr/$iStampcardMaxStamps);
+        $iFreebiesMajTotal = round($iNumberMaj/$iStampcardMaxStamps);
+        $iFreebiesJunTotal = round($iNumberJun/$iStampcardMaxStamps);
+        $iFreebiesJulTotal = round($iNumberJul/$iStampcardMaxStamps);
+        $iFreebiesAugTotal = round($iNumberAug/$iStampcardMaxStamps);
+        $iFreebiesSepTotal = round($iNumberSep/$iStampcardMaxStamps);
+        $iFreebiesOktTotal = round($iNumberOkt/$iStampcardMaxStamps);
+        $iFreebiesNovTotal = round($iNumberNov/$iStampcardMaxStamps);
+        $iFreebiesDecTotal = round($iNumberDec/$iStampcardMaxStamps);
         
         $iTotalNumberOfFreebies = $iFreebiesJan+$iFreebiesFeb+$iFreebiesMar+$iFreebiesApr+$iFreebiesMaj+$iFreebiesJun+$iFreebiesJul+$iFreebiesAug+$iFreebiesSep+$iFreebiesOkt+$iFreebiesNov+$iFreebiesDec;
+        $iTotalNumberOfFreebies = round($iTotalNumberOfFreebies);
         
-        $freebies_pr_month = ''.$iFreebiesJan.','.$iFreebiesFeb.','.$iFreebiesMar.','.$iFreebiesApr.','.$iFreebiesMaj.','.$iFreebiesJun.','.$iFreebiesJul.',5,7,2,8,1';
+        $freebies_pr_month = ''.$iFreebiesJanTotal.','.$iFreebiesFebTotal.','.$iFreebiesMarTotal.','.$iFreebiesAprTotal.','.$iFreebiesMajTotal.','.$iFreebiesJunTotal.','.$iFreebiesJulTotal.','.$iFreebiesAugTotal.','.$iFreebiesSepTotal.','.$iFreebiesOktTotal.','.$iFreebiesNovTotal.','.$iFreebiesDecTotal.'';
         
         
         $url = 'https://chart.googleapis.com/chart?cht=lc';
@@ -460,7 +461,7 @@ class StampcardController
         $chartsize = '&chs=550x300';
 
         $x_axis = '0:|Jan|Feb|Mar|Apr|Maj|Jun|Jul|Aug|Sep|Okt|Nov|Dec|';
-        $y_axis = '1:|0|25|50|75|100';
+        $y_axis = '1:|0|5|10|25|50|75|100';
         
         $url = $url.$chartsize.$chatlegendlinecolor.$stamps_pr_month.$freebies_pr_month.'&chxt=x,y&chxl='.$x_axis.$y_axis.$datalabels.$datavalueonline;
         
