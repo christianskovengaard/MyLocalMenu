@@ -269,14 +269,16 @@ class StampcardController
             $iRestuarentInfoId = $aResult['iRestuarentInfoId'];
             
             //Get stampcard
-            $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps,iStampcardNumberOfGivenStamps FROM stampcard 
+            $sQuery = $this->conPDO->prepare("SELECT iStampcardId,iStampcardMaxStamps,iStampcardNumberOfGivenStamps FROM stampcard 
                                                 WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
             $sQuery->bindValue(':iRestuarentInfoId', $iRestuarentInfoId);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             
+            $iStampcardId = $aResult['iStampcardId'];
+            $iStampcardMaxStamps = $aResult['iStampcardMaxStamps'];
             //Create GoogleChart
-            $charturl = $this->CreateGoogleChart();
+            $charturl = $this->CreateGoogleChart($iStampcardId,$iStampcardMaxStamps);
             
             
             $oStampcard['stampcard'] = $aResult;
@@ -287,18 +289,167 @@ class StampcardController
         }
     }
       
-    private function CreateGoogleChart () {
+    private function CreateGoogleChart ($iStampcardId,$iStampcardMaxStamps) {
         
-        //TODO: get all stamps given 
+        //TODO: Get all stamps given pr. month based on $iStampcardId
+        $sQuery = $this->conPDO->prepare("SELECT MONTH(dtStampDateTime) as datemonth,sCustomerId,iStampUsed FROM stamp WHERE iFK_iStampcardId = :iFK_iStampcardId");
+        $sQuery->bindValue(":iFK_iStampcardId", $iStampcardId);
+        $sQuery->execute();
+        $iNumberOfStampsGiven = $sQuery->rowCount();
+        
+        $iNumberJan = 0;
+        $iFreebiesJan = 0;
+        
+        $iNumberFeb = 0;
+        $iFreebiesFeb = 0;
+        
+        $iNumberMar = 0;
+        $iFreebiesMar = 0;
+        
+        $iNumberApr = 0;
+        $iFreebiesApr = 0;
+        
+        $iNumberMaj = 0;
+        $iFreebiesMaj = 0;
+        
+        $iNumberJun = 0;
+        $iFreebiesJun = 0;
+        
+        $iNumberJul = 0;
+        $iFreebiesJul = 0;
+        
+        $iNumberAug = 0;
+        $iFreebiesAug = 0;
+        
+        $iNumberSep = 0;
+        $iFreebiesSep = 0;
+        
+        
+        $iNumberOkt = 0;
+        $iFreebiesOkt = 0;
+        
+        $iNumberNov = 0;
+        $iFreebiesNov = 0;
+        
+        $iNumberDec = 0;
+        $iFreebiesDec = 0;
+        
+                
+        //Foreach datemonth set the number of stamps given
+        while($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
+            
+            //Januar
+            if($aResult['datemonth'] == 1){
+                $iNumberJan++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesJan++;
+                }
+            }
+            //Februar
+            if($aResult['datemonth'] == 2){
+                $iNumberFeb++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesFeb++;
+                }
+            }
+            //Marts
+            if($aResult['datemonth'] == 3){
+                $iNumberMar++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesMar++;
+                }
+            }
+            //April
+            if($aResult['datemonth'] == 4){
+                $iNumberApr++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesApr++;
+                }
+            }
+            //Maj
+            if($aResult['datemonth'] == 5){
+                $iNumberMaj++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesMaj++;
+                }
+            }
+            //Juni
+            if($aResult['datemonth'] == 6){
+                $iNumberJun++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesJun++;
+                }
+            }
+            //Juli
+            if($aResult['datemonth'] == 7){
+                $iNumberJul++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesJul++;
+                }
+            }
+            //August
+            if($aResult['datemonth'] == 8){
+                $iNumberAug++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesAug++;
+                }
+            }
+            //September
+            if($aResult['datemonth'] == 9){
+                $iNumberSep++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesSep++;
+                }
+            }
+            //Oktober
+            if($aResult['datemonth'] == 10){
+                $iNumberOkt++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesOkt++;
+                }
+            }
+            //Novermber
+            if($aResult['datemonth'] == 11){
+                $iNumberNov++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesNov++;
+                }
+            }
+            //December
+            if($aResult['datemonth'] == 12){
+                $iNumberDec++;
+                if($aResult['iStampUsed'] == 1) {
+                    $iFreebiesDec++;
+                }
+            }
+        }
+
+        //Stamps pr. month given
+        $stamps_pr_month = '&chd=t:'.$iNumberJan.','.$iNumberFeb.','.$iNumberMar.','.$iNumberApr.','.$iNumberMaj.','.$iNumberJun.','.$iNumberJul.','.$iNumberAug.','.$iNumberSep.','.$iNumberOkt.','.$iNumberNov.','.$iNumberDec.'|';
+        
+        
+        $iFreebiesJan = $iNumberJan/$iStampcardMaxStamps;
+        $iFreebiesFeb = $iNumberFeb/$iStampcardMaxStamps;
+        $iFreebiesMar = $iNumberMar/$iStampcardMaxStamps;
+        $iFreebiesApr = $iNumberApr/$iStampcardMaxStamps;
+        $iFreebiesMaj = $iNumberMaj/$iStampcardMaxStamps;
+        $iFreebiesJun = $iNumberJun/$iStampcardMaxStamps;
+        $iFreebiesJul = $iNumberJul/$iStampcardMaxStamps;
+        $iFreebiesAug = $iNumberAug/$iStampcardMaxStamps;
+        $iFreebiesSep = $iNumberSep/$iStampcardMaxStamps;
+        $iFreebiesOkt = $iNumberOkt/$iStampcardMaxStamps;
+        $iFreebiesNov = $iNumberNov/$iStampcardMaxStamps;
+        $iFreebiesDec = $iNumberDec/$iStampcardMaxStamps;
+        
+        $iTotalNumberOfFreebies = $iFreebiesJan+$iFreebiesFeb+$iFreebiesMar+$iFreebiesApr+$iFreebiesMaj+$iFreebiesJun+$iFreebiesJul+$iFreebiesAug+$iFreebiesSep+$iFreebiesOkt+$iFreebiesNov+$iFreebiesDec;
+        
+        $freebies_pr_month = ''.$iFreebiesJan.','.$iFreebiesFeb.','.$iFreebiesMar.','.$iFreebiesApr.','.$iFreebiesMaj.','.$iFreebiesJun.','.$iFreebiesJul.',5,7,2,8,1';
         
         
         $url = 'https://chart.googleapis.com/chart?cht=lc';
         
-        //TODO: Data to change
-        $stamps_pr_month = '&chd=t:27,25,20,31,25,39,25,31,26,28,17,28|2,4,8,2,5,9,2,5,7,2,8,1';
-        
         //Data labels
-        $datalabels = '&chdl=Antal stempler givet i alt 227|Antal gratis kopper kaffe givet ud 25';
+        $datalabels = '&chdl=Antal stempler givet i alt '.$iNumberOfStampsGiven.'|Antal gratis kopper kaffe givet ud '.$iTotalNumberOfFreebies;
         
         //Data show on line
         $datavalueonline = '&chm=N,000000,0,0,10,,e|N,000000,0,1,10,,e|N,000000,0,2,10,,e|N,000000,0,3,10,,e|N,000000,0,4,10,,e|N,000000,0,5,10,,e|N,000000,0,6,10,,e|N,000000,0,7,10,,e|N,000000,0,8,10,,e|N,000000,0,9,10,,e|N,000000,0,10,10,,e|N,000000,0,11,10,,e|N,000000,1,0,10,,e|N,000000,1,1,10,,e|N,000000,1,2,10,,e|N,000000,1,3,10,,e|N,000000,1,4,10,,e|N,000000,1,5,10,,e|N,000000,1,6,10,,e|N,000000,1,7,10,,e|N,000000,1,8,10,,e|N,000000,1,9,10,,e|N,000000,1,10,10,,e|N,000000,1,11,10,,e|N,000000,1,12,10,,e';
@@ -311,7 +462,7 @@ class StampcardController
         $x_axis = '0:|Jan|Feb|Mar|Apr|Maj|Jun|Jul|Aug|Sep|Okt|Nov|Dec|';
         $y_axis = '1:|0|25|50|75|100';
         
-        $url = $url.$chartsize.$chatlegendlinecolor.$stamps_pr_month.'&chxt=x,y&chxl='.$x_axis.$y_axis.$datalabels.$datavalueonline;
+        $url = $url.$chartsize.$chatlegendlinecolor.$stamps_pr_month.$freebies_pr_month.'&chxt=x,y&chxl='.$x_axis.$y_axis.$datalabels.$datavalueonline;
         
         return $url;
         
