@@ -44,6 +44,10 @@ $oSecurityController->sec_session_start();
                 <input name="username" id="LoginEmail" type="text" placeholder="Email">
                 <input name="password" type="Password" placeholder="Kodeord">
                 <input id="loginButton" type="submit" value="Log Ind" class="button"/> 
+                <div id='WrongPassword'><p>Skift kodeord</p>
+                    <input type='text' placeholder='Email' id='forgotpassMail'>
+                    <input type='button' value='Send nyt kodeord til email' class='button' onclick='SendResetPasswordRequest();'>
+                </div>
                 <!--<div onclick="HideShowSwitch('Login');" class="button02">Luk</div>-->
             </div>
         </form>
@@ -68,7 +72,7 @@ $oSecurityController->sec_session_start();
            var url = window.location.search.substring(7);
            if (url === "false") {
                $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p></div>");
-               $("#loginButton").after("<div id='WrongPassword'><p>Skift kodeord</p><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Skift koderord' class='button' onclick='SendResetPasswordRequest();' ></div>");
+               //$("#loginButton").after("<div id='WrongPassword'><p>Skift kodeord</p><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Skift koderord' class='button' onclick='SendResetPasswordRequest();' ></div>");
                //Scroll to WrongPassword
                $('html,body').animate({
                     scrollTop: $("#WrongPassword").offset().top},

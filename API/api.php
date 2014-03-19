@@ -339,24 +339,24 @@ if(isset($_GET['sFunction']))
     
         case "GetZipcodesAndCities":
             require_once '../Controllers/ZipcodeCityController.php';
-            $oStampcard = new ZipcodeCityController();
-            $result = $oStampcard->GetZipcodesAndCities();
+            $oZipcodeCity = new ZipcodeCityController();
+            $result = $oZipcodeCity->GetZipcodesAndCities();
             $sResult = json_encode($result);
             echo $sResult;
         break;
     
         case "GetZipcode":
             require_once '../Controllers/ZipcodeCityController.php';
-            $oStampcard = new ZipcodeCityController();
-            $result = $oStampcard->GetZipcode();
+            $oZipcodeCity = new ZipcodeCityController();
+            $result = $oZipcodeCity->GetZipcode();
             $sResult = json_encode($result);
             echo $sResult;
         break;
 
         case "GetCityname":
             require_once '../Controllers/ZipcodeCityController.php';
-            $oStampcard = new ZipcodeCityController();
-            $result = $oStampcard->GetCityname();
+            $oZipcodeCity = new ZipcodeCityController();
+            $result = $oZipcodeCity->GetCityname();
             $sResult = json_encode($result);
             echo $sResult;
         break;
@@ -364,16 +364,16 @@ if(isset($_GET['sFunction']))
         
         case "ResetPasswordNoToken":
             require_once '../Controllers/UserController.php';
-            $oStampcard = new UserController();
-            $result = $oStampcard->ResetPasswordNoToken();
+            $oUser = new UserController();
+            $result = $oUser->ResetPasswordNoToken();
             $sResult = json_encode($result);
             echo $sResult;
         break;
         
         case "SendResetPasswordRequest":
             require_once '../Controllers/UserController.php';
-            $oStampcard = new UserController();
-            $result = $oStampcard->SendResetPasswordRequest();
+            $oUser = new UserController();
+            $result = $oUser->SendResetPasswordRequest();
             $sResult = json_encode($result);
             echo $sResult;
         break;

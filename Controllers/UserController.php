@@ -873,6 +873,13 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
          //Convert the JSON string into an array
          $oJSON = json_decode($sJSON);
          
+         
+         //TODO: Check if email exsist in database
+         $sQuery = $this->conPDO->prepare("SELECT sUsername FROM users WHERE sUsername = :sUsername");
+         $sQuery->bindValue(":sUsername", $oJSON->email);
+         $sQuery->execute();
+         if($sQuery->rowCount() == 1) {
+         
          //Create random hashed string
          $randomHash = $this->oBcrypt->genHash($oJSON->email);
          
@@ -889,7 +896,11 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
          //Send email with link to reset password
          $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
          
-         $aUser['result'] = true;
+         $aUser['result'] = 'true';
+         
+         }else{
+             $aUser['result'] = 'false';
+         }
          
          return $aUser;
      }

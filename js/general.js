@@ -1689,11 +1689,11 @@ function SendResetPasswordRequest() {
                         
                     }
                 }).done(function(result){
-                        if(result.result === true) {
+                        if(result.result === 'true') {
                            alert('Check din mail for link til reset password'); 
                         }
                         else {
-                            alert('Smid fejl besked');
+                            alert('Din email findes ikke i systemet!');
                         }
                 });
                
