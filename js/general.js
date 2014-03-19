@@ -25,9 +25,9 @@
       $('.newplaceholder').append('<h3><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="Overskrift"></h3>');
       $('.newplaceholder h3 input').focus();
       $('.newplaceholder').append('<h4><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="evt ekstra info"></h4>');
-      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div><input type="hidden" value="new">');
+      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src=""></div><div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div><input type="hidden" value="new">');
       $('.DishEditWrapper').hide();
-      $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"></ul>');
+      $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"><li></li></ul>');
       $('#'+id).append('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuList(this);"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuListHeadlineToHtml(\''+id+'\');">✓ Updater</a></li>');
 //      $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"><li onclick="CreateNewLiInSortableList(\''+id+'\')" class="AddLiButton non-dragable"><h5>+</h5></li></ul>');
 //      $('.newplaceholder').append(' <input type="button" value="Slet liste '+id+'" onclick="DeleteSortableList(\''+id+'\')">');
@@ -156,7 +156,8 @@
           
 
           $('.SaveMenuDish').fadeOut('normal', function(){ 
-
+              
+              //Removed this class 
               $(this).before('<li onclick="CreateNewLiInSortableList(\''+id+'\')" class="AddLiButton non-dragable"><h5>+</h5></li>');
               $(this).remove();
               $('.AddLiButton').fadeIn('fast');
@@ -167,6 +168,8 @@
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
           
+          //Set Session storage
+          sessionStorage.bMenucardChanged = 'true';
       }
       else{
           alert("udfyld venlist en overskrift");
@@ -314,26 +317,30 @@
   }
   
   function DeleteLiSortable(elem)
-  {
+  {     
       var elem = $(elem).parent().parent();
       var text = $(elem).find('.DishHeadline').text();
       if (confirm('Dette vil slette: '+text)) 
       {
           $(elem).remove();
+          //Set sessionStorage
+          sessionStorage.bMenucardChanged = 'true';
       }
   }
   
   function DeleteSortableList(id)
-  {
+  {    
       var text = $(id).parent().parent().find('h3').text();
       if (confirm('Dette vil slette: '+text+' og alle menupunkter ?')) {
           
           $(id).parent().parent().remove();
+          //Set sessionStorage
+          sessionStorage.bMenucardChanged = 'true';
       }
   } 
   
   function EditSortableList(id){
-         
+              
           var dish = $(id);
           var number = dish.closest('.DishWrapper').children('.DishNumber');
           var numberValue = number.text();
@@ -369,6 +376,8 @@
     {
       alert("Beklager, Der er en fejl. Du skal hente en nyrere Browser");
     }
+    //Set sessionStorage
+    sessionStorage.bMenucardChanged = 'true';
     
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
@@ -582,8 +591,7 @@
   {
       //console.log('AutomaticUpdateMenucard');
      
-      //Set session storage
-     
+      //Set session storage     
       if(typeof(Storage)!=="undefined") {
           //Set value when the page is loaded
           if(sessionStorage.bMenucardChanged === undefined){
