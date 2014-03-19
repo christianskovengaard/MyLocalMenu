@@ -602,7 +602,7 @@
           
         //Check if a ajax call is all ready running
         if($.active === 0){ 
-            alert('run ajax call');
+            //alert('run ajax call');
             UpdateMenucard();
         }else {
             console.log('Det kører allerede et ajax call');
@@ -1934,6 +1934,23 @@ function InitiateAutocomplete() {
         data: {sFunction:"GetZipcodesAndCities"}
        }).done(function(result) 
        {
+           
+           
+           
+           $( "#iCompanyZipcode" ).autocomplete({
+                delay: 150,
+                source: function(req, responseFn) {
+                    if(req.term.length >= 1){
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp( "^" + re, "i" );
+                    var a = $.grep( result.iZipcode, function(item,index){
+                        return matcher.test(item);
+                    });
+                        responseFn( a );
+                    }
+                }
+           });
+           
            $( "#MenuZip" ).autocomplete({
                 delay: 150,
                 source: function(req, responseFn) {
