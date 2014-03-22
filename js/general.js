@@ -616,8 +616,8 @@
             console.log('Det kører allerede et ajax call');
         }      
       }
-      //Run every 10 second
-      setTimeout(function(){AutomaticUpdateMenucard();},10000);
+      //Run every 5 second
+      setTimeout(function(){AutomaticUpdateMenucard();},5000);
   }
     
   function SaveMenucard()
