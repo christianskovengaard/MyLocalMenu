@@ -95,7 +95,7 @@ if($oSecurityController->login_check() == true) { ?>
                     </div>
                     <div class='StampWrapper'>
                         <p>Antal stempler på stempelkortet:</p>
-                        <input value="" placeholder="" id="iMaxStamps">
+                        <input value="" placeholder="" id="iMaxStamps" maxlength="2">
                         <div class='button StampButton' onclick="MakeStampcard();">Gem</div>
                         
                         <div class='StampStat'>
