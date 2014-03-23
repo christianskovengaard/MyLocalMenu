@@ -118,7 +118,7 @@ input {
 #MenuZip { width: 63px; }
 #MenuTown { width: 186px; }
 .EditmenuWrapperInner { display: table; margin: 0 auto;  }
-.Hours.Opening { width: 220px; }
+.Hours.Opening { width: 185px; }
 .Hours.Opening h2 { display: inline-table; width: 30px; font-size: 14px; line-height: 14px; vertical-align: middle; margin: 0; }
 .Hours.Opening p { display: inline-table; width: 30px; text-align: center; }
 
