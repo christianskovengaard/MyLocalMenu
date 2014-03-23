@@ -76,32 +76,51 @@ input {
 .menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px;}*/
 .header { position: fixed; background: #fff; width: 100%; height: 80px; margin: 0px; top: 0px; left: 0px; z-index: 1; }
 .RestaurantInfo { position: fixed; width: 100%; margin: 0px; padding: 10px 0 0 0; background: #dddddd; border-bottom: 1px solid #cec9c4; border-top: 1px solid #cec9c4; overflow: hidden; top: 80px; left: 0px; z-index: 1; } /* background: #dedcc9;*/
-.menuWrapper { position: relative; display: table; width: 100%; margin-top: 210px; z-index: 0;}
+.menuWrapper { position: relative; display: table; width: 100%; margin-top: 210px; z-index: 2;}
 
 .TabMenu { 
     position: fixed;
     width: 100%; height: 30px;
     top: 172px; 
-    background: #eee; 
-    box-shadow: inset 0px 6px 6px -2px #ddd;
+    background: #eee ; 
+    /*box-shadow: inset 0px 6px 6px -2px #ddd;*/
     z-index: 1;
+    border-bottom: 1px solid #cec9c4;
 }
 .TabMenu div { display: inline-table; }
 .Tab { 
-    margin: 0px -4px 0 0; 
+    margin: 5px -1px 0 0; 
     width: 110px; 
-    height: 100%; 
+    height: 18px; 
     text-align: center; 
     padding-top: 6px; 
-    color: #ccc;
-    border-left: 1px solid #dcdcdc; 
+    color: #eee;
+    background: #686868;
+    box-shadow: inset 0px -6px 6px -2px #555;
+    /*border-left: 1px solid #dcdcdc;*/ 
     cursor: pointer;
+    font-size: 13px;
     o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s; 
+
 }
-.Tab:hover { background: #ddd; color: #333; border-left: 1px solid #ccc; }
-.Tab.On { 
+.Tab:hover { 
+    margin-top: 2px;
+    background: #ddd; 
+    color: #333;
+    /* border-left: 1px solid #ccc;*/ 
+    box-shadow: none;
+    height: 22px;
     background: #ddd; color: #333; box-shadow: none;
-    box-shadow: 4px 0px 4px -2px #ddd;
+    border: 1px solid #cec9c4;
+    border-bottom: none;
+}
+.Tab.On { 
+    margin-top: 2px;
+    height: 22px;
+    background: #ddd; color: #333; box-shadow: none;
+    border: 1px solid #cec9c4;
+    border-bottom: none;
+    /*box-shadow: 4px 0px 4px -2px #ddd;*/
 }
 
 .wrapper { position: relative; max-width: 100%; margin: 0 auto; padding: 0 20px; }
@@ -118,7 +137,7 @@ input {
 #MenuZip { width: 63px; }
 #MenuTown { width: 186px; }
 .EditmenuWrapperInner { display: table; margin: 0 auto;  }
-.Hours.Opening { width: 185px; }
+.Hours.Opening { width: 200px; }
 .Hours.Opening h2 { display: inline-table; width: 30px; font-size: 14px; line-height: 14px; vertical-align: middle; margin: 0; }
 .Hours.Opening p { display: inline-table; width: 30px; text-align: center; }
 
