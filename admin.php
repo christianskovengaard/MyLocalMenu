@@ -31,8 +31,7 @@ if($oSecurityController->login_check() == true) { ?>
                          <h5>MyLocalCafé</h5>
                     </div>
                     <div class="appGetInfo">
-                        <h6>Hent MyLocalCafé appen nu</h6>
-                        <img src="img/getAppleApp.png"><img src="img/getAndroidApp.png"><img src="img/getWindowsApp.png">
+                        <img src="img/getAppleApp.png"><img src="img/getAndroidApp.png"><!--<img src="img/getWindowsApp.png">-->
                     </div>
                 </div>
             </div>            
