@@ -82,10 +82,8 @@ class MessageController
         header('Access-Control-Allow-Origin: *');  
         
         /* Only allow trusted, MUCH more safe
-        header('Access-Control-Allow-Origin: spjæl.dk');
-        header('Access-Control-Allow-Origin: xn--spjl-xoa.sk');
-        header('Access-Control-Allow-Origin: www.spjæl.dk');
-        header('Access-Control-Allow-Origin: www.xn--spjl-xoa.dk');
+        header('Access-Control-Allow-Origin: mylocalcafe.dk');
+        header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
         */
         
         
@@ -115,7 +113,7 @@ class MessageController
             $iRestuarentInfoId = $aResult['iFk_iRestuarentInfoId'];
             
             //Get all message that are active (fits the time span based on the time now)
-            $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC");
+            $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC LIMIT 1");
             $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
             $sQuery->execute();
             $i = 0;
@@ -123,7 +121,7 @@ class MessageController
 
                 $oMenucards['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['sMessageHeadline'] = utf8_encode($aResult['sMessageHeadline']);
                 $oMenucards['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['sMessageBodyText'] = utf8_encode($aResult['sMessageBodyText']);
-                $oMessages['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['dtMessageDate'] = utf8_encode($aResult['dtMessageDate']);
+                $oMenucards['Menucards'][$iMenucardSerialNumber]['Messages'][$i]['dtMessageDate'] = utf8_encode($aResult['dtMessageDate']);
                 $i++;
             }
             
@@ -159,13 +157,14 @@ class MessageController
         $iRestuarentInfoId = $aResult['iFk_iRestuarentInfoId'];
         
         //Get all message that are active (fits the time span based on the time now)
-        $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC");
+        $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC LIMIT 1");
         $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
         $sQuery->execute();
         $i = 0;
         while($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
             $oMessages[$i]['headline'] = utf8_encode($aResult['sMessageHeadline']);
             $oMessages[$i]['bodytext'] = utf8_encode($aResult['sMessageBodyText']); 
+            $oMessages[$i]['date'] = utf8_encode($aResult['dtMessageDate']); 
             $i++;
         }
        return $oMessages;
