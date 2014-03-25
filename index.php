@@ -29,12 +29,40 @@ $oSecurityController->sec_session_start();
         <img class="logo" src="img/logo_4.png">
         <h1>MyLocalCafé</h1>
         <div id="NewUser" class="inputFrame ligth">
-                    <h2>Velkommen</h2>
-                    <p>På MyLocalCafé kan du ......  (skal layoutes - når teksten er på plads)</p>
-                    <h3>Opret en gratis bruger</h3>
-                    <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
-                    <!--<div onclick="HideShowSwitch('Email');" class="button01">Opret</div>-->
-                    <input type="submit" onclick="HideShowSwitch('Email');" value="Opret en bruger" class="button"/>
+            <h3>Kære Café ejer</h3>
+            <p>Få din egen App, og kommunikér direkte med dine kunder, helt gratis.</p> 
+            <p>Du kan:</p>
+            <ul>
+                <li>- Promover tilbud til dine kunder</li>
+                <li>- Få nye kunder</li>
+                <li>- Få flere loyale kunder</li>
+                <li>- Mål løbende på dine salg</li>
+                <li>- Skab omtale om dit sted</li>
+                <li>- Forøg din omsætning</li>
+            </ul>
+            <p>Du kan som café ejer oprette en gratis profil. Med denne profil er det muligt, at tilføje oplysninger om din café. Disse oplysninger er individuelle, men kan bl.a. være:</p>
+            <ul>
+               <li>- Åbningstider</li>
+               <li>- Menukort</li>
+               <li>- Tilbud</li>
+               <li>- Service info</li>
+               <li>- Wi-fi adgang</li>
+               <li>- Beliggenhed</li>
+               <li>- Mærkedage</li>
+               <li>- Konkurrencer</li>
+               <li>- Send push beskeder</li>
+               <li>- Opret online klippekort</li>
+               <li>- Opret online stempelkort</li>
+               <li>- Og meget mere</li>
+           </ul>
+
+           <p>Dine café oplysninger kommunikeres direkte til dine kunder igennem My Local Café´s app.</p>
+           <h3>Sådan virker det</h3>
+           <p>Dine Café kunder henter My Local Cafés app. De indtaster jeres Cafékode og får vist jeres personlige Café app.</p>
+           <h3>Opret en profil og få en app i dag, det er helt gratis.</h3>
+           <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
+           <!--<div onclick="HideShowSwitch('Email');" class="button01">Opret</div>-->
+           <input type="submit" onclick="HideShowSwitch('Email');" value="Opret en bruger" class="button"/>
         </div> 
         <?php if ($oSecurityController->login_check() == false) : ?>
 <!--        <div onclick="HideShowSwitch('Login');" class="button01">Log</div>-->
