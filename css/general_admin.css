@@ -157,7 +157,7 @@ input {
 .appGetInfo img { height: 40px; width: auto; opacity:1; margin: 5px 10px 0 0; cursor: pointer;}
 .appGetInfo img:hover { opacity:0.7; }
 
-.menuWrapperInner { display: table; margin: 0 auto; min-width: 200px; }
+.menuWrapperInner { display: table; margin: 0 auto; min-width: 200px; padding-bottom: 40px;}
 .menuWrapperInner textarea { 
             font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
             font-size: 18px; line-height: 14px; 
