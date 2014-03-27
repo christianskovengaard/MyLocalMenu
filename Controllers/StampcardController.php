@@ -37,7 +37,7 @@ class StampcardController
     public function SaveStampcard() {
         
         $oStampcard = array(
-                'sFunction' => 'GetStampcard',
+                'sFunction' => 'SaveStampcard',
                 'result' => false
             );
         
@@ -55,11 +55,12 @@ class StampcardController
             //Check if user is logged in
             if($this->oSecurityController->login_check() == true)
             {
-                $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo 
-                                                    INNER JOIN users
-                                                    ON users.sUsername = :sUsername
-                                                    INNER JOIN company
-                                                    ON company.iCompanyId = users.iFK_iCompanyId");
+                $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo                                                     
+                                                        INNER JOIN company
+                                                        ON company.iCompanyId = restuarentinfo.iFK_iCompanyInfoId
+                                                        INNER JOIN users
+                                                        ON users.iFK_iCompanyId = company.iCompanyId
+                                                        WHERE users.sUsername = :sUsername");
                 $sQuery->bindValue(':sUsername', $_SESSION['username']);
                 $sQuery->execute();
                 $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
@@ -70,12 +71,14 @@ class StampcardController
                 $sQuery->bindValue(':iFK_iRestuarentInfoId', $iRestuarentInfoId);
                 $sQuery->execute();
                 $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                
                 if($aResult['number'] == 1) {
-                    $sQuery = $this->conPDO->prepare("UPDATE stampcard SET iStampcardMaxStamps = :iStampcardMaxStamps, iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId");
+                    $sQuery = $this->conPDO->prepare("UPDATE stampcard SET iStampcardMaxStamps = :iStampcardMaxStamps WHERE iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId");
                 } else {
                     //Create new stampcard
                     $sQuery = $this->conPDO->prepare("INSERT INTO stampcard (iStampcardMaxStamps,iFK_iRestuarentInfoId) VALUES (:iStampcardMaxStamps,:iFK_iRestuarentInfoId)");     
                 }
+                
                 $sQuery->bindValue(':iStampcardMaxStamps', $oJSONStampcard->iStampcardMaxStamps);
                 $sQuery->bindValue(':iFK_iRestuarentInfoId', $iRestuarentInfoId);
                 $sQuery->execute();
@@ -258,18 +261,19 @@ class StampcardController
         //Check if user is logged in
         if($this->oSecurityController->login_check() == true)
         {
-            $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo 
-                                                INNER JOIN users
-                                                ON users.sUsername = :sUsername
-                                                INNER JOIN company
-                                                ON company.iCompanyId = users.iFK_iCompanyId");
+            $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo                                                     
+                                                        INNER JOIN company
+                                                        ON company.iCompanyId = restuarentinfo.iFK_iCompanyInfoId
+                                                        INNER JOIN users
+                                                        ON users.iFK_iCompanyId = company.iCompanyId
+                                                        WHERE users.sUsername = :sUsername");
             $sQuery->bindValue(':sUsername', $_SESSION['username']);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $iRestuarentInfoId = $aResult['iRestuarentInfoId'];
             
             //Get stampcard
-            $sQuery = $this->conPDO->prepare("SELECT iStampcardId,iStampcardMaxStamps,iStampcardNumberOfGivenStamps FROM stampcard 
+            $sQuery = $this->conPDO->prepare("SELECT iStampcardId,iStampcardMaxStamps,iStampcardNumberOfGivenStamps,iStampcardRedemeCode FROM stampcard 
                                                 WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
             $sQuery->bindValue(':iRestuarentInfoId', $iRestuarentInfoId);
             $sQuery->execute();
@@ -287,6 +291,50 @@ class StampcardController
             
             return $oStampcard;
         }
+    }
+    
+    public function UpdateRedemeCode() {
+        
+        $oStampcard = array(
+                'sFunction' => 'UpdateRedemeCode',
+                'result' => 'false'
+            );
+        
+        //Check if redemecode is set
+        if(isset($_GET['sRedemeCode'])) {
+            
+                //Check if session is started
+                if(!isset($_SESSION['sec_session_id']))
+                { 
+                    $this->oSecurityController->sec_session_start();
+                }
+
+                //Check if user is logged in
+                if($this->oSecurityController->login_check() == true)
+                {
+                    $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo                                                     
+                                                        INNER JOIN company
+                                                        ON company.iCompanyId = restuarentinfo.iFK_iCompanyInfoId
+                                                        INNER JOIN users
+                                                        ON users.iFK_iCompanyId = company.iCompanyId
+                                                        WHERE users.sUsername = :sUsername");
+                    $sQuery->bindValue(':sUsername', $_SESSION['username']);
+                    $sQuery->execute();
+                    $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                    $iRestuarentInfoId = $aResult['iRestuarentInfoId'];
+
+                    $sRedemeCode = $_GET['sRedemeCode'];
+                    
+                    $sQuery = $this->conPDO->prepare("UPDATE stampcard SET iStampcardRedemeCode = :iStampcardRedemeCode WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
+                    $sQuery->bindValue(":iStampcardRedemeCode", $sRedemeCode);
+                    $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
+                    $sQuery->execute();
+
+                    $oStampcard['result'] = 'true';
+                }
+        }
+        
+        return $oStampcard;
     }
       
     private function CreateGoogleChart ($iStampcardId,$iStampcardMaxStamps) {

@@ -95,8 +95,13 @@ if($oSecurityController->login_check() == true) { ?>
                     <div class='StampWrapper'>
                         <p>Antal stempler på stempelkortet:</p>
                         <input value="" placeholder="" id="iMaxStamps" maxlength="2">
-                        <div class='button StampButton' onclick="MakeStampcard();">Gem</div>
-                        
+                        <div class='button StampButton' onclick="SaveStampcard();">Gem</div>
+                        <p>Stempelkort kode: </p><p id="RedemeCode"></p><br>
+                        <input type="text" id="RedemeCode1" maxlength="1">
+                        <input type="text" id="RedemeCode2" maxlength="1">
+                        <input type="text" id="RedemeCode3" maxlength="1">
+                        <input type="text" id="RedemeCode4" maxlength="1"><br><br>
+                        <div class="button StampButton" onclick="UpdateRedemeCode();">Sæt stempelkort kode</div>
                         <div class='StampStat'>
                             <div> <span id="iStampsgiven"></span> stempler er blevet uddelt</div><br/>
                             <h3>Stempler uddelt i år</h3>
@@ -105,15 +110,7 @@ if($oSecurityController->login_check() == true) { ?>
    
                         <h3>QR kode</h3>
                         <div>
-                            <!--<span>Brug denne QR kode til stempelkort</span>-->
-                            <!--<div id="currentQRcode"></div>-->
-                            
                             <div class='button StampButton' onclick="PrintQRcode();">Print din QR kode</div>
-<!--                        </div>
-                        <h2>Lav ny QR kode</h2>
-                        <div>
-                            <span>Her kan du lave en ny QR kode</span>
-                            <br>-->
                             <div class='button StampButton'onclick='GenerateQRcode();'>Lav en ny QR kode</div>
                             <div id="currentQRcode"></div>
                         </div>

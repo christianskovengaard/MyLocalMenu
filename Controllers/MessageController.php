@@ -44,12 +44,12 @@ class MessageController
             {
                 
                 //Check if user logged in and get the iRestuarentId
-                    $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo 
-                                                    INNER JOIN users
-                                                    ON users.sUsername = :sUsername
-                                                    INNER JOIN company
-                                                    ON company.iCompanyId = users.iFK_iCompanyId
-                                                    WHERE restuarentinfo.iFK_iCompanyInfoId =  company.iCompanyId");
+                    $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo                                                     
+                                                        INNER JOIN company
+                                                        ON company.iCompanyId = restuarentinfo.iFK_iCompanyInfoId
+                                                        INNER JOIN users
+                                                        ON users.iFK_iCompanyId = company.iCompanyId
+                                                        WHERE users.sUsername = :sUsername");
                 $sQuery->bindValue(':sUsername', $_SESSION['username']);
                 $sQuery->execute();
                 $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
@@ -193,12 +193,12 @@ class MessageController
                     $aJSONMessage = json_decode($_GET['sJSON']);
 
                     //Check if user logged in and get the iRestuarentId
-                    $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo 
-                                                    INNER JOIN users
-                                                    ON users.sUsername = :sUsername
-                                                    INNER JOIN company
-                                                    ON company.iCompanyId = users.iFK_iCompanyId
-                                                    WHERE restuarentinfo.iFK_iCompanyInfoId =  company.iCompanyId");
+                    $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo                                                     
+                                                        INNER JOIN company
+                                                        ON company.iCompanyId = restuarentinfo.iFK_iCompanyInfoId
+                                                        INNER JOIN users
+                                                        ON users.iFK_iCompanyId = company.iCompanyId
+                                                        WHERE users.sUsername = :sUsername");
                     $sQuery->bindValue(':sUsername', $_SESSION['username']);
                     $sQuery->execute();
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);

@@ -1855,6 +1855,7 @@ function GetStampcard() {
            $('#iStampsgiven').html(result.stampcard.iStampcardNumberOfGivenStamps);
            $('#iMaxStamps').val(result.stampcard.iStampcardMaxStamps);
            $('#stampchart').attr('src',result.stampcard.charturl);
+           $('#RedemeCode').html(result.stampcard.iStampcardRedemeCode);
            MakeStampcard();
        });
 }
@@ -1869,6 +1870,10 @@ function MakeStampcard() {
        $('#StampEX h4').after("<div class='Stamp'></div>");
    }
    
+}
+
+function SaveStampcard() {
+    
    var aData = {};
    
    aData['iStampcardMaxStamps'] = $('#iMaxStamps').val();
@@ -1887,7 +1892,7 @@ function MakeStampcard() {
         data: {sFunction:"SaveStampcard",sJSONStampcard:sJSON}
        }).done(function(result) 
        {
-           
+           MakeStampcard();
        });
 }
 
@@ -2017,4 +2022,24 @@ function InitiateAutocomplete() {
            
        });
     
+}
+
+function UpdateRedemeCode() {
+    
+    var sRedemeCode = $('#RedemeCode1').val() + $('#RedemeCode2').val() + $('#RedemeCode3').val() + $('#RedemeCode4').val(); 
+    $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateRedemeCode",sRedemeCode:sRedemeCode}
+       }).done(function(result) {
+           if(result.result === 'true') {
+                alert('Stempelkort kode er blevet opdateret');
+                $('#RedemeCode').html(sRedemeCode);
+                $('#RedemeCode1').val('');
+                $('#RedemeCode2').val('');
+                $('#RedemeCode3').val('');
+                $('#RedemeCode4').val('');
+           }
+       }); 
 }
