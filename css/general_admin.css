@@ -85,7 +85,7 @@ input {
     top: 0px; left: 0px; 
     z-index: 1; 
 }
-.menuWrapper { position: relative; display: table; width: 100%; margin-top: 135px; z-index: 0;}
+.menuWrapper { position: relative; display: table; width: 100%; margin-top: 135px; z-index: 0; padding-bottom: 40px;}
 
 .TabMenu { 
     position: fixed;
@@ -157,7 +157,7 @@ input {
 .appGetInfo img { height: 40px; width: auto; opacity:1; margin: 5px 10px 0 0; cursor: pointer;}
 .appGetInfo img:hover { opacity:0.7; }
 
-.menuWrapperInner { display: table; margin: 0 auto; min-width: 200px; padding-bottom: 40px;}
+.menuWrapperInner { display: table; margin: 0 auto; min-width: 200px; }
 .menuWrapperInner textarea { 
             font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
             font-size: 18px; line-height: 14px; 
