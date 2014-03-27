@@ -97,7 +97,7 @@
       var Description = $('.DishDescription textarea').val();
       var price = $('.DishPrice input').val();
       
-      if(Number != ''  && Headline != '' && price !=''){
+      if(Headline != '' && price !=''){
           $('.DishNumber input').parent().html('<h1>'+Number+'</h1>');
           $('.DishHeadline input').parent().html('<h1>'+Headline+'</h1>');
           $('.DishDescription textarea').parent().html('<h2>'+Description+'</h2>');
@@ -115,7 +115,7 @@
       
       else{
           //TODO: Create better looking alert box
-          alert("udfyld venlist et nummer, en overskrift og en pris");
+          alert("Udfyld venlist en overskrift og en pris");
       }
 }
  
