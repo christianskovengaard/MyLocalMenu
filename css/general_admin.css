@@ -408,6 +408,11 @@ left: 9px;
 .InfoSlide.top h4 { margin:1px 0; color: #333; }
 .InfoSlidebox { display: inline-block; margin-right: 5px; vertical-align: top; }
 
+.InfoSlidebox#Openinghours { max-width: 102px;}
+.InfoSlidebox#Openinghours h4 { display: inline-block; min-width: 30px;}
+.InfoSlidebox#Openinghours h4:nth-child(12),
+.InfoSlidebox#Openinghours h4:nth-child(13) { border-top: 1px solid #555; padding-top: 3px; } 
+
 .SaveMenuDish { text-align: center; padding: 5px 0; display: block; min-width: 345px;}
 .saveMenuDishButton { font-size: 18px; background: #fea525; color: #fff; display: inline-table; padding: 5px 10px;  cursor: pointer;
                      -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; -khtml-border-radius: 4px; 
