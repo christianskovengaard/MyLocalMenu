@@ -25,7 +25,7 @@
       $('.newplaceholder').append('<h3><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="Overskrift"></h3>');
       $('.newplaceholder h3 input').focus();
       $('.newplaceholder').append('<h4><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuListHeadlineToHtml(\''+id+'\');}" placeholder="evt ekstra info"></h4>');
-      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="moveDish"><img src=""></div><div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div><input type="hidden" value="new">');
+      $('.newplaceholder').append('<div class="DishEditWrapper"><div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div><input type="hidden" value="new">');
       $('.DishEditWrapper').hide();
       $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"><li></li></ul>');
       $('#'+id).append('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuList(this);"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuListHeadlineToHtml(\''+id+'\');">✓ Updater</a></li>');
@@ -52,7 +52,7 @@
     $('.DishWrapperTEMP').append('<div class="DishNumber"><input type="text" maxlength="4" placeholder="nr"></div>');
     $('.DishWrapperTEMP').append('<div class="DishText"><div class="DishHeadline"><input type="text" placeholder="Overskrift"></div><div class="DishDescription"><textarea rows="1" placeholder="Beskrivelse"></textarea></div></div>');
     $('.DishWrapperTEMP').append('<div class="DishPrice"><h2>...</h2><input type="text" onkeydown="if (event.keyCode == 13) { SaveMenuDishToHtml();}" placeholder="0"><h2>kr</h2></div>');
-    $('.DishWrapperTEMP').append('<div class="DishEditWrapper DishEditWrapperTEMP"><div class="moveDish"><img src="img/moveIcon.png"></div><div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
+    $('.DishWrapperTEMP').append('<div class="DishEditWrapper DishEditWrapperTEMP"><div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><p>╳</p></div></div>');
     $('.DishWrapperTEMP').hide().slideDown();
     $('.DishWrapperTEMP').removeClass('DishWrapperTEMP');
 
@@ -289,7 +289,6 @@
                 connectWith: ".connectedSortable",
                 items: "li:not(.non-dragable)",
                 tolerance: "pointer",
-                handle: ".moveDish",
                 change: function( event, ui ) {sessionStorage.bMenucardChanged = 'true';},
                 update: function( event, ui ) {UpdatePlacementOfItems();}
       }).disableSelection();

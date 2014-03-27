@@ -362,7 +362,7 @@ left: 9px;
 
 .AddLiButton.info { margin-top: 0; }
 
-.DishWrapper { position: relative; padding: 5px; background: #fff; }
+.DishWrapper { position: relative; padding: 5px; background: #fff; cursor: move; }
 
 .DishWrapper input,.InfoSlide input { background: #ddd; margin: 0; padding: 0px 3px; transition: width 0.25s;  }
     .DishNumber { display: inline-table; min-width: 25px; margin-right: 8px; }
