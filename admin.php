@@ -23,21 +23,7 @@ if($oSecurityController->login_check() == true) { ?>
         <![endif]-->
     </head>
     <body>       
-        <div class="header">
-            <div class="wrapper">
-                <div class="logoWrapper">                        
-                    <img src="img/logo_4.png">
-                    <div class="logoText">
-                         <h5>MyLocalCafé</h5>
-                    </div>
-                    <div class="appGetInfo">
-                        <img src="img/getAppleApp.png"><img src="img/getAndroidApp.png"><!--<img src="img/getWindowsApp.png">-->
-                    </div>
-                </div>
-            </div>            
-        </div>
-        
-        <div class="RestaurantInfo">                  
+        <div class="RestaurantInfo">     
         </div>
         
         <div class="TabMenu">

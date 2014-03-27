@@ -46,7 +46,7 @@ input {
 }
 .inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; }
 
-.buttonEdit.top { top: 0px; bottom: auto; font-size: 15px; line-height: 15px; padding: 0px 9px; height: 30px; margin: 0; background: #bbb; }
+.buttonEdit.top { top: -1px; bottom: auto; font-size: 15px; line-height: 15px; padding: 0px 9px; height: 30px; margin: 0; color: #fff; background: #333; }
 .buttonEdit {       
       position: absolute;
       bottom: 10px; right: 10px;
@@ -75,13 +75,22 @@ input {
 .RestaurantInfo { position: relative; display: table; width: 100%; margin: 0px; padding: 10px 0 0 0; background: rgba(143,130,121,0.2); overflow: hidden;}  background: #dedcc9;
 .menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px;}*/
 .header { position: fixed; background: #fff; width: 100%; height: 80px; margin: 0px; top: 0px; left: 0px; z-index: 1; }
-.RestaurantInfo { position: fixed; width: 100%; margin: 0px; padding: 10px 0 0 0; background: #dddddd; border-bottom: 1px solid #cec9c4; border-top: 1px solid #cec9c4; overflow: hidden; top: 80px; left: 0px; z-index: 1; } /* background: #dedcc9;*/
-.menuWrapper { position: relative; display: table; width: 100%; margin-top: 210px; z-index: 0;}
+.RestaurantInfo { 
+    position: fixed; 
+    width: 100%; 
+    margin: 0px; padding: 10px 0 0 0; 
+    background: #fff; 
+    border-bottom: 1px solid #cec9c4; 
+    overflow: hidden; 
+    top: 0px; left: 0px; 
+    z-index: 1; 
+}
+.menuWrapper { position: relative; display: table; width: 100%; margin-top: 135px; z-index: 0;}
 
 .TabMenu { 
     position: fixed;
     width: 100%; height: 30px;
-    top: 172px; 
+    top: 91px; 
     background: #eee ; 
     /*box-shadow: inset 0px 6px 6px -2px #ddd;*/
     z-index: 1;
@@ -91,15 +100,15 @@ input {
 .Tab { 
     margin: 5px -1px 0 0; 
     width: 110px; 
-    height: 18px; 
+    height: 21px; 
     text-align: center; 
-    padding-top: 6px; 
-    color: #eee;
+    padding-top: 3px; 
+    color: #ccc;
     background: #686868;
     box-shadow: inset 0px -6px 6px -2px #555;
     /*border-left: 1px solid #dcdcdc;*/ 
     cursor: pointer;
-    font-size: 13px;
+    font-size: 16px;
     o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s; 
 
 }
@@ -109,14 +118,14 @@ input {
     color: #333;
     /* border-left: 1px solid #ccc;*/ 
     box-shadow: none;
-    height: 22px;
+    height: 25px;
     background: #ddd; color: #333; box-shadow: none;
     border: 1px solid #cec9c4;
     border-bottom: none;
 }
 .Tab.On { 
     margin-top: 2px;
-    height: 22px;
+    height: 25px;
     background: #ddd; color: #333; box-shadow: none;
     border: 1px solid #cec9c4;
     border-bottom: none;
@@ -143,11 +152,6 @@ input {
 
 
 /* ::::::::::::::::: ANDET :::::::::::::::::::::  */
-
-.logoWrapper { display: block; width: 200px; margin: 10px 0 0 0; }
-.logoWrapper img { display: inline-table; width: 50px;  vertical-align: middle; }
-.logoWrapper h5 { margin: 8px 0px; }
-.logoText { display: inline-table; height: 50px; vertical-align: middle;  margin: 10px 0 0 5px; }
 
 .appGetInfo { position: absolute; right: 20px; top: 0px; }
 .appGetInfo img { height: 40px; width: auto; opacity:1; margin: 5px 10px 0 0; cursor: pointer;}
@@ -210,6 +214,7 @@ left: 9px;
 
 /* ::::::::::::::::: Restaurant INFO :::::::::::::::::::::  */
 
+.RestaurantInfo img { display: inline-table; width: 60px; vertical-align: middle; margin: 0px 20px 0px -10px }
 .Restaurant { display: inline-table; margin: 0 25px 0px 0; vertical-align: top; }
 .Restaurant.Name {  }
     .Restaurant.Name h1 { margin: 10px 0 0px 0; }
