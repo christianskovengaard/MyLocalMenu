@@ -1618,6 +1618,14 @@ class MenucardController
     public function GetMenucardWithRestuarentName ()
     {
         
+        //Allow all, NOT SAFE
+        header('Access-Control-Allow-Origin: *');  
+        
+        /* Only allow trusted, MUCH more safe
+        header('Access-Control-Allow-Origin: mylocalcafe.dk');
+        header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
+        */
+        
         $aMenucard = array(
                 'sFunction' => 'GetMenucardWithRestuarentName',
                 'result' => false
@@ -1665,6 +1673,7 @@ class MenucardController
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             if($aResult == false): return false; endif;
             $aMenucard['sMenucardName'] = utf8_encode($aResult['sMenucardName']);
+            $aMenucard['iMenucardSerialNumber'] = $iMenucardSerialNumber;
             $iMenucardId = $aResult['iMenucardId'];
             $iFK_RestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
             
@@ -1846,6 +1855,15 @@ class MenucardController
             $aMenucard['sRestuarentName'] = utf8_encode($aResult['sRestuarentInfoName']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
+            
+            //Get messages for the menucard
+            $oMessage = $this->oMessageController->GetMessagesAppFromMenucard($iMenucardSerialNumber);
+            $aMenucard['oMessages'] = $oMessage;
+            
+            //Get the stampcard
+            $aStampcard = $this->oStampcardController->GetStampcardApp($iMenucardSerialNumber);
+            $aMenucard['oStampcard'] = $aStampcard;
+            
             
             //var_dump($aMenucard);
             return $aMenucard;

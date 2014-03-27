@@ -31,5 +31,9 @@
         
         <input type="button" onclick="GetMessagesAndStampsApp();" value="GetMessagesApp">
         
+        
+        <input type="button" onclick="GetmenucardWithRestuarentName();" value="GetMenucardWithRestName">
+        <input type="text" id="sRestuarentName" placeholder="sRestuarentName">
+        
     </body>
 </html>

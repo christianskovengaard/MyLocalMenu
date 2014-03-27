@@ -54,7 +54,7 @@ if(isset($_GET['sFunction']))
 
         break;
         
-        
+      
         case "GetMenucardAdmin":
             require_once '../Controllers/MenucardController.php';
             $oMenucardController = new MenuCardController();

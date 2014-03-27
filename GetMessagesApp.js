@@ -28,3 +28,20 @@ function GetMessagesAndStampsApp() {
        
 }
 
+function GetmenucardWithRestuarentName() {
+    
+    
+    var sRestuarentName = $('#sRestuarentName').val();
+    
+    $.ajax({
+              type: "GET",
+              url: "/MyLocalMenu/API/api.php",
+              dataType: "jSON",
+              data: {sFunction:"GetMenucardWithRestuarentName",sRestuarentName:sRestuarentName}
+             }).done(function(result){
+                 
+             });
+             
+    
+}
+
