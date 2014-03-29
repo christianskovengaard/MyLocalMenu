@@ -185,16 +185,16 @@ class StampcardController
         header('Access-Control-Allow-Origin: *');  
         
         /* Only allow trusted, MUCH more safe
-        header('Access-Control-Allow-Origin: spjæl.dk');
-        header('Access-Control-Allow-Origin: xn--spjl-xoa.sk');
-        header('Access-Control-Allow-Origin: www.spjæl.dk');
-        header('Access-Control-Allow-Origin: www.xn--spjl-xoa.dk');
+        header('Access-Control-Allow-Origin: mylocalcafe.dk');
+        header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
+
         */
         
-        if(isset($_GET['iMenucardSerialNumber']) && isset($_GET['sCustomerId'])) {
+        if(isset($_GET['iMenucardSerialNumber']) && isset($_GET['sCustomerId']) && isset($_GET['sRedemeCode']) ) {
         
             $iMenucardSerialNumber = $_GET['iMenucardSerialNumber'];
             $sCustomerId = $_GET['sCustomerId'];
+            $sRedemeCode = $_GET['sRedemeCode'];
             
             //Get iRestuarentInfoId
             $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
@@ -202,42 +202,57 @@ class StampcardController
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $iRestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
-                    
-            //Check for iStampcardMaxStamps to see how many stamps it takes to get one free cup of coffe
-            $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps,iStampcardId FROM stampcard WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
-            $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
+            
+            //Check if the sRemedeCode is valid
+            $sQuery = $this->conPDO->prepare("SELECT COUNT(iStampcardRedemeCode) as result FROM stampcard WHERE iStampcardRedemeCode = :sRedemeCode AND iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId");
+            $sQuery->bindValue(":sRedemeCode", $sRedemeCode);
+            $sQuery->bindValue(":iFK_iRestuarentInfoId", $iRestuarentInfoId);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-            //Convert string to int
-            $iStampcardMaxStamps = intval($aResult['iStampcardMaxStamps']);
-            $iStampcardId = $aResult['iStampcardId'];
+            $result = $aResult['result'];
+            
+            //sRedemecode is Valid
+            if($result == 1)
+            {              
 
-            //Count number of stamps for the user
-            //Check if there are enough stamps to get one free cup of coffe
-            $sQuery = $this->conPDO->prepare("SELECT COUNT(*) as number FROM stamp WHERE sCustomerId = :sCustomerId AND iStampUsed = '0'");
-            $sQuery->bindValue(":sCustomerId", $sCustomerId);
-            $sQuery->execute();
-            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-
-            //Convert string to int
-            $iStamps = intval($aResult['number']);
-
-
-            //Calculate if there is enough stamps for one free cup of coffe.
-            //Antal stempler divideret med antal stempler det kræver at få en kop gratis kaffe
-            if($iStamps/$iStampcardMaxStamps >= 1) {
-
-                //Set $iStampcardMaxStamps number of stamps to used
-                $sQuery = $this->conPDO->prepare("UPDATE stamp SET iStampUsed = '1'
-                                                    WHERE sCustomerId = :sCustomerId 
-                                                    AND iStampUsed = '0' AND iFK_iStampcardId = :iStampcardId");
-                $sQuery->bindValue(":sCustomerId", $sCustomerId);
-                $sQuery->bindValue(":iStampcardId", $iStampcardId);
+                //Check for iStampcardMaxStamps to see how many stamps it takes to get one free cup of coffe
+                $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps,iStampcardId FROM stampcard WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
+                $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
                 $sQuery->execute();
-                
-                $oStampcard['result'] = 'true';
+                $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                //Convert string to int
+                $iStampcardMaxStamps = intval($aResult['iStampcardMaxStamps']);
+                $iStampcardId = $aResult['iStampcardId'];
+
+                //Count number of stamps for the user
+                //Check if there are enough stamps to get one free cup of coffe
+                $sQuery = $this->conPDO->prepare("SELECT COUNT(*) as number FROM stamp WHERE sCustomerId = :sCustomerId AND iStampUsed = '0'");
+                $sQuery->bindValue(":sCustomerId", $sCustomerId);
+                $sQuery->execute();
+                $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+
+                //Convert string to int
+                $iStamps = intval($aResult['number']);
+
+
+                //Calculate if there is enough stamps for one free cup of coffe.
+                //Antal stempler divideret med antal stempler det kræver at få en kop gratis kaffe
+                if($iStamps/$iStampcardMaxStamps >= 1) {
+
+                    //Set $iStampcardMaxStamps number of stamps to used
+                    $sQuery = $this->conPDO->prepare("UPDATE stamp SET iStampUsed = '1'
+                                                        WHERE sCustomerId = :sCustomerId 
+                                                        AND iStampUsed = '0' AND iFK_iStampcardId = :iStampcardId");
+                    $sQuery->bindValue(":sCustomerId", $sCustomerId);
+                    $sQuery->bindValue(":iStampcardId", $iStampcardId);
+                    $sQuery->execute();
+
+                    $oStampcard['result'] = 'true';
+                } else {
+                    $oStampcard['result'] = 'false';
+                }
             } else {
-                $oStampcard['result'] = false;
+                $oStampcard['result'] = 'wrong redemecode';
             }
         }
         return $oStampcard;
