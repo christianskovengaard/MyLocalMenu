@@ -73,7 +73,7 @@ if($oSecurityController->login_check() == true) { ?>
         <div id="TabWrappersStamp" class="menuWrapper" style="display: none;">
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
-                    <p>Sådan ser dit stemplkort ud:</p>
+                    <p>Sådan ser dit stemplkort ud:</p><br>                   
                     <div class='StampEX' id='StampEX'>
                         <h3>STEMPLEKORT</h3>
                         <h4></h4>
@@ -82,6 +82,9 @@ if($oSecurityController->login_check() == true) { ?>
                         <p>Antal stempler på stempelkortet:</p>
                         <input value="" placeholder="" id="iMaxStamps" maxlength="2">
                         <div class='button StampButton' onclick="SaveStampcard();">Gem</div>
+                        <input type="text" placeholder="Stempelkort tekst" id="sStampcardText" style="width: 200px;"/>
+                        <div id="sStampcardTextExample">Stempelkort tekst...</div><br>
+                        <div class="button StampButton" onclick="UpdateStampcardText();">Opdater stempelkort tekst</div><br>
                         <p>Stempelkort kode: </p><p id="RedemeCode"></p><br>
                         <input type="text" id="RedemeCode1" maxlength="1">
                         <input type="text" id="RedemeCode2" maxlength="1">

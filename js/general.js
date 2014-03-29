@@ -1855,15 +1855,15 @@ function GetStampcard() {
            $('#iMaxStamps').val(result.stampcard.iStampcardMaxStamps);
            $('#stampchart').attr('src',result.stampcard.charturl);
            $('#RedemeCode').html(result.stampcard.iStampcardRedemeCode);
-           MakeStampcard();
+           MakeStampcard(result.stampcard.sStampcardText);
        });
 }
 
-function MakeStampcard() {
+function MakeStampcard(sStampcardText) {
    $('#StampEX h4').nextAll().remove();
    var NumStamps = $("#iMaxStamps").val();
    var NumStampsPlusOne = parseInt(NumStamps) + 1;
-   $('#StampEX h4').text('Køb '+NumStamps+' kopper kaffe og få den '+NumStampsPlusOne+'. gratis');
+   $('#StampEX h4').text('Køb '+NumStamps+' '+sStampcardText+' og få den '+NumStampsPlusOne+'. gratis');
    
    for(var i=1; i <= NumStamps; i++) {
        $('#StampEX h4').after("<div class='Stamp'></div>");
@@ -2042,3 +2042,35 @@ function UpdateRedemeCode() {
            }
        }); 
 }
+
+
+function UpdateStampcardText() {
+    
+    var sStampcardtext = $('#sStampcardText').val(); 
+    $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateStampcardText",sStampcardtext:sStampcardtext}
+       }).done(function(result) {
+           if(result.result === 'true') {
+                alert('Stempelkort tekst er blevet opdateret');
+                //Set the new text frontend
+                var text1 = parseInt($('#iMaxStamps').val())+1;
+                text1 = text1+'.';
+                var text = 'Køb '+$('#iMaxStamps').val()+' '+$('#sStampcardText').val()+' og få den '+text1+' gratis';
+                $('#.StampEX h4').html(text);
+           }
+       }); 
+}
+
+
+$('#sStampcardText').keyup(function() {
+    
+    //Set the new text
+    var text1 = parseInt($('#iMaxStamps').val()) + 1;
+    text1 = text1+'.';
+    var text = 'Køb '+$('#iMaxStamps').val()+' '+this.value+' og få den '+text1+' gratis';
+    $('#sStampcardTextExample').html(text);
+    
+});
