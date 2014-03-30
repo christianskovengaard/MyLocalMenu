@@ -50,8 +50,10 @@ if($oSecurityController->login_check() == true) { ?>
         <div id="TabWrappersMessenger" class="menuWrapper" style="display: none;" >
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
-                    <input id="sMessageHeadline" type="text" value="" placeholder="Overskrift"/>
+                    <div class="Messagepreview">
+                    <textarea id="sMessageHeadline" type="text" value="" placeholder="Overskrift"></textarea>
                     <textarea id="sMessengerTextarea" placeholder="Skriv en ny besked"></textarea>
+                    </div>
                     <p>Beskeden skal være aktiv</p>
                     <br>
                     <p>fra</p>

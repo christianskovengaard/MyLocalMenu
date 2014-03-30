@@ -1759,7 +1759,11 @@ function TapChange(subject) {
         $("#Tab"+subject).addClass("On");
         $(".menuWrapper").hide();
         $("#TabWrapper"+subject).show();
-        if( subject === "sMessenger" ) { $("#sMessengerTextarea").focus(); }
+        if( subject === "sMessenger" ) { 
+            $("#sMessengerTextarea").focus(); 
+            $('#sMessageHeadline').autogrow();
+            $('#sMessengerTextarea').autogrow();
+        }
     }
     else{  }
 }
