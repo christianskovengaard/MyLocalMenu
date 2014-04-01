@@ -112,6 +112,13 @@ class MessageController
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $iRestuarentInfoId = $aResult['iFk_iRestuarentInfoId'];
             
+            //Get stampcard text
+            $sQuery = $this->conPDO->prepare("SELECT sStampcardText FROM stampcard WHERE iFk_iRestuarentInfoId = :iFk_iRestuarentInfoId");
+            $sQuery->bindValue(":iFk_iRestuarentInfoId", $iRestuarentInfoId);
+            $sQuery->execute();
+            $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $oMenucards['Menucards'][$iMenucardSerialNumber]['sStampcardText'] = $aResult['sStampcardText']; 
+            
             //Get all message that are active (fits the time span based on the time now)
             $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC LIMIT 1");
             $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
