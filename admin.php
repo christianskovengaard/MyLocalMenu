@@ -12,11 +12,11 @@ if($oSecurityController->login_check() == true) { ?>
         <title>MyLocalCafé - Admin</title>
         <link rel="icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/general_admin.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 700px)" href="css/general_admin_small.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:701px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
+<!--        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 700px)" href="css/general_admin_small.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:701px) and (max-width: 1170px)" href="css/general_admin_medium.css" />-->
         
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 800px)" href="css/general_admin_small.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:801px) and (max-width: 1170px)" href="css/general_admin_medium.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 461px)" href="css/general_admin_small.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:462px) and (max-width: 790px)" href="css/general_admin_medium.css" />
         <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>        
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -57,12 +57,14 @@ if($oSecurityController->login_check() == true) { ?>
                     <p>Beskeden skal være aktiv</p>
                     <br>
                     <p>fra</p>
-                    <input type='text' id='dMessageStart' class="datepicker" placeholder="fra">
+                    <input type='text' id='dMessageStart' class="datepicker" placeholder="">
                     <p>til</p>
-                    <input type='text' id='dMessageEnd' class="datepicker" placeholder="til">
+                    <input type='text' id='dMessageEnd' class="datepicker" placeholder="">
                     <br>
                     <div class="button" onclick="SaveMessage();">Send</div>
                     <br><br>
+                    <h2>Sidst sendte besked:</h2>
+                    <div id="currentMessages" class="oldMessenge"></div>
                     <h2>Gamle beskeder:</h2>
                     <div id="oldMessages" class="oldMessenge"></div>
                           

@@ -1,37 +1,46 @@
-/* 
-    Document   : general_admin_medium
-    Created on : 18-11-2013, 22:49:57
-    Author     : spjael
-    Description:
-        Purpose of the stylesheet follows.
-*/
 
 root { 
     display: block;
 }
+html,body {
+    overflow-x: hidden; padding: 0; 
+}
 
-/*
-h1 { font-size: 35px; line-height: 10px; }
-h2 { font-size: 18px; line-height: 15px; }
-h3 { font-size: 25px; line-height: 5px; }
-h4 { font-size: 14px; line-height: 5px; }
-h5 { font-size: 22px; margin: 0px; }
-h6 { font-size: 14px; margin: 0px; }
-div { font-size: 22px; }
+.RestaurantInfo { height: 64px; top: 0px; overflow: visible; }
+.RestaurantInfo img { margin: 0px 15px 0px -5px; width: 40px; }
+.Restaurant.Name { margin-right: 25px; }
+.Restaurant.Name h1 { font-size: 32px; line-height: 10px; }
+.Restaurant.Name h2 { font-size: 17px; line-height: 10px; }
 
-.buttonEdit { font-size: 15px; padding: 2px 6px 0 0; bottom: 5px;}
-.buttonEdit img { width: 25px; margin-bottom: 2px; }
-.buttonEdit.top { top: -5px; max-height: 27px; }
+.Restaurant.info { padding-top: 0; }
+.RestaurantPhone h2 { font-size: 17px; line-height: 10px;  }
+.RestaurantPhone img { width: 12px; margin: 0 5px 0 0; }
 
+.RestaurantAdresse { margin: -5px 0 0 -13px; }
+.RestaurantAdresse h4 { margin: 1px 0 0 5px; }
+.RestaurantAdresse img { width: 14px; margin: 2px 0px 0 12px; }
 .Restaurant { margin-right: 10px; }
-.Restaurant.OpeningHours { margin: 0; }
-.Restaurant.Delivery { margin: 0 0 0 10px; }
-.Restaurant h4 { font-size: 12px; }
-.RestaurantAdresse { margin-top: -10px;}
-.RestaurantAdresse h4 { max-width: 150px; line-height: 12px; }
-.RestaurantAdresse img { width: 10px; }
-.RestaurantPhone { margin-top: -5px; }
-.RestaurantPhone img { width: 10px; }
+.Restaurant.OpeningHours { margin-top: -10px; }
+.Restaurant.OpeningHours h5 { display: inline-table; width: 99px; margin: 13px 88px 0px 10px; }
+.Restaurant h4 { display: inline-table; margin-right: 5px; }
 
+input { margin-top: 5px; }
 
-.menuWrapperInner { max-width: 800px; }*/
+.TabMenu { top: 75px; }
+
+.menuWrapper {padding: 0px; margin: 0; margin-top: 140px;}
+.wrapper { padding: 0px 10px; margin: 0; }
+.menuWrapperInner { max-width: 400px;  }
+
+.buttonEdit { font-size: 15px; padding: 2px 4px 0 0; bottom: -73px; right: 90px; }
+.buttonEdit img { width: 25px; margin-bottom: 2px; z-index: 10; }
+
+.buttonEdit.top { top: -16px; right: 5px; }
+
+.EditRestaurantInfoWrapper div .button.pushdown {
+margin-top: 22px;
+}
+.oldMessenge {
+width: 358px;
+}
+.menuWrapperInner textarea { width: 351px; }

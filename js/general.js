@@ -1,5 +1,11 @@
  /* Sorftable list functions */
   
+  
+  // Skal den med?? 
+$(window).bind('beforeunload', function(){
+  return 'Dette kan gøre at du mister alle dine ændringer';
+});
+  
   function CreateNewSortableList()
   {    
       
@@ -1760,9 +1766,12 @@ function TapChange(subject) {
         $(".menuWrapper").hide();
         $("#TabWrapper"+subject).show();
         if( subject === "sMessenger" ) { 
-            $("#sMessengerTextarea").focus(); 
+            $("#sMessageHeadline").focus(); 
             $('#sMessageHeadline').autogrow();
             $('#sMessengerTextarea').autogrow();
+            // Fill fromdate
+            var todayDate = $.datepicker.formatDate('dd-mm-yy', new Date());
+            $("#dMessageStart").val(todayDate);
         }
     }
     else{  }
@@ -1808,7 +1817,20 @@ function GetMessages() {
           $('#oldMessages').html('');
 
           $.each(result.Messages, function(key,value){
-              $('#oldMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+value.dtMessageDate+'</h3><h2>'+value.sMessageBodyText+'</h2></div>');
+              var date = value.dtMessageDate;
+              var yy = date.substring(0,4);
+              var mm = date.substring(5,7);
+              var dd = date.substring(8,10);
+              var h = date.substring(11,13);
+              var m = date.substring(14,16);
+              var date = dd+"-"+mm+"-"+yy+" "+h+":"+m;
+
+              if( key == 0){
+                  $('#currentMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+date+'</h3><h2>'+value.sMessageBodyText+'</h2></div>')
+              }
+              else {
+              $('#oldMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+date+'</h3><h2>'+value.sMessageBodyText+'</h2></div>');
+              }
           });
            
        });
@@ -1816,7 +1838,8 @@ function GetMessages() {
 }
 
 function SaveMessage() {
-    
+    if(!$("#sMessageHeadline").val() == "" || !$("#sMessengerTextarea").val() == "" ){
+        
        var aData = {};
        
        aData['dMessageStart'] = $('#dMessageStart').val();
@@ -1843,6 +1866,14 @@ function SaveMessage() {
            $('#sMessengerTextarea').val(''); 
            GetMessages();
        });
+    }
+    else {
+        $(".Messagepreview").after("<div class='MessageEmpty'>Du skal skrive en besked</div>");
+        $(".MessageEmpty").hide().slideDown(200);
+        $(".MessageEmpty").delay('1000').slideUp(200, function(){
+            $(this).remove();
+        });
+    }
 }
 
 
@@ -1871,6 +1902,7 @@ function MakeStampcard(sStampcardText) {
    
    for(var i=1; i <= NumStamps; i++) {
        $('#StampEX h4').after("<div class='Stamp'></div>");
+       
    }
    
 }
