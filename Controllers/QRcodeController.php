@@ -22,7 +22,7 @@ class QRcodeController
        
        $aQRcode = $this->GenerateNewQRcode(); 
         
-       $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoQRcode = :url, sRestuarentInfoQrcodeData = :data WHERE iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId");
+       $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoQRcode = :url, sRestuarentInfoQrcodeData = :data WHERE iRestuarentInfoId = :iFK_iRestuarentInfoId");
        $sQuery->bindValue(':url', $aQRcode['url']);
        $sQuery->bindValue(":data", $aQRcode['data']);
        $sQuery->bindValue(':iFK_iRestuarentInfoId', $iRestuarentInfoId);
