@@ -19,9 +19,11 @@ class StampcardController
     
     public function CreateStampcard($iFK_iRestuarentInfoId) {
         
-        $sQuery = $this->conPDO->prepare("INSERT INTO stampcard (iStampcardMaxStamps,iFK_iRestuarentInfoId) VALUES (:iStampcardMaxStamps,:iFK_iRestuarentInfoId)");
+        $sQuery = $this->conPDO->prepare("INSERT INTO stampcard (iStampcardMaxStamps,iFK_iRestuarentInfoId,iStampcardRedemeCode,sStampcardText) VALUES (:iStampcardMaxStamps,:iFK_iRestuarentInfoId,:iStampcardRedemeCode,:sStampcardText)");
         $sQuery->bindValue(":iStampcardMaxStamps", '5');
         $sQuery->bindValue(":iFK_iRestuarentInfoId", $iFK_iRestuarentInfoId);
+        $sQuery->bindValue(":iStampcardRedemeCode", '1234');
+        $sQuery->bindValue(":sStampcardText", 'kopper kaffe');
         
         try {
                 $sQuery->execute();
