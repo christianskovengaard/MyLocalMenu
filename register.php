@@ -68,9 +68,9 @@ if(isset($_GET['sUserToken']))
                             <h2>Åbningstider</h2>
                             <div id="OpeningHours" class="Hours Opening"></div>
                             <div onclick="registerNext(1);" class="button prev">tilbage</div>
-                            <div onclick="//SubmitFormRegister();" class="button Reg">OK</div>
+                            <div onclick="SubmitFormRegister();" class="button Reg">OK</div>
                         </div>
-                        <input type="hidden" id="sUserToken" value="<?/*= $_GET['sUserToken']*/?>"/>
+                        <input type="hidden" id="sUserToken" value="<?= $_GET['sUserToken']?>"/>
                     </form>
                 
             </div>

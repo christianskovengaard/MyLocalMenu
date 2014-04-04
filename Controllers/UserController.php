@@ -260,7 +260,7 @@ class UserController
      {
          $aUser = array(
                 'sFunction' => 'AddNewUser',
-                'result' => false
+                'result' => 'false'
             );
          
          if(isset($_GET['Email']))
@@ -316,7 +316,7 @@ class UserController
 
                 $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
 
-                $aUser['result'] = true;
+                $aUser['result'] = 'true';
             }
             
             return $aUser;

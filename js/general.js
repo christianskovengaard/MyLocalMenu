@@ -1224,20 +1224,7 @@ $(window).bind('beforeunload', function(){
             var mail = $('#sEmailToSubmit').val();
             if(validateEmail(mail))
             {   
-                if(AddNewUser(mail) === true){
-                    //if(10 == 10){
-                $('#NewUser').html('');
-                var mailhost = mail.split('@')[1];
-                $('#NewUser').append('<div class="EmailSubmission"><h1>jayyy</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>')
-//                $('.EmailSubmission').hide().slideDown(200);
-                //Create new account and send email to user
-                }else{
-                   $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Emailen er allerede i brug</h1><h3>Prøv med en anden email eller log ind nedenfor</h3></div>');
-                   $('.EmailSubmission').hide().slideDown(200);
-//                   setTimeout(function(){$('.EmailSubmission').slideUp(200);},2500);
-//                   setTimeout(function(){$('.EmailSubmission').remove();},2700);
-                   $('#sEmailToSubmit').val('');
-                }
+                AddNewUser(mail);
             }else{
                 $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Ikke en korrekt Email</h1></div>');
                 $('.EmailSubmission').hide().slideDown(200);
@@ -1257,11 +1244,14 @@ $(window).bind('beforeunload', function(){
              data : {sFunction:"AddNewUser",Email:mail}
         }).done(function(result){
             if(result.result === 'true'){
-                return true;
-                
+                $('#NewUser').html('');
+                var mailhost = mail.split('@')[1];
+                $('#NewUser').append('<div class="EmailSubmission"><h1>jayyy</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>');
+                //Create new account and send email to user               
             }else{
-                return false;
-                
+                $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Emailen er allerede i brug</h1><h3>Prøv med en anden email eller log ind nedenfor</h3></div>');
+                   $('.EmailSubmission').hide().slideDown(200);
+                   $('#sEmailToSubmit').val('');               
             } 
         }); 
     }
