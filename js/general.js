@@ -5,7 +5,7 @@
 $(window).bind('beforeunload', function(){
   return 'Dette kan gøre at du mister alle dine ændringer';
 });
-  
+
   function CreateNewSortableList()
   {    
       
