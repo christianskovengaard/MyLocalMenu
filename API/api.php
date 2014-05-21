@@ -393,7 +393,14 @@ if(isset($_GET['sFunction']))
             $sResult = json_encode($result);
             echo $sResult;
         break;
-    
+        
+        case "AutocompleteCafename":
+            require_once '../Controllers/RestuarentController.php';
+            $oRestuarentController = new RestuarentController();
+            $result = $oRestuarentController->SearchForRestuarentname();
+            $sResult = json_encode($result);
+            echo $sResult;
+        break;
         
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';

@@ -176,6 +176,46 @@ class RestuarentController
         return $aRestuarent;
     }
 
+    
+    public function SearchForRestuarentname() {
+        
+        
+        header('Access-Control-Allow-Origin: *');  
+        
+        
+        /* Only allow trusted, MUCH more safe
+        header('Access-Control-Allow-Origin: mylocalcafe.dk');
+        header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
+        */
+        
+        $aRestuarent = array(
+                'sFunction' => 'SearchForRestuarentname',
+                'result' => 'false',
+                'cafe' => ''
+            );
+        
+        if(isset($_GET['sCafename'])) {
+        
+            $sCafename = $_GET['sCafename'];
+
+            $sQuery = $this->conPDO->prepare("SELECT sRestuarentInfoName,sRestuarentInfoAddress FROM restuarentname_search WHERE sRestuarentInfoName LIKE :sCafename");
+            $sQuery->bindValue(":sCafename", '%'.$sCafename.'%');
+            $sQuery->execute();
+            
+            $i = 0;
+            while ($result = $sQuery->fetch(PDO::FETCH_ASSOC)) {
+                $aRestuarent['cafe'][$i]['name'] = utf8_encode($result['sRestuarentInfoName']);
+                $aRestuarent['cafe'][$i]['address'] = utf8_encode($result['sRestuarentInfoAddress']);
+                $i++;
+            }
+            $aRestuarent['result'] = 'true';
+            
+        }
+        
+        return $aRestuarent;
+    }
+    
+    
     public function __destruct() {
         ;
     }
