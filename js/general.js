@@ -28,7 +28,7 @@
       $('.newplaceholder').append('<div class="DishEditWrapper"><div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit_white.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><img src="img/delete_white.png"></div></div><input type="hidden" value="new">');
       $('.DishEditWrapper').hide();
       $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"><li></li></ul>');
-      $('#'+id).append('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuList(this);"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuListHeadlineToHtml(\''+id+'\');">✓ Updater</a></li>');
+      $('#'+id).append('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuList(this);"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuListHeadlineToHtml(\''+id+'\');">✓ Opdatér</a></li>');
 //      $('.newplaceholder').append('<ul id="'+id+'" class="connectedSortable"><li onclick="CreateNewLiInSortableList(\''+id+'\')" class="AddLiButton non-dragable"><h5>+</h5></li></ul>');
 //      $('.newplaceholder').append(' <input type="button" value="Slet liste '+id+'" onclick="DeleteSortableList(\''+id+'\')">');
       $('.sortablediv:last').removeClass('newplaceholder'); 
@@ -65,7 +65,7 @@
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
     $('.newsortabledivbuffer').css('display', 'inline-block');
-    $('#'+id+' .AddLiButton').before('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Updater</a></li>');
+    $('#'+id+' .AddLiButton').before('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Opdatér</a></li>');
   
     //Update the items placement
     UpdatePlacementOfItems();
@@ -82,7 +82,7 @@
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
     $('.newsortabledivbuffer').css('display', 'inline-block');
-    $('.AddLiButton.info').before('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveInfoToHtml();">✓ Updater</a></div>');
+    $('.AddLiButton.info').before('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelNewMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveInfoToHtml();">✓ Opdatér</a></div>');
     $('.EditDish').hide();
       
   }
@@ -97,7 +97,7 @@
       var Description = $('.DishDescription textarea').val();
       var price = $('.DishPrice input').val();
       
-      if(Headline != '' && price !=''){
+      //if(Headline != '' && price !=''){
           $('.DishNumber input').parent().html('<h1>'+Number+'</h1>');
           $('.DishHeadline input').parent().html('<h1>'+Headline+'</h1>');
           $('.DishDescription textarea').parent().html('<h2>'+Description+'</h2>');
@@ -111,12 +111,13 @@
           $('.EditDish').show();
           $(".DishEditWrapper").show();
           $('.DishEditWrapperTEMP').removeClass('DishEditWrapperTEMP');
-      }
+      /*}
       
       else{
-          //TODO: Create better looking alert box
+          
           alert("Udfyld venlist en overskrift og en pris");
-      }
+          
+      }*/
 }
  
   function SaveInfoToHtml(){
@@ -319,7 +320,7 @@
   {     
       var elem = $(elem).parent().parent();
       var text = $(elem).find('.DishHeadline').text();
-      if (confirm('Dette vil slette: '+text)) 
+      if (confirm('Dette vil slette menuen og alle menupunkter!')) 
       {
           $(elem).remove();
           //Set sessionStorage
@@ -381,7 +382,7 @@
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
     $('.newsortabledivbuffer').css('display', 'inline-block');
-    dish.closest('.DishWrapper').after('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Updater</a></li>');
+    dish.closest('.DishWrapper').after('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Opdatér</a></li>');
 }
   
   function EditListHeadline(id){
@@ -413,7 +414,7 @@
           $('.AddLiButton').hide();
           $('.newsortablediv').hide();
           $('.newsortabledivbuffer').css('display', 'inline-block');
-          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditHeadline();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(this);">✓ Updater</a></div>');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditHeadline();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(this);">✓ Opdatér</a></div>');
 }
   function CancelEditHeadline(){
         $('#headEditHeadline').parent().html(sessionStorage.headlineHead);
@@ -450,7 +451,7 @@
           $('.AddLiButton').hide();
           $('.newsortablediv').hide();
           $('.newsortabledivbuffer').css('display', 'inline-block');
-          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuinfo();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedInfoToHtml(this);">✓ Updater</a></div>');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuinfo();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedInfoToHtml(this);">✓ Opdatér</a></div>');
 }
 
    function CancelEditMenuinfo(){
@@ -927,6 +928,10 @@
                               //Set opening hours
                               $('[name="Day'+value.iTimeCounter+'"] option[value="'+value.iTimeFromId+'"]').attr('selected', 'selected');
                               $('[name="Day'+value.iTimeCounter+'_'+value.iTimeCounter+'"] option[value="'+value.iTimeToId+'"]').attr('selected', 'selected');
+                              //Set if closed
+                              if(value.iClosed === '1') {
+                                  $('#Day'+value.iTimeCounter+'_Closed').attr('checked','checked');
+                              }
                               //Append the obj to the openinghours obj
                               menucardinfo.openinghours.push(obj);
                           });

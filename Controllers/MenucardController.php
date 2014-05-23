@@ -1440,7 +1440,7 @@ class MenucardController
             
             
             //Get openning hours
-            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName,`openinghours`.`iFK_iTimeFromId`,`openinghours`.`iFK_iTimeToId` FROM `openinghours`
+            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName,`openinghours`.`iFK_iTimeFromId`,`openinghours`.`iFK_iTimeToId`,`openinghours`.`iClosed` FROM `openinghours`
                                                 LEFT JOIN `day`
                                                 ON `day`.`iDayId` = `openinghours`.`iFK_iDayId`
                                                 LEFT JOIN `time` as timeFrom
@@ -1472,6 +1472,7 @@ class MenucardController
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFromId'] = $row['iFK_iTimeFromId'];
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeToId'] = $row['iFK_iTimeToId'];
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeCounter'] = $x;
+                $aMenucard['aMenucardOpeningHours'][$i]['iClosed'] = $row['iClosed'];
                 //Check for Openinghours hour today        
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  

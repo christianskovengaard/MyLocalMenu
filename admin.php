@@ -29,7 +29,7 @@ if($oSecurityController->login_check() == true) { ?>
         <div class="TabMenu">
             <div id="TabsMenu" class="Tab On" onclick="TapChange('sMenu');">Menu</div>
             <div id="TabsMessenger" class="Tab" onclick="TapChange('sMessenger');">Beskeder</div>
-            <div id="TabsStamp" class="Tab" onclick="TapChange('sStamp');">Stemplekort</div>
+            <!--<div id="TabsStamp" class="Tab" onclick="TapChange('sStamp');">Stemplekort</div>-->
             <div id="TabsEdit" class="Tab" onclick="TapChange('sEdit');">Indstillinger</div>
         </div>
         
@@ -50,6 +50,7 @@ if($oSecurityController->login_check() == true) { ?>
         <div id="TabWrappersMessenger" class="menuWrapper" style="display: none;" >
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
+                    <div class="MessageText">Her kan du skrive beskeder ud til dine kunder, i forbindelse med tilbud, events m.m.</div>
                     <div class="Messagepreview">
                     <textarea id="sMessageHeadline" type="text" value="" placeholder="Overskrift"></textarea>
                     <textarea id="sMessengerTextarea" placeholder="Skriv en ny besked"></textarea>
