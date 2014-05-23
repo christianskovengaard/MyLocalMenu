@@ -309,7 +309,7 @@ class UserController
                     die($e->getMessage());
                 }
 
-                $sMessage = "Ny bruger til MyLocal, Gå til dette <a href='mylocalcafe.dk/register.php?sUserToken=$sUserToken'>link</a> og opret et nyt menukort";
+                $sMessage = "Ny bruger til My Local Café, Tryk på dette <a href='mylocalcafe.dk/register.php?sUserToken=$sUserToken'>link</a> for at oprette din profil";
                 $sTo = $mail;
                 $sFrom = 'support@mylocalcafe.dk';
                 $sSubject = 'Ny konto hos MyLocal';

@@ -1245,7 +1245,7 @@
             if(result.result === 'true'){
                 $('#NewUser').html('');
                 var mailhost = mail.split('@')[1];
-                $('#NewUser').append('<div class="EmailSubmission"><h1>jayyy</h1><h3>Vi har sent en email til <span>'+mail+'</span></h3><h3>med et link til hvor du opretter dit menukort</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>');
+                $('#NewUser').append('<div class="EmailSubmission"><h1>Sådan!</h1><h3>Vi har sendt en email til <span>'+mail+'</span></h3><h3>med et link til oprettelse af din profil</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>');
                 //Create new account and send email to user               
             }else{
                 $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Emailen er allerede i brug</h1><h3>Prøv med en anden email eller log ind nedenfor</h3></div>');
@@ -1449,7 +1449,7 @@ function ValidateRegSwitch(CaseName,id){
             $('.validationTagImg.pass').remove();
             var pass = $(id).val();
             if(pass.length <= 5 ){
-                $(id).before('<div class="validationTag pass">Din kode skal være 6 tegn eller over.</div>');
+                $(id).before('<div class="validationTag pass">Din kode skal være 6 tegn eller derover.</div>');
             }
         break;
         

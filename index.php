@@ -33,32 +33,32 @@ $oSecurityController->sec_session_start();
             <p>Få din egen App, og kommunikér direkte med dine kunder, helt gratis.</p> 
             <p>Du kan:</p>
             <ul>
-                <li>- Promover tilbud til dine kunder</li>
-                <li>- Få nye kunder</li>
-                <li>- Få flere loyale kunder</li>
-                <li>- Mål løbende på dine salg</li>
-                <li>- Skab omtale om dit sted</li>
-                <li>- Forøg din omsætning</li>
+                <li> Promover tilbud til dine kunder</li>
+                <li> Få nye kunder</li>
+                <li> Få flere loyale kunder</li>
+                <li> Mål løbende på dine salg</li>
+                <li> Skab omtale om dit sted</li>
+                <li> Forøg din omsætning</li>
             </ul>
             <p>Du kan som café ejer oprette en gratis profil. Med denne profil er det muligt, at tilføje oplysninger om din café. Disse oplysninger er individuelle, men kan bl.a. være:</p>
             <ul>
-               <li>- Åbningstider</li>
-               <li>- Menukort</li>
-               <li>- Tilbud</li>
-               <li>- Service info</li>
-               <li>- Wi-fi adgang</li>
-               <li>- Beliggenhed</li>
-               <li>- Mærkedage</li>
-               <li>- Konkurrencer</li>
-               <li>- Send push beskeder</li>
-               <li>- Opret online klippekort</li>
-               <li>- Opret online stempelkort</li>
-               <li>- Og meget mere</li>
+               <li> Åbningstider</li>
+               <li> Menukort</li>
+               <li> Tilbud</li>
+               <li> Service info</li>
+               <li> Wi-fi adgang</li>
+               <li> Beliggenhed</li>
+               <li> Mærkedage</li>
+               <li> Konkurrencer</li>
+               <li> Send push beskeder</li>
+               <li> Opret online klippekort</li>
+               <li> Opret online stempelkort</li>
+               <li> Og meget mere</li>
            </ul>
 
            <p>Dine café oplysninger kommunikeres direkte til dine kunder igennem My Local Café´s app.</p>
            <h3>Sådan virker det</h3>
-           <p>Dine Café kunder henter My Local Cafés app. De indtaster jeres Cafékode og får vist jeres personlige Café app.</p>
+           <p>Dine Café kunder henter My Local Café's app. De indtaster jeres cafénavn, og får vist jeres personlige café app.</p>
            <h3>Opret en profil og få en app i dag, det er helt gratis.</h3>
            <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
            <!--<div onclick="HideShowSwitch('Email');" class="button01">Opret</div>-->
