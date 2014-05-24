@@ -869,6 +869,8 @@
                               sRestuarentInfoDescription: result.sRestuarentInfoSlogan,
                               sRestuarentPhone: result.sRestuarentPhone,
                               sRestuarentAddress: result.sRestuarentAddress,
+                              iZipcode: result.iRestuarentZipcode,
+                              sCity: result.sRestuarentCityname,
                               sRestuarentOpenningHoursToday: result.sRestuarentOpenningHoursToday,
                               openNow: result.openNow,
                               sRestuarentTakeAwayHoursToday: result.sRestuarentTakeAwayHoursToday,

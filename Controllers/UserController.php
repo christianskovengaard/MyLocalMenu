@@ -778,7 +778,7 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
 
             $sUsername = $_SESSION['username'];
            
-            $aUser['sUsername'] = $sUsername;
+            $aUser['sUsername'] = utf8_encode($sUsername);
                        
             //Get iFK_iCompanyId
             $sQuery = $this->conPDO->prepare("SELECT iFK_iCompanyId FROM users WHERE sUsername = :sUsername LIMIT 1");
