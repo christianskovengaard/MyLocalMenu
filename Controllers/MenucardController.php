@@ -811,7 +811,7 @@ class MenucardController
 
 
                 //Delete all menucardinfo
-                $sQuery = $this->conPDO->prepare("DELETE FROM menucardinfo WHERE iFK_iMenucardId");
+                $sQuery = $this->conPDO->prepare("DELETE FROM menucardinfo WHERE iFK_iMenucardId = :iMenucardId");
                 $sQuery->bindValue(":iMenucardId", $iMenucardId);
 
                 try
