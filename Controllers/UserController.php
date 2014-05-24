@@ -168,6 +168,8 @@ class UserController
             'result' => false
         );
         
+        $sUsername = utf8_decode($sUsername);
+        
         $sQuery = $this->conPDO->prepare("SELECT sUserPassword,iUserIdHashed,iUserId,sUsername FROM users WHERE sUsername = ? LIMIT 1");
 	$sQuery->bindValue(1, $sUsername);
         
