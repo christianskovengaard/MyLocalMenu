@@ -198,7 +198,7 @@ class RestuarentController
         
             $sCafename = $_GET['sCafename'];
 
-            $sQuery = $this->conPDO->prepare("SELECT sRestuarentInfoName,sRestuarentInfoAddress FROM restuarentname_search WHERE sRestuarentInfoName LIKE :sCafename");
+            $sQuery = $this->conPDO->prepare("SELECT sRestuarentInfoName,sRestuarentInfoAddress FROM restuarentinfo WHERE sRestuarentInfoName LIKE :sCafename");
             $sQuery->bindValue(":sCafename", '%'.$sCafename.'%');
             $sQuery->execute();
             
