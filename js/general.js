@@ -1559,7 +1559,7 @@ function SubmitFormRegister(){
                  
             }
         }).done(function(result){
-               alert('Reg. complete: '+result.result);
+               //alert('Reg. complete: '+result.result);
                 if(result.result === true)
                 {
                     document.location.href = 'admin.php';
