@@ -114,7 +114,7 @@ class RestuarentController
                 $sQuery->bindValue(":sRestuarentInfoName", utf8_decode(urldecode($aJSONRestuarent->sRestuarentName)));
                 $sQuery->bindValue(":sRestuarentInfoSlogan", utf8_decode(urldecode($aJSONRestuarent->sRestuarentSlogan)));      
                 $sQuery->bindValue(":sRestuarentInfoPhone", urldecode($aJSONRestuarent->sRestuarentPhone));
-                $sQuery->bindValue(":sRestuarentInfoAddress", urldecode($aJSONRestuarent->sRestuarentAddress));
+                $sQuery->bindValue(":sRestuarentInfoAddress", utf8_decode(urldecode($aJSONRestuarent->sRestuarentAddress)));
                 $sQuery->bindValue(':iRestuarentInfoZipcode', $aJSONRestuarent->sRestuarentZipcode); 
                 $sQuery->bindValue(":iFK_iCompanyId", $iFK_iCompanyId);
                 $sQuery->execute();

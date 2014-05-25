@@ -1637,6 +1637,7 @@ class MenucardController
             
             $sRestuarentName = $_GET['sRestuarentName'];
             $sRestuarentName = str_replace("+", " ", $sRestuarentName);
+            $sRestuarentName = utf8_decode($sRestuarentName);
 
             //Get the $iMenucardSerialNumber from the $sRestuarentName
             //First get the Menucard 
