@@ -196,7 +196,7 @@ class RestuarentController
         
         if(isset($_GET['sCafename'])) {
         
-            $sCafename = $_GET['sCafename'];
+            $sCafename = utf8_decode($_GET['sCafename']);
 
             $sQuery = $this->conPDO->prepare("SELECT sRestuarentInfoName,sRestuarentInfoAddress FROM restuarentinfo WHERE sRestuarentInfoName LIKE :sCafename");
             $sQuery->bindValue(":sCafename", '%'.$sCafename.'%');
