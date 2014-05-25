@@ -211,7 +211,7 @@
       var Headline = $('.InfoSlide input').val();
       var Description = $('.InfoSlide textarea').val();
 
-      if(Headline !== '' && Description !== ''){
+      //if(Headline !== '' && Description !== ''){
           
           $('.InfoSlide input').parent().html(Headline);
           $('.InfoSlide textarea').parent().html(Description);
@@ -227,10 +227,10 @@
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
           
-      }
+      /*}
       else{
           alert("udfyld venlist begge felter");
-      }    
+      }*/    
  }
  
   
