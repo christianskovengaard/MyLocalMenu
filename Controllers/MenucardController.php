@@ -1855,7 +1855,10 @@ class MenucardController
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $aMenucard['sRestuarentName'] = utf8_encode($aResult['sRestuarentInfoName']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
-            $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
+            $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);
+            $aMenucard['iRestuarentInfoZipcode'] = $aResult['iRestuarentInfoZipcode'];
+            //Get cityname
+            $aMenucard['sRestuarentInfoCity'] = $this->oZipcodeCityController->GetCitynamePriv($aResult['iRestuarentInfoZipcode']);
             
             //Get messages for the menucard
             $oMessage = $this->oMessageController->GetMessagesAppFromMenucard($iMenucardSerialNumber);
