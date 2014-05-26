@@ -197,6 +197,9 @@
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
           
+          //Set Session storage
+          sessionStorage.bMenucardChanged = 'true';
+          
       }
       else{
           alert("udfyld venlist en overskrift");
@@ -331,7 +334,7 @@
   function DeleteSortableList(id)
   {    
       var text = $(id).parent().parent().find('h3').text();
-      if (confirm('Dette vil slette: '+text+' og alle menupunkter ?')) {
+      if (confirm('Dette vil slette: '+text+' og alle menupunkter!')) {
           
           $(id).parent().parent().remove();
           //Set sessionStorage
@@ -542,9 +545,9 @@
       
 
       //sMenucard name
-      aAllLists['sMenucardname'] = "Menukort navn HARDCODED";
+      aAllLists['sMenucardname'] = "Menukort navn";
       //sMenucard description
-      aAllLists['sMenucarddescription'] = "Menukort beskrivelse HARDCODED";
+      aAllLists['sMenucarddescription'] = "Menukort beskrivelse";
       aAllLists['iMenucardIdHashed'] = $('#iMenucardIdHashed').val();
       //iNumberofMenucardCategories
       aAllLists['iLastIndexofMenucardCategories'] = iLastIndexofMenucardCategories;
