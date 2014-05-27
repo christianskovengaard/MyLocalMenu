@@ -356,7 +356,7 @@ class MenucardController
                 'result' => false
             );
         
-        if(isset($_GET['sJSONMenucard']))
+        if(isset($_POST['sJSONMenucard']))
         {   
             //Check if a session is NOT started
             if(!isset($_SESSION['sec_session_id']))
@@ -373,7 +373,7 @@ class MenucardController
             
             
                 //Get the JSON string
-                $sJSONMenucard = $_GET['sJSONMenucard'];
+                $sJSONMenucard = $_POST['sJSONMenucard'];
                 //Convert the JSON string into an array
                 $aJSONMenucard = json_decode($sJSONMenucard);
 
