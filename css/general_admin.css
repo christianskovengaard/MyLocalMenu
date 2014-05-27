@@ -468,3 +468,20 @@ left: 9px;
 .saveMenuDishButton.Cancel:hover { background: #333;}
 
 #currentQRcode img { height: 120px; }
+
+
+/** color style for the placeholder tag **/
+::-webkit-input-placeholder {
+    color: #21201f;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #21201f;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #21201f;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #21201f;
+}

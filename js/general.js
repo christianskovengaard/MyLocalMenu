@@ -800,7 +800,8 @@
                 $('.Restaurant.Name h1').html($("#MenuName").val());
                 $('.Restaurant.Name h2').html($("#MenuSubName").val());
                 $('.RestaurantPhone h2').html($("#MenuPhone").val());
-                $('.RestaurantAdresse h4').html($("#MenuAdress").val());
+                $('.RestaurantAdresse h4').html($("#MenuAdress").val()+', '+$('#MenuZip').val()+' '+$('#MenuTown').val());
+                
                 
                 //Update opening hours in the DOM
                 $('#Openinghours').html('');
