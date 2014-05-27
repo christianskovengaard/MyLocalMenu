@@ -1328,7 +1328,9 @@ class MenucardController
             $aMenucard['sRestuarentSlogan'] = utf8_encode($aResult['sRestuarentInfoSlogan']);
             $aMenucard['sRestuarentPhone'] = $aResult['sRestuarentInfoPhone'];
             $aMenucard['sRestuarentAddress'] = utf8_encode($aResult['sRestuarentInfoAddress']);             
-            
+            $aMenucard['iRestuarentInfoZipcode'] = $aResult['iRestuarentInfoZipcode'];
+            //Get cityname
+            $aMenucard['sRestuarentInfoCity'] = $this->oZipcodeCityController->GetCitynamePriv($aResult['iRestuarentInfoZipcode']);
             
             //Get messages for the menucard
             $oMessage = $this->oMessageController->GetMessagesAppFromMenucard($iMenucardSerialNumber);
