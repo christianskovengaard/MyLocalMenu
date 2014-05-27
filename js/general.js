@@ -574,8 +574,9 @@
       aAllLists['menucardinfo'] = aAllMenucardInfo;
       var sJSONAllLists = JSON.stringify(aAllLists);
       
+      //TODO: Change to use POST
        $.ajax({
-        type: "GET",
+        type: "POST",
         url: "API/api.php",
         dataType: "json",
         data: {sFunction:"UpdateMenucard",sJSONMenucard:sJSONAllLists}

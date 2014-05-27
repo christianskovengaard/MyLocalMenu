@@ -22,7 +22,7 @@ if(isset($_GET['sFunction']))
 
         break;
               
-        case "UpdateMenucard":
+        /*'case "UpdateMenucard":
             require_once '../Controllers/MenucardController.php';
             $oMenucardController = new MenuCardController();
             $result = $oMenucardController->UpdateMenucard();
@@ -36,7 +36,7 @@ if(isset($_GET['sFunction']))
             }
             echo $sResult;
 
-        break;
+        break;*/
         
         case "GetMenucardWithSerialNumber":
             require_once '../Controllers/MenucardController.php';
@@ -409,4 +409,33 @@ if(isset($_GET['sFunction']))
 
     }
 }
+
+
+if(isset($_POST['sFunction'])) {
+    $sFunction = $_POST['sFunction'];
+
+    switch ($sFunction) {
+        
+        case "UpdateMenucard":
+            require_once '../Controllers/MenucardController.php';
+            $oMenucardController = new MenuCardController();
+            $result = $oMenucardController->UpdateMenucard();
+            if($result['result'] == true)
+            {
+                $sResult = json_encode($result);
+            }
+            else
+            {
+                $sResult = json_encode($result);
+            }
+            echo $sResult;
+        break;
+        
+        default:
+                $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
+                echo $result;
+        break;
+    }
+}
+
 ?>
