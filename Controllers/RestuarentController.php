@@ -135,35 +135,45 @@ class RestuarentController
                 $aOpeningHours = array(
                     0 => $aJSONRestuarent->iMondayTimeFrom,
                     1 => $aJSONRestuarent->iMondayTimeTo,
-                    2 => $aJSONRestuarent->iThuesdayTimeFrom,
-                    3 => $aJSONRestuarent->iThuesdayTimeTo,
-                    4 => $aJSONRestuarent->iWednesdaysTimeFrom,
-                    5 => $aJSONRestuarent->iWednesdaysTimeTo,
-                    6 => $aJSONRestuarent->iThursdayTimeFrom,
-                    7 => $aJSONRestuarent->iThursdayTimeTo,
-                    8 => $aJSONRestuarent->iFridayTimeFrom,
-                    9 => $aJSONRestuarent->iFridayTimeTo,
-                    10 => $aJSONRestuarent->iSaturdayTimeFrom,
-                    11 => $aJSONRestuarent->iSaturdayTimeTo,
-                    12 => $aJSONRestuarent->iSundayTimeFrom,
-                    13 => $aJSONRestuarent->iSundayTimeTo
+                    2 => $aJSONRestuarent->iMondayClosed,
+                    3 => $aJSONRestuarent->iThuesdayTimeFrom,
+                    4 => $aJSONRestuarent->iThuesdayTimeTo,
+                    5 => $aJSONRestuarent->iThuesdayClosed,
+                    6 => $aJSONRestuarent->iWednesdaysTimeFrom,
+                    7 => $aJSONRestuarent->iWednesdaysTimeTo,
+                    8 => $aJSONRestuarent->iWednesdaysClosed,
+                    9 => $aJSONRestuarent->iThursdayTimeFrom,
+                    10 => $aJSONRestuarent->iThursdayTimeTo,
+                    11 => $aJSONRestuarent->iThursdayClosed,
+                    12 => $aJSONRestuarent->iFridayTimeFrom,
+                    13 => $aJSONRestuarent->iFridayTimeTo,
+                    14 => $aJSONRestuarent->iFridayClosed,
+                    15 => $aJSONRestuarent->iSaturdayTimeFrom,
+                    16 => $aJSONRestuarent->iSaturdayTimeTo,
+                    17 => $aJSONRestuarent->iSaturdayClosed,
+                    18 => $aJSONRestuarent->iSundayTimeFrom,
+                    19 => $aJSONRestuarent->iSundayTimeTo,
+                    20 => $aJSONRestuarent->iSundayClosed,
                 );
 
                 //Loop through array and insert all the values
                 //Counter for the day id. 1=mandag,2=tirsdag,3=onsdag,4=torsdag,5=fredag,6=lørdag,7=søndag
                 $iDay = 1;
-                for($i=0;$i<13;$i+=2) {
-                    $sQuery = $this->conPDO->prepare("UPDATE openinghours SET iFK_iTimeFromId = :iFK_iTimeFromId, iFK_iTimeToId = :iFK_iTimeToId WHERE iFK_iMenucardId = :iFK_iMenucardId AND iFK_iDayId = :iFK_iDayId");
+                for($i=0;$i<20;$i+=3) {
+                    $sQuery = $this->conPDO->prepare("UPDATE openinghours SET iFK_iTimeFromId = :iFK_iTimeFromId, iFK_iTimeToId = :iFK_iTimeToId, iClosed = :iClosed WHERE iFK_iMenucardId = :iFK_iMenucardId AND iFK_iDayId = :iFK_iDayId");
 
                     $sQuery->bindValue(':iFK_iMenucardId', $iFK_iMenucardId);
                     $sQuery->bindValue(':iFK_iDayId', $iDay);
-                    $sQuery->bindValue(':iFK_iTimeFromId', $aOpeningHours[$i]);
+                    $sQuery->bindValue(':iFK_iTimeFromId', $aOpeningHours[$i]); //3
                     $i++;
-                    $sQuery->bindValue(':iFK_iTimeToId', $aOpeningHours[$i]);
+                    $sQuery->bindValue(':iFK_iTimeToId', $aOpeningHours[$i]); //4
+                    $i++;
+                    $sQuery->bindValue("iClosed", $aOpeningHours[$i]); //5
                     $sQuery->execute();
-                    $i--;
+                    $i--; //4
+                    $i--; //3
                     $iDay++;
-                    if($i == 12){
+                    if($i == 19){
                         break;
                     }
                 }  
