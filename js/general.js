@@ -128,7 +128,7 @@
       var infoHeadline = $('.InfoSlide.new input').val();
       var infoDescription = $('.InfoSlide.new textarea').val();
       
-      if(infoHeadline != ''  && infoDescription != ''){
+      if(infoHeadline !== ''  && infoDescription !== ''){
           
           $('.InfoSlide.new').before('<div Class="InfoSlide"><h1>'+infoHeadline+'</h1><h2>'+infoDescription+'</h2><div class="DishEditWrapper"><div class="EditDish" onclick="EditInfo(this)"><img src="img/edit.png"></div><div class="DeleteDish" onclick="DeleteSortableList(this)"><img src="img/delete.png"></div></div></div>');
           $('.InfoSlide.new').remove();
@@ -150,7 +150,7 @@
       var listHeadline = $('.sortablediv h3 input').val();
       var listDescription = $('.sortablediv h4 input').val();
 
-      if(listHeadline != ''){
+      if(listHeadline !== ''){
           
           $('.sortablediv h3 input').parent().html(listHeadline);
           $('.sortablediv h4 input').parent().html(listDescription);
@@ -181,7 +181,7 @@
       var listHeadline = $('.sortablediv h3 input').val();
       var listDescription = $('.sortablediv h4 input').val();
 
-      if(listHeadline != ''){
+      if(listHeadline !== ''){
           
           $('.sortablediv h3 input').parent().html(listHeadline);
           $('.sortablediv h4 input').parent().html(listDescription);
@@ -405,7 +405,7 @@
           }
           
           headline.html('<input id="headEditHeadline" type=text value="'+headlineText+'">');
-          if( descriptionText == "" ){
+          if( descriptionText === "" ){
             description.html('<input id="HeadEditDescription" type=text placeholder="evt ekstra info">');
           }
           else{
@@ -759,7 +759,7 @@
       */
 
       aData['sRestuarentPhone'] = $("#MenuPhone").val();
-      
+   
      //Get the Openinghours monday-sunday   
      aData['iMondayTimeFrom'] = $("#iMondayTimeFrom option:selected").val();
      aData['iMondayTimeTo'] = $("#iMondayTimeTo option:selected").val();
@@ -1074,7 +1074,7 @@
                               sRestuarentOpenningHoursToday: result.sRestuarentOpenningHoursToday,
                               openNow: result.openNow,
                               sRestuarentTakeAwayHoursToday: result.sRestuarentTakeAwayHoursToday,
-                              takeOutNow: result.takeOutNow,
+                              takeOutNow: result.takeOutNow
                           };
                           //Load template and show
                           var template = $('#restuarentinfo_viewmenucard').html();
@@ -1333,7 +1333,7 @@ function registerNext(num) {
 //    if($('.validationTag').length != 0 ){
 //    }
 //    else{
-        if(num==0){
+        if(num===0){
             $('.inputFrame.B').hide();
             $('.inputFrame.C').hide();
             $('.inputFrame.A').show();
@@ -1341,13 +1341,13 @@ function registerNext(num) {
             $('.inputFrameWrapper').css("height",H+50);
             $('.inputFrame input').eq(2).focus();
         }
-         if(num==1){
+         if(num===1){
              $('.inputFrame.B').show();
             $('.inputFrame.C').hide();
             $('.inputFrame.A').hide();
              $('.inputFrame input').eq(2).focus();
          }
-         if(num==2){
+         if(num===2){
             $('.inputFrame.B').hide();
             $('.inputFrame.A').hide();
             $('.inputFrame.C').show();
@@ -1853,8 +1853,8 @@ function GetMessages() {
               var m = date.substring(14,16);
               var date = dd+"-"+mm+"-"+yy+" "+h+":"+m;
 
-              if( key == 0){
-                  $('#currentMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+date+'</h3><h2>'+value.sMessageBodyText+'</h2></div>')
+              if( key === 0){
+                  $('#currentMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+date+'</h3><h2>'+value.sMessageBodyText+'</h2></div>');
               }
               else {
               $('#oldMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+date+'</h3><h2>'+value.sMessageBodyText+'</h2></div>');
@@ -1866,7 +1866,7 @@ function GetMessages() {
 }
 
 function SaveMessage() {
-    if(!$("#sMessageHeadline").val() == "" || !$("#sMessengerTextarea").val() == "" ){
+    if(!$("#sMessageHeadline").val() === "" || !$("#sMessengerTextarea").val() === "" ){
         
        var aData = {};
        
