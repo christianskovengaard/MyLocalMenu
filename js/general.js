@@ -934,12 +934,19 @@
 
                           //Foreach OpeningHours insert into the menucarcardinfo
                           $.each(result.aMenucardOpeningHours, function(key,value){
+                              if(value.iClosed === '0') {
                               var obj = {
                                   sDayName: value.sDayName,
-                                  iTimeFrom: value.iTimeFrom,
-                                  iTimeTo: value.iTimeTo
+                                  iTime: value.iTimeFrom+'-'+value.iTimeTo
+
                               };
-                              
+                              }else if (value.iClosed === '1') {
+                                 var obj = {
+                                  sDayName: value.sDayName,
+                                  iTime: 'Lukket i dag'
+
+                              }; 
+                              }
                               //Set opening hours
                               $('[name="Day'+value.iTimeCounter+'"] option[value="'+value.iTimeFromId+'"]').attr('selected', 'selected');
                               $('[name="Day'+value.iTimeCounter+'_'+value.iTimeCounter+'"] option[value="'+value.iTimeToId+'"]').attr('selected', 'selected');

@@ -1171,7 +1171,7 @@ class MenucardController
             
             
             //Get openning hours
-            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName FROM `openinghours`
+            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName , iClosed FROM `openinghours`
                                                 LEFT JOIN `day`
                                                 ON `day`.`iDayId` = `openinghours`.`iFK_iDayId`
                                                 LEFT JOIN `time` as timeFrom
@@ -1198,6 +1198,7 @@ class MenucardController
                 $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode(substr($row['sDayName'],0,3));
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
+                $aMenucard['aMenucardOpeningHours'][$i]['iClosed'] = $row['iClosed'];
                 
                 //Check for Openinghours hour today   
                 if($row['sDayName'] == $TodayDaynameDanish)
@@ -1705,7 +1706,7 @@ class MenucardController
             
             
             //Get openning hours
-            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName FROM `openinghours`
+            $sQuery = $this->conPDO->prepare("SELECT `timeFrom`.iTime as iTimeFrom,`timeTo`.iTime as iTimeTo ,`day`.sDayName , iClosed FROM `openinghours`
                                                 LEFT JOIN `day`
                                                 ON `day`.`iDayId` = `openinghours`.`iFK_iDayId`
                                                 LEFT JOIN `time` as timeFrom
@@ -1728,10 +1729,10 @@ class MenucardController
             $current_time = date('H:i:s');
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
-                $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode($row['sDayName']);
+                $aMenucard['aMenucardOpeningHours'][$i]['sDayName'] = utf8_encode(substr($row['sDayName'],0,3));
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
-                
+                $aMenucard['aMenucardOpeningHours'][$i]['iClosed'] = $row['iClosed'];
                 //Check for Openinghours hour today               
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
