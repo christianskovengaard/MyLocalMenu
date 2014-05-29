@@ -1,7 +1,7 @@
 <?php
 
 # Include the Autoloader (see "Libraries" for install instructions)
-//require_once '../Classes/mailgun/vendor/autoload.php';
+require_once '../Classes/mailgun/vendor/autoload.php';
 use Mailgun\Mailgun;
 
 
