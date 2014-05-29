@@ -574,7 +574,7 @@
       aAllLists['menucardinfo'] = aAllMenucardInfo;
       var sJSONAllLists = JSON.stringify(aAllLists);
       
-      //TODO: Change to use POST
+      
        $.ajax({
         type: "POST",
         url: "API/api.php",
@@ -801,8 +801,6 @@
           data: {sFunction:"UpdateRestuarentInfo",sJSON:sJSON}
          }).done(function(result){
              if(result.result === true){
-
-                //TDOD: Show information was updated
                 
                 //Update info in DOM
                 $('.Restaurant.Name h1').html($("#MenuName").val());
@@ -813,14 +811,24 @@
                 
                 //Update opening hours in the DOM
                 $('#Openinghours').html('');
+                if($('#Day1_Closed').attr('checked') === undefined) { var mondaytime = $("#iMondayTimeFrom option:selected").text()+'-'+$("#iMondayTimeTo option:selected").text();}else{mondaytime = 'Lukket i dag';}
+                if($('#Day2_Closed').attr('checked') === undefined) { var thuesdaytime = $("#iThuesdayTimeFrom option:selected").text()+'-'+$("#iThuesdayTimeTo option:selected").text();}else{thuesdaytime = 'Lukket i dag';}
+                if($('#Day3_Closed').attr('checked') === undefined) { var wednestime = $("#iWednesdaysTimeFrom option:selected").text()+'-'+$("#iWednesdaysTimeTo option:selected").text();}else{wednestime = 'Lukket i dag';}
+                if($('#Day4_Closed').attr('checked') === undefined) { var thurstime = $("#iThursdayTimeFrom option:selected").text()+'-'+$("#iThursdayTimeTo option:selected").text();}else{thurstime = 'Lukket i dag';}
+                if($('#Day5_Closed').attr('checked') === undefined) { var fridaytime = $("#iFridayTimeFrom option:selected").text()+'-'+$("#iFridayTimeTo option:selected").text();}else{fridaytime = 'Lukket i dag';}
+                if($('#Day6_Closed').attr('checked') === undefined) { var saturdaytime = $("#iSaturdayTimeFrom option:selected").text()+'-'+$("#iSaturdayTimeTo option:selected").text();}else{saturdaytime = 'Lukket i dag';}
+                if($('#Day7_Closed').attr('checked') === undefined) { var sundaytime = $("#iSundayTimeFrom option:selected").text()+'-'+$("#iSundayTimeTo option:selected").text();}else{sundaytime = 'Lukket i dag';}
+                                             
                 $('#Openinghours').append('<h3>Åbningstider</h3>\n\
-                                           <h4>Man '+$("#iMondayTimeFrom option:selected").text()+'-'+$("#iMondayTimeTo option:selected").text()+'</h4>\n\
-                                           <h4>Tir '+$("#iThuesdayTimeFrom option:selected").text()+'-'+$("#iThuesdayTimeTo option:selected").text()+'</h4>\n\
-                                           <h4>Ons '+$("#iWednesdaysTimeFrom option:selected").text()+'-'+$("#iWednesdaysTimeTo option:selected").text()+'</h4>\n\
-                                           <h4>Tor '+$("#iThursdayTimeFrom option:selected").text()+'-'+$("#iThursdayTimeTo option:selected").text()+'</h4>\n\
-                                           <h4>Fre '+$("#iFridayTimeFrom option:selected").text()+'-'+$("#iFridayTimeTo option:selected").text()+'</h4>\n\
-                                           <h4>Lør '+$("#iSaturdayTimeFrom option:selected").text()+'-'+$("#iSaturdayTimeTo option:selected").text()+'</h4>\n\
-                                           <h4>Søn '+$("#iSundayTimeFrom option:selected").text()+'-'+$("#iSundayTimeTo option:selected").text()+'</h4>');
+                                           <h4>Man '+mondaytime+'</h4>\n\
+                                           <h4>Tir '+thuesdaytime+'</h4>\n\
+                                           <h4>Ons '+wednestime+'</h4>\n\
+                                           <h4>Tor '+thurstime+'</h4>\n\
+                                           <h4>Fre '+fridaytime+'</h4>\n\
+                                           <h4>Lør '+saturdaytime+'</h4>\n\
+                                           <h4>Søn '+sundaytime+'</h4>');
+                                           
+             
                 //Update the day today
                 //0 = Sunday, 1 = Monday, 2 = Thuesday and so on up to 6 = Saturday
                 var day =  new Date().getDay();
@@ -1268,7 +1276,10 @@
                 $('#NewUser').html('');
                 var mailhost = mail.split('@')[1];
                 $('#NewUser').append('<div class="EmailSubmission"><h1>Sådan!</h1><h3>Vi har sendt en email til <span>'+mail+'</span></h3><h3>med et link til oprettelse af din profil</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>');
-                //Create new account and send email to user               
+                //Create new account and send email to user
+                $('html, body').animate({
+                    scrollTop: $(".logo").offset().top
+                },0);
             }else{
                 $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Emailen er allerede i brug</h1><h3>Prøv med en anden email eller log ind nedenfor</h3></div>');
                    $('.EmailSubmission').hide().slideDown(200);
