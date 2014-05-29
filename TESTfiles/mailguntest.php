@@ -24,22 +24,27 @@ use Mailgun\Mailgun;
 
 if(isset($_POST['sendmail'])) {
     
+    
     # Instantiate the client.
-$mgClient = new Mailgun('key-88g6sqd16pjmmv76ysapw2yf3oqi1rp8');
-$domain = "mylocalcafe.dk";
+        $mgClient = new Mailgun('key-88g6sqd16pjmmv76ysapw2yf3oqi1rp8');
+        $domain = "mylocalcafe.dk";
     
-    $subject = $_POST['subject'];
-    $body = $_POST['body'];
-    
-    # Make the call to the client.
-$result = $mgClient->sendMessage($domain,
-                      array('from'    => 'MyLocalCafé <support@mylocalcafe.dk>',
-                            'to'      => 'christianskovengaard@gmail.comk',
-                            'cc'      => 'christianskovengaard@gmail.com',
-                            'bcc'     => 'christianskovengaard@gmail.com',
-                            'subject' => $subject,
-                            'text'    => $body,
-                            'html'    => '<html>'.$body.'</html>'),
-                      array('attachment' => array('@/home/c5/C5/2/SKSReports/SKSRapport_Jarlkrone_02-03-2013.pdf')));
+    $sFrom = 'Support <support@mylocalcafe.dk>';
+    $sTo = 'christianskovengaard@gmail.com';
+    $sSubject = "Test mail";
+    $sMessage = "her er noget tekst";
+
+
+        # Make the call to the client.
+        $result = $mgClient->sendMessage($domain,
+                              array('from'    => $sFrom,
+                                'to'      => $sTo,
+                                'subject' => $sSubject,
+                                'text'    => $sMessage,
+                                'html'    => '<html>'.$sMessage.'</html>',
+                                'h:charset' => 'utf-8',
+                                'h:Reply-To' => 'info@mylocalcafe.dk',
+                                'h:Return-Path' => 'info@mylocalcafe.dk')
+                );
 
 }
