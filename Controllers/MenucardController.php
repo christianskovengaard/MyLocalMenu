@@ -96,7 +96,7 @@ class MenucardController
         $sQuery->execute();
         
         
-        //Create items (3) for the category
+        //Create 1 item for the category
         $sQuery = $this->conPDO->prepare("INSERT INTO menucarditem (sMenucardItemName,sMenucardItemNumber,sMenucardItemDescription,iMenucardItemPrice,iMenucardItemPlaceInList,iFK_iMenucardCategoryId) 
                                             VALUES (:sMenucardItemName,:sMenucardItemNumber,:sMenucardItemDescription,:iMenucardItemPrice,:iMenucardItemPlaceInList,:iFK_iMenucardCategoryId)");
         $sQuery->bindValue(':sMenucardItemName', "Produkt navn");

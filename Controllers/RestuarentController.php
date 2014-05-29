@@ -164,14 +164,14 @@ class RestuarentController
 
                     $sQuery->bindValue(':iFK_iMenucardId', $iFK_iMenucardId);
                     $sQuery->bindValue(':iFK_iDayId', $iDay);
-                    $sQuery->bindValue(':iFK_iTimeFromId', $aOpeningHours[$i]); //3
+                    $sQuery->bindValue(':iFK_iTimeFromId', $aOpeningHours[$i]);
                     $i++;
-                    $sQuery->bindValue(':iFK_iTimeToId', $aOpeningHours[$i]); //4
+                    $sQuery->bindValue(':iFK_iTimeToId', $aOpeningHours[$i]);
                     $i++;
-                    $sQuery->bindValue("iClosed", $aOpeningHours[$i]); //5
+                    $sQuery->bindValue("iClosed", $aOpeningHours[$i]);
                     $sQuery->execute();
-                    $i--; //4
-                    $i--; //3
+                    $i--;
+                    $i--;
                     $iDay++;
                     if($i == 19){
                         break;

@@ -1541,7 +1541,7 @@ function SubmitFormRegister(){
         aData['iRestuarentZipcode'] = $('#iRestuarentZipcode').val();
         aData['iRestuarentTel'] = $('#iRestuarentTel').val();
 
-        //Get the Openinghours monday-sunday   
+        //Get the Openinghours monday-sunday 
         aData['iMondayTimeFrom'] = $("#iMondayTimeFrom option:selected").val();
         aData['iMondayTimeTo'] = $("#iMondayTimeTo option:selected").val();
         aData['iThuesdayTimeFrom'] = $("#iThuesdayTimeFrom option:selected").val();   
@@ -1557,7 +1557,13 @@ function SubmitFormRegister(){
         aData['iSundayTimeFrom'] = $("#iSundayTimeFrom option:selected").val();
         aData['iSundayTimeTo'] = $("#iSundayTimeTo option:selected").val();
         
-        
+        if($("#Day1_Closed").is(':checked')){aData['iMondayClosed'] = 1;}else{aData['iMondayClosed'] = 0;}
+        if($("#Day2_Closed").is(':checked')){aData['iThuesdayClosed'] = 1;}else{aData['iThuesdayClosed'] = 0;}
+        if($("#Day3_Closed").is(':checked')){aData['iWednesdaysClosed'] = 1;}else{aData['iWednesdaysClosed'] = 0;}
+        if($("#Day4_Closed").is(':checked')){aData['iThursdayClosed'] = 1;}else{aData['iThursdayClosed'] = 0;}
+        if($("#Day5_Closed").is(':checked')){aData['iFridayClosed'] = 1;}else{aData['iFridayClosed'] = 0;}
+        if($("#Day6_Closed").is(':checked')){aData['iSaturdayClosed'] = 1;}else{aData['iSaturdayClosed'] = 0;}
+        if($("#Day7_Closed").is(':checked')){aData['iSundayClosed'] = 1;}else{aData['iSundayClosed'] = 0;}
         
         //Workaround with encoding issue in IE8 and JSON.stringify
         for (var i in aData) {

@@ -1,6 +1,6 @@
 <?php
 
-/*Check if the sUserToken is set
+//Check if the sUserToken is set
 if(isset($_GET['sUserToken']))
 {
     //If sUserToken is valid get the user
@@ -8,7 +8,7 @@ if(isset($_GET['sUserToken']))
     $oUserController = new UserController();
     if($oUserController->ChecksUserToken() == true)
     {
-  */  
+   
 ?>
 <!DOCTYPE html>
 <html>
@@ -97,12 +97,12 @@ if(isset($_GET['sUserToken']))
     </body>
 </html>
 <?php
-/*
+
     }else{
         header("location: index.php");
     }
 }
 else{
     header("location: index.php");
-}*/
+}
 ?>

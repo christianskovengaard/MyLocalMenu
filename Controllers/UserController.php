@@ -472,37 +472,47 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             
             //Insert openinghours
             $aOpeningHours = array(
-                0 => $aJSONInfo->iMondayTimeFrom,
-                1 => $aJSONInfo->iMondayTimeTo,
-                2 => $aJSONInfo->iThuesdayTimeFrom,
-                3 => $aJSONInfo->iThuesdayTimeTo,
-                4 => $aJSONInfo->iWednesdaysTimeFrom,
-                5 => $aJSONInfo->iWednesdaysTimeTo,
-                6 => $aJSONInfo->iThursdayTimeFrom,
-                7 => $aJSONInfo->iThursdayTimeTo,
-                8 => $aJSONInfo->iFridayTimeFrom,
-                9 => $aJSONInfo->iFridayTimeTo,
-                10 => $aJSONInfo->iSaturdayTimeFrom,
-                11 => $aJSONInfo->iSaturdayTimeTo,
-                12 => $aJSONInfo->iSundayTimeFrom,
-                13 => $aJSONInfo->iSundayTimeTo
-            );
+                    0 => $aJSONInfo->iMondayTimeFrom,
+                    1 => $aJSONInfo->iMondayTimeTo,
+                    2 => $aJSONInfo->iMondayClosed,
+                    3 => $aJSONInfo->iThuesdayTimeFrom,
+                    4 => $aJSONInfo->iThuesdayTimeTo,
+                    5 => $aJSONInfo->iThuesdayClosed,
+                    6 => $aJSONInfo->iWednesdaysTimeFrom,
+                    7 => $aJSONInfo->iWednesdaysTimeTo,
+                    8 => $aJSONInfo->iWednesdaysClosed,
+                    9 => $aJSONInfo->iThursdayTimeFrom,
+                    10 => $aJSONInfo->iThursdayTimeTo,
+                    11 => $aJSONInfo->iThursdayClosed,
+                    12 => $aJSONInfo->iFridayTimeFrom,
+                    13 => $aJSONInfo->iFridayTimeTo,
+                    14 => $aJSONInfo->iFridayClosed,
+                    15 => $aJSONInfo->iSaturdayTimeFrom,
+                    16 => $aJSONInfo->iSaturdayTimeTo,
+                    17 => $aJSONInfo->iSaturdayClosed,
+                    18 => $aJSONInfo->iSundayTimeFrom,
+                    19 => $aJSONInfo->iSundayTimeTo,
+                    20 => $aJSONInfo->iSundayClosed,
+                );
             
             //Loop through array and insert all the values
             //Counter for the day id. 1=mandag,2=tirsdag,3=onsdag,4=torsdag,5=fredag,6=lørdag,7=søndag
             $iDay = 1;
-            for($i=0;$i<13;$i+=2) {
-                $sQuery = $this->conPDO->prepare("INSERT INTO openinghours (iFK_iMenucardId,iFK_iDayId,iFK_iTimeFromId,iFK_iTimeToId) VALUES (:iFK_iMenucardId,:iFK_iDayId,:iFK_iTimeFromId,:iFK_iTimeToId)");
+            for($i=0;$i<20;$i+=3) {
+                $sQuery = $this->conPDO->prepare("INSERT INTO openinghours (iFK_iMenucardId,iFK_iDayId,iFK_iTimeFromId,iFK_iTimeToId,iClosed) VALUES (:iFK_iMenucardId,:iFK_iDayId,:iFK_iTimeFromId,:iFK_iTimeToId,:iClosed)");
                              
                 $sQuery->bindValue(':iFK_iMenucardId', $iMenucardId);
                 $sQuery->bindValue(':iFK_iDayId', $iDay);
                 $sQuery->bindValue(':iFK_iTimeFromId', $aOpeningHours[$i]);
                 $i++;
                 $sQuery->bindValue(':iFK_iTimeToId', $aOpeningHours[$i]);
+                $i++;
+                $sQuery->bindValue(":iClosed", $aOpeningHours[$i]);
                 $sQuery->execute();
                 $i--;
+                $i--;
                 $iDay++;
-                if($i == 12){
+                if($i == 19){
                     break;
                 }
             }                               
