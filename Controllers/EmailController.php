@@ -1,18 +1,20 @@
 <?php
 
 # Include the Autoloader (see "Libraries" for install instructions)
-require_once '../Classes/mailgun/vendor/autoload.php';
+require_once 'mailgun/vendor/autoload.php';
 use Mailgun\Mailgun;
 
 
 class EmailController
 {
     public function __construct() {
-        ;
+        
     }
     
     public function SendEmail ($sTo,$sFrom,$sSubject,$sMessage)
     {
+        
+        
         # Instantiate the client.
         $mgClient = new Mailgun('key-88g6sqd16pjmmv76ysapw2yf3oqi1rp8');
         $domain = "mylocalcafe.dk";

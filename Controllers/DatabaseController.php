@@ -16,6 +16,9 @@ class DatabaseController
         
         require_once(ROOT_DIRECTORY . '/Classes/DatabaseClass.php');
         $this->oDatabase = new Database();
+        
+        //Turn off error reporting
+        //error_reporting(0);
     }
     
     function ConnectToDatabase()
