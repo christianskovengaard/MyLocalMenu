@@ -379,8 +379,7 @@
     {
       alert("Beklager, Der er en fejl. Du skal hente en nyrere Browser");
     }
-    //Set sessionStorage
-    sessionStorage.bMenucardChanged = 'true';
+    
     
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
