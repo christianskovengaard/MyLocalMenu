@@ -7,14 +7,14 @@ if(isset($_POST['username']) && isset($_POST['password']))
     $oUserController = new UserController();
     $loggedIn = $oUserController->LogInUser($_POST['username'], $_POST['password']);
    if($loggedIn['result'] == 'true'){
-        header('location: admin.php');
+        header('location: admin');
    }else if($loggedIn['result'] == 'Account locked'){
-       header("location: index.php?login=Account_locked");
+       header("location: index?login=Account_locked");
    }else if($loggedIn['result'] == 'false'){
-       header("location: index.php?login=false");
+       header("location: index?login=false");
    }
 }
 else {
-    header("location: index.php?login=false");
+    header("location: index?login=false");
 }
 ?>

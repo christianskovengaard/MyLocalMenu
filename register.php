@@ -99,10 +99,10 @@ if(isset($_GET['sUserToken']))
 <?php
 
     }else{
-        header("location: index.php");
+        header("location: index");
     }
 }
 else{
-    header("location: index.php");
+    header("location: index");
 }
 ?>

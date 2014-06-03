@@ -1598,7 +1598,7 @@ function SubmitFormRegister(){
                //alert('Reg. complete: '+result.result);
                 if(result.result === true)
                 {
-                    document.location.href = 'admin.php';
+                    document.location.href = 'admin';
                 }
                 else
                 {
@@ -1693,7 +1693,7 @@ function SubmitFormNewPassword(){
                alert('Password reset: '+result.result);
                 if(result.result === true)
                 {
-                    document.location.href = 'admin.php';
+                    document.location.href = 'admin';
                 }
                 else
                 {

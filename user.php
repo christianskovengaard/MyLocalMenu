@@ -55,5 +55,5 @@ if(isset($_GET['sUserToken']) && $oUserController->ChecksUserToken() == true) :
     </body>
 </html>
 <?php
-else : header('location: index.php'); endif;
+else : header('location: index'); endif;
 ?>

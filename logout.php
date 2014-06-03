@@ -6,5 +6,5 @@
     
     setcookie('sec_session_id', '', time()-3600,'/', '', 0, 0);
 
-    header("location: index.php");
+    header("location: index");
 ?>
