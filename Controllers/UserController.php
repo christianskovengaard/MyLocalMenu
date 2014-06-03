@@ -177,33 +177,7 @@ class UserController
 
 	//Fetch the result as assoc array
         $aUser = $sQuery->fetch(PDO::FETCH_ASSOC);
-	
-        
-        //Check if the users has a menucard, if no new card send register mail again
-        if($aUser['iFK_iCompanyId'] == NULL) {
-            
-            $sUserToken = $aUser['sUserCreateToken'];
-            //Set new UserCreateToken if it is empty
-            if($sUserToken == ''){
-                $sUserToken = $this->oBcrypt->genHash($aUser['sUsername']);
-                //Update the user with the new UserCreateToken
-                $sQuery = $this->conPDO->prepare("UPDATE users SET sUserCreateToken = :sUserCreateToken WHERE sUsername = :sUsername");
-                $sQuery->bindValue(":sUsername", $aUser['sUsername']);
-                $sQuery->bindValue(":sUserCreateToken", $sUserToken);
-                $sQuery->execute();
-            }
-            
-            //Send register email again
-            $sTo = $aUser['sUsername'];
-            $sFrom = 'support@mylocalcafe.dk';
-            $sSubject = 'Ny konto hos My Local Café';
-            $sMessage = "Ny bruger til My Local Café, Tryk på dette <a href='http://mylocalcafe.dk/register?sUserToken=$sUserToken'>link</a> for at oprette din profil";               
-            //Send email with link to reset password
-            $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
-             
-            $aLogin['result'] = 'nocafe';
-            return $aLogin;
-        }
+	       
         
         $sUserPasswordFromDatabase = $aUser['sUserPassword']; // stored hashed password
         $user_id_hashed = $aUser['iUserIdHashed']; // iUserId hashed
@@ -236,6 +210,33 @@ class UserController
            }
            else
            {
+               
+                //Check if the users has a menucard, if no new card send register mail again
+                if($aUser['iFK_iCompanyId'] == NULL) {
+
+                    $sUserToken = $aUser['sUserCreateToken'];
+                    //Set new UserCreateToken if it is empty
+                    if($sUserToken == ''){
+                        $sUserToken = $this->oBcrypt->genHash($aUser['sUsername']);
+                        //Update the user with the new UserCreateToken
+                        $sQuery = $this->conPDO->prepare("UPDATE users SET sUserCreateToken = :sUserCreateToken WHERE sUsername = :sUsername");
+                        $sQuery->bindValue(":sUsername", $aUser['sUsername']);
+                        $sQuery->bindValue(":sUserCreateToken", $sUserToken);
+                        $sQuery->execute();
+                    }
+
+                    //Send register email again
+                    $sTo = $aUser['sUsername'];
+                    $sFrom = 'support@mylocalcafe.dk';
+                    $sSubject = 'Ny konto hos My Local Café';
+                    $sMessage = "Ny bruger til My Local Café, Tryk på dette <a href='http://mylocalcafe.dk/register?sUserToken=$sUserToken'>link</a> for at oprette din profil";               
+                    //Send email with link to reset password
+                    $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
+
+                    $aLogin['result'] = 'nocafe';
+                    return $aLogin;
+                }
+                             
                 // using the verify method to compare the password with the stored hashed password.
                 if($this->oBcrypt->verify($sUserPassword, $sUserPasswordFromDatabase) === true)
                 { 
