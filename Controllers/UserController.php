@@ -311,7 +311,7 @@ class UserController
                     die($e->getMessage());
                 }
 
-                $sMessage = "Ny bruger til My Local Café, Tryk på dette <a href='mylocalcafe.dk/register.php?sUserToken=$sUserToken'>link</a> for at oprette din profil";
+                $sMessage = "Ny bruger til My Local Café, Tryk på dette <a href='http://mylocalcafe.dk/register.php?sUserToken=$sUserToken'>link</a> for at oprette din profil";
                 $sTo = $mail;
                 $sFrom = 'support@mylocalcafe.dk';
                 $sSubject = 'Ny konto hos MyLocal';
@@ -904,7 +904,7 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
          $sTo = $oJSON->email;
          $sFrom = 'support@mylocalcafe.dk';
          $sSubject = 'Nyt kodeord';
-         $sMessage = "Reset dit kodeord til din bruger hos MyLocalCafé, Gå til dette <a href='mylocalcafe.dk/user.php?sUserToken=$randomHash'>link</a> og sæt dit nye kodeord";
+         $sMessage = "Reset dit kodeord til din bruger hos MyLocalCafé, Gå til dette <a href='http://mylocalcafe.dk/user.php?sUserToken=$randomHash'>link</a> og sæt dit nye kodeord";
          //Send email with link to reset password
          $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
          
