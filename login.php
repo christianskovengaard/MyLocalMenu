@@ -12,7 +12,10 @@ if(isset($_POST['username']) && isset($_POST['password']))
        header("location: index?login=Account_locked");
    }else if($loggedIn['result'] == 'false'){
        header("location: index?login=false");
+   }else if($loggedIn['result'] == 'nocafe'){
+       header("location: index?login=nocafe");
    }
+   
 }
 else {
     header("location: index?login=false");

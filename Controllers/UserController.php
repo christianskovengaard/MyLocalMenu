@@ -170,7 +170,7 @@ class UserController
         
         $sUsername = utf8_decode($sUsername);
         
-        $sQuery = $this->conPDO->prepare("SELECT sUserPassword,iUserIdHashed,iUserId,sUsername FROM users WHERE sUsername = ? LIMIT 1");
+        $sQuery = $this->conPDO->prepare("SELECT sUserPassword,iUserIdHashed,iUserId,sUsername,iFK_iCompanyId,sUserCreateToken FROM users WHERE sUsername = ? LIMIT 1");
 	$sQuery->bindValue(1, $sUsername);
         
 	$sQuery->execute();
@@ -178,6 +178,33 @@ class UserController
 	//Fetch the result as assoc array
         $aUser = $sQuery->fetch(PDO::FETCH_ASSOC);
 	
+        
+        //Check if the users has a menucard, if no new card send register mail again
+        if($aUser['iFK_iCompanyId'] == NULL) {
+            
+            $sUserToken = $aUser['sUserCreateToken'];
+            //Set new UserCreateToken if it is empty
+            if($sUserToken == ''){
+                $sUserToken = $this->oBcrypt->genHash($aUser['sUsername']);
+                //Update the user with the new UserCreateToken
+                $sQuery = $this->conPDO->prepare("UPDATE users SET sUserCreateToken = :sUserCreateToken WHERE sUsername = :sUsername");
+                $sQuery->bindValue(":sUsername", $aUser['sUsername']);
+                $sQuery->bindValue(":sUserCreateToken", $sUserToken);
+                $sQuery->execute();
+            }
+            
+            //Send register email again
+            $sTo = $aUser['sUsername'];
+            $sFrom = 'support@mylocalcafe.dk';
+            $sSubject = 'Ny konto hos My Local Café';
+            $sMessage = "Ny bruger til My Local Café, Tryk på dette <a href='http://mylocalcafe.dk/register?sUserToken=$sUserToken'>link</a> for at oprette din profil";               
+            //Send email with link to reset password
+            $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
+             
+            $aLogin['result'] = 'nocafe';
+            return $aLogin;
+        }
+        
         $sUserPasswordFromDatabase = $aUser['sUserPassword']; // stored hashed password
         $user_id_hashed = $aUser['iUserIdHashed']; // iUserId hashed
         $user_id =  $aUser['iUserId']; //iUserId
@@ -557,7 +584,7 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             ); 
          
         if(isset($_GET['sJSON']))
-        {
+        {          
             $aJSONInfo = json_decode($_GET['sJSON']);
             //var_dump($aJSONInfo);
                     
@@ -886,7 +913,37 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
          $oJSON = json_decode($sJSON);
          
          
-         //TODO: Check if email exsist in database
+         //Check if the user has a manucard, if the user has no menucard the user should be resent the register email         
+         $sQuery = $this->conPDO->prepare("SELECT iFK_iCompanyId,sUserCreateToken FROM users WHERE sUsername = :sUsername");
+         $sQuery->bindValue(":sUsername", $oJSON->email);
+         $sQuery->execute();
+         $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+         if($aResult['iFK_iCompanyId'] == NULL){
+             
+            $sUserToken = $aResult['sUserCreateToken'];
+            //Set new UserCreateToken if it is empty
+            if($sUserToken == ''){
+                $sUserToken = $this->oBcrypt->genHash($oJSON->email);
+                //Update the user with the new UserCreateToken
+                $sQuery = $this->conPDO->prepare("UPDATE users SET sUserCreateToken = :sUserCreateToken WHERE sUsername = :sUsername");
+                $sQuery->bindValue(":sUsername", $oJSON->email);
+                $sQuery->bindValue(":sUserCreateToken", $sUserToken);
+                $sQuery->execute();
+            }
+            
+            //Send register email again
+            $sTo = $oJSON->email;
+            $sFrom = 'support@mylocalcafe.dk';
+            $sSubject = 'Ny konto hos My Local Café';
+            $sMessage = "Ny bruger til My Local Café, Tryk på dette <a href='http://mylocalcafe.dk/register?sUserToken=$sUserToken'>link</a> for at oprette din profil";               
+            //Send email with link to reset password
+            $this->oEmail->SendEmail($sTo, $sFrom, $sSubject, $sMessage);
+             
+            $aUser['result'] = 'true';
+            return $aUser;
+         }
+         
+         //Check if email exsist in database
          $sQuery = $this->conPDO->prepare("SELECT sUsername FROM users WHERE sUsername = :sUsername");
          $sQuery->bindValue(":sUsername", $oJSON->email);
          $sQuery->execute();

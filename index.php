@@ -102,11 +102,17 @@ $oSecurityController->sec_session_start();
                $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p></div>");
                //$("#loginButton").after("<div id='WrongPassword'><p>Skift kodeord</p><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Skift koderord' class='button' onclick='SendResetPasswordRequest();' ></div>");
                //Scroll to WrongPassword
-               $('html,body').animate({
-                    scrollTop: $("#WrongPassword").offset().top},
-                    'fast');
+               $('html,body').animate({scrollTop: $("#WrongPassword").offset().top},'fast');
                $("#forgotpassMail").focus();
            }
+           if(url === "nocafe"){
+               $("#loginButton").before("<div id='WrongPassword'><p>Du har endnu ikke oprettet en café</p><p>Vi har sendt en registrerings mail til dig.</p></div>");             
+               $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');
+           }
+           if(url === "Account_locked"){
+               $("#loginButton").before("<div id='WrongPassword'><p>Kontoen er blevet låst i 2 timer pga. for mange log ind forsøg</p></div>");             
+               $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');    
+          }
         </script>
         
 <!--        <div class="header">
