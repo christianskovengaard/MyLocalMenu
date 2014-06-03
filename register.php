@@ -92,6 +92,9 @@ if(isset($_GET['sUserToken']))
                     makeOpeningHours();
                     InitiateAutocompleteForRegister();
                 });
+               window.onbeforeunload = function() {
+                    return "Du er ved at lukke siden. Hvis du forlader siden går alle data tabt!";
+                };
         </script>
 
     </body>
