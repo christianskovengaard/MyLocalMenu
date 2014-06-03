@@ -642,8 +642,8 @@ class MenucardController
 
                                 $sQuery->bindValue(1, $oMenucardItem->sMenucardItemName);
                                 $sQuery->bindValue(2, $oMenucardItem->sMenucardItemNumber);               
-                                $sQuery->bindValue(3, $oMenucardItem->sMenucardItemDescription);
-                                $sQuery->bindValue(4, $oMenucardItem->iMenucardItemPrice);
+                                $sQuery->bindValue(3, html_entity_decode($oMenucardItem->sMenucardItemDescription));
+                                $sQuery->bindValue(4, html_entity_decode($oMenucardItem->iMenucardItemPrice));
                                 $sQuery->bindValue(5, $iMenucardItemPlaceInList); 
                                 $sQuery->bindValue(6, $iMenucardCategoryId);
                                 
@@ -686,8 +686,8 @@ class MenucardController
 
                                 $sQuery->bindValue(':sMenucardItemName', $oMenucardItem->sMenucardItemName);
                                 $sQuery->bindValue(':sMenucardItemNumber', $oMenucardItem->sMenucardItemNumber);               
-                                $sQuery->bindValue(':sMenucardItemDescription', $oMenucardItem->sMenucardItemDescription);
-                                $sQuery->bindValue(':iMenucardItemPrice', $oMenucardItem->iMenucardItemPrice);
+                                $sQuery->bindValue(':sMenucardItemDescription', html_entity_decode ($oMenucardItem->sMenucardItemDescription));
+                                $sQuery->bindValue(':iMenucardItemPrice', html_entity_decode($oMenucardItem->iMenucardItemPrice));
                                 $sQuery->bindValue(':iMenucardItemPlaceInList', $iMenucardItemPlaceInList);                               
                                 $sQuery->bindValue(':iFK_iMenucardCategoryId', $iMenucardCategoryId);
                                 $sQuery->bindValue(':iMenucardItemIdHashed', $iMenucardItemIdHashed);
