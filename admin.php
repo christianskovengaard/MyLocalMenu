@@ -121,7 +121,7 @@ if($oSecurityController->login_check() == true) { ?>
                     <h3>Ret Café oplysninger</h3>
                     <div>
                         <p>Café navn</p>
-                        <input id="MenuName" type="text" value="" placeholder="Restuarent navn"> <br/>
+                        <input id="MenuName" type="text" value="" placeholder="Café navn"> <br/>
                         <p>evt Slogan</p>
                         <input id="MenuSubName" type="text" value="" placeholder="slogan"> <br/>
                         <p>Vejnavn og nummer</p>
@@ -130,7 +130,7 @@ if($oSecurityController->login_check() == true) { ?>
                         <input id="MenuZip" type="text" value="" placeholder="Post nr." maxlength="4">
                         <input id="MenuTown" type="text" value=""> <br/>
                         <p>Caféns telefonnr.</p>
-                        <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="8">
+                        <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="11">
                         
                     </div>
 
