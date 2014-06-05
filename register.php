@@ -42,7 +42,7 @@ if(isset($_GET['sUserToken']))
 <!--                            <input type="text" placeholder="Din email">
                             <input type="password" placeholder="Kode fra modtaget email">-->
                             <input value="" id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
-                            <input value="" type="password" onblur="ValidateRegSwitch('passwordRetype',this);" placeholder="Gentag koden">
+                            <input value="" id="NewPasswordRetype" type="password" placeholder="Gentag koden">
                             <div onclick="registerNext(1);" class="button Reg">Næste</div>
                         </div>
 

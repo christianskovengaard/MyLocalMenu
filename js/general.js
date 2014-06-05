@@ -1341,17 +1341,39 @@ function registerNext(num) {
             $('.inputFrame input').eq(2).focus();
         }
          if(num===1){
-             $('.inputFrame.B').show();
-            $('.inputFrame.C').hide();
-            $('.inputFrame.A').hide();
-             $('.inputFrame input').eq(2).focus();
+             
+             //Check if password is not empty and is the same
+             console.log('repass: '+$('#NewPasswordRetype').val());
+             console.log('pass: '+$('#NewPassword').val());
+             if($('#NewPasswordRetype').val() === $('#NewPassword').val() && $('#NewPassword').val() !== '' && $('#NewPasswordRetype').val() !== ''){    
+                $('.inputFrame.B').show();
+                $('.inputFrame.C').hide();
+                $('.inputFrame.A').hide();
+                $('.inputFrame input').eq(2).focus();             
+             }else {
+                 //Empty password or not the same
+                 $('.validationTag').remove();
+                 $('#NewPasswordRetype').before('<div class="validationTag passRe">Koderne er ikke ens</div>');   
+             }
          }
          if(num===2){
-            $('.inputFrame.B').hide();
-            $('.inputFrame.A').hide();
-            $('.inputFrame.C').show();
-            var H = $('.inputFrame.C').height();
-            $('.inputFrameWrapper').css("height",H+50);
+             
+            //Check if all fields are not empty 
+            
+            if($('#sCompanyName').val() !== '' && $('#iCompanyTelefon').val() !== '' && $('#sCompanyAddress').val() !== '' && $('#iCompanyZipcode').val() !== '' && $('#sCompanyCVR').val() !== '' && $('#sRestuarentName').val() !== '' && $('#sRestuarentAddress').val() !== '' && $('#iRestuarentZipcode').val() !== '' && $('#iRestuarentTel').val() !== '') {
+            
+                $('.inputFrame.B').hide();
+                $('.inputFrame.A').hide();
+                $('.inputFrame.C').show();
+                var H = $('.inputFrame.C').height();
+                $('.inputFrameWrapper').css("height",H+50);
+            
+            }else {
+                //All fileds must be field out
+                $('.validationTag').remove();
+                $('#iRestuarentTel').after('<div class="validationTag">Husk at udfylde alle felter!</div>');  
+                
+            }
         }
 //    }
 }
@@ -1490,6 +1512,7 @@ function ValidateRegSwitch(CaseName,id){
             $('.validationTagImg.passRe').remove();
             var passRe = $(id).val();
             if(passRe !== $('#NewPassword').val() ){
+                console.log('Retype');
                 $(id).before('<div class="validationTag passRe">Koderne er ikke ens</div>');
             }
         break;
