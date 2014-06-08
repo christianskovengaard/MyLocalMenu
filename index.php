@@ -64,9 +64,9 @@ $oSecurityController->sec_session_start();
            <!--<div onclick="HideShowSwitch('Email');" class="button01">Opret</div>-->
            <input type="submit" onclick="HideShowSwitch('Email');" value="Opret en bruger" class="button"/>
         </div> 
-        <?php if ($oSecurityController->login_check() == false) : ?>
+        <?php //if ($oSecurityController->login_check() == false) : ?>
 <!--        <div onclick="HideShowSwitch('Login');" class="button01">Log</div>-->
-        <form name="login" method="POST" action="login.php">
+<!--        <form name="login" method="POST" action="login.php">
             <div id="LoginBox" class="inputFrame">
                 <h2>Log Ind</h2>
                 <input name="username" id="LoginEmail" type="text" placeholder="Email">
@@ -76,17 +76,17 @@ $oSecurityController->sec_session_start();
                     <input type='text' placeholder='Email' id='forgotpassMail'>
                     <input type='button' value='Send nyt kodeord til email' class='button' onclick='SendResetPasswordRequest();'>
                 </div>
-                <!--<div onclick="HideShowSwitch('Login');" class="button02">Luk</div>-->
+                <div onclick="HideShowSwitch('Login');" class="button02">Luk</div>
             </div>
-        </form>
-        <?php else : ?>
+        </form>-->
+        <?php //else : ?>
         <!--<div onclick="" class="button01">Rediger brugerprofil</div>-->
-        <h6>Du er logget ind</h6>
-        <a href="admin">gå til redigering af menukort</a>
+<!--        <h6>Du er logget ind</h6>
+        <a href="admin">gå til redigering af menukort</a>-->
 <!--        <form name="logout" method="POST" action="logout.php">
             <input type="submit" value="Log ud" class="button"/>
         </form>-->
-        <?php endif; ?>
+        <?php //endif; ?>
         
 <!--        <form method="GET" action="viewmenucard.php" id="FindMenucardForm">
             <div id="LoginBox" class="inputFrame small">

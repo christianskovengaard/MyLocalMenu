@@ -199,7 +199,7 @@ if($oSecurityController->login_check() == true) { ?>
     </body>
 </html>
 <?php  } else {
-    header("location: index");
+    header("location: login-page");
     //$asd = $oSecurityController->login_check();
     /*var_dump($asd);
     echo $_SESSION['user_id'] .'<br>'; 

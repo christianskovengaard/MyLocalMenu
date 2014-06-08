@@ -9,15 +9,15 @@ if(isset($_POST['username']) && isset($_POST['password']))
    if($loggedIn['result'] == 'true'){
         header('location: admin');
    }else if($loggedIn['result'] == 'Account locked'){
-       header("location: index?login=Account_locked");
+       header("location: login-page?login=Account_locked");
    }else if($loggedIn['result'] == 'false'){
-       header("location: index?login=false");
+       header("location: login-page?login=false");
    }else if($loggedIn['result'] == 'nocafe'){
-       header("location: index?login=nocafe");
+       header("location: login-page?login=nocafe");
    }
    
 }
 else {
-    header("location: index?login=false");
+    header("location: login-page?login=false");
 }
 ?>
