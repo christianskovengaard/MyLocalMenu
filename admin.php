@@ -39,7 +39,7 @@ if($oSecurityController->login_check() == true) { ?>
                     <div class="sortablediv" id='restuarantInfo'>                       
                     </div>
                     
-                    <div onclick="CreateNewSortableList();" class="newsortablediv"><h3>+</h3></div>
+                    <div onclick="CreateNewSortableList();" class="newsortablediv"><h3>Tilføj ny kategori</h3><div>+</div></div>
                     <div class="newsortabledivbuffer"></div>     
                 </div>
                 

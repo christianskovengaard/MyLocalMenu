@@ -844,7 +844,7 @@
          });
       
   }
-
+  
   /* GetMenucard function */
   
   function getUrlVars() 
