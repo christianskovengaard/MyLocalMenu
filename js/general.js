@@ -840,11 +840,23 @@
                 if(day === 6){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iSaturdayTimeFrom option:selected").text()+'-'+$("#iSaturdayTimeTo option:selected").text()+'</h4>');}
                 
                 //TODO: Check if the new time is in between the time now and update open class
+
+                //show update is done
+                alertSucces();
             }
          });
       
   }
-  
+
+  function alertSucces() {
+    $("body").append("<div class='fullPage'><div class='inforUpdateAlert'>Oplysningerne er opdateret ✓</div></div>");
+          $(".fullPage").hide().fadeIn("slow", function(){
+                  $(this).delay(1000).fadeOut(1000, function(){
+                      $(this).remove();
+          });
+    });
+  }
+
   /* GetMenucard function */
   
   function getUrlVars() 
@@ -1466,7 +1478,8 @@ function registerNext(num) {
 
                 if(result.result === true)
                 {
-                    alert('Det er nu opdateret');
+                    //show update is done
+                    alertSucces();
                 }
                 else
                 {
@@ -1671,10 +1684,12 @@ function SubmitFormNewPasswordNoToken() {
                     //document.location.href = 'index.php';
                     $('#NewPassword').val('');
                     $('#NewPasswordRepeat').val('');
+                    //show update is done
+                    alertSucces();
                 }
                 else
                 {
-                    alert('Smid fejl besked');
+                    alert('der er desværre sket en fejl');
                 }
         }); 
     }else {
