@@ -810,22 +810,22 @@
                 
                 //Update opening hours in the DOM
                 $('#Openinghours').html('');
-                if($('#Day1_Closed').attr('checked') === undefined) { var mondaytime = $("#iMondayTimeFrom option:selected").text()+'-'+$("#iMondayTimeTo option:selected").text();}else{mondaytime = 'Lukket i dag';}
-                if($('#Day2_Closed').attr('checked') === undefined) { var thuesdaytime = $("#iThuesdayTimeFrom option:selected").text()+'-'+$("#iThuesdayTimeTo option:selected").text();}else{thuesdaytime = 'Lukket i dag';}
-                if($('#Day3_Closed').attr('checked') === undefined) { var wednestime = $("#iWednesdaysTimeFrom option:selected").text()+'-'+$("#iWednesdaysTimeTo option:selected").text();}else{wednestime = 'Lukket i dag';}
-                if($('#Day4_Closed').attr('checked') === undefined) { var thurstime = $("#iThursdayTimeFrom option:selected").text()+'-'+$("#iThursdayTimeTo option:selected").text();}else{thurstime = 'Lukket i dag';}
-                if($('#Day5_Closed').attr('checked') === undefined) { var fridaytime = $("#iFridayTimeFrom option:selected").text()+'-'+$("#iFridayTimeTo option:selected").text();}else{fridaytime = 'Lukket i dag';}
-                if($('#Day6_Closed').attr('checked') === undefined) { var saturdaytime = $("#iSaturdayTimeFrom option:selected").text()+'-'+$("#iSaturdayTimeTo option:selected").text();}else{saturdaytime = 'Lukket i dag';}
-                if($('#Day7_Closed').attr('checked') === undefined) { var sundaytime = $("#iSundayTimeFrom option:selected").text()+'-'+$("#iSundayTimeTo option:selected").text();}else{sundaytime = 'Lukket i dag';}
+                if($('#Day1_Closed').attr('checked') === undefined) { var mondaytime = $("#iMondayTimeFrom option:selected").text()+'-'+$("#iMondayTimeTo option:selected").text();}else{mondaytime = 'Lukket';}
+                if($('#Day2_Closed').attr('checked') === undefined) { var thuesdaytime = $("#iThuesdayTimeFrom option:selected").text()+'-'+$("#iThuesdayTimeTo option:selected").text();}else{thuesdaytime = 'Lukket';}
+                if($('#Day3_Closed').attr('checked') === undefined) { var wednestime = $("#iWednesdaysTimeFrom option:selected").text()+'-'+$("#iWednesdaysTimeTo option:selected").text();}else{wednestime = 'Lukket';}
+                if($('#Day4_Closed').attr('checked') === undefined) { var thurstime = $("#iThursdayTimeFrom option:selected").text()+'-'+$("#iThursdayTimeTo option:selected").text();}else{thurstime = 'Lukket';}
+                if($('#Day5_Closed').attr('checked') === undefined) { var fridaytime = $("#iFridayTimeFrom option:selected").text()+'-'+$("#iFridayTimeTo option:selected").text();}else{fridaytime = 'Lukket';}
+                if($('#Day6_Closed').attr('checked') === undefined) { var saturdaytime = $("#iSaturdayTimeFrom option:selected").text()+'-'+$("#iSaturdayTimeTo option:selected").text();}else{saturdaytime = 'Lukket';}
+                if($('#Day7_Closed').attr('checked') === undefined) { var sundaytime = $("#iSundayTimeFrom option:selected").text()+'-'+$("#iSundayTimeTo option:selected").text();}else{sundaytime = 'Lukket';}
                                              
                 $('#Openinghours').append('<h3>Åbningstider</h3>\n\
-                                           <h4>Man '+mondaytime+'</h4>\n\
-                                           <h4>Tir '+thuesdaytime+'</h4>\n\
-                                           <h4>Ons '+wednestime+'</h4>\n\
-                                           <h4>Tor '+thurstime+'</h4>\n\
-                                           <h4>Fre '+fridaytime+'</h4>\n\
-                                           <h4>Lør '+saturdaytime+'</h4>\n\
-                                           <h4>Søn '+sundaytime+'</h4>');
+                                           <h4>Man</h4><h4>'+mondaytime+'</h4><br>\n\
+                                           <h4>Tir</h4><h4>'+thuesdaytime+'</h4><br>\n\
+                                           <h4>Ons</h4><h4>'+wednestime+'</h4><br>\n\
+                                           <h4>Tor</h4><h4>'+thurstime+'</h4><br>\n\
+                                           <h4>Fre</h4><h4>'+fridaytime+'</h4><br>\n\
+                                           <h4>Lør</h4><h4>'+saturdaytime+'</h4><br>\n\
+                                           <h4>Søn</h4><h4>'+sundaytime+'</h4>');
                                            
              
                 //Update the day today

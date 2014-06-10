@@ -144,7 +144,8 @@ input {
 .EditRestaurantInfo { /*position: absolute;*/ /*display: none;*/ width: 100%; /*top: 200px;*/ }
 .EditRestaurantInfoWrapper { display: inline-table; position: relative; margin-top: 30px; padding: 0 20px; }
 .EditRestaurantInfoWrapper p { display: block; font-size: 15px; margin: 3px 0; width: 300px; }
-.EditRestaurantInfoWrapper input { width: 280px; }
+.EditRestaurantInfoWrapper input { width: 280px;  }
+.EditRestaurantInfoWrapper input[type=checkbox] { width: 20px; margin: 0px 10px; }
 .EditRestaurantInfoWrapper div { display: inline-table; margin-right: 10px; }
 .EditRestaurantInfoWrapper div .button { width: 200px; margin-top: 10px; background: #f9ac4d; }
 .EditRestaurantInfoWrapper div .button.pushdown { margin-top: 84px; }
@@ -154,7 +155,7 @@ input {
 #MenuZip { width: 63px; }
 #MenuTown { width: 186px; }
 .EditmenuWrapperInner { display: table; margin: 0 auto;  }
-.Hours.Opening { width: 200px; }
+.Hours.Opening { width: 300px; }
 .Hours.Opening h2 { display: inline-table; width: 30px; font-size: 14px; line-height: 14px; vertical-align: middle; margin: 0; }
 .Hours.Opening p { display: inline-table; width: 30px; text-align: center; }
 
