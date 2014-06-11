@@ -1896,6 +1896,7 @@ function GetMessages() {
        {
 
           $('#oldMessages').html('');
+          $('#currentMessages').html('');
 
           $.each(result.Messages, function(key,value){
               var date = value.dtMessageDate;
@@ -1919,7 +1920,7 @@ function GetMessages() {
 }
 
 function SaveMessage() {
-    if(!$("#sMessageHeadline").val() === "" || !$("#sMessengerTextarea").val() === "" ){
+    if($("#sMessageHeadline").val() !== "" && $("#sMessengerTextarea").val() !== "" && $('#dMessageEnd').val() !== "" ){
         
        var aData = {};
        
@@ -1944,12 +1945,12 @@ function SaveMessage() {
        {
            //alert('Besked gemt: '+result.result);
            $('#sMessageHeadline').val(''); 
-           $('#sMessengerTextarea').val(''); 
+           $('#sMessengerTextarea').val('');
            GetMessages();
        });
     }
     else {
-        $(".Messagepreview").after("<div class='MessageEmpty'>Du skal skrive en besked</div>");
+        $(".Messagepreview").after("<div class='MessageEmpty'>Du skal skrive en besked og en slut dato</div>");
         $(".MessageEmpty").hide().slideDown(200);
         $(".MessageEmpty").delay('1000').slideUp(200, function(){
             $(this).remove();
