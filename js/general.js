@@ -1031,6 +1031,11 @@
                                     var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
                                     var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
                                     var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
+                                    if(iMenucardItemPrice > 0){
+                                        var havePrice = true;
+                                    } else {
+                                        havePrice = '';
+                                    }
                                     var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
                                     var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
 
@@ -1039,6 +1044,7 @@
                                         sMenucardItemDescription: sMenucardItemDescription,
                                         sMenucardItemNumber: sMenucardItemNumber,
                                         iMenucardItemPrice: iMenucardItemPrice,
+                                        havePrice: havePrice,
                                         iMenucardItemIdHashed: iMenucardItemIdHashed,
                                         iMenucardItemPlaceInList: iMenucardItemPlaceInList
                                     };
@@ -1382,7 +1388,7 @@ function registerNext(num) {
              
             //Check if all fields are not empty 
             
-            if($('#sCompanyName').val() !== '' && $('#iCompanyTelefon').val() !== '' && $('#sCompanyAddress').val() !== '' && $('#iCompanyZipcode').val() !== '' && $('#sCompanyCVR').val() !== '' && $('#sRestuarentName').val() !== '' && $('#sRestuarentAddress').val() !== '' && $('#iRestuarentZipcode').val() !== '' && $('#iRestuarentTel').val() !== '') {
+            if($('#sCompanyName').val() !== '' && $('#iCompanyTelefon').val() !== '' && $('#sCompanyAddress').val() !== '' && $('#iCompanyZipcode').val() !== '' && $('#sRestuarentName').val() !== '' && $('#sRestuarentAddress').val() !== '' && $('#iRestuarentZipcode').val() !== '' && $('#iRestuarentTel').val() !== '') {
             
                 $('.inputFrame.B').hide();
                 $('.inputFrame.A').hide();
