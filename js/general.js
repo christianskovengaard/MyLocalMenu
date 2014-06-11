@@ -213,7 +213,10 @@
      
       var Headline = $('.InfoSlide input').val();
       var Description = $('.InfoSlide textarea').val();
-
+      //Replace \n with <br />
+      Description = Description.replace(/\r?\n/g, '<br />');
+      
+      
       //if(Headline !== '' && Description !== ''){
           
           $('.InfoSlide input').parent().html(Headline);
@@ -432,8 +435,11 @@
           var headline = $(id).closest('.InfoSlide').children('h1');
           var headlineText = headline.text();
           var description = $(id).closest('.InfoSlide').children('h2');
-          var descriptionText = description.text();
+          var descriptionText = description.html();
           
+          //Replace line breaks with \n 
+          descriptionText = descriptionText.replace(/<br\s*\/?>/mg,"\n");
+
           if(typeof(Storage)!=="undefined"){
                 sessionStorage.headlineInfo = headlineText;
                 sessionStorage.descriptionInfo = descriptionText;
@@ -565,7 +571,8 @@
           if(index > 0){
             var aMenucardInfo = {};
             aMenucardInfo['headline'] = $(this).find('h1').html();;
-            aMenucardInfo['text'] = $(this).find('h2').html();;
+            //Get text and Replace <br/> tags with \n
+            aMenucardInfo['text'] = $(this).find('h2').html().replace(/<br\s*\/?>/mg,"\n");;
             aAllMenucardInfo[index] = aMenucardInfo;
             aAllMenucardInfo['iLastIndexOfmenucardinfo'] = index;
           }
@@ -942,7 +949,7 @@
                           };
 
                           //Foreach menucardinfo insert into the menucarcardinfo
-                          $.each(result.aMenucardInfo, function(key,value){
+                          $.each(result.aMenucardInfo, function(key,value){                                                        
                               var obj = {                                 
                                   headline: value.sMenucardInfoHeadline,
                                   text: value.sMenucardInfoParagraph
@@ -991,6 +998,9 @@
                           var template = $('#menucardinfo_admin').html();
                           var html = Mustache.to_html(template, menucardinfo);                       
                           $('#restuarantInfo').html(html);
+                                                  
+                          //Linebreak hotfix. Replace \n with <br/> tags
+                          $('#linebreakhotfix').html($('#linebreakhotfix').html().replace(/\r?\n/g, '<br/>'));                         
                       });
 
                       //Show the menucard categories and items
