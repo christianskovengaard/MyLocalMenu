@@ -1031,7 +1031,7 @@
                                     var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
                                     var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
                                     var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
-                                    if(iMenucardItemPrice > 0){
+                                    if(iMenucardItemPrice !== ''){
                                         var havePrice = true;
                                     } else {
                                         havePrice = '';
