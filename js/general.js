@@ -2192,3 +2192,21 @@ $('#sStampcardText').keyup(function() {
     $('#sStampcardTextExample').html(text);
     
 });
+
+//Disabled/enable select input types
+$("input[name='checkbox_closed']").live('click', function(){
+ //Get ID 
+ var id = $(this).attr('id').substring(0,4);
+ var number  = id.charAt(3);
+ //Disable select boxes
+ 
+ //If not disabled then disabled it
+ if ($("select[name='"+id+'_'+number+"']").is(':disabled')){
+     
+     $("select[name='"+id+'_'+number+"']").attr("disabled", false); 
+     $("select[name='"+id+"']").attr("disabled", false);     
+ }else{
+     $("select[name='"+id+'_'+number+"']").attr("disabled", "disabled"); 
+     $("select[name='"+id+"']").attr("disabled", "disabled"); 
+ }
+ });
