@@ -75,8 +75,8 @@ class MenucardController
         
         //Create Default menucardinfo
         $sQuery = $this->conPDO->prepare("INSERT INTO menucardinfo (sMenucardInfoHeadline,sMenucardInfoParagraph,iFK_iMenucardId) VALUES (:Headline,:Text,:iMenucardId)");
-        $sQuery->bindValue(':Headline', "Overskift");
-        $sQuery->bindValue(':Text', "Her kan du skrive oplysninger om dit sted!");
+        $sQuery->bindValue(':Headline', "");
+        $sQuery->bindValue(':Text', "");
         $sQuery->bindValue(':iMenucardId', $iMenucardId);
         $sQuery->execute();
         
