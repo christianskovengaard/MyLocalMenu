@@ -150,6 +150,23 @@ input {
 .EditRestaurantInfoWrapper div .button { width: 200px; margin-top: 10px; background: #f9ac4d; }
 .EditRestaurantInfoWrapper div .button.pushdown { margin-top: 84px; }
 .EditRestaurantInfoWrapper div .button:hover { color: #333; -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s; }
+/* de 4 naeste kan ikke samles i en, så kan det ikke laeses  */
+.EditRestaurantInfoWrapper input::-webkit-input-placeholder, .EditRestaurantInfoWrapper textarea::-webkit-input-placeholder
+{
+    color: #888888;
+}
+.EditRestaurantInfoWrapper input::-moz-placeholder, .EditRestaurantInfoWrapper textarea::-moz-placeholder
+{
+    color: #888888;
+}
+.EditRestaurantInfoWrapper input:-moz-placeholder, .EditRestaurantInfoWrapper textarea:-moz-placeholder
+{
+    color: #888888;
+}
+.EditRestaurantInfoWrapper input:-ms-input-placeholder, .EditRestaurantInfoWrapper textarea:-ms-input-placeholder
+{
+    color: #888888;
+}
 .line { display: inline-table; width: 2px; height: 470px; background: #d1d1d1; color: #d1d1d1; font-size: 1px; }
 
 #MenuZip { width: 63px; }
