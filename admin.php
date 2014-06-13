@@ -80,7 +80,7 @@ if($oSecurityController->login_check() == true) { ?>
                     <p>Eller</p>
                     <div id="upload_feild">
                         <input id="uploadFile" placeholder="Fil ej valgt, klik for at vælg fil" disabled="disabled" />
-                        <input id="uploadBtn" type="file" />
+                        <input id="uploadBtn" type="file" accept="image/*" />
 
                     </div>
                     <input type="button" value="Upload">
@@ -210,7 +210,7 @@ if($oSecurityController->login_check() == true) { ?>
             $('.datepicker').datepicker({ dateFormat: 'dd-mm-yy' });
             AutomaticUpdateMenucard();
             InitiateAutocomplete();
-            HentMinBilleder();
+            InitFileManeger();
             
             //TODO: Changed this Quick fix
             //Set menucard in edit mode 

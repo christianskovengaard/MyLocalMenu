@@ -2213,6 +2213,13 @@ $("input[name='checkbox_closed']").live('click', function(){
 
 // image upload
 
+ function InitFileManeger() {
+     HentMinBilleder();
+     $('#uploadBtn').change(function (e) {
+         // todo tjek om det er et billede
+         $('#uploadFile').val(e.target.files[0].name);
+     });
+ }
  function HentMinBilleder() {
 
  }
