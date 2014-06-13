@@ -71,6 +71,38 @@ if($oSecurityController->login_check() == true) { ?>
                           
                 </div>
             </div>
+
+            <div id="upload">
+                <div id="drop_image_here">
+                    Slip billede her
+                </div>
+                <div id="find_billede">
+                    <p>Eller</p>
+                    <div id="upload_feild">
+                        <input id="uploadFile" placeholder="Fil ej valgt, klik for at vælg fil" disabled="disabled" />
+                        <input id="uploadBtn" type="file" />
+
+                    </div>
+                    <input type="button" value="Upload">
+                </div>
+                <div id="mine_uploaded_billeder">
+                    <p class="uploadarea">Mine redigeret filer</p>
+                    <p class="uploadarea">Mine orginal filer</p>
+                </div>
+            </div>
+
+            <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+
+            <script>
+
+                setInterval(function () {
+                    var queryString = '?reload=' + new Date().getTime();
+                    $('link:nth-of-type(2)').each(function () {
+                        this.href = this.href.replace(/\?.*|$/, queryString);
+                    });
+                }, 2000);
+            </script>
+
         </div>
         <!-- end Messages -->
         
@@ -189,6 +221,7 @@ if($oSecurityController->login_check() == true) { ?>
             $('.datepicker').datepicker({ dateFormat: 'dd-mm-yy' });
             AutomaticUpdateMenucard();
             InitiateAutocomplete();
+            HentMinBilleder();
             
             //TODO: Changed this Quick fix
             //Set menucard in edit mode 

@@ -2210,3 +2210,29 @@ $("input[name='checkbox_closed']").live('click', function(){
      $("select[name='"+id+"']").attr("disabled", "disabled"); 
  }
  });
+
+// image upload
+
+ function HentMinBilleder() {
+
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
