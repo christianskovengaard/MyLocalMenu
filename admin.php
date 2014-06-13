@@ -91,17 +91,6 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
             </div>
 
-            <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-
-            <script>
-
-                setInterval(function () {
-                    var queryString = '?reload=' + new Date().getTime();
-                    $('link:nth-of-type(2)').each(function () {
-                        this.href = this.href.replace(/\?.*|$/, queryString);
-                    });
-                }, 2000);
-            </script>
 
         </div>
         <!-- end Messages -->
