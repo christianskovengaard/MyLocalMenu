@@ -1,8 +1,9 @@
 <script id="menucard_admin" type="text/template">
     <input type="hidden" value="{{iMenucardIdHashed}}" id="iMenucardIdHashed">
     {{#menucard}}
-    <div class="sortablediv sortableList">                  
-    <h3>{{sMenucardCategoryName}}</h3>
+    <div class="sortableCategory">
+    <div class="sortablediv sortableList" id="{{iMenucardCategoryIdHashed}}">                  
+    <h3 class="sortable-header">{{sMenucardCategoryName}}</h3>
     <h4>{{sMenucardCategoryDescription}}</h4>
     <div class="DishEditWrapper">
         <div class="EditDish" onclick="EditListHeadline(this)"><img src="img/edit_white.png"></div>
@@ -34,6 +35,7 @@
             <h5>+</h5>
         </li>
     </ul>
+    </div>
     </div>
     {{/menucard}}
 </script>    

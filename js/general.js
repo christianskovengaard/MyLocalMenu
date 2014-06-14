@@ -299,6 +299,14 @@
                 change: function( event, ui ) {sessionStorage.bMenucardChanged = 'true';},
                 update: function( event, ui ) {UpdatePlacementOfItems();}
       }).disableSelection();
+      
+      //Update sortable categories .sortableList
+      $( ".sortableCategory" ).sortable({
+        connectWith: ".sortableCategory",
+        handle: ".sortable-header",
+        change: function( event, ui ) {/*sessionStorage.bMenucardChanged = 'true';*/},
+        update: function( event, ui ) {/*UpdatePlacementOfItems();*/}
+      });
   }
   
   function UpdatePlacementOfItems()
@@ -1064,7 +1072,7 @@
                           $('#restuarantInfo').after(html);
                           
                           //Function to initiate all sortable lists 
-                          UpdateSortableLists();                                                    
+                          UpdateSortableLists();                                                
                       });
                 }else{
                     
