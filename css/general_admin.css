@@ -479,6 +479,7 @@ left: 9px;
 .InfoSlidebox#Openinghours h4:nth-child(12),
 .InfoSlidebox#Openinghours h4:nth-child(13) { border-top: 1px solid #555; padding-top: 3px; } 
 
+.fullPage { position: fixed; top: 0; bottom: 0; left: 0; right: 0; }
 .inforUpdateAlert { position: absolute; top: 50%; left: 50%; margin-left: -100px; background: #F9AC4D; padding: 10px 20px; color: #fff; z-index:1000; }
 
 .SaveMenuDish { text-align: center; padding: 5px 0; display: block; min-width: 345px;}
