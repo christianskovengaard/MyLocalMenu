@@ -2312,9 +2312,9 @@ $("input[name='checkbox_closed']").live('click', function(){
 
 
      if (files.length > 0) {
-         upload(files);
 
          $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
+         upload(files);
      } else {
          $('#upload_in_progress').html('<p>' + filer.join(', ') + '</p>');
 
@@ -2349,7 +2349,7 @@ $("input[name='checkbox_closed']").live('click', function(){
      }).done(function (result) {
          if (result.result) {
              // dette bliver kort hvis billede bliver uploadet med succes
-             $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, {n:result.location}))
+             $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result))
          } else {
              // dette bliver koret hvis billede ikke bliver uploaded
              alert("fejl")

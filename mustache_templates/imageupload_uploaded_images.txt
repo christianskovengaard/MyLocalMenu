@@ -3,7 +3,10 @@
 <div>
     <img src="imgmsg/{{n}}" width="200">
 
-    <p>slet</p>
+<p>{{ d }}</p>
+
+
+    <p onclick="deleteImage({{id}}">slet</p>
 
     <p>ret</p>
 

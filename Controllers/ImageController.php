@@ -52,11 +52,12 @@ class ImageController
 
         //Check if user is logged in
         if ($this->oSecurityController->login_check() == true) {
-            $sQuery = $this->conPDO->prepare("SELECT sImageName, sImageDate FROM images WHERE iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId");
+            $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId, sImageName, sImageDate FROM images WHERE iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId ORDER BY iImageId DESC ");
             $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());
             $sQuery->execute();
             while ($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
                 $oMessage['images'][] = array(
+                    'id' => $aResult['iFK_iRestuarentInfoId'],
                     'n' => $aResult['sImageName'],
                     'd' => $aResult['sImageDate']
                 );
@@ -119,6 +120,13 @@ class ImageController
 
                         $oMessage['result'] = true;
                         $oMessage['location'] = $filename;
+                        $oMessage['id'] = $this->conPDO->lastInsertId();
+
+                        $oMessage['images'] = array(
+                            'id' => $this->conPDO->lastInsertId(),
+                            'n' => $filename,
+                            'd' => date( 'YYYY-MM-DD')
+                        );
                     }
 
                     $id++;
