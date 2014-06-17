@@ -2338,8 +2338,10 @@ $("input[name='checkbox_closed']").live('click', function(){
 
      }).done(function (result) {
          if (result.result) {
+             // dette bliver kort hvis billede bliver uploadet med succes
              alert("ok");
          } else {
+             // dette bliver koret hvis billede ikke bliver uploaded
              alert("fejl")
          }
 
@@ -2356,8 +2358,12 @@ $("input[name='checkbox_closed']").live('click', function(){
          if (files.length > 0) {
              // todo skal set timeout fjernes?
              setTimeout(function () {
+             // koe upload igen hvis der er flere billeder der skal uploades
                 upload(files);
-             }, 2500);
+             }, 250);
+         }else {
+             // ryd upload_in_progress diven
+             $('#upload_in_progress').html('');
          }
      });
 
