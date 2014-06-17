@@ -7,7 +7,7 @@ root {
 
 body,html { width: 100%; height: 100%; margin: 0px; color: #333; }
 
-h1, h2, p, h3, h4, h5, h6, a, div  {
+h1, h2, p, h3, h4, h5, h6, a, div, ul  {
     font-family: 'Raleway', sans-serif; 
   }
 
@@ -82,6 +82,23 @@ h1, h2, p, h3, h4, h5, h6, a, div  {
 .header .wrapper .rigth a:hover{
   background: rgba(0,0,0,0.5);
 }
+.header .wrapper .rigth input {
+  color: #333;
+  background: #fff;
+  border: 0;
+  margin: 10px 5px 0 0;
+  padding: 10px 20px 10px 15px;
+  -moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;
+  text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+  font-family: 'Raleway', sans-serif;
+}
+.btn {
+  background: #FCA041 !important;
+  text-decoration: none !important;
+  color: #333 !important;
+}
 .body {
   position: relative;
   width: 100%;
@@ -130,3 +147,9 @@ h1, h2, p, h3, h4, h5, h6, a, div  {
 
 
 .logo { display: block; width: 120px; margin: 0px auto 10px auto; }
+
+.body .wrapper .left.login-page,.body .wrapper .rigth.login-page {
+    width: 300px;
+    text-align: left;
+
+}
