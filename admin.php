@@ -90,6 +90,7 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
                 <div id="mine_uploaded_billeder">
                     <p class="uploadarea">Mit billede biblotek</p>
+                    <div id="mit_billede_biblotek"></div>
                 </div>
             </div>
 

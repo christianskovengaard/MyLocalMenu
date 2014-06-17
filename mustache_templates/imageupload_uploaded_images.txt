@@ -1,0 +1,13 @@
+{{#images}}
+
+<div>
+    <img src="imgmsg/{{n}}" width="200">
+
+    <p>slet</p>
+
+    <p>ret</p>
+
+    </div>
+<hr>
+
+{{/images}}

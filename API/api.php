@@ -401,6 +401,12 @@ if(isset($_GET['sFunction']))
             $sResult = json_encode($result);
             echo $sResult;
         break;
+
+        case "GetUsersImageLibrary":
+            require_once "../Controllers/ImageController.php";
+            $oImageController = new ImageController();
+            echo json_encode($oImageController->GetImages());
+            break;
         
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
@@ -432,9 +438,9 @@ if(isset($_POST['sFunction'])) {
         break;
 
         case "UploadImage":
-            require_once "../Controllers/ImageUploadController.php";
-            $oImageUploadController = new ImageUploadController();
-            echo json_encode($oImageUploadController->UploadImage());
+            require_once "../Controllers/ImageController.php";
+            $oImageController = new ImageController();
+            echo json_encode($oImageController->UploadImage());
 
         break;
 

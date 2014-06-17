@@ -2211,8 +2211,8 @@ $("input[name='checkbox_closed']").live('click', function(){
  }
  });
 
-// image upload
-
+ // image upload
+ var imagetemloate = false;
  function InitFileManeger() {
 
      var uploadbox = document.getElementById("drop_image_here");
@@ -2222,8 +2222,10 @@ $("input[name='checkbox_closed']").live('click', function(){
      uploadbox.addEventListener("dragover", dragOver, false);
      uploadbox.addEventListener("dragleave", dragLeave, false);
 
-
-     HentMinBilleder();
+     jQuery.get('mustache_templates/imageupload_uploaded_images.txt', function (data) {
+         imagetemloate = data;
+         HentMinBilleder();
+     });
      $('#uploadBtn').change(function (e) {
          var filer = [];
          for (var i = 0; i < e.target.files.length; i++) {
@@ -2242,7 +2244,15 @@ $("input[name='checkbox_closed']").live('click', function(){
      });
  }
  function HentMinBilleder() {
-
+     $.ajax({
+         type: "GET",
+         url: "API/api.php",
+         dataType: "json",
+         data: {sFunction:"GetUsersImageLibrary"}
+     }).done(function(result)
+     {
+         $('#mit_billede_biblotek').html(Mustache.to_html(imagetemloate, result));
+     });
  }
 
 
@@ -2339,7 +2349,7 @@ $("input[name='checkbox_closed']").live('click', function(){
      }).done(function (result) {
          if (result.result) {
              // dette bliver kort hvis billede bliver uploadet med succes
-             alert("ok");
+             $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, {n:result.location}))
          } else {
              // dette bliver koret hvis billede ikke bliver uploaded
              alert("fejl")
