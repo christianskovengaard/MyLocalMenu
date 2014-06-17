@@ -2382,7 +2382,7 @@ $("input[name='checkbox_closed']").live('click', function(){
 
 
 function deleteImage(id) {
-    if(confirm("ER du sikker på at du vil slette dette billede?")) {
+    if(confirm("Er du sikker på at du vil slette dette billede?")) {
         var sel = "[data-imageid="+id+"]";
         $(sel).css("opacity", 0.5);
         $.ajax({
