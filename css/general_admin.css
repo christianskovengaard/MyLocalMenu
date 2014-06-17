@@ -562,4 +562,49 @@ left: 9px;
 .uploadhover {
     background-color: #195F91 !important;
 }
+.imageInList {
+    background-color: #DDD;
+    margin-bottom: 20px;
+    position: relative;
+}
+.imageInList img {
+    width: 150px;
+    float: left;
+}
+.imageInList_left{
 
+    float: left;
+    position: absolute;
+    right: 0;
+    left: 150px;
+    bottom: 0;
+    top: 0;
+}
+.imageInList p {
+    margin: 0;
+}
+.imageInList_left .imageInList_dato {
+    padding: 10px;
+    font-weight: bold;
+}
+
+.imageInList_left .slet, .imageInList_left .ret {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.imageInList_left .ret {
+    background: #f2a620;
+}
+.imageInList_left .slet {
+    background: #333;
+    color: #fff;
+}
+.imageInList_left .retogsletimage {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.clear {
+    clear: both;
+}

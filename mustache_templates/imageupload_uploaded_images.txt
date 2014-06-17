@@ -1,16 +1,13 @@
 {{#images}}
-
-<div data-imageid="{{id}}">
-    <p style="font-weight:bold">{{ d }}</p>
-    <img src="imgmsg/{{n}}" width="200" style="float:left">
-
-
-
-    <p onclick="deleteImage({{id}})">slet</p>
-
-    <p>ret</p>
-    <div style="clear:left"></div>
-    <hr>
+<div data-imageid="{{id}}" class="imageInList">
+    <img src="imgmsg/{{n}}">
+    <div class="imageInList_left">
+        <p class="imageInList_dato">{{ d }}</p>
+        <div class="retogsletimage">
+            <p class="ret">ret</p>
+            <p class="slet" onclick="deleteImage({{id}})">slet</p>
+        </div>
+    </div>
+    <div class="clear"></div>
 </div>
-
 {{/images}}
