@@ -2214,10 +2214,31 @@ $("input[name='checkbox_closed']").live('click', function(){
 // image upload
 
  function InitFileManeger() {
+
+     var uploadbox = document.getElementById("drop_image_here");
+
+     uploadbox.addEventListener("drop", drop, false);
+     uploadbox.addEventListener("dragenter", dragEnter, false);
+     uploadbox.addEventListener("dragover", dragOver, false);
+     uploadbox.addEventListener("dragleave", dragLeave, false);
+
+
      HentMinBilleder();
      $('#uploadBtn').change(function (e) {
-         // todo tjek om det er et billede
-         $('#uploadFile').val(e.target.files[0].name);
+         var filer = [];
+         for (var i = 0; i < e.target.files.length; i++) {
+
+             filer.push(e.target.files[i].name);
+
+         }
+         $('#uploadFile').html(filer.join(', '));
+
+         if(filer.length == 0) {
+             $('#uploadFile').html('Fil(er) ej valgt, klik for at vælg fil');
+
+         }
+
+         delete filer;
      });
  }
  function HentMinBilleder() {
@@ -2225,6 +2246,122 @@ $("input[name='checkbox_closed']").live('click', function(){
  }
 
 
+ function dragEnter(e) {
+     $("#drop_image_here").addClass("uploadhover");
+     e.stopPropagation();
+     e.preventDefault();
+ }
+
+ function dragOver(e) {
+     e.stopPropagation();
+     e.preventDefault();
+ }
+ function dragLeave(e) {
+     $("#drop_image_here").removeClass("uploadhover");
+     e.stopPropagation();
+     e.preventDefault();
+ }
+ function drop(e) {
+     e.stopPropagation();
+     e.preventDefault();
+     $("#drop_image_here").removeClass("uploadhover");
+     /** @namespace e.dataTransfer.files */
+     var filer = e.target.files || e.dataTransfer.files;
+
+     if (filer.length > 0) {
+
+         beforeUpload(filer);
+     }
+ }
+ function uploadFraKnap() {
+     var filer = document.getElementById('uploadBtn').files;
+
+     if (filer.length != 0) {
+         beforeUpload(filer);
+     }
+
+     filer.value = null;
+
+ }
+ var regespForTestImage = new RegExp("^image/");
+
+ function beforeUpload(files) {
+     $('#uploadFile').html('Fil(er) ej valgt, klik for at vælg fil');
+
+     var nyefiler = [];
+     var filer = [];
+     for (var i = 0; i < files.length; i++) {
+         if(regespForTestImage.test(files[i].type)){
+            nyefiler.push(files[i]);
+            filer.push(files[i].name);
+         }else {
+             filer.push(files[i].name+" er ikke et billede")
+         }
+     }
+     files = nyefiler;
+
+
+     if (files.length > 0) {
+         upload(files);
+
+         $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
+     } else {
+         $('#upload_in_progress').html('<p>' + filer.join(', ') + '</p>');
+
+     }
+ }
+
+
+
+ function upload(files) {
+     var formobject = new FormData();
+     formobject.append('file[]', files[0]);
+     formobject.append('sFunction', 'UploadImage');
+
+     var oldfilelist = files;
+     files = [];
+     for (var i = 1; i < oldfilelist.length; i++) {
+         files.push(oldfilelist[i])
+     }
+
+
+     $.ajax({
+         type: "POST",
+         url: "API/api.php",
+         dataType: "json",
+         data: formobject,
+
+         async: false,
+         cache: false,
+         contentType: false,
+         processData: false
+
+     }).done(function (result) {
+         if (result.result) {
+             alert("ok");
+         } else {
+             alert("fejl")
+         }
+
+
+
+         var filer = [];
+         for (var i = 0; i < files.length; i++) {
+
+             filer.push(files[i].name);
+
+         }
+
+         $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
+         if (files.length > 0) {
+             // todo skal set timeout fjernes?
+             setTimeout(function () {
+                upload(files);
+             }, 2500);
+         }
+     });
+
+ }
 
 
 

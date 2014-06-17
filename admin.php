@@ -77,17 +77,19 @@ if($oSecurityController->login_check() == true) { ?>
                     Slip billede her
                 </div>
                 <div id="find_billede">
-                    <p>Eller</p>
+                    <p class="upload_eller">Eller</p>
                     <div id="upload_feild">
-                        <input id="uploadFile" placeholder="Fil ej valgt, klik for at vælg fil" disabled="disabled" />
-                        <input id="uploadBtn" type="file" accept="image/*" />
+                        <p id="uploadFile">Fil(er) ej valgt, klik for at vælg fil</p>
+                        <input id="uploadBtn" type="file" accept="image/*" multiple />
 
                     </div>
-                    <input type="button" value="Upload">
+                    <input id="amlUploadBtn" type="button"  onclick="uploadFraKnap()" value="Upload">
+                </div>
+                <div id="upload_in_progress">
+
                 </div>
                 <div id="mine_uploaded_billeder">
-                    <p class="uploadarea">Mine redigeret filer</p>
-                    <p class="uploadarea">Mine orginal filer</p>
+                    <p class="uploadarea">Mit billede biblotek</p>
                 </div>
             </div>
 

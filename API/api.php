@@ -430,7 +430,14 @@ if(isset($_POST['sFunction'])) {
             }
             echo $sResult;
         break;
-        
+
+        case "UploadImage":
+            require_once "../Controllers/ImageUploadController.php";
+            $oImageUploadController = new ImageUploadController();
+            echo json_encode($oImageUploadController->UploadImage());
+
+        break;
+
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
                 echo $result;
