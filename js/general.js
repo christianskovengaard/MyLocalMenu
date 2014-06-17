@@ -2381,7 +2381,26 @@ $("input[name='checkbox_closed']").live('click', function(){
 
 
 
+function deleteImage(id) {
+    if(confirm("ER du sikker på at du vil slette dette billede?")) {
+        var sel = "[data-imageid="+id+"]";
+        $(sel).css("opacity", 0.5);
+        $.ajax({
+            type: "GET",
+            url: "API/api.php",
+            dataType: "json",
+            data: {sFunction:"DeleteImage",imageid:id}
+        }).done(function(result) {
 
+            if(result.result) {
+                $(sel).fadeOut(500);
+            }else {
+                $(sel).css("opacity", 1);
+            }
+        });
+    }
+
+}
 
 
 

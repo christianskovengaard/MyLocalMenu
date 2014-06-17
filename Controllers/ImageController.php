@@ -52,12 +52,12 @@ class ImageController
 
         //Check if user is logged in
         if ($this->oSecurityController->login_check() == true) {
-            $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId, sImageName, sImageDate FROM images WHERE iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId ORDER BY iImageId DESC ");
+            $sQuery = $this->conPDO->prepare("SELECT iImageId, sImageName, sImageDate FROM images WHERE iFK_iRestuarentInfoId = :iFK_iRestuarentInfoId ORDER BY iImageId DESC ");
             $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());
             $sQuery->execute();
             while ($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
                 $oMessage['images'][] = array(
-                    'id' => $aResult['iFK_iRestuarentInfoId'],
+                    'id' => $aResult['iImageId'],
                     'n' => $aResult['sImageName'],
                     'd' => $aResult['sImageDate']
                 );
@@ -69,6 +69,49 @@ class ImageController
         return $oMessage;
     }
 
+    public function DeleteImage(){
+        $oMessage = array(
+            'sFunction' => 'DeleteImage',
+            'result' => false
+        );
+        if (isset($_GET['imageid'])) {
+            $imageId = $_GET['imageid'];
+            //Check if session is started
+            if (!isset($_SESSION['sec_session_id'])) {
+                $this->oSecurityController->sec_session_start();
+            }
+
+            //Check if user is logged in
+            if ($this->oSecurityController->login_check() == true) {
+                $userid = $this->GetResturantId();
+
+                $sQuery = $this->conPDO->prepare("SELECT * FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
+                $sQuery->bindValue(':imageId', $imageId);
+                $sQuery->bindValue(':resturentid', $userid);
+                $sQuery->execute();
+                $rows = $sQuery->rowCount();
+                if ($rows == 1) {
+                    $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                    if (file_exists("../imgmsg/" . $aResult['sImageName'])) {
+                        unlink("../imgmsg/" . $aResult['sImageName']);
+
+                        $sQuery = $this->conPDO->prepare("DELETE FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
+                        $sQuery->bindValue(':imageId', $imageId);
+                        $sQuery->bindValue(':resturentid', $userid);
+                        $sQuery->execute();
+
+                        $oMessage['result']=true;
+                    }
+
+                }
+
+
+
+
+            }
+        }
+        return $oMessage;
+    }
 
     public function UploadImage()
     {

@@ -1,16 +1,16 @@
 {{#images}}
 
-<div>
+<div data-imageid="{{id}}">
     <p style="font-weight:bold">{{ d }}</p>
     <img src="imgmsg/{{n}}" width="200" style="float:left">
 
 
 
-    <p onclick="deleteImage({{id}}">slet</p>
+    <p onclick="deleteImage({{id}})">slet</p>
 
     <p>ret</p>
     <div style="clear:left"></div>
+    <hr>
 </div>
-<hr>
 
 {{/images}}

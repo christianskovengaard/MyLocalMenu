@@ -406,7 +406,13 @@ if(isset($_GET['sFunction']))
             require_once "../Controllers/ImageController.php";
             $oImageController = new ImageController();
             echo json_encode($oImageController->GetImages());
-            break;
+        break;
+
+        case 'DeleteImage':
+            require_once "../Controllers/ImageController.php";
+            $oImageController = new ImageController();
+            echo json_encode($oImageController->DeleteImage());
+        break;
         
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
