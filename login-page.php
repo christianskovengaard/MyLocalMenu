@@ -28,6 +28,66 @@ $oSecurityController->sec_session_start();
         
         <img class="logo" src="img/logo_4.png">
         <h1>MyLocalCafé</h1>
+
+        <div id="NewUser" class="inputFrame ligth">
+            <h3>Kære Café ejer</h3>
+            <p>Få din egen App, og kommunikér direkte med dine kunder, helt gratis.</p> 
+            <p>Du kan:</p>
+            <ul>
+                <li> Promover tilbud til dine kunder</li>
+                <li> Få nye kunder</li>
+                <li> Få flere loyale kunder</li>
+                <li> Mål løbende på dine salg</li>
+                <li> Skab omtale om dit sted</li>
+                <li> Forøg din omsætning</li>
+            </ul>
+            <p>Du kan som café ejer oprette en gratis profil. Med denne profil er det muligt, at tilføje oplysninger om din café. Disse oplysninger er individuelle, men kan bl.a. være:</p>
+            <ul>
+               <li> Åbningstider</li>
+               <li> Menukort</li>
+               <li> Tilbud</li>
+               <li> Service info</li>
+               <li> Wi-fi adgang</li>
+               <li> Beliggenhed</li>
+               <li> Mærkedage</li>
+               <li> Konkurrencer</li>
+               <li> Send push beskeder</li>
+               <li> Opret online klippekort</li>
+               <li> Opret online stempelkort</li>
+               <li> Og meget mere</li>
+           </ul>
+
+           <p>Dine café oplysninger kommunikeres direkte til dine kunder igennem My Local Café´s app.</p>
+           <h3>Sådan virker det</h3>
+           <p>Dine Café kunder henter My Local Café's app. De indtaster jeres cafénavn, og får vist jeres personlige café app.</p>
+           <h3>Opret en profil og få en app i dag, det er helt gratis.</h3>
+           <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
+           <!--<div onclick="HideShowSwitch('Email');" class="button01">Opret</div>-->
+           <input type="submit" onclick="HideShowSwitch('Email');" value="Opret en bruger" class="button"/>
+        </div> 
+
+        <script type="text/javascript">
+           var url = window.location.search.substring(7);
+           if (url === "false") {
+               $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p></div>");
+               //$("#loginButton").after("<div id='WrongPassword'><p>Skift kodeord</p><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Skift koderord' class='button' onclick='SendResetPasswordRequest();' ></div>");
+               //Scroll to WrongPassword
+               $('html,body').animate({scrollTop: $("#WrongPassword").offset().top},'fast');
+               $("#forgotpassMail").focus();
+           }
+           if(url === "nocafe"){
+               $("#loginButton").before("<div id='WrongPassword'><p>Du har endnu ikke oprettet en café</p><p>Vi har sendt en registrerings mail til dig.</p></div>");             
+               $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');
+           }
+           if(url === "Account_locked"){
+               $("#loginButton").before("<div id='WrongPassword'><p>Kontoen er blevet låst i 2 timer pga. for mange log ind forsøg</p></div>");             
+               $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');    
+          }
+        </script>
+
+        <!--   over sat ind nu   -->
+
+
         <div id="NewUser" class="inputFrame ligth">
            <h3>Opret en profil og få en app i dag, det er helt gratis.</h3>
            <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
