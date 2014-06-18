@@ -2396,7 +2396,7 @@ function deleteImage(id) {
         }).done(function(result) {
 
             if(result.result) {
-                $(sel).fadeOut(500);
+                $(sel).animate({opacity: 0}, 500).slideUp(500);
             }else {
                 $(sel).css("opacity", 1);
                 $(sel2).show();
