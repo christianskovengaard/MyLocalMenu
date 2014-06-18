@@ -47,9 +47,9 @@ $oSecurityController->sec_session_start();
             <div class="wrapper">
                 <div class="left">
                     <h1>Er du cafe ejer?</h1>
-                    <a href="http://mylocalcafe.dk/admin">Log ind</a>
+                    <a href="admin">Log ind</a>
                     <p>eller</p>
-                    <a href="http://mylocalcafe.dk/admin">læs mere</a>
+                    <a href="admin">læs mere</a>
                     <br>
                     <h3>og få oprettet din café med det samme, helt gratis!</h3>
                 </div>
