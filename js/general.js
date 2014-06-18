@@ -2290,7 +2290,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          beforeUpload(filer);
      }
 
-     filer.value = null;
+     document.getElementById('uploadBtn').value = null
 
  }
  var regespForTestImage = new RegExp("^image/");
