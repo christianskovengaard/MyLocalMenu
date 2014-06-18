@@ -566,6 +566,7 @@ left: 9px;
     background-color: #DDD;
     margin-bottom: 20px;
     position: relative;
+    min-height: 115px;
 }
 .imageInList img {
     width: 150px;

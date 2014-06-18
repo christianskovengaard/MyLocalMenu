@@ -147,7 +147,7 @@ class ImageController
 
                 if (getimagesize($fil['tmp_name'])) {
                     $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
-                    $filename = $id . '.' . end(explode(".", $fil['name']));
+                    $filename = $this->GetResturantId() . date( '-Y-m-d-') . time() . '.' . end(explode(".", $fil['name']));
                     $location = '../imgmsg/' . $filename;
 
                     if ($fil['error'] == 0 && move_uploaded_file($fil['tmp_name'], $location)) {
@@ -168,7 +168,7 @@ class ImageController
                         $oMessage['images'] = array(
                             'id' => $this->conPDO->lastInsertId(),
                             'n' => $filename,
-                            'd' => date( 'YYYY-MM-DD')
+                            'd' => date( 'Y-m-d')
                         );
                     }
 
