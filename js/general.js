@@ -2218,3 +2218,16 @@ $("input[name='checkbox_closed']").live('click', function(){
      $("select[name='"+id+"']").attr("disabled", "disabled"); 
  }
  });
+ 
+ 
+ //Check for select to disable
+ setTimeout(function(){
+ $("input[name='checkbox_closed']").each(function(){
+   
+     if($(this).is(':checked')){
+        var id = $(this).attr('id').substring(0,4);
+        var number  = id.charAt(3);
+        $("select[name='"+id+'_'+number+"']").attr("disabled", "disabled"); 
+        $("select[name='"+id+"']").attr("disabled", "disabled"); 
+    }
+ });},1500);
