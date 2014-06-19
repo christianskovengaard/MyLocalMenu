@@ -47,7 +47,7 @@ $oSecurityController->sec_session_start();
             <div class="wrapper">
                 <div class="left">
                     <h1>Er du cafe ejer?</h1>
-                    <a href="admin">Log ind</a>
+                    <a href="admin.php#LogInd">Log ind</a>
                     <p>eller</p>
                     <a href="admin">læs mere</a>
                     <br>

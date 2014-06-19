@@ -87,6 +87,11 @@ $oSecurityController->sec_session_start();
                 
             </div>
         </div>
+        <div name="LogInd" class="loginBlock">
+         <a name="LogInd">log</a>
+             <h3>log ind</h3>
+                
+        </div>
                   
            
            
