@@ -26,6 +26,7 @@ $oSecurityController->sec_session_start();
     </head>
     <body>
         <div class="header">
+            <a class="logindtop" href=#LogInd>log ing</a>
             <div class="wrapper">
               <div class="left">
                   <img src="img/IphoneB.png">
@@ -64,7 +65,6 @@ $oSecurityController->sec_session_start();
                 </div>
                 <div class="rigth login-page">
                     <img class="logo" src="img/logo_4.png"> 
-
                     <h3>Du kan som café ejer oprette en gratis profil. Med denne profil er det muligt, at tilføje oplysninger om din café. Disse oplysninger er individuelle, men kan bl.a. være:</h3>
                      <ul>
                          <li> Åbningstider</li>
@@ -87,20 +87,6 @@ $oSecurityController->sec_session_start();
                 
             </div>
         </div>
-        <div name="LogInd" class="loginBlock">
-         <a name="LogInd">log</a>
-             <h3>log ind</h3>
-                
-        </div>
-                  
-           
-           
-           
-          
-
-
-           
-        
 
         <script type="text/javascript">
            var url = window.location.search.substring(7);
@@ -121,31 +107,46 @@ $oSecurityController->sec_session_start();
           }
         </script>
 
+        <div class="loginBlock">
+            <div class="wrapper">
+              <a name="LogInd"></a> <!-- Anchor for link to logind on page -->
+             <?php if ($oSecurityController->login_check() == false) : ?>
+                  <form name="login" method="POST" action="login.php">
+                      <div id="LoginBox" class="inputFrame">
+                      <img class="logo" src="img/logo_4.png"> 
+                      <h1>MyLocal<span>Café</span></h1>
+                        <h2>Log Ind</h2>
+                        <input name="username" id="LoginEmail" type="text" placeholder="Email">
+                        <input name="password" type="Password" placeholder="Kodeord">
+                        <input id="loginButton" type="submit" value="Log Ind" class="btn"/> 
+                        <div id='WrongPassword' class="WrongPassword">
+                            <input type='text' placeholder='Email' id='forgotpassMail'>
+                            <input type='button' value='Send nyt kodeord til email' class='btn' onclick='SendResetPasswordRequest();'>
+                        </div>
+                      </div>
+                  </form>
+              <?php else : ?>
+                <div id="LoginBox" class="inputFrame">
+                      <img class="logo" src="img/logo_4.png"> 
+                      <h1>MyLocal<span>Café</span></h1>
+                      <h2>Du er logget ind</h2>
+                      <a href="admin">Tryk her, for at gå til redigering af menukort</a>
+                  </div>
+              <?php endif; ?>
+             </div>   
+        </div>
+
+        
+
         <!--   over sat ind nu   -->
 
 
-        <div id="NewUser" class="inputFrame ligth">
+        <!--<div id="NewUser" class="inputFrame ligth">
            <h3>Opret en profil og få en app i dag, det er helt gratis.</h3>
            <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
            <input type="submit" onclick="HideShowSwitch('Email');" value="Opret en bruger" class="button"/>
-        </div> 
-        <?php if ($oSecurityController->login_check() == false) : ?>
-        <form name="login" method="POST" action="login.php">
-            <div id="LoginBox" class="inputFrame">
-                <h2>Log Ind</h2>
-                <input name="username" id="LoginEmail" type="text" placeholder="Email">
-                <input name="password" type="Password" placeholder="Kodeord">
-                <input id="loginButton" type="submit" value="Log Ind" class="button"/> 
-                <div id='WrongPassword'><p>Skift kodeord</p>
-                    <input type='text' placeholder='Email' id='forgotpassMail'>
-                    <input type='button' value='Send nyt kodeord til email' class='button' onclick='SendResetPasswordRequest();'>
-                </div>
-            </div>
-        </form>
-        <?php else : ?>
-        <h6>Du er logget ind</h6>
-        <a href="admin">gå til redigering af menukort</a>
-        <?php endif; ?>
+        </div> -->
+
         
         <script type="text/javascript">
            var url = window.location.search.substring(7);

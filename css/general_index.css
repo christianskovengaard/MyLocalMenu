@@ -10,7 +10,9 @@ body,html { width: 100%; height: 100%; margin: 0px; color: #333; }
 h1, h2, p, h3, h4, h5, h6, a, div, ul  {
     font-family: 'Raleway', sans-serif; 
   }
-
+input {
+  outline: none;
+}
 .wrapper {
   position: relative;
   margin: 0 auto;
@@ -94,6 +96,18 @@ h1, h2, p, h3, h4, h5, h6, a, div, ul  {
     font-weight: 500;
   font-family: 'Raleway', sans-serif;
 }
+.logindtop {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #777;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.logindtop:hover {
+  color: #fff;
+}
 .btn {
   background: #FCA041 !important;
   text-decoration: none !important;
@@ -152,4 +166,57 @@ h1, h2, p, h3, h4, h5, h6, a, div, ul  {
     width: 300px;
     text-align: left;
 
+}
+
+.loginBlock {
+  background: #333;
+  color: #fff;
+  height: 100%;
+}
+.inputFrame {
+  text-align: center;
+  padding: 30px 0;
+}
+.inputFrame h1 {
+  display: table;
+    margin: 0px auto;
+}
+.inputFrame h1 span{
+    font-weight: 100;
+}
+.inputFrame h2 {
+    margin: 50px 0 10px;
+}
+.inputFrame a {
+  color: #333;
+  background: #FCA041;
+  border: 0;
+  margin: 10px auto 0 auto;
+  padding: 10px 20px 10px 15px;
+  -moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Raleway', sans-serif;
+  display: table;
+}
+.inputFrame a:hover {
+  background: #fff ;
+}
+
+.inputFrame input {
+  color: #333;
+  background: #fff;
+  border: 0;
+  margin: 10px auto 0 auto;
+  padding: 10px 20px 10px 15px;
+  -moz-border-radius: 30px; -webkit-border-radius: 30px; border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Raleway', sans-serif;
+  display: table;
+}
+.WrongPassword {
+  display: none;
 }
