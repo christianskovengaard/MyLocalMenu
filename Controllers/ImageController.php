@@ -25,7 +25,8 @@ class ImageController
 
     }
 
-    private function GetResturantId(){
+    private function GetResturantId()
+    {
         $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo
                                                         INNER JOIN company
                                                         ON company.iCompanyId = restuarentinfo.iFK_iCompanyInfoId
@@ -39,7 +40,8 @@ class ImageController
 
     }
 
-    public function GetImages(){
+    public function GetImages()
+    {
         $oMessage = array(
             'sFunction' => 'GetImages',
             'result' => false,
@@ -69,7 +71,8 @@ class ImageController
         return $oMessage;
     }
 
-    public function DeleteImage(){
+    public function DeleteImage()
+    {
         $oMessage = array(
             'sFunction' => 'DeleteImage',
             'result' => false
@@ -92,20 +95,17 @@ class ImageController
                 $rows = $sQuery->rowCount();
                 if ($rows == 1) {
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-                    if (file_exists("../imgmsg/" . $aResult['sImageName'])) {
-                        unlink("../imgmsg/" . $aResult['sImageName']);
+                    unlink("../imgmsg/" . $aResult['sImageName']);
 
-                        $sQuery = $this->conPDO->prepare("DELETE FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
-                        $sQuery->bindValue(':imageId', $imageId);
-                        $sQuery->bindValue(':resturentid', $userid);
-                        $sQuery->execute();
+                    $sQuery = $this->conPDO->prepare("DELETE FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
+                    $sQuery->bindValue(':imageId', $imageId);
+                    $sQuery->bindValue(':resturentid', $userid);
+                    $sQuery->execute();
 
-                        $oMessage['result']=true;
-                    }
+                    $oMessage['result'] = true;
+
 
                 }
-
-
 
 
             }
@@ -147,12 +147,10 @@ class ImageController
 
                 if (getimagesize($fil['tmp_name'])) {
                     $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
-                    $filename = $this->GetResturantId() . date( '-Y-m-d-') . time() . '.' . end(explode(".", $fil['name']));
+                    $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . end(explode(".", $fil['name']));
                     $location = '../imgmsg/' . $filename;
 
                     if ($fil['error'] == 0 && move_uploaded_file($fil['tmp_name'], $location)) {
-
-
 
 
                         $sQuery = $this->conPDO->prepare("INSERT INTO images (iFK_iRestuarentInfoId, sImageName, sImageDate) VALUES (:iFK_iRestuarentInfoId, :imageName, CURDATE())");
@@ -168,7 +166,7 @@ class ImageController
                         $oMessage['images'] = array(
                             'id' => $this->conPDO->lastInsertId(),
                             'n' => $filename,
-                            'd' => date( 'Y-m-d')
+                            'd' => date('Y-m-d')
                         );
                     }
 
