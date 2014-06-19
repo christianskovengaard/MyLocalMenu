@@ -94,8 +94,39 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
             </div>
 
+        </div>
+        <div id="imageEidter">
+            <div id="imageEidterInner">
+                <div id="imageArea">
+                    <img id="imageSrc" src=""/>
+                </div>
+                <div id="toolLine">
+                    <div id="toolL">
+                        <span>
+                            BESKÆR
+                        </span>
+                        <span>
+                            SORT/HVID
+                        </span>
+                        <span>
+                            FLIP HØJRE
+                        </span>
+                        <span>
+                            FLIP VENSTRE
+                        </span>
+                    </div>
+                    <div id="toolR">
+                        <span onclick="editImageClosePopup()">
+                            LUK
+                        </span>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
 
         </div>
+
+
         <!-- end Messages -->
         
         <!-- Stampcard and QRcode -->

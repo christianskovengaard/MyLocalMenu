@@ -4,7 +4,7 @@
     <div class="imageInList_left">
         <p class="imageInList_dato">{{ d }}</p>
         <div class="retogsletimage">
-            <p class="ret">ret</p>
+            <p class="ret" onclick="editImage({{id}},'{{n}}')">ret</p>
             <p class="slet" onclick="deleteImage({{id}})">slet</p>
         </div>
     </div>

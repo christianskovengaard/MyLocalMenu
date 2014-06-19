@@ -2411,16 +2411,57 @@ function deleteImage(id) {
 
 }
 
+var eiditimageVariable = {
+    "open":false,
+    "width":0,
+    "height":0
+};
+function editImage(id, imageUrl){
+    var newImg = new Image();
+    newImg.onload = function() {
+        eiditimageVariable.open = true;
+        eiditimageVariable.height = newImg.height;
+        eiditimageVariable.width = newImg.width;
+        $('#imageSrc').attr('src', "imgmsg/"+imageUrl);
+        $("#imageEidter").fadeIn(100);
+        resizeEidtImage();
+    };
+    newImg.src = "imgmsg/"+imageUrl;
+}
+function editImageClosePopup(){
+    eiditimageVariable.open = false;
+    $("#imageEidter").fadeOut(100);
+}
 
 
 
 
 
+ $( window ).resize(function() {
+     resizeEidtImage();
+ });
+
+function resizeEidtImage(){
+    if(eiditimageVariable.open){
+
+        var newHeight = 0;
+        if(eiditimageVariable.width>window.innerWidth-60) {
+            $('#imageEidterInner').width(window.innerWidth-60);
+            newHeight = ((window.innerWidth - 60) / eiditimageVariable.width) * eiditimageVariable.height;
+        }else{
+            $('#imageEidterInner').width(eiditimageVariable.width);
+            newHeight = eiditimageVariable.height;
+        }
+
+        if(newHeight>window.innerHeight-60-$('#toolLine').height()  ) {
+            // alt for hoj
+            $('#imageEidterInner').width(eiditimageVariable.width * ((window.innerHeight-60-$('#toolLine').height()) / eiditimageVariable.height));
+
+        }
+        $("#imageEidterInner").css("marginTop",(window.innerHeight-$('#imageEidterInner').height())/2);
 
 
-
-
-
-
-
-
+        $("#imageArea").height($("#imageSrc").height());
+        delete newHeight;
+    }
+}

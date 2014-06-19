@@ -609,3 +609,45 @@ left: 9px;
 .clear {
     clear: both;
 }
+
+
+#imageEidter {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.4);
+    z-index: 2;
+    display: none;
+}
+#imageEidterInner {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#imageEidter #imageArea img{
+    width: 100%;
+}
+
+#imageEidter #toolLine {
+    background-color: rgba(0,0,0,.7);
+    padding: 3px;
+}
+#imageEidter #toolLine span {
+    color: #ffffff !important;
+    font-family: arial, helvetica, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#imageEidter #toolR {
+    float: right;
+}
+#imageEidter #toolL {
+    float: left;
+}
+#imageEidter #toolL span {
+    margin-right: 15px;
+
+}
