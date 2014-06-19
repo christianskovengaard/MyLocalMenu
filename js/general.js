@@ -2414,7 +2414,8 @@ function deleteImage(id) {
 var eiditimageVariable = {
     "open":false,
     "width":0,
-    "height":0
+    "height":0,
+    "id":null
 };
 function editImage(id, imageUrl){
     var newImg = new Image();
@@ -2422,6 +2423,7 @@ function editImage(id, imageUrl){
         eiditimageVariable.open = true;
         eiditimageVariable.height = newImg.height;
         eiditimageVariable.width = newImg.width;
+        eiditimageVariable.id = id;
         $('#imageSrc').attr('src', "imgmsg/"+imageUrl);
         $("#imageEidter").fadeIn(100);
         resizeEidtImage();
@@ -2430,6 +2432,10 @@ function editImage(id, imageUrl){
 }
 function editImageClosePopup(){
     eiditimageVariable.open = false;
+    eiditimageVariable.height = 0;
+    eiditimageVariable.width = 0;
+    eiditimageVariable.id = null;
+
     $("#imageEidter").fadeOut(100);
 }
 
@@ -2463,5 +2469,18 @@ function resizeEidtImage(){
 
         $("#imageArea").height($("#imageSrc").height());
         delete newHeight;
+    }
+}
+function  editImageSortHvid(){
+    if(eiditimageVariable.open) {
+        $.ajax({
+            type: "GET",
+            url: "API/api.php",
+            dataType: "json",
+            data: {sFunction:"ImageEidtSortHvid",imageid:eiditimageVariable.id}
+        }).done(function(result) {
+
+
+        });
     }
 }

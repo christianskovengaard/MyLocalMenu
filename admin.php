@@ -105,7 +105,7 @@ if($oSecurityController->login_check() == true) { ?>
                         <span>
                             BESKÆR
                         </span>
-                        <span>
+                        <span onclick="editImageSortHvid()">
                             SORT/HVID
                         </span>
                         <span>

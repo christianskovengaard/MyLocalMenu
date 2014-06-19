@@ -186,4 +186,55 @@ class ImageController
 
     }
 
+    public function ImageEidtSortHvid()
+    {
+        $oMessage = array(
+            'sFunction' => 'ImageEidtSortHvid',
+            'result' => false
+        );
+        if(isset($_GET['imageid'])){
+            if (!isset($_SESSION['sec_session_id'])) {
+                $this->oSecurityController->sec_session_start();
+            }
+
+            //Check if user is logged in
+            if ($this->oSecurityController->login_check() == true) {
+                $imageId = $_GET['imageid'];
+
+
+
+
+
+                $sQuery = $this->conPDO->prepare("SELECT * FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
+                $sQuery->bindValue(':imageId', $imageId);
+                $sQuery->bindValue(':resturentid', $this->GetResturantId());
+                $sQuery->execute();
+                $rows = $sQuery->rowCount();
+                if ($rows == 1) {
+                    $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+
+                    $aResult['sImageName'];
+
+
+
+
+
+
+
+                    $oMessage['result'] = true;
+
+
+                }
+
+
+
+
+            }
+
+        }
+
+
+        return $oMessage;
+    }
+
 }

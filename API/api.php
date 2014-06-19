@@ -413,6 +413,12 @@ if(isset($_GET['sFunction']))
             $oImageController = new ImageController();
             echo json_encode($oImageController->DeleteImage());
         break;
+
+        case 'ImageEidtSortHvid':
+            require_once "../Controllers/ImageController.php";
+            $oImageController = new ImageController();
+            echo json_encode($oImageController->ImageEidtSortHvid());
+        break;
         
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
