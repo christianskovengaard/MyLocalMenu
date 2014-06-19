@@ -20,7 +20,11 @@
                     <div class="DishHeadline"><h1>{{sMenucardItemName}}</h1></div>
                     <div class="DishDescription"><h2>{{sMenucardItemDescription}}</h2></div>
                 </div>
-                <div class="DishPrice">{{#havePrice}}<h2>...</h2><h2>{{iMenucardItemPrice}}</h2><h2>kr</h2>{{/havePrice}}{{^havePrice}}{{/havePrice}}</div>
+                <div class="DishPrice">{{#havePrice}}
+                                            <h2>...</h2><h2>{{iMenucardItemPrice}}</h2><h2>kr</h2>
+                                       {{/havePrice}}
+                                       {{^havePrice}}<h2></h2><h2>{{iMenucardItemPrice}}</h2><h2></h2>{{/havePrice}}
+                </div>
                 <div class="DishEditWrapper">
                     
                     <div class="EditDish" onclick="EditSortableList(this)"><img src="img/edit.png"></div>

@@ -101,7 +101,13 @@
           $('.DishNumber input').parent().html('<h1>'+Number+'</h1>');
           $('.DishHeadline input').parent().html('<h1>'+Headline+'</h1>');
           $('.DishDescription textarea').parent().html('<h2>'+Description+'</h2>');
-          $('.DishPrice input').parent().html('<h2>...</h2><h2>'+price+'</h2><h2>kr</h2>');
+          //Check if price is int
+          if(isNaN(price) || price === ''){
+              $('.DishPrice input').parent().html('<h2></h2><h2>'+price+'</h2><h2></h2>');
+          }
+          else{
+            $('.DishPrice input').parent().html('<h2>...</h2><h2>'+price+'</h2><h2>kr</h2>');
+          }
           $('.SaveMenuDish').fadeOut('normal', function(){ 
               $(this).remove();
               $('.AddLiButton').fadeIn('fast');
@@ -1031,11 +1037,13 @@
                                     var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
                                     var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
                                     var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
-                                    if(iMenucardItemPrice !== ''){
-                                        var havePrice = true;
-                                    } else {
-                                        havePrice = '';
+                                    if(isNaN(iMenucardItemPrice) || iMenucardItemPrice === ''){
+                                        var havePrice = '';
                                     }
+                                    else{
+                                        havePrice = true;
+                                    }
+                                    
                                     var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
                                     var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
 
