@@ -1435,8 +1435,8 @@ class MenucardController
             $i = 0;
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
-                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoHeadline'] = utf8_encode($row['sMenucardInfoHeadline']);
-                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoParagraph'] = utf8_encode($row['sMenucardInfoParagraph']);
+                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoHeadline'] = html_entity_decode(utf8_encode($row['sMenucardInfoHeadline']));
+                $aMenucard['aMenucardInfo'][$i]['sMenucardInfoParagraph'] = html_entity_decode(utf8_encode($row['sMenucardInfoParagraph']));
                 $i++;
             }
             
@@ -1555,8 +1555,8 @@ class MenucardController
             $i = 0;
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
-                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryName'] = utf8_encode($row['sMenucardCategoryName']);
-                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryDescription'] = utf8_encode($row['sMenucardCategoryDescription']);
+                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryName'] = html_entity_decode(utf8_encode($row['sMenucardCategoryName']));
+                $aMenucard['aMenucardCategory'][$i]['sMenucardCategoryDescription'] = html_entity_decode(utf8_encode($row['sMenucardCategoryDescription']));
                 $aMenucard['aMenucardCategory'][$i]['iMenucardCategoryIdHashed'] = $row['iMenucardCategoryIdHashed'];
                 $iFK_iMenucardCategoryId = $row['iMenucardCategoryId'];
 
@@ -1574,9 +1574,9 @@ class MenucardController
                     
                     while ($rowItem = $sQueryItem->fetch(PDO::FETCH_ASSOC)) 
                     {
-                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemName'][$x] = utf8_encode($rowItem['sMenucardItemName']);
-                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemNumber'][$x] = utf8_encode($rowItem['sMenucardItemNumber']);
-                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemDescription'][$x] = utf8_encode($rowItem['sMenucardItemDescription']);
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemName'][$x] = html_entity_decode(utf8_encode($rowItem['sMenucardItemName']));
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemNumber'][$x] = html_entity_decode(utf8_encode($rowItem['sMenucardItemNumber']));
+                        $aMenucard['aMenucardCategoryItems'.$i]['sMenucardItemDescription'][$x] = html_entity_decode(utf8_encode($rowItem['sMenucardItemDescription']));
                         $aMenucard['aMenucardCategoryItems'.$i]['iMenucardItemPrice'][$x] = $rowItem['iMenucardItemPrice'];
                         $aMenucard['aMenucardCategoryItems'.$i]['iMenucardItemIdHashed'][$x] = $rowItem['iMenucardItemIdHashed'];
                         $aMenucard['aMenucardCategoryItems'.$i]['iMenucardItemPlaceInList'][$x] = $rowItem['iMenucardItemPlaceInList'];
