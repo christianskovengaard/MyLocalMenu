@@ -173,6 +173,7 @@ class imageLib
     private $imageSize;
     private $fileExtension;
 
+
     private $debug = true;
     private $errorArray = array();
 
@@ -265,6 +266,17 @@ class imageLib
 
         // *** Set if image should be interlaced or not. 
         $this->isInterlace = false;
+    }
+
+
+
+
+    /**
+     * @return string
+     */
+    public function getFileExtension()
+    {
+        return $this->fileExtension;
     }
 
 

@@ -25,6 +25,10 @@ class ImageController
 
     }
 
+    private function LoadPhpImageMagician(){
+        require "../Classes/PhpImageMagicianClass.php";
+    }
+
     private function GetResturantId()
     {
         $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo
@@ -95,7 +99,11 @@ class ImageController
                 $rows = $sQuery->rowCount();
                 if ($rows == 1) {
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-                    unlink("../imgmsg/" . $aResult['sImageName']);
+
+                    if(file_exists("../imgmsg/" . $aResult['sImageName'])){
+
+                        unlink("../imgmsg/" . $aResult['sImageName']);
+                    }
 
                     $sQuery = $this->conPDO->prepare("DELETE FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
                     $sQuery->bindValue(':imageId', $imageId);
@@ -160,8 +168,6 @@ class ImageController
                         $sQuery->execute();
 
                         $oMessage['result'] = true;
-                        $oMessage['location'] = $filename;
-                        $oMessage['id'] = $this->conPDO->lastInsertId();
 
                         $oMessage['images'] = array(
                             'id' => $this->conPDO->lastInsertId(),
@@ -213,13 +219,35 @@ class ImageController
                 if ($rows == 1) {
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
 
-                    $aResult['sImageName'];
+                    $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
+
+                    $this->LoadPhpImageMagician();
+
+                    $OImageManipolation = new imageLib('../imgmsg/'.$aResult['sImageName']);
+                    $OImageManipolation->greyScale();
+
+                    $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . $OImageManipolation->getFileExtension();
+
+                    $OImageManipolation->saveImage('../imgmsg/' . $filename);
 
 
 
+                    $id++;
+                    file_put_contents("../app_data/image_upload_id.txt", $id);
 
 
+                    $sQuery = $this->conPDO->prepare("INSERT INTO images (iFK_iRestuarentInfoId, sImageName, sImageDate) VALUES (:iFK_iRestuarentInfoId, :imageName, CURDATE())");
 
+                    $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());
+                    $sQuery->bindValue(":imageName", $filename);
+                    $sQuery->execute();
+
+
+                    $oMessage['images'] = array(
+                        'id' => $this->conPDO->lastInsertId(),
+                        'n' => $filename,
+                        'd' => date('Y-m-d')
+                    );
 
                     $oMessage['result'] = true;
 

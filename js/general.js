@@ -2479,7 +2479,9 @@ function  editImageSortHvid(){
             dataType: "json",
             data: {sFunction:"ImageEidtSortHvid",imageid:eiditimageVariable.id}
         }).done(function(result) {
+            $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result))
 
+            editImage(result.images.id, result.images.n)
 
         });
     }
