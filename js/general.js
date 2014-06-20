@@ -1471,13 +1471,14 @@
             break;
             
         case 'Email':
+
             $('.EmailSubmission').remove();
             var mail = $('#sEmailToSubmit').val();
             if(validateEmail(mail))
             {   
-                AddNewUser(mail);
+               AddNewUser(mail);
             }else{
-                $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Ikke en korrekt Email</h1></div>');
+                $('#sEmailToSubmit').before('<div class="EmailSubmission"><h3>Ikke en korrekt Email</h3></div>');
                 $('.EmailSubmission').hide().slideDown(200);
 //                setTimeout(function(){$('.EmailSubmission').slideUp(200);},2500);
 //                setTimeout(function(){$('.EmailSubmission').remove();},2700);
@@ -1495,15 +1496,11 @@
              data : {sFunction:"AddNewUser",Email:mail}
         }).done(function(result){
             if(result.result === 'true'){
-                $('#NewUser').html('');
                 var mailhost = mail.split('@')[1];
-                $('#NewUser').append('<div class="EmailSubmission"><h1>Sådan!</h1><h3>Vi har sendt en email til <span>'+mail+'</span></h3><h3>med et link til oprettelse af din profil</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>');
-                //Create new account and send email to user
-                $('html, body').animate({
-                    scrollTop: $(".logo").offset().top
-                },0);
+                $('#sEmailToSubmit').before('<div class="EmailSubmission"><h1>Sådan!</h1><h3>Vi har sendt en email til <span>'+mail+'</span></h3><h3>med et link til oprettelse af din profil</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>');
+                //Create new account and send email to user  TODO
             }else{
-                $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Emailen er allerede i brug</h1><h3>Prøv med en anden email eller log ind nedenfor</h3></div>');
+                $('#sEmailToSubmit').before('<div class="EmailSubmission"><h3>Emailen er allerede i brug</h3><p>Prøv med en anden email eller log ind</p></div>');
                    $('.EmailSubmission').hide().slideDown(200);
                    $('#sEmailToSubmit').val('');               
             } 

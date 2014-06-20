@@ -26,7 +26,7 @@ $oSecurityController->sec_session_start();
     </head>
     <body>
         <div class="header">
-            <a class="logindtop" href=#LogInd>log ing</a>
+            <a class="logindtop" href="login-page#LogInd">log ing</a>
             <div class="wrapper">
               <div class="left">
                   <img src="img/IphoneB.png">
@@ -40,7 +40,7 @@ $oSecurityController->sec_session_start();
                   <h3>Opret en profil og få en app i dag, det er helt gratis.</h3>
                    <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
                    <!--<div onclick="HideShowSwitch('Email');" class="button01">Opret</div>-->
-                   <input type="submit" onclick="HideShowSwitch('Email');" value="Opret din café" class="btn"/>
+                   <input type="submit" onclick="HideShowSwitch('Email');" id="addUserBtn" value="Opret din café" class="btn"/>
                                 
               </div>
            </div>
@@ -88,25 +88,6 @@ $oSecurityController->sec_session_start();
             </div>
         </div>
 
-        <script type="text/javascript">
-           var url = window.location.search.substring(7);
-           if (url === "false") {
-               $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p></div>");
-               //$("#loginButton").after("<div id='WrongPassword'><p>Skift kodeord</p><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Skift koderord' class='button' onclick='SendResetPasswordRequest();' ></div>");
-               //Scroll to WrongPassword
-               $('html,body').animate({scrollTop: $("#WrongPassword").offset().top},'fast');
-               $("#forgotpassMail").focus();
-           }
-           if(url === "nocafe"){
-               $("#loginButton").before("<div id='WrongPassword'><p>Du har endnu ikke oprettet en café</p><p>Vi har sendt en registrerings mail til dig.</p></div>");             
-               $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');
-           }
-           if(url === "Account_locked"){
-               $("#loginButton").before("<div id='WrongPassword'><p>Kontoen er blevet låst i 2 timer pga. for mange log ind forsøg</p></div>");             
-               $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');    
-          }
-        </script>
-
         <div class="loginBlock">
             <div class="wrapper">
               <a name="LogInd"></a> <!-- Anchor for link to logind on page -->
@@ -117,12 +98,8 @@ $oSecurityController->sec_session_start();
                       <h1>MyLocal<span>Café</span></h1>
                         <h2>Log Ind</h2>
                         <input name="username" id="LoginEmail" type="text" placeholder="Email">
-                        <input name="password" type="Password" placeholder="Kodeord">
-                        <input id="loginButton" type="submit" value="Log Ind" class="btn"/> 
-                        <div id='WrongPassword' class="WrongPassword">
-                            <input type='text' placeholder='Email' id='forgotpassMail'>
-                            <input type='button' value='Send nyt kodeord til email' class='btn' onclick='SendResetPasswordRequest();'>
-                        </div>
+                        <input name="password" id="LoginPassword" type="Password" placeholder="Kodeord">
+                        <input id="loginButton" type="submit" value="Log Ind" class="btn"/>  
                       </div>
                   </form>
               <?php else : ?>
@@ -136,26 +113,21 @@ $oSecurityController->sec_session_start();
              </div>   
         </div>
 
-        
-
         <!--   over sat ind nu   -->
-
 
         <!--<div id="NewUser" class="inputFrame ligth">
            <h3>Opret en profil og få en app i dag, det er helt gratis.</h3>
            <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
            <input type="submit" onclick="HideShowSwitch('Email');" value="Opret en bruger" class="button"/>
-        </div> -->
-
-        
+        </div> -->    
         <script type="text/javascript">
            var url = window.location.search.substring(7);
            if (url === "false") {
-               $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p></div>");
+               $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p><p style='display: inline-block; margin: 0;'>Har du glemt dit kodeord </p><a style='background: none; color:#FCA041; padding:0 3px; display: inline-block;' href='login-page?login=newCode#LogInd'> Klik her</a></div>");
                //$("#loginButton").after("<div id='WrongPassword'><p>Skift kodeord</p><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Skift koderord' class='button' onclick='SendResetPasswordRequest();' ></div>");
                //Scroll to WrongPassword
-               $('html,body').animate({scrollTop: $("#WrongPassword").offset().top},'fast');
-               $("#forgotpassMail").focus();
+               //$('html,body').animate({scrollTop: $("#WrongPassword").offset().top},'fast');
+               //$("#forgotpassMail").focus();
            }
            if(url === "nocafe"){
                $("#loginButton").before("<div id='WrongPassword'><p>Du har endnu ikke oprettet en café</p><p>Vi har sendt en registrerings mail til dig.</p></div>");             
@@ -165,6 +137,15 @@ $oSecurityController->sec_session_start();
                $("#loginButton").before("<div id='WrongPassword'><p>Kontoen er blevet låst i 2 timer pga. for mange log ind forsøg</p></div>");             
                $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');    
           }
-        </script>       
+          if(url === "newCode"){
+               $("#LoginBox h2").text('Nyt kodeord');
+               $("#LoginEmail").remove();
+               $("#LoginPassword").remove();
+               $("#loginButton").before("<div id='WrongPassword'><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Send nyt kodeord til email' class='btn' onclick='SendResetPasswordRequest();'><a style='background: none; color:#FCA041; padding:0 3px; display: inline-block;' href='login-page#LogInd'>tilbage</a></div>");             
+               $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');    
+               $("#loginButton").remove();
+          }
+
+        </script>
     </body>
 </html>
