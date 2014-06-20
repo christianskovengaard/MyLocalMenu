@@ -479,7 +479,11 @@
 
   function UpdateMenucard()
   {
+      console.log('UpdateMenucard is disabled');
+      //Set sessionStorage.bMenucardChanged = 'false';
+      sessionStorage.bMenucardChanged = 'false';
       
+      /*
       //$('#EditMenuButton').text('');
       //$('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\');"><img src="img/edit.png">Menukort</div>');
                    
@@ -600,6 +604,8 @@
            //reload the menucard
            //GetMenucard(true);
        });
+      
+      */
   }
   
   
