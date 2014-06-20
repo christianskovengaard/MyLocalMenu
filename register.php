@@ -1,13 +1,6 @@
 <?php
 
-//Check if the sUserToken is set
-if(isset($_GET['sUserToken']))
-{
-    //If sUserToken is valid get the user
-    require_once('./Controllers/UserController.php');
-    $oUserController = new UserController();
-    if($oUserController->ChecksUserToken() == true)
-    {
+
    
 ?>
 <!DOCTYPE html>
@@ -18,9 +11,9 @@ if(isset($_GET['sUserToken']))
         <title>MyLocalCafé - Register</title>
         <title>MyLocalCafé</title>
         <link rel="icon" href="img/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="css/general_index.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 500px)" href="css/general_index_small.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:501px) and (max-width: 850px)" href="css/general_index_medium.css" />
+        <link rel="stylesheet" type="text/css" href="css/general_register.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 500px)" href="css/general_register_small.css" />
+        <link rel="stylesheet" type="text/css" media="only screen and (min-width:501px) and (max-width: 850px)" href="css/general_register_medium.css" />
         <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>          
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -29,13 +22,12 @@ if(isset($_GET['sUserToken']))
     </head>
     <body>
         
-        <div class="header">                    
+        <div class="header">               
                     <img class="logo M" src="img/logo_4.png">
-                    <h1>Opret din café profil</h1>
+                    <h3>Opret din café profil</h3>
         </div> 
         
-            <div class="Register">
-                
+            <div class="wrapper">
                     <form action="" method="" id="register_form">
                         <div class="inputFrame A">
                             <h2>Vælg din kode</h2>
@@ -43,7 +35,7 @@ if(isset($_GET['sUserToken']))
                             <input type="password" placeholder="Kode fra modtaget email">-->
                             <input value="" id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
                             <input value="" id="NewPasswordRetype" type="password" placeholder="Gentag koden">
-                            <div onclick="registerNext(1);" class="button Reg">Næste</div>
+                            <!--<div onclick="registerNext(1);" class="button Reg">Næste</div>-->
                         </div>
 
                         <div class="inputFrame B">
@@ -60,15 +52,15 @@ if(isset($_GET['sUserToken']))
                             <input type="text" id="iRestuarentZipcode" onblur="ValidateRegSwitch('zipcode',this);" style="display: inline-block;" size="4" maxlength="4" placeholder="Postnr">
                             <div class="RegCity"></div>
                             <input type="text" id="iRestuarentTel" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Telefonnummer">
-                            <div onclick="registerNext(0);" class="button prev">Tilbage</div>
-                            <div onclick="registerNext(2);" class="button Reg">Næste</div>
+                            <!--<div onclick="registerNext(0);" class="button prev">Tilbage</div>
+                            <div onclick="registerNext(2);" class="button Reg">Næste</div>-->
                         </div>
 
                         <div class="inputFrame C">
                             <h2>Åbningstider</h2>
                             <div id="OpeningHours" class="Hours Opening"></div>
-                            <div onclick="registerNext(1);" class="button prev">Tilbage</div>
-                            <div onclick="SubmitFormRegister();" class="button Reg">OK</div>
+                            <!--<div onclick="registerNext(1);" class="button prev">Tilbage</div>-->
+                            <div onclick="SubmitFormRegister();" class="btn">OK</div>
                         </div>
                         <input type="hidden" id="sUserToken" value="<?= $_GET['sUserToken']?>"/>
                     </form>
@@ -101,11 +93,5 @@ if(isset($_GET['sUserToken']))
 </html>
 <?php
 
-    }else{
-        header("location: index");
-    }
-}
-else{
-    header("location: index");
-}
+
 ?>
