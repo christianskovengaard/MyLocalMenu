@@ -1,6 +1,13 @@
 <?php
 
-
+//Check if the sUserToken is set
+if(isset($_GET['sUserToken']))
+{
+    //If sUserToken is valid get the user
+    require_once('./Controllers/UserController.php');
+    $oUserController = new UserController();
+    if($oUserController->ChecksUserToken() == true)
+    {
    
 ?>
 <!DOCTYPE html>
@@ -92,6 +99,11 @@
     </body>
 </html>
 <?php
-
-
+    }else{
+        header("location: index");
+    }
+}
+else{
+    header("location: index");
+}
 ?>
