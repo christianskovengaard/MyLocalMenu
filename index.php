@@ -54,7 +54,7 @@ $oSecurityController->sec_session_start();
                     <h3>og få oprettet din café med det samme, helt gratis!</h3>
                 </div>
                 <div class="rigth">
-                    <img class="logo" src="img/logo_4.png">
+                    <img style="width:250px;" src="img/Iphone_CutA.png">
                 </div>
             </div>
         </div>
