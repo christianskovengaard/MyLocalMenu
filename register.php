@@ -34,7 +34,7 @@
 <!--                            <input type="text" placeholder="Din email">
                             <input type="password" placeholder="Kode fra modtaget email">-->
                             <input value="" id="NewPassword" type="password" onblur="ValidateRegSwitch('password',this);" placeholder="Indtast en kode">
-                            <input value="" id="NewPasswordRetype" type="password" placeholder="Gentag koden">
+                            <input value="" id="NewPasswordRetype" onblur="ValidateRegSwitch('passwordRetype',this);" type="password" placeholder="Gentag koden">
                             <!--<div onclick="registerNext(1);" class="button Reg">Næste</div>-->
                         </div>
 
@@ -47,7 +47,7 @@
                             <input type="text" id="sCompanyCVR" placeholder="CVR nr.">
                             <h2>Din Café</h2>
                             <input type="text" id="sRestuarentName" onblur="ValidateRegSwitch('MustFill',this);" placeholder="Cafénavn">
-                            <input type="text" id="sRestuarentSlogan" style="background: #ddd; " placeholder="Evt. slogan">
+                            <input type="text" id="sRestuarentSlogan" style="background: #eee; " placeholder="Evt. slogan">
                             <input type="text" id="sRestuarentAddress" onblur="ValidateRegSwitch('MustFill',this);" placeholder="Gadenavn og nummer">
                             <input type="text" id="iRestuarentZipcode" onblur="ValidateRegSwitch('zipcode',this);" style="display: inline-block;" size="4" maxlength="4" placeholder="Postnr">
                             <div class="RegCity"></div>
