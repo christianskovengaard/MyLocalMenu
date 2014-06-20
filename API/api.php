@@ -419,6 +419,12 @@ if(isset($_GET['sFunction']))
             $oImageController = new ImageController();
             echo json_encode($oImageController->ImageEidtSortHvid());
         break;
+
+        case 'PreviewImage':
+            require_once "../Controllers/ImageController.php";
+            $oImageController = new ImageController();
+            $oImageController->PreviewImage();
+        break;
         
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';

@@ -2352,7 +2352,12 @@ $("input[name='checkbox_closed']").live('click', function(){
              $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result))
          } else {
              // dette bliver koret hvis billede ikke bliver uploaded
-             alert("fejl")
+             if (result.toSmall) {
+                 alert("Dette billede er ikke stort nok");
+             } else {
+                 alert("fejl")
+             }
+
          }
 
 
@@ -2415,7 +2420,8 @@ var eiditimageVariable = {
     "open":false,
     "width":0,
     "height":0,
-    "id":null
+    "id":null,
+    "functions":[]
 };
 function editImage(id, imageUrl){
     var newImg = new Image();
@@ -2425,21 +2431,72 @@ function editImage(id, imageUrl){
         eiditimageVariable.width = newImg.width;
         eiditimageVariable.id = id;
         $('#imageSrc').attr('src', "imgmsg/"+imageUrl);
+        $('#imageEidterSave').addClass("disable");
+        $('#mageEidterAmlToolBar').show();
+        $('#mageEidterCropToolBar').hide();
+
+
         $("#imageEidter").fadeIn(100);
         resizeEidtImage();
     };
     newImg.src = "imgmsg/"+imageUrl;
 }
-function editImageClosePopup(){
+function editImageUpdate(){
+    var newImg = new Image();
+    newImg.onload = function() {
+        eiditimageVariable.height = newImg.height;
+        eiditimageVariable.width = newImg.width;
+
+
+        document.getElementById('imageAreaImageOuter').innerHTML = "";
+        newImg.id = "imageSrc";
+        document.getElementById('imageAreaImageOuter').appendChild( newImg );
+
+        $('#imageEidterSave').removeClass("disable");
+
+
+        resizeEidtImage()
+        setTimeout(function(){
+            resizeEidtImage()
+        }, 25)
+    };
+
+    newImg.src = "API/api.php?sFunction=PreviewImage&imageId="+eiditimageVariable.id+"&"+$.param({functions:eiditimageVariable.functions});
+}
+function lukMaaskeImageEidter(e){
+    if(e.target.id == "imageEidter"){
+        if(eiditimageVariable.functions.length == 0){
+            lukImageEidter();
+        }else {
+            if(confirm("Du har ikke gemt dine rettelser.\n\nVil du forsætte med at lukke?")){
+                lukImageEidter();
+            }
+        }
+
+    }
+}
+function lukImageEidter(e){
     eiditimageVariable.open = false;
     eiditimageVariable.height = 0;
     eiditimageVariable.width = 0;
     eiditimageVariable.id = null;
-
+    eiditimageVariable.functions = [];
     $("#imageEidter").fadeOut(100);
 }
+function editImageSetupCrop(){
+    if(eiditimageVariable.width>719 && eiditimageVariable.height>319){
+        $('#mageEidterAmlToolBar').hide();
+        $('#mageEidterCropToolBar').show();
 
-
+        $('#custum_crop_resizer_hivimig').css({"top":((10/100)*eiditimageVariable.height)+"%", "left":((10/100)*eiditimageVariable.width)+"%"})
+    }else{
+        alert("Dette billede er ikke stort nok til at blive beskæret")
+    }
+}
+function editImageCancelCrop(){
+    $('#mageEidterAmlToolBar').show();
+    $('#mageEidterCropToolBar').hide();
+}
 
 
 
@@ -2471,18 +2528,11 @@ function resizeEidtImage(){
         delete newHeight;
     }
 }
-function  editImageSortHvid(){
-    if(eiditimageVariable.open) {
-        $.ajax({
-            type: "GET",
-            url: "API/api.php",
-            dataType: "json",
-            data: {sFunction:"ImageEidtSortHvid",imageid:eiditimageVariable.id}
-        }).done(function(result) {
-            $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result))
-
-            editImage(result.images.id, result.images.n)
-
-        });
-    }
+function editImageSortHvid(){
+    eiditimageVariable.functions.push('sortHvid');
+    editImageUpdate();
+}
+function editImageRotate(vej) {
+    eiditimageVariable.functions.push('rotate'+vej);
+    editImageUpdate()
 }

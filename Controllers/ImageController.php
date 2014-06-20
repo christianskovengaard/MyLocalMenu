@@ -25,7 +25,8 @@ class ImageController
 
     }
 
-    private function LoadPhpImageMagician(){
+    private function LoadPhpImageMagician()
+    {
         require "../Classes/PhpImageMagicianClass.php";
     }
 
@@ -100,7 +101,7 @@ class ImageController
                 if ($rows == 1) {
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
 
-                    if(file_exists("../imgmsg/" . $aResult['sImageName'])){
+                    if (file_exists("../imgmsg/" . $aResult['sImageName'])) {
 
                         unlink("../imgmsg/" . $aResult['sImageName']);
                     }
@@ -126,7 +127,8 @@ class ImageController
 
         $oMessage = array(
             'sFunction' => 'UploadImage',
-            'result' => false
+            'result' => false,
+            'toSmall' => true
         );
 
         //Check if session is started
@@ -154,31 +156,41 @@ class ImageController
 
 
                 if (getimagesize($fil['tmp_name'])) {
-                    $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
-                    $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . end(explode(".", $fil['name']));
-                    $location = '../imgmsg/' . $filename;
 
-                    if ($fil['error'] == 0 && move_uploaded_file($fil['tmp_name'], $location)) {
+                    list($width, $height, $type, $attr) = getimagesize($fil['tmp_name']);
+
+                    if($width>699 && $height>299){
+                        $oMessage['toSmall']=false;
+                        
+                        $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
+                        $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . end(explode(".", $fil['name']));
+                        $location = '../imgmsg/' . $filename;
+
+                        if ($fil['error'] == 0 && move_uploaded_file($fil['tmp_name'], $location)) {
 
 
-                        $sQuery = $this->conPDO->prepare("INSERT INTO images (iFK_iRestuarentInfoId, sImageName, sImageDate) VALUES (:iFK_iRestuarentInfoId, :imageName, CURDATE())");
+                            $sQuery = $this->conPDO->prepare("INSERT INTO images (iFK_iRestuarentInfoId, sImageName, sImageDate) VALUES (:iFK_iRestuarentInfoId, :imageName, CURDATE())");
 
-                        $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());
-                        $sQuery->bindValue(":imageName", $filename);
-                        $sQuery->execute();
+                            $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());
+                            $sQuery->bindValue(":imageName", $filename);
+                            $sQuery->execute();
 
-                        $oMessage['result'] = true;
+                            $oMessage['result'] = true;
 
-                        $oMessage['images'] = array(
-                            'id' => $this->conPDO->lastInsertId(),
-                            'n' => $filename,
-                            'd' => date('Y-m-d')
-                        );
+                            $oMessage['images'] = array(
+                                'id' => $this->conPDO->lastInsertId(),
+                                'n' => $filename,
+                                'd' => date('Y-m-d')
+                            );
+                        }
+
+                        $id++;
+                        file_put_contents("../app_data/image_upload_id.txt", $id);
+
                     }
 
-                    $id++;
-                    file_put_contents("../app_data/image_upload_id.txt", $id);
 
+                   
 
                 }
 
@@ -198,7 +210,7 @@ class ImageController
             'sFunction' => 'ImageEidtSortHvid',
             'result' => false
         );
-        if(isset($_GET['imageid'])){
+        if (isset($_GET['imageid'])) {
             if (!isset($_SESSION['sec_session_id'])) {
                 $this->oSecurityController->sec_session_start();
             }
@@ -206,9 +218,6 @@ class ImageController
             //Check if user is logged in
             if ($this->oSecurityController->login_check() == true) {
                 $imageId = $_GET['imageid'];
-
-
-
 
 
                 $sQuery = $this->conPDO->prepare("SELECT * FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
@@ -223,13 +232,12 @@ class ImageController
 
                     $this->LoadPhpImageMagician();
 
-                    $OImageManipolation = new imageLib('../imgmsg/'.$aResult['sImageName']);
+                    $OImageManipolation = new imageLib('../imgmsg/' . $aResult['sImageName']);
                     $OImageManipolation->greyScale();
 
                     $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . $OImageManipolation->getFileExtension();
 
                     $OImageManipolation->saveImage('../imgmsg/' . $filename);
-
 
 
                     $id++;
@@ -255,8 +263,6 @@ class ImageController
                 }
 
 
-
-
             }
 
         }
@@ -265,4 +271,58 @@ class ImageController
         return $oMessage;
     }
 
+    public function PreviewImage()
+    {
+        if (isset($_GET['imageId'], $_GET['functions'])) {
+
+            if (!isset($_SESSION['sec_session_id'])) {
+                $this->oSecurityController->sec_session_start();
+            }
+
+            //Check if user is logged in
+            if ($this->oSecurityController->login_check() == true) {
+                $userid = $this->GetResturantId();
+                $imageId = $_GET['imageId'];
+
+                $sQuery = $this->conPDO->prepare("SELECT * FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
+                $sQuery->bindValue(':imageId', $imageId);
+                $sQuery->bindValue(':resturentid', $userid);
+                $sQuery->execute();
+                $rows = $sQuery->rowCount();
+                if ($rows == 1) {
+                    $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                    $url = "../imgmsg/" . $aResult['sImageName'];
+
+                    $this->LoadPhpImageMagician();
+
+                    /** @var imageLib $newImage */
+                    $newImage = $this->getProcessedImage($url, $_GET['functions']);
+                    $newImage->showImage();
+                }
+            }
+        }
+    }
+
+    private function getProcessedImage($url, $functions)
+    {
+        $image = new imageLib($url);
+
+        foreach ($functions as $task) {
+            switch($task){
+                case 'sortHvid':
+                    $image->greyScale();
+                break;
+                case 'rotateHojre':
+                    $image->rotate();
+                break;
+                case 'rotateVenstre':
+                    $image->rotate(270);
+                break;
+            }
+
+        }
+
+        return $image;
+
+    }
 }

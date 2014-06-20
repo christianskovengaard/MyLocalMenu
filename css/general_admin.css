@@ -184,6 +184,11 @@ input {
 .appGetInfo img:hover { opacity:0.7; }
 
 .menuWrapperInner { display: table; margin: 0 auto; min-width: 200px; }
+
+@media screen and (max-width: 1100px){
+.menuWrapperInner { margin: 0 0 0 320px }
+}
+
 .menuWrapperInner textarea {
             /*font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
             font-family: 'Exo 2', sans-serif;
@@ -644,10 +649,38 @@ left: 9px;
 #imageEidter #toolR {
     float: right;
 }
-#imageEidter #toolL {
+#imageEidter .toolL {
     float: left;
+    padding: 4px;
 }
-#imageEidter #toolL span {
+#imageEidter .toolL span {
     margin-right: 15px;
 
+}
+#imageEidter #imageEidterInner #toolLine #toolR span#imageEidterSave.disable  {
+    color: #888888 !important;
+    cursor: not-allowed;
+}
+#mageEidterCropToolBar {
+    display: none;
+}
+
+#imageArea {
+    position: relative;
+
+}
+#custum_crop_resizer, #custum_crop_resizer_hivimig {
+    position: absolute;
+    cursor: move;
+    z-index: 2;
+}
+#custum_crop_resizer {
+    background-color: rgba(255, 255, 255, .3);
+}
+#custum_crop_resizer_hivimig {
+    height: 10px;
+    width: 10px;
+    background-color: #EEEEEE;
+    border-radius: 10px;
+    cursor: se-resize;
 }

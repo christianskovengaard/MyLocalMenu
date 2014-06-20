@@ -95,29 +95,43 @@ if($oSecurityController->login_check() == true) { ?>
             </div>
 
         </div>
-        <div id="imageEidter">
+        <div id="imageEidter" onclick="lukMaaskeImageEidter(event)">
             <div id="imageEidterInner">
                 <div id="imageArea">
-                    <img id="imageSrc" src=""/>
+                    <div id="imageAreaImageOuter">
+                        <img id="imageSrc" src=""/>
+                    </div>
+
+                    <div id="custum_crop_resizer" draggable="true"></div>
+                    <div id="custum_crop_resizer_hivimig" draggable="true"></div>
+
                 </div>
                 <div id="toolLine">
-                    <div id="toolL">
-                        <span>
+                    <div class="toolL" id="mageEidterAmlToolBar">
+                        <span onclick="editImageSetupCrop()">
                             BESKÆR
                         </span>
                         <span onclick="editImageSortHvid()">
                             SORT/HVID
                         </span>
-                        <span>
+                        <span onclick="editImageRotate('Hojre')">
                             FLIP HØJRE
                         </span>
-                        <span>
+                        <span onclick="editImageRotate('Venstre')">
                             FLIP VENSTRE
                         </span>
                     </div>
+                    <div class="toolL" id="mageEidterCropToolBar">
+                        <span onclick="editImageCancelCrop()">
+                            ANULER BESKÆRING
+                        </span>
+                        <span>
+                            GEN BESKÆRING
+                        </span>
+                    </div>
                     <div id="toolR">
-                        <span onclick="editImageClosePopup()">
-                            LUK
+                        <span onclick="editImageSaveImage()" id="imageEidterSave" class="button disable">
+                            GEM OG LUK
                         </span>
                     </div>
                     <div class="clear"></div>
