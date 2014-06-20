@@ -58,13 +58,13 @@ $oSecurityController->sec_session_start();
                           <li> Forøg din omsætning</li>
                       </ul>
 
-                      <img class="logo" src="img/logo_4.png"> 
+                      <img style="width:300px;" src="img/Iphone_CutB.png"> 
 
                       <h3>Sådan virker det</h3>
-                      <p>Dine Café kunder henter My Local Café's app. De indtaster jeres cafénavn, og får vist jeres personlige café app.</p>
+                      <p>Dine Café kunder henter MyLocalCafé's app. De indtaster jeres cafénavn, og får vist jeres personlige café app.</p>
                 </div>
                 <div class="rigth login-page">
-                    <img class="logo" src="img/logo_4.png"> 
+                    <img style="width:300px;" src="img/Iphone_CutA.png"> 
                     <h3>Du kan som café ejer oprette en gratis profil. Med denne profil er det muligt, at tilføje oplysninger om din café. Disse oplysninger er individuelle, men kan bl.a. være:</h3>
                      <ul>
                          <li> Åbningstider</li>
@@ -82,7 +82,8 @@ $oSecurityController->sec_session_start();
                      </ul>
                  </div>    
                   <div class="wrapper">   
-                     <h3>Dine café oplysninger kommunikeres direkte til dine kunder igennem My Local Café´s app.</h3>
+                     <h3>Dine café oplysninger kommunikeres direkte til dine kunder igennem MyLocal Café´s app.</h3>
+                     <br><br><br><br>
                   </div>
                 
             </div>
