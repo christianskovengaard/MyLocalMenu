@@ -87,7 +87,7 @@
       
   }
   
-  function SaveMenuDishToHtml() {
+  function SaveMenuDishToHtml(itemId,placeinlist) {
       
       //Set sessionStorage bMenucardChaged to 'true'
       sessionStorage.bMenucardChanged = 'true';
@@ -96,6 +96,14 @@
       var Headline = $('.DishHeadline input').val();
       var Description = $('.DishDescription textarea').val();
       var price = $('.DishPrice input').val();
+      
+      if(placeinlist === undefined) {
+          //Get the placein list from the DOM when the item is new
+          var placeinlist = $('.DishNumber input').parent().parent().children('.DishPlaceInList').val();
+          //Get the CategoryId
+          var categoryId = $('.DishNumber input').closest('ul').attr('id');
+          categoryId = categoryId.substr(8);
+      }
       
       //if(Headline != '' && price !=''){
           $('.DishNumber input').parent().html('<h1>'+Number+'</h1>');
@@ -117,6 +125,11 @@
           $('.EditDish').show();
           $(".DishEditWrapper").show();
           $('.DishEditWrapperTEMP').removeClass('DishEditWrapperTEMP');
+          
+          
+          
+          UpdateMenucarditem(itemId,placeinlist,Number,Headline,Description,price,categoryId);
+          
       /*}
       
       else{
@@ -177,6 +190,11 @@
           
           //Set Session storage
           sessionStorage.bMenucardChanged = 'true';
+          
+          var menucardId = $('#iMenucardIdHashed').val();
+          
+          UpdateMenucardCategory('',listHeadline,listDescription,menucardId);
+          
       }
       else{
           alert("udfyld venlist en overskrift");
@@ -205,7 +223,8 @@
           
           //Set Session storage
           sessionStorage.bMenucardChanged = 'true';
-          
+               
+          UpdateMenucardCategory(id,listHeadline,listDescription,'');
       }
       else{
           alert("udfyld venlist en overskrift");
@@ -238,6 +257,8 @@
           $('.EditDish').show();
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
+          
+          UpdateMenucardInfo(Headline,Description);
           
       /*}
       else{
@@ -326,9 +347,13 @@
               });
           });
       });
+      
+      
+      //TODO: Make Ajax call and save the new placement in the database
+      
   }
   
-  function DeleteLiSortable(elem)
+  function DeleteLiSortable(elem,id)
   {     
       var elem = $(elem).parent().parent();
       var text = $(elem).find('.DishHeadline').text();
@@ -338,6 +363,8 @@
           //Set sessionStorage
           sessionStorage.bMenucardChanged = 'true';
       }
+      
+      DeleteMenucarditem(id);
   }
   
   function DeleteSortableList(id)
@@ -357,7 +384,10 @@
           var number = dish.closest('.DishWrapper').children('.DishNumber');
           var numberValue = number.text();
           number.html('<input id="DishNum" type="text" maxlength="4" value="'+numberValue+'">');
-
+          
+          var itemId = dish.closest('.DishWrapper').children('.DishId').val();
+          var placeinlist = dish.closest('.DishWrapper').children('.DishPlaceInList').val();
+          
           var headline = dish.closest('.DishWrapper').children().children('.DishHeadline');
           var headlineValue = headline.text();
           headline.html('<input type="text" value="'+headlineValue+'">');
@@ -393,7 +423,7 @@
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
     $('.newsortabledivbuffer').css('display', 'inline-block');
-    dish.closest('.DishWrapper').after('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Opdatér</a></li>');
+    dish.closest('.DishWrapper').after('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml(\''+itemId+'\',\''+placeinlist+'\');">✓ Opdatér</a></li>');
 }
   
   function EditListHeadline(id){
@@ -402,6 +432,7 @@
           var headlineText = headline.text();
           var description = $(id).closest('.sortablediv').children('h4');
           var descriptionText = description.text();
+          var categoryId = $(id).attr('value');
           
           if(typeof(Storage)!=="undefined"){
                 sessionStorage.headlineHead = headlineText;
@@ -425,7 +456,7 @@
           $('.AddLiButton').hide();
           $('.newsortablediv').hide();
           $('.newsortabledivbuffer').css('display', 'inline-block');
-          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditHeadline();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(this);">✓ Opdatér</a></div>');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditHeadline();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(\''+categoryId+'\');">✓ Opdatér</a></div>');
 }
   function CancelEditHeadline(){
         $('#headEditHeadline').parent().html(sessionStorage.headlineHead);
@@ -456,7 +487,7 @@
           }
           
           headline.html('<input id="InfoEditHeadline" type=text value="'+headlineText+'">');
-          description.html('<textarea id="InfoEditDescription">'+descriptionText+'"</textarea>');
+          description.html('<textarea id="InfoEditDescription">'+descriptionText+'</textarea>');
           
           $('.InfoSlide textarea').autogrow();
                     
@@ -476,6 +507,100 @@
        $('.SaveMenuDish').fadeOut();
        $('.newsortablediv').fadeIn();
    }
+
+
+  function UpdateMenucarditem(id,placeinlist,number,headline,description,price,categoryId) {
+      
+      var sJSONMenucard = {};
+      sJSONMenucard['id'] = id;
+      sJSONMenucard['number'] = number;
+      sJSONMenucard['placeinlist'] = placeinlist;
+      sJSONMenucard['price'] = price;
+      sJSONMenucard['headline'] = headline; 
+      sJSONMenucard['description'] = description;
+      sJSONMenucard['categoryId'] = categoryId;
+      var sJSONMenucard = JSON.stringify(sJSONMenucard);
+      
+      $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Item",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('update success');
+       });
+      
+  }
+  
+  function DeleteMenucarditem(id) {
+    
+    var sJSONMenucard = {};
+    sJSONMenucard['id'] = id;  
+    var sJSONMenucard = JSON.stringify(sJSONMenucard);  
+    
+    $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Item_delete",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('delete success');
+    });  
+      
+  }
+  
+  function UpdateMenucardCategory(id,headline,description,menucardId) {
+      
+      var sJSONMenucard = {};
+      sJSONMenucard['id'] = id; 
+      sJSONMenucard['headline'] = headline; 
+      sJSONMenucard['description'] = description;
+      sJSONMenucard['menucardId'] = menucardId;     
+      var sJSONMenucard = JSON.stringify(sJSONMenucard);
+      
+      $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Category",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('update success');
+       });
+  }
+  
+  function DeleteMenucardCategory(id) {
+    
+    var sJSONMenucard = {};
+    sJSONMenucard['id'] = id;  
+    var sJSONMenucard = JSON.stringify(sJSONMenucard);  
+    
+    $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Category_delete",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('delete success');
+    });
+  }
+  
+  function UpdateMenucardInfo(headline,description) {
+      
+      var sJSONMenucard = {};
+      sJSONMenucard['iMenucardIdHashed'] = $('#iMenucardIdHashed').val(); 
+      sJSONMenucard['headline'] = headline; 
+      sJSONMenucard['description'] = description; 
+      var sJSONMenucard = JSON.stringify(sJSONMenucard);
+      
+      $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Info",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('update success');
+       });
+  }
 
   function UpdateMenucard()
   {
@@ -641,7 +766,9 @@
       //Run every 5 second
       setTimeout(function(){AutomaticUpdateMenucard();},5000);
   }
-    
+  
+ 
+  /*
   function SaveMenucard()
   {
       $('#EditMenuButton').text('');
@@ -758,7 +885,9 @@
        });
        
   }
-  
+  */
+ 
+ 
   /* Sortable list functions end */
 
   function UpdateRestuarentInfo()
