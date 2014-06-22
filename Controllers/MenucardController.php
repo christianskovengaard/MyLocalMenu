@@ -411,13 +411,29 @@ class MenucardController
                         $sQuery->bindValue(":iMenucardCategoryId", $iMenucardCategoryId);
                         $sQuery->execute();
                         
-                        //TODO: Return the $iMenucardCategoryHashedId
+                        //Return the $iMenucardCategoryHashedId
+                        $aMenucard['iMenucardCategoryHashedId'] = $iMenucardCategoryHashedId;
                         
                     }
                 }
                 
                 if($_POST['sType'] == "Category_delete") {
-                    //TODO: Delete Category and Item in that category
+                    
+                    //Delete Category and Item in that category                                       
+                    
+                    $sQuery = $this->conPDO->prepare("SELECT iMenucardCategoryId FROM menucardcategory WHERE iMenucardCategoryIdHashed = :iMenucardCategoryIdHashed");
+                    $sQuery->bindValue(":iMenucardCategoryIdHashed", $aJSONMenucard->id);
+                    $sQuery->execute();
+                    $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                    
+                    //DELETE all items that belongs to the category
+                    $sQuery = $this->conPDO->prepare("DELETE FROM menucarditem WHERE iFK_iMenucardCategoryId = :iMenucardCategoryId");
+                    $sQuery->bindValue(":iMenucardCategoryId", $aResult['iMenucardCategoryId']);
+                    $sQuery->execute();
+                    //DELETE the category
+                    $sQuery = $this->conPDO->prepare("DELETE FROM menucardcategory WHERE iMenucardCategoryId = :iMenucardCategoryId");
+                    $sQuery->bindValue(":iMenucardCategoryId", $aResult['iMenucardCategoryId']);
+                    $sQuery->execute();
                 }  
 
 

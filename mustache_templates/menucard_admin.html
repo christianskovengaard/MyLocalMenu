@@ -6,7 +6,7 @@
     <h4>{{sMenucardCategoryDescription}}</h4>
     <div class="DishEditWrapper">
         <div class="EditDish" value="{{iMenucardCategoryIdHashed}}" onclick="EditListHeadline(this)"><img src="img/edit_white.png"></div>
-        <div class="DeleteDish" onclick="DeleteSortableList(this)"><img src="img/delete_white.png"></div>
+        <div class="DeleteDish" value="{{iMenucardCategoryIdHashed}}" onclick="DeleteSortableList(this)"><img src="img/delete_white.png"></div>
     </div>
     <input type="hidden" value="{{iMenucardCategoryIdHashed}}"/>
     <ul id="sortable{{iMenucardCategoryIdHashed}}" class="connectedSortable">

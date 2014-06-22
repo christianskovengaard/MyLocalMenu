@@ -375,6 +375,9 @@
           $(id).parent().parent().remove();
           //Set sessionStorage
           sessionStorage.bMenucardChanged = 'true';
+          var id = $(id).attr('value');
+          DeleteMenucardCategory(id);
+          
       }
   } 
   
@@ -565,6 +568,10 @@
         data: {sFunction:"UpdateMenucard",sType:"Category",sJSONMenucard:sJSONMenucard}
        }).done(function(result) {
            console.log('update success');
+           //Set the iMenucardCategoryHashedId if it is a new category
+           $('input[value="new"]').val(result.iMenucardCategoryHashedId);
+           $('input[value="'+result.iMenucardCategoryHashedId+'"]').closest('div').children('.connectedSortable').attr("id","sortable"+result.iMenucardCategoryHashedId);
+           setTimeout(function(){ $('input[value="'+result.iMenucardCategoryHashedId+'"]').closest('div').children('.connectedSortable').children('.AddLiButton').attr("onclick","CreateNewLiInSortableList('sortable"+result.iMenucardCategoryHashedId+"')");},500);
        });
   }
   
@@ -987,7 +994,6 @@
                 if(day === 5){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iFridayTimeFrom option:selected").text()+'-'+$("#iFridayTimeTo option:selected").text()+'</h4>');}
                 if(day === 6){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iSaturdayTimeFrom option:selected").text()+'-'+$("#iSaturdayTimeTo option:selected").text()+'</h4>');}
                 
-                //TODO: Check if the new time is in between the time now and update open class
 
                 //show update is done
                 alertSucces();
