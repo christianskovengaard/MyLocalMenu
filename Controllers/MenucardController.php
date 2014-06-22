@@ -493,7 +493,30 @@ class MenucardController
                 
                 if($_POST['sType'] == "PlaceInList") {
                     
-                    //Update items place in list
+                    //echo $aJSONMenucard->iLastIndexofMenucardCategories;
+                    //Update items place in list and update the category the item belongs to
+                    for($i=0;$i <= $aJSONMenucard->iLastIndexofMenucardCategories;$i++) {
+                        
+                        //The iMenucardCategoryIdHashed
+                        //$aJSONMenucard->$i->iId;
+                        $sQuery = $this->conPDO->prepare("SELECT iMenucardCategoryId FROM menucardcategory WHERE iMenucardCategoryIdHashed = :iMenucardCategoryIdHashed");
+                        $sQuery->bindValue(":iMenucardCategoryIdHashed", $aJSONMenucard->$i->iId);
+                        $sQuery->execute();
+                        $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                        
+                        for($x=0;$x <= $aJSONMenucard->$i->iLastMenucardItemIndex;$x++) {
+                           //echo "ID:". $aJSONMenucard->$i->$x->iId;
+                           //echo "PlaceInList:". $aJSONMenucard->$i->$x->iPlaceInList;
+                           
+                           $sQuery = $this->conPDO->prepare("UPDATE menucarditem SET iMenucardItemPlaceInList = :iMenucardItemPlaceInList, iFK_iMenucardCategoryId = :iFK_iMenucardCategoryId WHERE iMenucardItemIdHashed = :iMenucardItemIdHashed");
+                           $sQuery->bindValue(":iMenucardItemPlaceInList", $aJSONMenucard->$i->$x->iPlaceInList);
+                           $sQuery->bindValue(":iFK_iMenucardCategoryId", $aResult['iMenucardCategoryId']);
+                           $sQuery->bindValue(":iMenucardItemIdHashed", $aJSONMenucard->$i->$x->iId);
+                           $sQuery->execute();                           
+                        }
+                    }
+                    
+                   
                     
                 }
 
