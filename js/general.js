@@ -815,8 +815,8 @@
             console.log('Det kører allerede et ajax call');
         }      
       }
-      //Run every 2 second
-      setTimeout(function(){AutomaticUpdateMenucard();},2000);
+      //Run every 3 second
+      setTimeout(function(){AutomaticUpdateMenucard();},3000);
   }
   
  
