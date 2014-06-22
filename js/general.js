@@ -226,6 +226,7 @@
      
       var Headline = $('.InfoSlide input').val();
       var Description = $('.InfoSlide textarea').val();
+      var DescriptionForSave = Description;
       //Replace \n with <br />
       Description = Description.replace(/\r?\n/g, '<br />');
       
@@ -246,7 +247,7 @@
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
           
-          UpdateMenucardInfo(Headline,Description);
+          UpdateMenucardInfo(Headline,DescriptionForSave);
           
       /*}
       else{
