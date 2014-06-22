@@ -346,7 +346,7 @@
   {     
       var elem = $(elem).parent().parent();
       var text = $(elem).find('.DishHeadline').text();
-      if (confirm('Dette vil slette menupunktet!')) 
+      if (confirm('Dette vil slette pågældende menupunkt!')) 
       {
           $(elem).remove();
           DeleteMenucarditem(id);
@@ -358,7 +358,7 @@
   function DeleteSortableList(id)
   {    
       var text = $(id).parent().parent().find('h3').text();
-      if (confirm('Dette vil slette '+text+' og alle menupunkter!')) {
+      if (confirm('Dette vil slette pågældende kategori og tilhørende menupunkter!')) {
           
           $(id).parent().parent().remove();
           var id = $(id).attr('value');
