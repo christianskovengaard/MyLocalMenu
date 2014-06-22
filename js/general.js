@@ -553,9 +553,12 @@
        }).done(function(result) {
            console.log('update success');
            //Set the iMenucardCategoryHashedId if it is a new category
+           $('input[value="new"]').parent().children('.DishEditWrapper').children('.EditDish').attr('value',result.iMenucardCategoryHashedId);
+           $('input[value="new"]').parent().children('.DishEditWrapper').children('.DeleteDish').attr('value',result.iMenucardCategoryHashedId);
            $('input[value="new"]').val(result.iMenucardCategoryHashedId);
            $('input[value="'+result.iMenucardCategoryHashedId+'"]').closest('div').children('.connectedSortable').attr("id","sortable"+result.iMenucardCategoryHashedId);
            setTimeout(function(){ $('input[value="'+result.iMenucardCategoryHashedId+'"]').closest('div').children('.connectedSortable').children('.AddLiButton').attr("onclick","CreateNewLiInSortableList('sortable"+result.iMenucardCategoryHashedId+"')");},500);
+           
        });
   }
   
