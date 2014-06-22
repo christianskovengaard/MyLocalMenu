@@ -491,6 +491,11 @@ class MenucardController
                     $sQuery->execute();
                 }
                 
+                if($_POST['sType'] == "PlaceInList") {
+                    
+                    //Update items place in list
+                    
+                }
 
                 if($_POST['sType'] == "Info") {
                     

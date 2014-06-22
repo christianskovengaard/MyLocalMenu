@@ -88,9 +88,6 @@
   }
   
   function SaveMenuDishToHtml(itemId,placeinlist) {
-      
-      //Set sessionStorage bMenucardChaged to 'true'
-      sessionStorage.bMenucardChanged = 'true';
         
       var Number = $('.DishNumber input').val();
       var Headline = $('.DishHeadline input').val();
@@ -141,8 +138,6 @@
  
   function SaveInfoToHtml(){
       
-      //Set session storage bmenucardchanged to 'true'
-     sessionStorage.bMenucardChanged = 'true';
      
       var infoHeadline = $('.InfoSlide.new input').val();
       var infoDescription = $('.InfoSlide.new textarea').val();
@@ -188,8 +183,6 @@
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
           
-          //Set Session storage
-          sessionStorage.bMenucardChanged = 'true';
           
           var menucardId = $('#iMenucardIdHashed').val();
           
@@ -220,9 +213,6 @@
           $('.EditDish').show();
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
-          
-          //Set Session storage
-          sessionStorage.bMenucardChanged = 'true';
                
           UpdateMenucardCategory(id,listHeadline,listDescription,'');
       }
@@ -233,8 +223,6 @@
  
  function SaveEditedInfoToHtml(id){
      
-     //Set session storage bmenucardchanged to 'true'
-     sessionStorage.bMenucardChanged = 'true';
      
       var Headline = $('.InfoSlide input').val();
       var Description = $('.InfoSlide textarea').val();
@@ -360,11 +348,10 @@
       if (confirm('Dette vil slette menupunktet!')) 
       {
           $(elem).remove();
-          //Set sessionStorage
-          sessionStorage.bMenucardChanged = 'true';
+          DeleteMenucarditem(id);
       }
       
-      DeleteMenucarditem(id);
+      
   }
   
   function DeleteSortableList(id)
@@ -373,11 +360,8 @@
       if (confirm('Dette vil slette '+text+' og alle menupunkter!')) {
           
           $(id).parent().parent().remove();
-          //Set sessionStorage
-          sessionStorage.bMenucardChanged = 'true';
           var id = $(id).attr('value');
-          DeleteMenucardCategory(id);
-          
+          DeleteMenucardCategory(id);          
       }
   } 
   
@@ -608,7 +592,68 @@
            console.log('update success');
        });
   }
+  
+  
+  
+  function UpdateMenucardPlacement() {
+      
+      //TODO: Get all categories and all placements of items
+      var aAllLists = {};
+            
+      //Loop through for each sMenucardCategory
+      $(".sortableList").each(function(categoryIndex)
+      {
+          //Aray for one list, as and assoc array
+          var aList = {};
+          //iMenucardCategoryIdHashed
+          aList['iId'] = $(this).children("input[type='hidden']:first").val(); //$(this).attr('id');          
 
+          $(this).children("ul").each(function() {             
+              $(this).children(":not(.AddLiButton)").each(function(index) {                
+                  //Loop through .dishwrapper for each of the sMenucardItems
+                  $(this).children().each(function() {
+                      var sMenucardItemIdHashed = $(this).children(".DishId").val();
+                      var iMenucardItemPlaceInList = $(this).children(".DishPlaceInList").val();
+                      
+                      //Array for li element, as assoc array
+                      var aLiElement = {};
+                      //iId
+                      aLiElement['iId'] = sMenucardItemIdHashed;
+                      //iPlaceInList
+                      aLiElement['iPlaceInList'] = iMenucardItemPlaceInList;
+                      //Put li array into array for one list
+                      aList[index] = aLiElement;
+
+                      iLastMenucardItemIndex = index;
+                  });
+              });
+          });
+                  
+          //iLastMenucardItemIndex
+          aList['iLastMenucardItemIndex'] = iLastMenucardItemIndex;
+          //Put aList array into aAllLists array on aLists wich is fiels 0
+          aAllLists[categoryIndex] = aList;
+          aAllLists['iLastIndexofMenucardCategories'] = categoryIndex;
+    
+      });
+      
+      var sJSONAllLists = JSON.stringify(aAllLists);      
+      
+       $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"PlaceInList",sJSONMenucard:sJSONAllLists}
+       }).done(function(result) {
+           //Set sessionStorage.bMenucardChanged = 'false';
+           sessionStorage.bMenucardChanged = 'false';
+       });
+      
+  }
+  
+  
+  
+  /*
   function UpdateMenucard()
   {
       console.log('UpdateMenucard is disabled');
@@ -738,12 +783,12 @@
        });
       
       */
-  }
+  //}
   
   
   function AutomaticUpdateMenucard()
   {
-      //console.log('AutomaticUpdateMenucard');
+      //Function used for updating the placement of items in categories
      
       //Set session storage     
       if(typeof(Storage)!=="undefined") {
@@ -755,23 +800,20 @@
       else {
         alert('Sorry! No Web Storage support..');
       }
-      
-      //console.log('bMenucardChanged '+sessionStorage.bMenucardChanged);
-      //console.log('$.active '+$.active);
+
       //Check if the menucard has been changed
       //If changed the run the ajax call
       if(sessionStorage.bMenucardChanged === 'true') {
           
         //Check if a ajax call is all ready running
         if($.active === 0){ 
-            //alert('run ajax call');
-            UpdateMenucard();
+            UpdateMenucardPlacement();
         }else {
             console.log('Det kører allerede et ajax call');
         }      
       }
-      //Run every 5 second
-      setTimeout(function(){AutomaticUpdateMenucard();},5000);
+      //Run every 2 second
+      setTimeout(function(){AutomaticUpdateMenucard();},2000);
   }
   
  
