@@ -102,8 +102,12 @@ if($oSecurityController->login_check() == true) { ?>
                         <img id="imageSrc" src=""/>
                     </div>
 
-                    <div id="custum_crop_resizer" draggable="true"></div>
-                    <div id="custum_crop_resizer_hivimig" draggable="true"></div>
+                    <div id="custum_crop_resizer" style="display: none" draggable="true"></div>
+                    <div id="custum_crop_resizer_hivimig" style="display: none" draggable="true">
+                        <div id="custum_crop_resizer_hivimig_inner">
+
+                        </div>
+                    </div>
 
                 </div>
                 <div id="toolLine">
@@ -116,6 +120,9 @@ if($oSecurityController->login_check() == true) { ?>
                         </span>
                         <span onclick="editImageRotate('Hojre')">
                             FLIP HØJRE
+                        </span>
+                        <span onclick="editImageRotate('Halv')">
+                            FLIP HALV OMGANG
                         </span>
                         <span onclick="editImageRotate('Venstre')">
                             FLIP VENSTRE

@@ -1345,7 +1345,7 @@ class imageLib
             $this->imageResized = imagerotate($this->imageResized, $degrees, $bg); // Rotate 45 degrees and allocated the transparent colour as the one to make transparent (obviously)
 
             // Ensure alpha transparency
-            ImageSaveAlpha($this->imageResized, true);
+            // ImageSaveAlpha($this->imageResized, true);
 
         }
     }

@@ -318,6 +318,9 @@ class ImageController
                 case 'rotateVenstre':
                     $image->rotate(270);
                 break;
+                case 'rotateHalv':
+                    $image->rotate(180);
+                break;
             }
 
         }
