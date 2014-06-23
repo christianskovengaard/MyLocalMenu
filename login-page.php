@@ -26,7 +26,7 @@ $oSecurityController->sec_session_start();
     </head>
     <body>
         <div class="header">
-            <a class="logindtop" href="login-page#LogInd">log ing</a>
+            <a class="logindtop" href="login-page#LogInd">log ind</a>
             <div class="wrapper">
               <div class="left">
                   <img src="img/IphoneB.png">
