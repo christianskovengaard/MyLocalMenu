@@ -132,8 +132,8 @@ if($oSecurityController->login_check() == true) { ?>
                         <span onclick="editImageCancelCrop()">
                             ANULER BESKÆRING
                         </span>
-                        <span>
-                            GEN BESKÆRING
+                        <span onclick="editImageSaveCrop()">
+                            GEM BESKÆRING
                         </span>
                     </div>
                     <div id="toolR">

@@ -323,6 +323,19 @@ class ImageController
                 break;
             }
 
+            if (substr($task, 0, 4) === "crop") {
+                $aCropInfo = explode("-", $task);
+                $aCropInfo = array(
+                    "x"=>floatval($aCropInfo[1])/100,
+                    "y"=>floatval($aCropInfo[2])/100,
+                    "width"=>floatval($aCropInfo[3])/100,
+                    "height"=>floatval($aCropInfo[4])/100
+                );
+                $image->cropping($aCropInfo);
+
+            }
+
+
         }
 
         return $image;

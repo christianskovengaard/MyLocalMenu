@@ -464,6 +464,19 @@ class imageLib
 
     }
 
+
+    public function cropping($opt){
+        $opt['x'] = $opt['x'] * $this->width;
+        $opt['y'] = $opt['y'] * $this->height;
+        $opt['width'] = $opt['width'] * $this->width;
+        $opt['height'] = $opt['height'] * $this->height;
+
+        $this->imageResized = imagecrop($this->imageResized,$opt);
+        $this->width = $opt["width"];
+        $this->height = $opt["height"];
+
+    }
+
 ## --------------------------------------------------------
 
     private function getCropPlacing($optimalWidth, $optimalHeight, $newWidth, $newHeight, $pos = 'm')

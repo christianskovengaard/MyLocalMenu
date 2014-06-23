@@ -2528,9 +2528,23 @@ function editImageSetupCrop(){
         alert("Dette billede er ikke stort nok til at blive beskæret")
     }
 }
+ function editImageSaveCrop() {
 
+     $('#mageEidterAmlToolBar').show();
+     $('#mageEidterCropToolBar').hide();
+     $('#custum_crop_resizer').hide();
+     $('#custum_crop_resizer_hivimig').hide();
 
- function editImageCancelCrop(){
+     eiditimageVariable.functions.push(
+         'crop-' + parseFloat(document.getElementById("custum_crop_resizer").style.left) + '-' +
+         parseFloat(document.getElementById("custum_crop_resizer").style.top) + '-' +
+         parseFloat(document.getElementById("custum_crop_resizer").style.width) + '-' +
+         parseFloat(document.getElementById("custum_crop_resizer").style.height)
+     );
+     editImageUpdate()
+ }
+
+ function editImageCancelCrop() {
      $('#mageEidterAmlToolBar').show();
      $('#mageEidterCropToolBar').hide();
      $('#custum_crop_resizer').hide();
@@ -2548,36 +2562,15 @@ function set_hiv_i_mig() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  function r_dragstart(e) {
      eiditimageVariable.drag_pos.mouseX = e.clientX;
      eiditimageVariable.drag_pos.mouseY = e.clientY;
 
 
-     eiditimageVariable.customCropNowPosistions.width = parseInt(document.getElementById("custum_crop_resizer").style.width);
-     eiditimageVariable.customCropNowPosistions.height = parseInt(document.getElementById("custum_crop_resizer").style.height);
-     eiditimageVariable.customCropNowPosistions.top = parseInt(document.getElementById("custum_crop_resizer").style.top);
-     eiditimageVariable.customCropNowPosistions.left = parseInt(document.getElementById("custum_crop_resizer").style.left);
+     eiditimageVariable.customCropNowPosistions.width = parseFloat(document.getElementById("custum_crop_resizer").style.width);
+     eiditimageVariable.customCropNowPosistions.height = parseFloat(document.getElementById("custum_crop_resizer").style.height);
+     eiditimageVariable.customCropNowPosistions.top = parseFloat(document.getElementById("custum_crop_resizer").style.top);
+     eiditimageVariable.customCropNowPosistions.left = parseFloat(document.getElementById("custum_crop_resizer").style.left);
 
 
  }
@@ -2624,91 +2617,42 @@ function set_hiv_i_mig() {
  function f_dragstart(e) {
      eiditimageVariable.drag_pos.mouseX = e.clientX;
      eiditimageVariable.drag_pos.mouseY = e.clientY;
-
-     eiditimageVariable.customCropNowPosistions.width = parseInt(document.getElementById("custum_crop_resizer").style.width);
-     eiditimageVariable.customCropNowPosistions.height = parseInt(document.getElementById("custum_crop_resizer").style.height);
-     eiditimageVariable.customCropNowPosistions.top = parseInt(document.getElementById("custum_crop_resizer").style.top);
-     eiditimageVariable.customCropNowPosistions.left = parseInt(document.getElementById("custum_crop_resizer").style.left);
+     eiditimageVariable.customCropNowPosistions.width = parseFloat(document.getElementById("custum_crop_resizer").style.width);
+     eiditimageVariable.customCropNowPosistions.height = parseFloat(document.getElementById("custum_crop_resizer").style.height);
+     eiditimageVariable.customCropNowPosistions.top = parseFloat(document.getElementById("custum_crop_resizer").style.top);
+     eiditimageVariable.customCropNowPosistions.left = parseFloat(document.getElementById("custum_crop_resizer").style.left);
 
  }
  function f_dragmove(e) {
      e.preventDefault();
-
-
      var new_drag_pos_x = e.clientX;
      var new_drag_pos_y = e.clientY;
      var forskelX_percent = (new_drag_pos_x - eiditimageVariable.drag_pos.mouseX)/$('#imageSrc').width();
      var forskelY_percent = (new_drag_pos_y - eiditimageVariable.drag_pos.mouseY)/$('#imageSrc').height();
-
     if (forskelX_percent > 0) {
-         if (eiditimageVariable.customCropNowPosistions.left+eiditimageVariable.customCropNowPosistions.width+forskelY_percent<100) {
+         if (eiditimageVariable.customCropNowPosistions.left+eiditimageVariable.customCropNowPosistions.width+(forskelX_percent*100)<100) {
              document.getElementById("custum_crop_resizer").style.left = eiditimageVariable.customCropNowPosistions.left+(Math.abs(forskelX_percent)*100) + "%";
-
              set_hiv_i_mig();
          }
      } else if (forskelX_percent < 0) {
-             console.log('v');
          if (Math.abs(forskelX_percent)*100<eiditimageVariable.customCropNowPosistions.left) {
              document.getElementById("custum_crop_resizer").style.left = eiditimageVariable.customCropNowPosistions.left-(Math.abs(forskelX_percent)*100)+"%";
-
-             set_hiv_i_mig();
-         }
-     } /*
-     if (forskelY_percent > 0) {
-             console.log('n');
-         if (drag_pos.h + drag_pos.t + forskelY < drag_bg_image.h) {
-             document.getElementById("custum_crop_resizer").style.top = drag_pos.t + forskelY + "px";
-
-             set_hiv_i_mig();
-         }
-     } else if (forskelY_percent < 0) {
-             console.log('o');
-         if (drag_pos.t + forskelY > 0) {
-             document.getElementById("custum_crop_resizer").style.top = drag_pos.t + forskelY + "px";
-
              set_hiv_i_mig();
          }
      }
-*/
-
+     if (forskelY_percent > 0) {
+         if (eiditimageVariable.customCropNowPosistions.top+eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100)<100) {
+             document.getElementById("custum_crop_resizer").style.top = eiditimageVariable.customCropNowPosistions.top+(Math.abs(forskelY_percent)*100) + "%";
+             set_hiv_i_mig();
+         }
+     } else if (forskelY_percent < 0) {
+         // op
+         if (Math.abs(forskelY_percent)*100<eiditimageVariable.customCropNowPosistions.top) {
+             document.getElementById("custum_crop_resizer").style.top = eiditimageVariable.customCropNowPosistions.top-(Math.abs(forskelY_percent)*100)+"%";
+             set_hiv_i_mig();
+         }
+     }
  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
