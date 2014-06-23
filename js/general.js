@@ -2540,8 +2540,8 @@ function editImageSetupCrop(){
 function set_hiv_i_mig() {
     $('#custum_crop_resizer_hivimig').css(
         {
-            "top": (parseInt(document.getElementById('custum_crop_resizer').style.height) + parseInt(document.getElementById('custum_crop_resizer').style.top)) + "%",
-            "left": (parseInt(document.getElementById('custum_crop_resizer').style.width) + parseInt(document.getElementById('custum_crop_resizer').style.left)) + "%",
+            "top": (parseFloat(document.getElementById('custum_crop_resizer').style.height) + parseFloat(document.getElementById('custum_crop_resizer').style.top)) + "%",
+            "left": (parseFloat(document.getElementById('custum_crop_resizer').style.width) + parseFloat(document.getElementById('custum_crop_resizer').style.left)) + "%",
             "display": "block"
         }
     );
@@ -2583,104 +2583,94 @@ function set_hiv_i_mig() {
  }
  function r_dragmove(e) {
      e.preventDefault();
-
-
      var new_drag_pos_x = e.clientX;
      var new_drag_pos_y = e.clientY;
-
      var forskelX_percent = (new_drag_pos_x - eiditimageVariable.drag_pos.mouseX)/$('#imageSrc').width();
      var forskelY_percent = (new_drag_pos_y - eiditimageVariable.drag_pos.mouseY)/$('#imageSrc').height();
-
-     /* console.log(forskelX_percent+"-"+(forskelY_percent));
-     console.log(new_drag_pos_x+"/"+(new_drag_pos_y));
-      console.log(drag_pos.mouseX+"/"+(drag_pos.mouseY));
-*/
      if (forskelX_percent > 0) {
          if ( (eiditimageVariable.customCropNowPosistions.width+(forskelX_percent*100)+eiditimageVariable.customCropNowPosistions.left)<100 ) {
-             console.log(7);
              $('#custum_crop_resizer').css({ "width":(eiditimageVariable.customCropNowPosistions.width+(forskelX_percent*100))+"%"});
-
              set_hiv_i_mig();
          }
      } else if (forskelX_percent < 0) {
          if ( (((eiditimageVariable.customCropNowPosistions.width-(Math.abs(forskelX_percent)*100))/100)*eiditimageVariable.width) > 700 ) {
-             console.log(8);
              $('#custum_crop_resizer').css({ "width":(eiditimageVariable.customCropNowPosistions.width+(forskelX_percent*100))+"%"});
-
-
-             set_hiv_i_mig();
-         }
-     }/*
-     if (forskelY > 0) {
-         if ((drag_pos.t + drag_pos.h + forskelY) < drag_bg_image.h) {
-             console.log(9);
-             document.getElementById("custum_crop_resizer").style.height = drag_pos.h + forskelY + "px";
-
-             set_hiv_i_mig();
-         }
-     } else if (forskelY < 0) {
-         if (Math.abs(forskelY) < drag_pos.h) {
-             console.log(10);
-             document.getElementById("custum_crop_resizer").style.height = drag_pos.h + forskelY + "px";
-
              set_hiv_i_mig();
          }
      }
 
-     set_new_size_preview();*/
+     if (forskelY_percent > 0) {
+         if ( (eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100)+eiditimageVariable.customCropNowPosistions.top)<100 ) {
+             $('#custum_crop_resizer').css({ "height":(eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100))+"%"});
+
+             set_hiv_i_mig();
+         }
+     } else if (forskelY_percent < 0) {
+         if ( (((eiditimageVariable.customCropNowPosistions.height-(Math.abs(forskelY_percent)*100))/100)*eiditimageVariable.height) > 300 ) {
+             $('#custum_crop_resizer').css({ "height":(eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100))+"%"});
+             set_hiv_i_mig();
+         }
+     }
+
+     delete new_drag_pos_x;
+     delete new_drag_pos_y;
+     delete forskelX_percent;
+     delete forskelY_percent;
+
+
+
 
  }
  function f_dragstart(e) {
-     drag_pos.mouseX = e.clientX;
-     drag_pos.mouseY = e.clientY;
-     drag_pos.w = document.getElementById("custum_crop_resizer").offsetWidth;
-     drag_pos.h = document.getElementById("custum_crop_resizer").offsetHeight;
-     drag_pos.t = document.getElementById("custum_crop_resizer").offsetTop;
-     drag_pos.l = document.getElementById("custum_crop_resizer").offsetLeft;
-     console.log(3)
+     eiditimageVariable.drag_pos.mouseX = e.clientX;
+     eiditimageVariable.drag_pos.mouseY = e.clientY;
+
+     eiditimageVariable.customCropNowPosistions.width = parseInt(document.getElementById("custum_crop_resizer").style.width);
+     eiditimageVariable.customCropNowPosistions.height = parseInt(document.getElementById("custum_crop_resizer").style.height);
+     eiditimageVariable.customCropNowPosistions.top = parseInt(document.getElementById("custum_crop_resizer").style.top);
+     eiditimageVariable.customCropNowPosistions.left = parseInt(document.getElementById("custum_crop_resizer").style.left);
+
  }
  function f_dragmove(e) {
      e.preventDefault();
-     console.log(4);
 
 
-     new_drag_pos_x = e.clientX;
-     new_drag_pos_y = e.clientY;
+     var new_drag_pos_x = e.clientX;
+     var new_drag_pos_y = e.clientY;
+     var forskelX_percent = (new_drag_pos_x - eiditimageVariable.drag_pos.mouseX)/$('#imageSrc').width();
+     var forskelY_percent = (new_drag_pos_y - eiditimageVariable.drag_pos.mouseY)/$('#imageSrc').height();
 
-     var forskelX = new_drag_pos_x - drag_pos.mouseX;
-     var forskelY = new_drag_pos_y - drag_pos.mouseY;
-
-     if (forskelX > 0) {
-         if (drag_pos.w + drag_pos.l + forskelX < drag_bg_image.w) {
-             console.log(7);
-             document.getElementById("custum_crop_resizer").style.left = drag_pos.l + forskelX + "px";
+    if (forskelX_percent > 0) {
+             console.log(eiditimageVariable.customCropNowPosistions.left+eiditimageVariable.customCropNowPosistions.width);
+         if (forskelX_percent*100<100-eiditimageVariable.customCropNowPosistions.left+eiditimageVariable.customCropNowPosistions.width) {
+             document.getElementById("custum_crop_resizer").style.left = eiditimageVariable.customCropNowPosistions.left+(Math.abs(forskelX_percent)*100) + "%";
 
              set_hiv_i_mig();
          }
-     } else if (forskelX < 0) {
-         if (drag_pos.l + forskelX > 0) {
-             console.log(8);
-             document.getElementById("custum_crop_resizer").style.left = drag_pos.l + forskelX + "px";
+     } else if (forskelX_percent < 0) {
+             console.log('v');
+         if (Math.abs(forskelX_percent)*100<eiditimageVariable.customCropNowPosistions.left) {
+             document.getElementById("custum_crop_resizer").style.left = eiditimageVariable.customCropNowPosistions.left-(Math.abs(forskelX_percent)*100)+"%";
 
              set_hiv_i_mig();
          }
-     }
-     if (forskelY > 0) {
+     } /*
+     if (forskelY_percent > 0) {
+             console.log('n');
          if (drag_pos.h + drag_pos.t + forskelY < drag_bg_image.h) {
-             console.log(9);
              document.getElementById("custum_crop_resizer").style.top = drag_pos.t + forskelY + "px";
 
              set_hiv_i_mig();
          }
-     } else if (forskelY < 0) {
+     } else if (forskelY_percent < 0) {
+             console.log('o');
          if (drag_pos.t + forskelY > 0) {
-             console.log(10);
              document.getElementById("custum_crop_resizer").style.top = drag_pos.t + forskelY + "px";
 
              set_hiv_i_mig();
          }
      }
-
+*/
 
  }
 
