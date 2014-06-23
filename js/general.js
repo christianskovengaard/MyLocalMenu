@@ -2641,8 +2641,7 @@ function set_hiv_i_mig() {
      var forskelY_percent = (new_drag_pos_y - eiditimageVariable.drag_pos.mouseY)/$('#imageSrc').height();
 
     if (forskelX_percent > 0) {
-             console.log(eiditimageVariable.customCropNowPosistions.left+eiditimageVariable.customCropNowPosistions.width);
-         if (forskelX_percent*100<100-eiditimageVariable.customCropNowPosistions.left+eiditimageVariable.customCropNowPosistions.width) {
+         if (eiditimageVariable.customCropNowPosistions.left+eiditimageVariable.customCropNowPosistions.width+forskelY_percent<100) {
              document.getElementById("custum_crop_resizer").style.left = eiditimageVariable.customCropNowPosistions.left+(Math.abs(forskelX_percent)*100) + "%";
 
              set_hiv_i_mig();
