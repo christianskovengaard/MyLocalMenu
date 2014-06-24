@@ -100,7 +100,9 @@ $oSecurityController->sec_session_start();
                         <h2>Log Ind</h2>
                         <input name="username" id="LoginEmail" type="text" placeholder="Email">
                         <input name="password" id="LoginPassword" type="Password" placeholder="Kodeord">
-                        <input id="loginButton" type="submit" value="Log Ind" class="btn"/>  
+                        <input id="loginButton" type="submit" value="Log Ind" class="btn"/>
+                        <p style='display: inline-block; margin: 0;'>Har du glemt dit kodeord </p>
+                        <a style='background: none; color:#FCA041; padding:0 3px; display: inline-block;' href='login-page?login=newCode#LogInd'> Klik her</a>
                       </div>
                   </form>
               <?php else : ?>
@@ -124,7 +126,7 @@ $oSecurityController->sec_session_start();
         <script type="text/javascript">
            var url = window.location.search.substring(7);
            if (url === "false") {
-               $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p><p style='display: inline-block; margin: 0;'>Har du glemt dit kodeord </p><a style='background: none; color:#FCA041; padding:0 3px; display: inline-block;' href='login-page?login=newCode#LogInd'> Klik her</a></div>");
+               $("#loginButton").before("<div id='WrongPassword'><p>Email eller kodeord er forkert</p></div>");
                //$("#loginButton").after("<div id='WrongPassword'><p>Skift kodeord</p><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Skift koderord' class='button' onclick='SendResetPasswordRequest();' ></div>");
                //Scroll to WrongPassword
                //$('html,body').animate({scrollTop: $("#WrongPassword").offset().top},'fast');
