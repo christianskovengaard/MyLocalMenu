@@ -49,6 +49,37 @@ if($oSecurityController->login_check() == true) { ?>
         <!-- Messages -->
         <div id="TabWrappersMessenger" class="menuWrapper" style="display: none;" >
             <div class="wrapper">
+
+
+                <div id="upload">
+                    <div id="toggleImageButton">
+                        Vis/Skjul billebiblotek
+                    </div>
+                    <div id="upload_inner">
+                        <div id="drop_image_here">
+                            Slip billede her
+                        </div>
+                        <div id="find_billede">
+                            <p class="upload_eller">Eller</p>
+                            <div id="upload_feild">
+                                <p id="uploadFile">Fil(er) ej valgt, klik for at vælg fil</p>
+                                <input id="uploadBtn" type="file" accept="image/*" multiple />
+
+                            </div>
+                            <input id="amlUploadBtn" type="button"  onclick="uploadFraKnap()" value="Upload">
+                        </div>
+                        <div id="upload_in_progress">
+
+                        </div>
+                        <div id="mine_uploaded_billeder">
+                            <p class="uploadarea">Mit billede biblotek</p>
+                            <div id="mit_billede_biblotek"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
                 <div class="menuWrapperInner" id="wrapper">
                     <div class="MessageText">Her kan du skrive beskeder ud til dine kunder, i forbindelse med tilbud, events m.m.</div>
                     <div class="Messagepreview">
@@ -68,31 +99,10 @@ if($oSecurityController->login_check() == true) { ?>
                     <div id="currentMessages" class="oldMessenge"></div>
                     <h2>Gamle beskeder:</h2>
                     <div id="oldMessages" class="oldMessenge"></div>
-                          
+
                 </div>
             </div>
 
-            <div id="upload">
-                <div id="drop_image_here">
-                    Slip billede her
-                </div>
-                <div id="find_billede">
-                    <p class="upload_eller">Eller</p>
-                    <div id="upload_feild">
-                        <p id="uploadFile">Fil(er) ej valgt, klik for at vælg fil</p>
-                        <input id="uploadBtn" type="file" accept="image/*" multiple />
-
-                    </div>
-                    <input id="amlUploadBtn" type="button"  onclick="uploadFraKnap()" value="Upload">
-                </div>
-                <div id="upload_in_progress">
-
-                </div>
-                <div id="mine_uploaded_billeder">
-                    <p class="uploadarea">Mit billede biblotek</p>
-                    <div id="mit_billede_biblotek"></div>
-                </div>
-            </div>
 
         </div>
         <div id="imageEidter" onclick="lukMaaskeImageEidter(event)">

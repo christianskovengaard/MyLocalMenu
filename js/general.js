@@ -2251,6 +2251,9 @@ $("input[name='checkbox_closed']").live('click', function(){
 
          delete filer;
      });
+     $('#toggleImageButton').click(function () {
+        $('#upload_inner').slideToggle();
+     });
  }
  function HentMinBilleder() {
      $.ajax({
@@ -2451,7 +2454,11 @@ function editImage(id, imageUrl){
         eiditimageVariable.height = newImg.naturalHeight;
         eiditimageVariable.width = newImg.naturalWidth;
         eiditimageVariable.id = id;
-        $('#imageSrc').attr('src', "imgmsg/"+imageUrl);
+
+        document.getElementById('imageAreaImageOuter').innerHTML = "";
+        newImg.id = "imageSrc";
+        document.getElementById('imageAreaImageOuter').appendChild( newImg );
+
         $('#imageEidterSave').addClass("disable");
         $('#mageEidterAmlToolBar').show();
         $('#mageEidterCropToolBar').hide();

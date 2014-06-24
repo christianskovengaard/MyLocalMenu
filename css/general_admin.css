@@ -185,8 +185,8 @@ input {
 
 .menuWrapperInner { display: table; margin: 0 auto; min-width: 200px; }
 
-@media screen and (max-width: 1100px){
-.menuWrapperInner { margin: 0 0 0 320px }
+@media screen and (max-width: 1112px ) and (min-width: 720px) {
+.menuWrapperInner { margin: 0 0 0 330px }
 }
 
 .menuWrapperInner textarea {
@@ -513,15 +513,47 @@ left: 9px;
 :-ms-input-placeholder { /* Internet Explorer 10+ */
     color: #21201f;
 }
+@media screen and (min-width:720px){
+    #upload {
+        position: fixed;
+        left: 15px;
+        bottom: 15px;
+        top: 140px;
+    }
+    #upload_inner {
+        position: fixed;
+        left: 15px;
+        bottom: 15px;
+        top: 168px;
+        width: 290px;
 
-#upload {
+    }
+    #toggleImageButton {
+        width: 312px;
+    }
+}
+@media screen and (max-width:719px){
+    #upload {
+        width: 398px;
+        margin: auto auto 20px;
+    }
+    #upload_inner {
+        max-height: 500px;
+        width: 367px;
+    }
+}
+
+#toggleImageButton {
+    padding: 5px;
+    background-color: #878787;
+    color: #fff;
+    font-weight: bold;
+}
+
+#upload_inner {
+    display: none;
     padding: 15px;
-    position: fixed;
-    left: 15px;
-    bottom: 15px;
-    top: 140px;
     background-color: #f5f5f5;
-    width: 270px;
     border: 1px solid #cec9c4;;
 
     overflow-y: auto;
