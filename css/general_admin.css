@@ -206,7 +206,15 @@ input {
 .menuWrapperInner p { display: inline-table; vertical-align: middle; }
 .menuWrapperInner select { display: inline-table; width: 80px; margin: 2px 0 0 10px; }
 .menuWrapperInner .button { display: inline-table; float: right; margin: 8px 0px 0 0; }
-
+.MessageImage {
+    padding: 10px;
+    background-color: #9f9f9f;
+}
+.MessageImage p {
+    display: block;
+    text-align: center;
+    font-size: 1.2em;
+}
 .MessageText {
     max-width: 420px;
     margin-bottom: 5px;
