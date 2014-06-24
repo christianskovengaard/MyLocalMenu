@@ -101,8 +101,8 @@ $oSecurityController->sec_session_start();
                         <input name="username" id="LoginEmail" type="text" placeholder="Email">
                         <input name="password" id="LoginPassword" type="Password" placeholder="Kodeord">
                         <input id="loginButton" type="submit" value="Log Ind" class="btn"/>
-                        <p style='display: inline-block; margin: 0;'>Har du glemt dit kodeord </p>
-                        <a style='background: none; color:#FCA041; padding:0 3px; display: inline-block;' href='login-page?login=newCode#LogInd'> Klik her</a>
+                        <p class="forgotpassword" style='display: inline-block; margin: 0;'>Har du glemt dit kodeord </p>
+                        <a class="forgotpassword" style='background: none; color:#FCA041; padding:0 3px; display: inline-block;' href='login-page?login=newCode#LogInd'> Klik her</a>
                       </div>
                   </form>
               <?php else : ?>
@@ -147,6 +147,7 @@ $oSecurityController->sec_session_start();
                $("#loginButton").before("<div id='WrongPassword'><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Send nyt kodeord til email' class='btn' onclick='SendResetPasswordRequest();'><a style='background: none; color:#FCA041; padding:0 3px; display: inline-block;' href='login-page#LogInd'>tilbage</a></div>");             
                $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');    
                $("#loginButton").remove();
+               $('.forgotpassword').hide();
           }
 
         </script>
