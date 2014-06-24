@@ -414,16 +414,16 @@ if(isset($_GET['sFunction']))
             echo json_encode($oImageController->DeleteImage());
         break;
 
-        case 'ImageEidtSortHvid':
-            require_once "../Controllers/ImageController.php";
-            $oImageController = new ImageController();
-            echo json_encode($oImageController->ImageEidtSortHvid());
-        break;
-
         case 'PreviewImage':
             require_once "../Controllers/ImageController.php";
             $oImageController = new ImageController();
             $oImageController->PreviewImage();
+        break;
+
+        case 'SaveEidtImage':
+            require_once "../Controllers/ImageController.php";
+            $oImageController = new ImageController();
+            echo json_encode($oImageController->SaveEidtImage());
         break;
         
         default:

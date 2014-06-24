@@ -1314,7 +1314,7 @@ class imageLib
             if (is_integer($value)) {
                 $degrees = $value;
             }
-
+/*
             // *** Convert color
             $rgbArray = $this->formatColor($bgColor);
             $r = $rgbArray['r'];
@@ -1322,7 +1322,7 @@ class imageLib
             $b = $rgbArray['b'];
             if (isset($rgbArray['a'])) {
                 $a = $rgbArray['a'];
-            }
+            }*/
 
             if (is_string($value)) {
 
@@ -1349,13 +1349,13 @@ class imageLib
             $degrees = 360 - $degrees;
 
             // *** Create background color
-            $bg = ImageColorAllocateAlpha($this->imageResized, $r, $g, $b, $a);
+            //$bg = ImageColorAllocateAlpha($this->imageResized, $r, $g, $b, $a);
 
             // *** Fill with background
-            ImageFill($this->imageResized, 0, 0, $bg);
+            //ImageFill($this->imageResized, 0, 0, $bg);
 
             // *** Rotate
-            $this->imageResized = imagerotate($this->imageResized, $degrees, $bg); // Rotate 45 degrees and allocated the transparent colour as the one to make transparent (obviously)
+            $this->imageResized = imagerotate($this->imageResized, $degrees, null); // Rotate 45 degrees and allocated the transparent colour as the one to make transparent (obviously)
 
             // Ensure alpha transparency
             // ImageSaveAlpha($this->imageResized, true);

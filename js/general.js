@@ -2464,6 +2464,28 @@ function editImage(id, imageUrl){
     };
     newImg.src = "imgmsg/"+imageUrl;
 }
+ function editImageSaveImage(){
+     $("#imageEidter").fadeOut(100);
+
+
+     $.ajax({
+         type: "GET",
+         url: "API/api.php",
+         dataType: "json",
+         data: {sFunction:"SaveEidtImage", imageId: eiditimageVariable.id, functions: eiditimageVariable.functions }
+     }).done(function(result)
+     {
+         $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result));
+
+         eiditimageVariable.open = false;
+         eiditimageVariable.height = 0;
+         eiditimageVariable.width = 0;
+         eiditimageVariable.id = null;
+         eiditimageVariable.functions = [];
+
+     });
+
+ }
 function editImageUpdate(){
     var newImg = new Image();
     newImg.onload = function() {

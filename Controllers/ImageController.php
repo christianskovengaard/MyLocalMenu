@@ -204,86 +204,17 @@ class ImageController
 
     }
 
-    public function ImageEidtSortHvid()
-    {
-        $oMessage = array(
-            'sFunction' => 'ImageEidtSortHvid',
-            'result' => false
-        );
-        if (isset($_GET['imageid'])) {
-            if (!isset($_SESSION['sec_session_id'])) {
-                $this->oSecurityController->sec_session_start();
-            }
-
-            //Check if user is logged in
-            if ($this->oSecurityController->login_check() == true) {
-                $imageId = $_GET['imageid'];
-
-
-                $sQuery = $this->conPDO->prepare("SELECT * FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
-                $sQuery->bindValue(':imageId', $imageId);
-                $sQuery->bindValue(':resturentid', $this->GetResturantId());
-                $sQuery->execute();
-                $rows = $sQuery->rowCount();
-                if ($rows == 1) {
-                    $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-
-                    $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
-
-                    $this->LoadPhpImageMagician();
-
-                    $OImageManipolation = new imageLib('../imgmsg/' . $aResult['sImageName']);
-                    $OImageManipolation->greyScale();
-
-                    $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . $OImageManipolation->getFileExtension();
-
-                    $OImageManipolation->saveImage('../imgmsg/' . $filename);
-
-
-                    $id++;
-                    file_put_contents("../app_data/image_upload_id.txt", $id);
-
-
-                    $sQuery = $this->conPDO->prepare("INSERT INTO images (iFK_iRestuarentInfoId, sImageName, sImageDate) VALUES (:iFK_iRestuarentInfoId, :imageName, CURDATE())");
-
-                    $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());
-                    $sQuery->bindValue(":imageName", $filename);
-                    $sQuery->execute();
-
-
-                    $oMessage['images'] = array(
-                        'id' => $this->conPDO->lastInsertId(),
-                        'n' => $filename,
-                        'd' => date('Y-m-d')
-                    );
-
-                    $oMessage['result'] = true;
-
-
-                }
-
-
-            }
-
-        }
-
-
-        return $oMessage;
-    }
 
     public function PreviewImage()
     {
         if (isset($_GET['imageId'], $_GET['functions'])) {
-
             if (!isset($_SESSION['sec_session_id'])) {
                 $this->oSecurityController->sec_session_start();
             }
-
             //Check if user is logged in
             if ($this->oSecurityController->login_check() == true) {
                 $userid = $this->GetResturantId();
                 $imageId = $_GET['imageId'];
-
                 $sQuery = $this->conPDO->prepare("SELECT * FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
                 $sQuery->bindValue(':imageId', $imageId);
                 $sQuery->bindValue(':resturentid', $userid);
@@ -306,7 +237,6 @@ class ImageController
     private function getProcessedImage($url, $functions)
     {
         $image = new imageLib($url);
-
         foreach ($functions as $task) {
             switch($task){
                 case 'sortHvid':
@@ -322,7 +252,6 @@ class ImageController
                     $image->rotate(180);
                 break;
             }
-
             if (substr($task, 0, 4) === "crop") {
                 $aCropInfo = explode("-", $task);
                 $aCropInfo = array(
@@ -332,13 +261,63 @@ class ImageController
                     "height"=>floatval($aCropInfo[4])/100
                 );
                 $image->cropping($aCropInfo);
+            }
+        }
+        return $image;
+    }
 
+    public function SaveEidtImage()
+    {
+
+        $oMessage = array(
+            'sFunction' => 'SaveEidtImage',
+            'result' => false
+        );
+
+
+        if (isset($_GET['imageId'], $_GET['functions'])) {
+
+            if (!isset($_SESSION['sec_session_id'])) {
+                $this->oSecurityController->sec_session_start();
             }
 
+            //Check if user is logged in
+            if ($this->oSecurityController->login_check() == true) {
+                $userid = $this->GetResturantId();
+                $imageId = $_GET['imageId'];
 
+                $sQuery = $this->conPDO->prepare("SELECT * FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
+                $sQuery->bindValue(':imageId', $imageId);
+                $sQuery->bindValue(':resturentid', $userid);
+                $sQuery->execute();
+                $rows = $sQuery->rowCount();
+                if ($rows == 1) {
+                    $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                    $url = "../imgmsg/" . $aResult['sImageName'];
+                    $this->LoadPhpImageMagician();
+                    /** @var imageLib $newImage */
+                    $newImage = $this->getProcessedImage($url, $_GET['functions']);
+                    $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
+                    $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . $newImage->getFileExtension();
+                    $location = '../imgmsg/' . $filename;
+                    $newImage->saveImage($location);
+                    $sQuery = $this->conPDO->prepare("INSERT INTO images (iFK_iRestuarentInfoId, sImageName, sImageDate) VALUES (:iFK_iRestuarentInfoId, :imageName, CURDATE())");
+                    $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());
+                    $sQuery->bindValue(":imageName", $filename);
+                    $sQuery->execute();
+                    $id++;
+                    file_put_contents("../app_data/image_upload_id.txt", $id);
+
+                    $oMessage['images'] = array(
+                        'id' => $this->conPDO->lastInsertId(),
+                        'n' => $filename,
+                        'd' => date('Y-m-d')
+                    );
+
+                }
+            }
         }
 
-        return $image;
-
+        return $oMessage;
     }
 }
