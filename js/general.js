@@ -2746,16 +2746,29 @@ function editImageRotate(vej) {
 
 }
 
-
+ var MessageFinishImageAspect = {
+     max: 2.333333333333,
+     min: 0.7
+ };
 function PutImageInPreviewBox(url) {
     var newImg = new Image();
     newImg.onload = function() {
-        newImg.naturalHeight;
-        newImg.naturalWidth;
-
+        var neturalAspect = newImg.naturalHeight / newImg.naturalWidth;
         var contWidth = $("#MessageImage").width();
+        var newHeight = 0;
 
-        $("#MessageImage").css({"backgroundImage": "url('"+newImg.src+"')"}).animate({"height":"500px"}, 1000)
+        alert(neturalAspect);
+
+        if (neturalAspect < MessageFinishImageAspect.min) {
+            newHeight = contWidth * MessageFinishImageAspect.min;
+        } else if (neturalAspect > MessageFinishImageAspect.max) {
+            newHeight = contWidth * MessageFinishImageAspect.max;
+        } else {
+            newHeight = contWidth * neturalAspect;
+        }
+
+
+        $("#MessageImage").css({"backgroundImage": "url('" + newImg.src + "')"}).animate({"height": newHeight + "px"}, 1000)
         $("#MessageImageRemove").fadeIn(150)
 
 

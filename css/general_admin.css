@@ -215,6 +215,8 @@ input {
     background-size: cover;
     background-position: center;
     position: relative;
+
+    box-sizing: border-box;
 }
 .MessageImage p {
     display: block;
