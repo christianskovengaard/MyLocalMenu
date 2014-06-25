@@ -2230,6 +2230,20 @@ $("input[name='checkbox_closed']").live('click', function(){
      document.getElementById("custum_crop_resizer_hivimig").addEventListener("drag", r_dragmove)
 
 
+     var MessageImage = document.getElementById('MessageImage');
+     MessageImage.addEventListener("drop", AddImageToImageDrop, false);
+     MessageImage.addEventListener("dragenter", AddImageToImageDragEnter, false);
+     MessageImage.addEventListener("dragover", AddImageToImageDragOver, false);
+     MessageImage.addEventListener("dragleave", AddImageToImageDragLeave, false);
+     MessageImage.addEventListener("click", function (e) {
+         if (e.target.id != "MessageImageRemove") {
+             alert("vælg fra bib")
+         }
+     }, false);
+     $("#MessageImageRemove").click(function () {
+         $(this).fadeOut(150);
+         $("#MessageImage").css({"backgroundImage": "", "height":"auto"})
+     });
 
      jQuery.get('mustache_templates/imageupload_uploaded_images.txt', function (data) {
          imagetemloate = data;
@@ -2326,7 +2340,7 @@ $("input[name='checkbox_closed']").live('click', function(){
      if (files.length > 0) {
 
          $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
-         upload(files);
+         upload(files, function (file) { });
      } else {
          $('#upload_in_progress').html('<p>' + filer.join(', ') + '</p>');
 
@@ -2335,7 +2349,7 @@ $("input[name='checkbox_closed']").live('click', function(){
 
 
 
- function upload(files) {
+ function upload(files, done) {
      var formobject = new FormData();
      formobject.append('file[]', files[0]);
      formobject.append('sFunction', 'UploadImage');
@@ -2386,11 +2400,14 @@ $("input[name='checkbox_closed']").live('click', function(){
              // todo skal set timeout fjernes?
              setTimeout(function () {
              // koe upload igen hvis der er flere billeder der skal uploades
-                upload(files);
+                upload(files, function () {
+                });
              }, 250);
          }else {
              // ryd upload_in_progress diven
              $('#upload_in_progress').html('');
+
+             done(result.images.n)
          }
      });
 
@@ -2728,3 +2745,99 @@ function editImageRotate(vej) {
     }
 
 }
+
+
+function PutImageInPreviewBox(url) {
+    var newImg = new Image();
+    newImg.onload = function() {
+        newImg.naturalHeight;
+        newImg.naturalWidth;
+
+        var contWidth = $("#MessageImage").width();
+
+        $("#MessageImage").css({"backgroundImage": "url('"+newImg.src+"')"}).animate({"height":"500px"}, 1000)
+        $("#MessageImageRemove").fadeIn(150)
+
+
+
+    };
+    newImg.src = "imgmsg/"+url;
+}
+
+
+function AddImageToImageDrop(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+
+    $("#MessageImage").removeClass("uploadhover");
+
+    var filer = e.target.files || e.dataTransfer.files;
+
+
+
+    if(filer.length == 0){
+        if( e.dataTransfer.getData('imageId') && e.dataTransfer.getData('imageSrc') ){
+            PutImageInPreviewBox( e.dataTransfer.getData('imageSrc') );
+        }else {
+            alert("Det er ikke et billede du har slippet")
+        }
+
+    }else if(filer.length == 1){
+        var files = [filer[0]];
+        upload(files, function (file) {
+            PutImageInPreviewBox(file);
+        });
+    }else{
+        alert("Du kan kun uploader et billede af gangenn");
+    }
+
+
+    console.log(e)
+
+}
+function AddImageToImageDragEnter(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+
+
+}
+function AddImageToImageDragOver(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+    $("#MessageImage").addClass("uploadhover");
+}
+function AddImageToImageDragLeave(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+    $("#MessageImage").removeClass("uploadhover");
+}
+function AddImageToImageDragStart(ev){
+    if(ev.target.className == "imageInList") {
+        ev.dataTransfer.setData( 'imageId', ev.target.attributes['data-imageid'].value );
+        ev.dataTransfer.setData( 'imageSrc', ev.target.attributes['data-imagesrc'].value );
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

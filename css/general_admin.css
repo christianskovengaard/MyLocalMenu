@@ -209,11 +209,24 @@ input {
 .MessageImage {
     padding: 10px;
     background-color: #9f9f9f;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    position: relative;
 }
 .MessageImage p {
     display: block;
     text-align: center;
     font-size: 1.2em;
+}
+.MessageImage #MessageImageRemove{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2px;
+    display: none;
 }
 .MessageText {
     max-width: 420px;
@@ -605,7 +618,7 @@ left: 9px;
     filter: alpha(opacity=0);
 }
 .uploadhover {
-    background-color: #195F91 !important;
+    background-color: #F9CF85 !important;
 }
 .imageInList {
     background-color: #DDD;
