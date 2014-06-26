@@ -2747,8 +2747,8 @@ function editImageRotate(vej) {
 }
 
  var MessageFinishImageAspect = {
-     max: 2.333333333333,
-     min: 0.7
+     max: 1.42857142857,
+     min: 0.42857142857
  };
 function PutImageInPreviewBox(url) {
     var newImg = new Image();
@@ -2756,8 +2756,6 @@ function PutImageInPreviewBox(url) {
         var neturalAspect = newImg.naturalHeight / newImg.naturalWidth;
         var contWidth = $("#MessageImage").width();
         var newHeight = 0;
-
-        alert(neturalAspect);
 
         if (neturalAspect < MessageFinishImageAspect.min) {
             newHeight = contWidth * MessageFinishImageAspect.min;
