@@ -1908,10 +1908,18 @@ function GetMessages() {
               var date = dd+"-"+mm+"-"+yy+" "+h+":"+m;
 
               if( key === 0){
-                  $('#currentMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+date+'</h3><h2>'+value.sMessageBodyText+'</h2></div>');
+                  if (value.sMessageImage == "") {
+                      $('#currentMessages').append('<div><h1>' + value.sMessageHeadline + '</h1><h3>' + date + '</h3><h2>' + value.sMessageBodyText + '</h2></div>');
+                  } else {
+                      $('#currentMessages').append('<img src="imgmsg_sendt/' + value.sMessageImage + '"><div><h1>' + value.sMessageHeadline + '</h1><h3>' + date + '</h3><h2>' + value.sMessageBodyText + '</h2></div>');
+                  }
               }
               else {
-              $('#oldMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+date+'</h3><h2>'+value.sMessageBodyText+'</h2></div>');
+                  if (value.sMessageImage == "") {
+                      $('#oldMessages').append('<div><h1>' + value.sMessageHeadline + '</h1><h3>' + date + '</h3><h2>' + value.sMessageBodyText + '</h2></div>');
+                  } else {
+                      $('#oldMessages').append('<img src="imgmsg_sendt/' + value.sMessageImage + '"><div><h1>' + value.sMessageHeadline + '</h1><h3>' + date + '</h3><h2>' + value.sMessageBodyText + '</h2></div>');
+                  }
               }
           });
            
@@ -1928,6 +1936,7 @@ function SaveMessage() {
        aData['dMessageEnd'] = $('#dMessageEnd').val();
        aData['sMessageHeadnline'] = $('#sMessageHeadline').val(); 
        aData['sMessageBodyText'] = $('#sMessengerTextarea').val();
+        aData['iMessageImageId'] = $("#MessageImage").attr('data-urlid');
        
        //Workaround with encoding issue in IE8 and JSON.stringify
        for (var i in aData) {
@@ -1946,6 +1955,7 @@ function SaveMessage() {
            //alert('Besked gemt: '+result.result);
            $('#sMessageHeadline').val(''); 
            $('#sMessengerTextarea').val('');
+           FjernPrewievImage();
            GetMessages();
        });
     }
@@ -2282,7 +2292,7 @@ $("input[name='checkbox_closed']").live('click', function(){
 
  function FjernPrewievImage() {
      $("#MessageImageRemove").fadeOut(150);
-     $("#MessageImage").css({"backgroundImage": "", "height": "auto"}).data('url', '');
+     $("#MessageImage").css({"backgroundImage": "", "height": "auto"}).attr('data-urlid', '');
 
  }
 
@@ -2412,7 +2422,7 @@ $("input[name='checkbox_closed']").live('click', function(){
              // ryd upload_in_progress diven
              $('#upload_in_progress').html('');
 
-             done(result.images.n)
+             done(result.images.n, result.images.id)
          }
      });
 
@@ -2426,7 +2436,7 @@ $("input[name='checkbox_closed']").live('click', function(){
         $(sel).css("opacity", 0.5);
         $(sel2).hide();
 
-        if ($("#MessageImage").data('url') == url) {
+        if ($("#MessageImage").data('urlid') == id) {
             FjernPrewievImage();
         }
 
@@ -2532,7 +2542,7 @@ function editImageUpdate(){
         $('#imageEidterSave').removeClass("disable");
 
 
-        resizeEidtImage()
+        resizeEidtImage();
         setTimeout(function(){
             resizeEidtImage()
         }, 25)
@@ -2758,7 +2768,7 @@ function editImageRotate(vej) {
      max: 1.42857142857,
      min: 0.42857142857
  };
-function PutImageInPreviewBox(url) {
+ function PutImageInPreviewBox(url, id) {
     var newImg = new Image();
     newImg.onload = function() {
         var neturalAspect = newImg.naturalHeight / newImg.naturalWidth;
@@ -2774,7 +2784,7 @@ function PutImageInPreviewBox(url) {
         }
 
 
-        $("#MessageImage").css({"backgroundImage": "url('" + newImg.src + "')"}).data('url', url).animate({"height": newHeight + "px"}, 1000)
+        $("#MessageImage").attr('data-urlid', id).css({"backgroundImage": "url('" + newImg.src + "')"}).animate({"height": newHeight + "px"}, 1000)
         $("#MessageImageRemove").fadeIn(150)
 
 
@@ -2797,15 +2807,15 @@ function AddImageToImageDrop(e){
 
     if(filer.length == 0){
         if( e.dataTransfer.getData('imageId') && e.dataTransfer.getData('imageSrc') ){
-            PutImageInPreviewBox( e.dataTransfer.getData('imageSrc') );
+            PutImageInPreviewBox(e.dataTransfer.getData('imageSrc'), e.dataTransfer.getData('imageId'));
         }else {
             alert("Det er ikke et billede du har slippet")
         }
 
     }else if(filer.length == 1){
         var files = [filer[0]];
-        upload(files, function (file) {
-            PutImageInPreviewBox(file);
+        upload(files, function (file, id) {
+            PutImageInPreviewBox(file, id);
         });
     }else{
         alert("Du kan kun uploader et billede af gangenn");

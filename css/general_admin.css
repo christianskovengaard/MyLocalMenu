@@ -259,6 +259,12 @@ input {
     position: relative;
     width: 400px;
 }
+
+.oldMessenge img {
+    width: 420px;
+    position: relative;
+    top: 3px;
+}
 .oldMessenge div {
     position: relative;
     width: 100%;

@@ -84,7 +84,7 @@ if($oSecurityController->login_check() == true) { ?>
                     <div class="MessageText">Her kan du skrive beskeder ud til dine kunder, i forbindelse med tilbud, events m.m.</div>
 
 
-                    <div class="MessageImage" id="MessageImage" data-url="">
+                    <div class="MessageImage" id="MessageImage" data-urlid="">
                         <p>Slip billede her</p>
                         <p>Eller klik for at vælge fra biblottek</p>
                         <p id="MessageImageRemove">FJERN</p>
