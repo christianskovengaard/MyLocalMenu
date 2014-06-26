@@ -2241,8 +2241,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          }
      }, false);
      $("#MessageImageRemove").click(function () {
-         $(this).fadeOut(150);
-         $("#MessageImage").css({"backgroundImage": "", "height":"auto"})
+         FjernPrewievImage();
      });
 
      jQuery.get('mustache_templates/imageupload_uploaded_images.txt', function (data) {
@@ -2279,6 +2278,12 @@ $("input[name='checkbox_closed']").live('click', function(){
      {
          $('#mit_billede_biblotek').html(Mustache.to_html(imagetemloate, result));
      });
+ }
+
+ function FjernPrewievImage() {
+     $("#MessageImageRemove").fadeOut(150);
+     $("#MessageImage").css({"backgroundImage": "", "height": "auto"}).data('url', '');
+
  }
 
 
@@ -2414,13 +2419,16 @@ $("input[name='checkbox_closed']").live('click', function(){
  }
 
 
-
-function deleteImage(id) {
+ function deleteImage(id, url) {
     if(confirm("Er du sikker på at du vil slette dette billede?")) {
         var sel = "[data-imageid="+id+"]";
         var sel2 = "[data-imageid="+id+"] .retogsletimage";
         $(sel).css("opacity", 0.5);
         $(sel2).hide();
+
+        if ($("#MessageImage").data('url') == url) {
+            FjernPrewievImage();
+        }
 
         $.ajax({
             type: "GET",
@@ -2766,7 +2774,7 @@ function PutImageInPreviewBox(url) {
         }
 
 
-        $("#MessageImage").css({"backgroundImage": "url('" + newImg.src + "')"}).animate({"height": newHeight + "px"}, 1000)
+        $("#MessageImage").css({"backgroundImage": "url('" + newImg.src + "')"}).data('url', url).animate({"height": newHeight + "px"}, 1000)
         $("#MessageImageRemove").fadeIn(150)
 
 
@@ -2804,7 +2812,6 @@ function AddImageToImageDrop(e){
     }
 
 
-    console.log(e)
 
 }
 function AddImageToImageDragEnter(e){
