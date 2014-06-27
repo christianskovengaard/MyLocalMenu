@@ -2246,10 +2246,19 @@ $("input[name='checkbox_closed']").live('click', function(){
      MessageImage.addEventListener("dragover", AddImageToImageDragOver, false);
      MessageImage.addEventListener("dragleave", AddImageToImageDragLeave, false);
      MessageImage.addEventListener("click", function (e) {
-         if (e.target.id != "MessageImageRemove") {
-             alert("vælg fra bib")
+
+         if (e.target.id == "MessageImage" || e.target.id == "MessageImageBC" || e.target.id == "MessageImageBC") {
+             $('#findImage').show();
+
+             $('#findImages').html('');
+             $('#mit_billede_biblotek div').each(function (index, value) {
+                 $('#findImages').appendChild()
+             })
          }
-     }, false);
+     });
+     $('#lukFindImage').click(function () {
+         $('#findImage').hide();
+     });
      $("#MessageImageRemove").click(function () {
          FjernPrewievImage();
      });
@@ -2495,14 +2504,18 @@ function editImage(id, imageUrl){
         document.getElementById('imageAreaImageOuter').appendChild( newImg );
 
         $('#imageEidterSave').addClass("disable");
-        $('#mageEidterAmlToolBar').show();
-        $('#mageEidterCropToolBar').hide();
+        $('#imageEidterAmlToolBar').show();
+        $('#imageEidterCropToolBar').hide();
         $('#custum_crop_resizer').hide();
         $('#custum_crop_resizer_hivimig').hide();
+        $('#toSmallToFlipOpOnSide').hide();
+        $('.ImageControllCanBeDisabled').removeClass("disable");
 
 
         $("#imageEidter").fadeIn(100);
         resizeEidtImage();
+        setTimeout(resizeEidtImage, 50);
+        setTimeout(resizeEidtImage, 300);
     };
     newImg.src = "imgmsg/"+imageUrl;
 }
@@ -2572,8 +2585,8 @@ function lukImageEidter(e){
 }
 function editImageSetupCrop(){
     if((eiditimageVariable.width*0.9)>700 && (eiditimageVariable.height*0.9)>300){
-        $('#mageEidterAmlToolBar').hide();
-        $('#mageEidterCropToolBar').show();
+        $('#imageEidterAmlToolBar').hide();
+        $('#imageEidterCropToolBar').show();
 
         $('#custum_crop_resizer').css({"top":"5%", "left":"5%", "height":"90%", "width":"90%", "display":"block"});
         eiditimageVariable.customCropNowPosistions.height = 90;
@@ -2594,8 +2607,8 @@ function editImageSetupCrop(){
 }
  function editImageSaveCrop() {
 
-     $('#mageEidterAmlToolBar').show();
-     $('#mageEidterCropToolBar').hide();
+     $('#imageEidterAmlToolBar').show();
+     $('#imageEidterCropToolBar').hide();
      $('#custum_crop_resizer').hide();
      $('#custum_crop_resizer_hivimig').hide();
 
@@ -2609,8 +2622,8 @@ function editImageSetupCrop(){
  }
 
  function editImageCancelCrop() {
-     $('#mageEidterAmlToolBar').show();
-     $('#mageEidterCropToolBar').hide();
+     $('#imageEidterAmlToolBar').show();
+     $('#imageEidterCropToolBar').hide();
      $('#custum_crop_resizer').hide();
      $('#custum_crop_resizer_hivimig').hide();
 
@@ -2668,6 +2681,10 @@ function set_hiv_i_mig() {
              set_hiv_i_mig();
          }
      }
+
+     //if(æ)
+
+     alert(eiditimageVariable.customCropNowPosistions.width);
 
      delete new_drag_pos_x;
      delete new_drag_pos_y;

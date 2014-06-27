@@ -245,6 +245,68 @@ input {
     margin: 1px auto;
     /*background: #f2b854;*/
 }
+
+#findImage {
+    background: #373737;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -70px;
+    z-index: 10;
+    position: absolute;
+    display: none;
+}
+
+#findImageInner {
+    position: relative;
+    height: 100%;
+}
+
+#findImages {
+    position: absolute;
+    top: 27px;
+    bottom: 0;
+    overflow-y: scroll;
+    left: 0;
+    right: 0;
+}
+
+#findImageTopBar {
+    position: absolute;
+    top: 0;
+    height: 27px;
+    left: 0;
+    right: 0;
+    background-color: #f2a620;
+}
+
+#findImageTopBar p {
+    color: #ffffff;
+    padding: 3px !important;
+    margin: 0;
+    display: inline;
+}
+
+#findImages .imageInList {
+    height: 50px;
+    width: 50px;
+    overflow: hidden;
+    float: left;
+    margin: 5px;
+}
+
+#lukFindImage {
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    float: right;
+    font-weight: bold;
+}
+
+#findImages:after {
+    content: " ";
+    clear: both;
+}
 #sMessengerTextarea {
     font-weight: 100;
 }
@@ -628,17 +690,20 @@ left: 9px;
 .uploadhover {
     background-color: #F9CF85 !important;
 }
-.imageInList {
+
+#mit_billede_biblotek .imageInList {
     background-color: #DDD;
     margin-bottom: 20px;
     position: relative;
     min-height: 115px;
 }
-.imageInList img {
+
+#mit_billede_biblotek .imageInList img {
     width: 150px;
     float: left;
 }
-.imageInList_left{
+
+#mit_billede_biblotek .imageInList_left {
 
     float: left;
     position: absolute;
@@ -647,26 +712,31 @@ left: 9px;
     bottom: 0;
     top: 0;
 }
-.imageInList p {
+
+#mit_billede_biblotek .imageInList p {
     margin: 0;
 }
-.imageInList_left .imageInList_dato {
+
+#mit_billede_biblotek .imageInList_left .imageInList_dato {
     padding: 10px;
     font-weight: bold;
 }
 
-.imageInList_left .slet, .imageInList_left .ret {
+#mit_billede_biblotek .imageInList_left .slet, .imageInList_left .ret {
     padding: 5px 10px;
     cursor: pointer;
 }
-.imageInList_left .ret {
+
+#mit_billede_biblotek .imageInList_left .ret {
     background: #f2a620;
 }
-.imageInList_left .slet {
+
+#mit_billede_biblotek .imageInList_left .slet {
     background: #333;
     color: #fff;
 }
-.imageInList_left .retogsletimage {
+
+#mit_billede_biblotek .imageInList_left .retogsletimage {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -718,9 +788,19 @@ left: 9px;
     margin-right: 15px;
 
 }
+
+#imageEidter span.disable {
+    opacity: .5;
+    text-decoration: line-through;
+}
 #imageEidter #imageEidterInner #toolLine #toolR span#imageEidterSave.disable  {
     color: #888888 !important;
     cursor: not-allowed;
+}
+
+#imageEidter #toSmallToFlipOpOnSide, #imageEidter #toSmallToFlipOpOnSide {
+    display: none;
+
 }
 #mageEidterCropToolBar {
     display: none;

@@ -85,9 +85,21 @@ if($oSecurityController->login_check() == true) { ?>
 
 
                     <div class="MessageImage" id="MessageImage" data-urlid="">
-                        <p>Slip billede her</p>
-                        <p>Eller klik for at vælge fra biblottek</p>
+                        <p id="MessageImageBC">Slip billede her</p>
+                        <p id="MessageImageBC2">Eller klik for at vælge fra biblottek</p>
                         <p id="MessageImageRemove">FJERN</p>
+                        <div id="findImage">
+                            <div id="findImageInner">
+
+                                <div id="findImageTopBar">
+                                    <p>Vælg billede fra biblotek</p>
+                                    <button id="lukFindImage">LUK</button>
+                                </div>
+                                <div id="findImages">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="Messagepreview">
                     <textarea id="sMessageHeadline" type="text" value="" placeholder="Overskrift"></textarea>
@@ -128,30 +140,39 @@ if($oSecurityController->login_check() == true) { ?>
 
                 </div>
                 <div id="toolLine">
-                    <div class="toolL" id="mageEidterAmlToolBar">
+                    <div class="toolL" id="imageEidterAmlToolBar">
                         <span onclick="editImageSetupCrop()">
                             BESKÆR
                         </span>
                         <span onclick="editImageSortHvid()">
                             SORT/HVID
                         </span>
-                        <span onclick="editImageRotate('Hojre')">
+                        <span onclick="editImageRotate('Hojre')" class="ImageControllCanBeDisabled">
                             FLIP HØJRE
                         </span>
                         <span onclick="editImageRotate('Halv')">
                             FLIP HALV OMGANG
                         </span>
-                        <span onclick="editImageRotate('Venstre')">
+                        <span onclick="editImageRotate('Venstre')"  class="ImageControllCanBeDisabled">
                             FLIP VENSTRE
                         </span>
                     </div>
-                    <div class="toolL" id="mageEidterCropToolBar">
+                    <div class="toolL" id="imageEidterCropToolBar">
                         <span onclick="editImageCancelCrop()">
                             ANULER BESKÆRING
                         </span>
                         <span onclick="editImageSaveCrop()">
                             GEM BESKÆRING
                         </span>
+                        <div id="toSmallToFlipOpOnSide" title="Det vil ikke være mulig at lippe billedet op på siden hvis du gemmer denne ændring da billedet vill bliver for småt">
+                            <span class="disable">
+                                FLIP HØJRE
+                            </span>
+
+                            <span class="disable">
+                                FLIP VENSTRE
+                            </span>
+                        </div>
                     </div>
                     <div id="toolR">
                         <span onclick="editImageSaveImage()" id="imageEidterSave" class="button disable">
