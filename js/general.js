@@ -2247,13 +2247,17 @@ $("input[name='checkbox_closed']").live('click', function(){
      MessageImage.addEventListener("dragleave", AddImageToImageDragLeave, false);
      MessageImage.addEventListener("click", function (e) {
 
-         if (e.target.id == "MessageImage" || e.target.id == "MessageImageBC" || e.target.id == "MessageImageBC") {
+         if (e.target.id == "MessageImage" || e.target.id == "MessageImageBC" || e.target.id == "MessageImageBC2") {
              $('#findImage').show();
-
              $('#findImages').html('');
-             $('#mit_billede_biblotek div').each(function (index, value) {
-                 $('#findImages').appendChild()
+             $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
+                 $('#findImages').append('<div style="background-image: url(imgmsg/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
              })
+             $("#findImages div").click(function () {
+                 PutImageInPreviewBox($(this).attr('data-imageSrc'), $(this).attr('data-imageId'));
+                 $('#findImage').hide();
+             });
+
          }
      });
      $('#lukFindImage').click(function () {

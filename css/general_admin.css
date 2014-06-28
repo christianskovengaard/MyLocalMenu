@@ -255,6 +255,7 @@ input {
     z-index: 10;
     position: absolute;
     display: none;
+    min-height: 500px;
 }
 
 #findImageInner {
@@ -264,26 +265,37 @@ input {
 
 #findImages {
     position: absolute;
-    top: 27px;
+    top: 24px;
     bottom: 0;
     overflow-y: scroll;
     left: 0;
     right: 0;
+    padding: 5px;
 }
 
+#findImages div {
+    height: 72px;
+    width: 72px;
+    margin: 5px;
+    float: left;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+}
 #findImageTopBar {
     position: absolute;
     top: 0;
-    height: 27px;
+    height: 24px;
     left: 0;
     right: 0;
     background-color: #f2a620;
+    padding-left: 5px;
 }
 
 #findImageTopBar p {
     color: #ffffff;
-    padding: 3px !important;
-    margin: 0;
     display: inline;
 }
 
@@ -301,6 +313,7 @@ input {
     color: #FFFFFF;
     float: right;
     font-weight: bold;
+    outline: none;
 }
 
 #findImages:after {
@@ -632,6 +645,13 @@ left: 9px;
         max-height: 500px;
         width: 367px;
     }
+
+    #findImages div {
+        height: 68px;
+        width: 68px;
+
+    }
+
 }
 
 #toggleImageButton {
