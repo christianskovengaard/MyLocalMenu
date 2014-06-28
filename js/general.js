@@ -2828,7 +2828,9 @@ function AddImageToImageDrop(e){
 
     if(filer.length == 0){
         if( e.dataTransfer.getData('imageId') && e.dataTransfer.getData('imageSrc') ){
-            PutImageInPreviewBox(e.dataTransfer.getData('imageSrc'), e.dataTransfer.getData('imageId'));
+            if (!$('#findImage').is(":visible")) {
+                PutImageInPreviewBox(e.dataTransfer.getData('imageSrc'), e.dataTransfer.getData('imageId'));
+            }
         }else {
             alert("Det er ikke et billede du har slippet")
         }
