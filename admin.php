@@ -141,7 +141,7 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
                 <div id="toolLine">
                     <div class="toolL" id="imageEidterAmlToolBar">
-                        <span onclick="editImageSetupCrop()">
+                        <span onclick="editImageSetupCrop()" id="imageEidterCropButton">
                             BESKÆR
                         </span>
                         <span onclick="editImageSortHvid()">
