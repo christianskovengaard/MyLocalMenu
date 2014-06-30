@@ -159,7 +159,7 @@ class ImageController
 
                     list($width, $height, $type, $attr) = getimagesize($fil['tmp_name']);
 
-                    if($width>699 && $height>299){
+                    if($width>699 && $height>49){
                         $oMessage['toSmall']=false;
                         
                         $id = intval(file_get_contents("../app_data/image_upload_id.txt"));

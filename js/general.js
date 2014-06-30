@@ -2288,7 +2288,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          delete filer;
      });
      $('#toggleImageButton').click(function () {
-        $('#upload_inner').slideToggle();
+        $('#upload_inner').toggle();
      });
  }
  function HentMinBilleder() {
@@ -2519,7 +2519,7 @@ function editImage(id, imageUrl){
         } else {
             $('.ImageControllCanBeDisabled').removeClass("disable");
         }
-        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 300)) {
+        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 50)) {
             $('#imageEidterCropButton').addClass("disable");
         }
         $("#imageEidter").fadeIn(100);
@@ -2571,7 +2571,7 @@ function editImageUpdate(){
         } else {
             $('.ImageControllCanBeDisabled').removeClass("disable");
         }
-        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 300)) {
+        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 50)) {
             $('#imageEidterCropButton').addClass("disable");
         } else {
             $('#imageEidterCropButton').removeClass("disable");
@@ -2609,7 +2609,7 @@ function lukImageEidter(e){
     $("#imageEidter").fadeOut(100);
 }
 function editImageSetupCrop(){
-    if((eiditimageVariable.width*0.9)>700 && (eiditimageVariable.height*0.9)>300){
+    if((eiditimageVariable.width*0.9)>700 && (eiditimageVariable.height*0.9)>50){
         $('#imageEidterAmlToolBar').hide();
         $('#imageEidterCropToolBar').show();
 
@@ -2713,7 +2713,7 @@ function set_hiv_i_mig() {
 
          }
      } else if (forskelY_percent < 0) {
-         if ( (((eiditimageVariable.customCropNowPosistions.height-(Math.abs(forskelY_percent)*100))/100)*eiditimageVariable.height) > 300 ) {
+         if ( (((eiditimageVariable.customCropNowPosistions.height-(Math.abs(forskelY_percent)*100))/100)*eiditimageVariable.height) > 50 ) {
              $('#custum_crop_resizer').css({ "height":(eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100))+"%"});
              set_hiv_i_mig();
 
@@ -2824,7 +2824,7 @@ function editImageRotate(vej) {
 
  var MessageFinishImageAspect = {
      max: 1.42857142857,
-     min: 0.42857142857
+     min: 0.0714285714285714
  };
  function PutImageInPreviewBox(url, id) {
     var newImg = new Image();
