@@ -2554,6 +2554,7 @@ function editImage(id, imageUrl){
  }
 function editImageUpdate(){
     var newImg = new Image();
+    $('#imageEidterAmlToolBar').hide();
     newImg.onload = function() {
         eiditimageVariable.height = newImg.naturalHeight;
         eiditimageVariable.width = newImg.naturalWidth;
@@ -2576,6 +2577,7 @@ function editImageUpdate(){
             $('#imageEidterCropButton').removeClass("disable");
         }
 
+        $('#imageEidterAmlToolBar').show();
 
         resizeEidtImage();
         setTimeout(function(){
