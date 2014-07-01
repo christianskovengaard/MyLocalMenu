@@ -29,7 +29,7 @@ if($oSecurityController->login_check() == true) { ?>
         <div class="TabMenu">
             <div id="TabsMenu" class="Tab On" onclick="TapChange('sMenu');">Menu</div>
             <div id="TabsMessenger" class="Tab" onclick="TapChange('sMessenger');">Beskeder</div>
-            <!--<div id="TabsStamp" class="Tab" onclick="TapChange('sStamp');">Stemplekort</div>-->
+            <div id="TabsStamp" class="Tab" onclick="TapChange('sStamp');">Stemplekort</div>
             <div id="TabsEdit" class="Tab" onclick="TapChange('sEdit');">Indstillinger</div>
         </div>
         
@@ -216,12 +216,12 @@ if($oSecurityController->login_check() == true) { ?>
                             <img src="" id="stampchart" title="Uddelte stempler" alt="Chart"><br/>
                         </div>
    
-                        <h3>QR kode</h3>
+                        <!--<h3>QR kode</h3>
                         <div>
                             <div class='button StampButton' onclick="PrintQRcode();">Print din QR kode</div>
                             <div class='button StampButton'onclick='GenerateQRcode();'>Lav en ny QR kode</div>
                             <div id="currentQRcode"></div>
-                        </div>
+                        </div>-->
                         <br><br><br>
                     </div>    
                 </div>
