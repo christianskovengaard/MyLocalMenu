@@ -87,21 +87,32 @@
       
   }
   
-  function SaveMenuDishToHtml() {
-      
-      //Set sessionStorage bMenucardChaged to 'true'
-      sessionStorage.bMenucardChanged = 'true';
+  function SaveMenuDishToHtml(itemId,placeinlist) {
         
       var Number = $('.DishNumber input').val();
       var Headline = $('.DishHeadline input').val();
       var Description = $('.DishDescription textarea').val();
       var price = $('.DishPrice input').val();
       
+      if(placeinlist === undefined) {
+          //Get the placein list from the DOM when the item is new
+          var placeinlist = $('.DishNumber input').parent().parent().children('.DishPlaceInList').val();
+          //Get the CategoryId
+          var categoryId = $('.DishNumber input').closest('ul').attr('id');
+          categoryId = categoryId.substr(8);
+      }
+      
       //if(Headline != '' && price !=''){
           $('.DishNumber input').parent().html('<h1>'+Number+'</h1>');
           $('.DishHeadline input').parent().html('<h1>'+Headline+'</h1>');
           $('.DishDescription textarea').parent().html('<h2>'+Description+'</h2>');
-          $('.DishPrice input').parent().html('<h2>...</h2><h2>'+price+'</h2><h2>kr</h2>');
+          //Check if price is int
+          if(isNaN(price) || price === ''){
+              $('.DishPrice input').parent().html('<h2></h2><h2>'+price+'</h2><h2></h2>');
+          }
+          else{
+            $('.DishPrice input').parent().html('<h2>...</h2><h2>'+price+'</h2><h2>kr</h2>');
+          }
           $('.SaveMenuDish').fadeOut('normal', function(){ 
               $(this).remove();
               $('.AddLiButton').fadeIn('fast');
@@ -111,6 +122,11 @@
           $('.EditDish').show();
           $(".DishEditWrapper").show();
           $('.DishEditWrapperTEMP').removeClass('DishEditWrapperTEMP');
+          
+          
+          
+          UpdateMenucarditem(itemId,placeinlist,Number,Headline,Description,price,categoryId);
+          
       /*}
       
       else{
@@ -122,8 +138,6 @@
  
   function SaveInfoToHtml(){
       
-      //Set session storage bmenucardchanged to 'true'
-     sessionStorage.bMenucardChanged = 'true';
      
       var infoHeadline = $('.InfoSlide.new input').val();
       var infoDescription = $('.InfoSlide.new textarea').val();
@@ -169,8 +183,11 @@
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
           
-          //Set Session storage
-          sessionStorage.bMenucardChanged = 'true';
+          
+          var menucardId = $('#iMenucardIdHashed').val();
+          
+          UpdateMenucardCategory('',listHeadline,listDescription,menucardId);
+          
       }
       else{
           alert("udfyld venlist en overskrift");
@@ -196,10 +213,8 @@
           $('.EditDish').show();
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
-          
-          //Set Session storage
-          sessionStorage.bMenucardChanged = 'true';
-          
+               
+          UpdateMenucardCategory(id,listHeadline,listDescription,'');
       }
       else{
           alert("udfyld venlist en overskrift");
@@ -208,11 +223,10 @@
  
  function SaveEditedInfoToHtml(id){
      
-     //Set session storage bmenucardchanged to 'true'
-     sessionStorage.bMenucardChanged = 'true';
      
       var Headline = $('.InfoSlide input').val();
       var Description = $('.InfoSlide textarea').val();
+      var DescriptionForSave = Description;
       //Replace \n with <br />
       Description = Description.replace(/\r?\n/g, '<br />');
       
@@ -232,6 +246,8 @@
           $('.EditDish').show();
           $('.newsortablediv').fadeIn();
           $('.newsortabledivbuffer').hide();
+          
+          UpdateMenucardInfo(Headline,DescriptionForSave);
           
       /*}
       else{
@@ -320,28 +336,30 @@
               });
           });
       });
+      
   }
   
-  function DeleteLiSortable(elem)
+  function DeleteLiSortable(elem,id)
   {     
       var elem = $(elem).parent().parent();
       var text = $(elem).find('.DishHeadline').text();
-      if (confirm('Dette vil slette menupunktet!')) 
+      if (confirm('Dette vil slette pågældende menupunkt!')) 
       {
           $(elem).remove();
-          //Set sessionStorage
-          sessionStorage.bMenucardChanged = 'true';
+          DeleteMenucarditem(id);
       }
+      
+      
   }
   
   function DeleteSortableList(id)
   {    
       var text = $(id).parent().parent().find('h3').text();
-      if (confirm('Dette vil slette '+text+' og alle menupunkter!')) {
+      if (confirm('Dette vil slette pågældende kategori og tilhørende menupunkter!')) {
           
           $(id).parent().parent().remove();
-          //Set sessionStorage
-          sessionStorage.bMenucardChanged = 'true';
+          var id = $(id).attr('value');
+          DeleteMenucardCategory(id);          
       }
   } 
   
@@ -351,7 +369,10 @@
           var number = dish.closest('.DishWrapper').children('.DishNumber');
           var numberValue = number.text();
           number.html('<input id="DishNum" type="text" maxlength="4" value="'+numberValue+'">');
-
+          
+          var itemId = dish.closest('.DishWrapper').children('.DishId').val();
+          var placeinlist = dish.closest('.DishWrapper').children('.DishPlaceInList').val();
+          
           var headline = dish.closest('.DishWrapper').children().children('.DishHeadline');
           var headlineValue = headline.text();
           headline.html('<input type="text" value="'+headlineValue+'">');
@@ -387,7 +408,7 @@
     $('.AddLiButton').hide();
     $('.newsortablediv').hide();
     $('.newsortabledivbuffer').css('display', 'inline-block');
-    dish.closest('.DishWrapper').after('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml();">✓ Opdatér</a></li>');
+    dish.closest('.DishWrapper').after('<li class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditMenuDish();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveMenuDishToHtml(\''+itemId+'\',\''+placeinlist+'\');">✓ Opdatér</a></li>');
 }
   
   function EditListHeadline(id){
@@ -396,6 +417,7 @@
           var headlineText = headline.text();
           var description = $(id).closest('.sortablediv').children('h4');
           var descriptionText = description.text();
+          var categoryId = $(id).attr('value');
           
           if(typeof(Storage)!=="undefined"){
                 sessionStorage.headlineHead = headlineText;
@@ -419,7 +441,7 @@
           $('.AddLiButton').hide();
           $('.newsortablediv').hide();
           $('.newsortabledivbuffer').css('display', 'inline-block');
-          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditHeadline();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(this);">✓ Opdatér</a></div>');
+          $(id).parent().after('<div class="SaveMenuDish"><a class="saveMenuDishButton Cancel" onclick="CancelEditHeadline();"> Annuller</a><a class="saveMenuDishButton" onclick="SaveEditedMenuListHeadlineToHtml(\''+categoryId+'\');">✓ Opdatér</a></div>');
 }
   function CancelEditHeadline(){
         $('#headEditHeadline').parent().html(sessionStorage.headlineHead);
@@ -450,7 +472,7 @@
           }
           
           headline.html('<input id="InfoEditHeadline" type=text value="'+headlineText+'">');
-          description.html('<textarea id="InfoEditDescription">'+descriptionText+'"</textarea>');
+          description.html('<textarea id="InfoEditDescription">'+descriptionText+'</textarea>');
           
           $('.InfoSlide textarea').autogrow();
                     
@@ -471,9 +493,175 @@
        $('.newsortablediv').fadeIn();
    }
 
+
+  function UpdateMenucarditem(id,placeinlist,number,headline,description,price,categoryId) {
+      
+      var sJSONMenucard = {};
+      sJSONMenucard['id'] = id;
+      sJSONMenucard['number'] = number;
+      sJSONMenucard['placeinlist'] = placeinlist;
+      sJSONMenucard['price'] = price;
+      sJSONMenucard['headline'] = headline; 
+      sJSONMenucard['description'] = description;
+      sJSONMenucard['categoryId'] = categoryId;
+      var sJSONMenucard = JSON.stringify(sJSONMenucard);
+      
+      $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Item",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('update success');
+       });
+      
+  }
+  
+  function DeleteMenucarditem(id) {
+    
+    var sJSONMenucard = {};
+    sJSONMenucard['id'] = id;  
+    var sJSONMenucard = JSON.stringify(sJSONMenucard);  
+    
+    $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Item_delete",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('delete success');
+    });  
+      
+  }
+  
+  function UpdateMenucardCategory(id,headline,description,menucardId) {
+      
+      var sJSONMenucard = {};
+      sJSONMenucard['id'] = id; 
+      sJSONMenucard['headline'] = headline; 
+      sJSONMenucard['description'] = description;
+      sJSONMenucard['menucardId'] = menucardId;     
+      var sJSONMenucard = JSON.stringify(sJSONMenucard);
+      
+      $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Category",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('update success');
+           //Set the iMenucardCategoryHashedId if it is a new category
+           $('input[value="new"]').parent().children('.DishEditWrapper').children('.EditDish').attr('value',result.iMenucardCategoryHashedId);
+           $('input[value="new"]').parent().children('.DishEditWrapper').children('.DeleteDish').attr('value',result.iMenucardCategoryHashedId);
+           $('input[value="new"]').val(result.iMenucardCategoryHashedId);
+           $('input[value="'+result.iMenucardCategoryHashedId+'"]').closest('div').children('.connectedSortable').attr("id","sortable"+result.iMenucardCategoryHashedId);
+           setTimeout(function(){ $('input[value="'+result.iMenucardCategoryHashedId+'"]').closest('div').children('.connectedSortable').children('.AddLiButton').attr("onclick","CreateNewLiInSortableList('sortable"+result.iMenucardCategoryHashedId+"')");},500);
+           
+       });
+  }
+  
+  function DeleteMenucardCategory(id) {
+    
+    var sJSONMenucard = {};
+    sJSONMenucard['id'] = id;  
+    var sJSONMenucard = JSON.stringify(sJSONMenucard);  
+    
+    $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Category_delete",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('delete success');
+    });
+  }
+  
+  function UpdateMenucardInfo(headline,description) {
+      
+      var sJSONMenucard = {};
+      sJSONMenucard['iMenucardIdHashed'] = $('#iMenucardIdHashed').val(); 
+      sJSONMenucard['headline'] = headline; 
+      sJSONMenucard['description'] = description; 
+      var sJSONMenucard = JSON.stringify(sJSONMenucard);
+      
+      $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"Info",sJSONMenucard:sJSONMenucard}
+       }).done(function(result) {
+           console.log('update success');
+       });
+  }
+  
+  
+  
+  function UpdateMenucardPlacement() {
+      
+      //TODO: Get all categories and all placements of items
+      var aAllLists = {};
+            
+      //Loop through for each sMenucardCategory
+      $(".sortableList").each(function(categoryIndex)
+      {
+          //Aray for one list, as and assoc array
+          var aList = {};
+          //iMenucardCategoryIdHashed
+          aList['iId'] = $(this).children("input[type='hidden']:first").val(); //$(this).attr('id');          
+
+          $(this).children("ul").each(function() {             
+              $(this).children(":not(.AddLiButton)").each(function(index) {                
+                  //Loop through .dishwrapper for each of the sMenucardItems
+                  $(this).children().each(function() {
+                      var sMenucardItemIdHashed = $(this).children(".DishId").val();
+                      var iMenucardItemPlaceInList = $(this).children(".DishPlaceInList").val();
+                      
+                      //Array for li element, as assoc array
+                      var aLiElement = {};
+                      //iId
+                      aLiElement['iId'] = sMenucardItemIdHashed;
+                      //iPlaceInList
+                      aLiElement['iPlaceInList'] = iMenucardItemPlaceInList;
+                      //Put li array into array for one list
+                      aList[index] = aLiElement;
+
+                      iLastMenucardItemIndex = index;
+                  });
+              });
+          });
+                  
+          //iLastMenucardItemIndex
+          aList['iLastMenucardItemIndex'] = iLastMenucardItemIndex;
+          //Put aList array into aAllLists array on aLists wich is fiels 0
+          aAllLists[categoryIndex] = aList;
+          aAllLists['iLastIndexofMenucardCategories'] = categoryIndex;
+    
+      });
+      
+      var sJSONAllLists = JSON.stringify(aAllLists);      
+      
+       $.ajax({
+        type: "POST",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateMenucard",sType:"PlaceInList",sJSONMenucard:sJSONAllLists}
+       }).done(function(result) {
+           //Set sessionStorage.bMenucardChanged = 'false';
+           sessionStorage.bMenucardChanged = 'false';
+       });
+      
+  }
+  
+  
+  
+  /*
   function UpdateMenucard()
   {
+      console.log('UpdateMenucard is disabled');
+      //Set sessionStorage.bMenucardChanged = 'false';
+      sessionStorage.bMenucardChanged = 'false';
       
+      /*
       //$('#EditMenuButton').text('');
       //$('#EditMenuButton').append('<div class="buttonEdit" onclick="HideShowSwitch(\'HideSortableEdits\');"><img src="img/edit.png">Menukort</div>');
                    
@@ -594,12 +782,14 @@
            //reload the menucard
            //GetMenucard(true);
        });
-  }
+      
+      */
+  //}
   
   
   function AutomaticUpdateMenucard()
   {
-      //console.log('AutomaticUpdateMenucard');
+      //Function used for updating the placement of items in categories
      
       //Set session storage     
       if(typeof(Storage)!=="undefined") {
@@ -611,25 +801,24 @@
       else {
         alert('Sorry! No Web Storage support..');
       }
-      
-      //console.log('bMenucardChanged '+sessionStorage.bMenucardChanged);
-      //console.log('$.active '+$.active);
+
       //Check if the menucard has been changed
       //If changed the run the ajax call
       if(sessionStorage.bMenucardChanged === 'true') {
           
         //Check if a ajax call is all ready running
         if($.active === 0){ 
-            //alert('run ajax call');
-            UpdateMenucard();
+            UpdateMenucardPlacement();
         }else {
             console.log('Det kører allerede et ajax call');
         }      
       }
-      //Run every 5 second
-      setTimeout(function(){AutomaticUpdateMenucard();},5000);
+      //Run every 3 second
+      setTimeout(function(){AutomaticUpdateMenucard();},3000);
   }
-    
+  
+ 
+  /*
   function SaveMenucard()
   {
       $('#EditMenuButton').text('');
@@ -746,7 +935,9 @@
        });
        
   }
-  
+  */
+ 
+ 
   /* Sortable list functions end */
 
   function UpdateRestuarentInfo()
@@ -846,7 +1037,6 @@
                 if(day === 5){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iFridayTimeFrom option:selected").text()+'-'+$("#iFridayTimeTo option:selected").text()+'</h4>');}
                 if(day === 6){$('.Restaurant.OpeningHours h4:nth-child(2)').html('<h4>I dag: '+$("#iSaturdayTimeFrom option:selected").text()+'-'+$("#iSaturdayTimeTo option:selected").text()+'</h4>');}
                 
-                //TODO: Check if the new time is in between the time now and update open class
 
                 //show update is done
                 alertSucces();
@@ -1031,11 +1221,13 @@
                                     var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
                                     var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
                                     var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
-                                    if(iMenucardItemPrice !== ''){
-                                        var havePrice = true;
-                                    } else {
-                                        havePrice = '';
+                                    if(isNaN(iMenucardItemPrice) || iMenucardItemPrice === ''){
+                                        var havePrice = '';
                                     }
+                                    else{
+                                        havePrice = true;
+                                    }
+                                    
                                     var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
                                     var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
 
@@ -1276,13 +1468,14 @@
             break;
             
         case 'Email':
+
             $('.EmailSubmission').remove();
             var mail = $('#sEmailToSubmit').val();
             if(validateEmail(mail))
             {   
-                AddNewUser(mail);
+               AddNewUser(mail);
             }else{
-                $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Ikke en korrekt Email</h1></div>');
+                $('#sEmailToSubmit').before('<div class="EmailSubmission"><h3>Ikke en korrekt Email</h3></div>');
                 $('.EmailSubmission').hide().slideDown(200);
 //                setTimeout(function(){$('.EmailSubmission').slideUp(200);},2500);
 //                setTimeout(function(){$('.EmailSubmission').remove();},2700);
@@ -1300,15 +1493,11 @@
              data : {sFunction:"AddNewUser",Email:mail}
         }).done(function(result){
             if(result.result === 'true'){
-                $('#NewUser').html('');
                 var mailhost = mail.split('@')[1];
-                $('#NewUser').append('<div class="EmailSubmission"><h1>Sådan!</h1><h3>Vi har sendt en email til <span>'+mail+'</span></h3><h3>med et link til oprettelse af din profil</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>');
-                //Create new account and send email to user
-                $('html, body').animate({
-                    scrollTop: $(".logo").offset().top
-                },0);
+                $('#sEmailToSubmit').before('<div class="EmailSubmission"><h1>Sådan!</h1><h3>Vi har sendt en email til <span>'+mail+'</span></h3><h3>med et link til oprettelse af din profil</h3><h3>gå til <a href="http://www.'+mailhost+'">'+mailhost+'</a></h3></div>');
+                //Create new account and send email to user  TODO
             }else{
-                $('#sEmailToSubmit').after('<div class="EmailSubmission"><h1>Emailen er allerede i brug</h1><h3>Prøv med en anden email eller log ind nedenfor</h3></div>');
+                $('#sEmailToSubmit').before('<div class="EmailSubmission"><h3>Emailen er allerede i brug</h3><p>Prøv med en anden email eller log ind</p></div>');
                    $('.EmailSubmission').hide().slideDown(200);
                    $('#sEmailToSubmit').val('');               
             } 
@@ -1541,9 +1730,8 @@ function ValidateRegSwitch(CaseName,id){
             $('.validationTagImg.passRe').remove();
             var passRe = $(id).val();
             if(passRe !== $('#NewPassword').val() ){
-                console.log('Retype');
                 $(id).before('<div class="validationTag passRe">Koderne er ikke ens</div>');
-            }
+            }else{  $('.passRe').remove();}
         break;
         
         case 'zipcode':
@@ -1581,7 +1769,11 @@ function ValidateRegSwitch(CaseName,id){
  
  
 function SubmitFormRegister(){
-    
+
+        // if validate (check if validationTag exist.. if then they miss something)       
+        //Check if there are any validationTag
+        if (!$(".validationTag")[0]){
+        
         //Encrypt password with jsEncrypt
         var pubKey = "-----BEGIN PUBLIC KEY-----\r\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4jCNEY3ZyZbhNksbKG+l\r\n+LX9fIEiLkrRy9roGTKJnr2TEuZ28qvwRKeFbAs0wpMUS5\/8hF+Fte2Qywqq9ARG\r\nRNzTcDxjz72VRwTf1tSTKAJUsHYLKbBWPsvZ8FWk9EzJqltdj1mYVKMWcm7Ham5g\r\nwydozgnI3VbX8HMY8EglycKIc43gC+liSUmloWHGCnfKrfSEQ2cuIjnupvodvFw6\r\n5dAanLu+FRuL6hnvt7huxXz5+wbPI5\/aFGWUIHUbHoDFOag8BhVaDjXCrjWt3ry3\r\noFkheO87swYfSmQg4tHM\/2keCrsdHAk2z\/eCuYcbksnmNgTqWgcSHNGM+nq9ngz\/\r\nxXeb1UT+KxBy7K86oCD0a67eDzGvu3XxxW5N3+vvKJnfL6xT0EWTYw9Lczqhl9lp\r\nUdCgrcYe45pRHCqiPGtlYIBCT5lqVZi9zncWmglzl2Fc4fhjwKiK1DH7MSRBO8ut\r\nlgawBFkCprdsmapioTRLOHFRAylSGUiyqYg0NqMuQc5fMRiVPw8Lq3WeAWMAl8pa\r\nksAQHYAoFoX1L+4YkajSVvD5+jQIt3JFUKHngaGoIWnQXPQupmJpdOGMCCu7giiy\r\n0GeCYrSVT8BCXMb4UwIr\/nAziIOMiK87WAwJKysRoZH7daK26qoqpylJ00MMwFMP\r\nvtrpazOcbKmvyjE+Gg\/ckzMCAwEAAQ==\r\n-----END PUBLIC KEY-----";
 
@@ -1637,7 +1829,10 @@ function SubmitFormRegister(){
         aData['sUserToken'] = $('#sUserToken').val();
         
         var sJSON = JSON.stringify(aData);
-
+        
+        $('.allFields_validationTag').remove();
+        $('.btn').before("<div class='creatingProfile'>Din profil bliver nu oprettet, vent venligst</div>");
+        
         $.ajax({
             type : "GET",
             dataType : "json",
@@ -1657,6 +1852,11 @@ function SubmitFormRegister(){
                     alert('Smid fejl besked');
                 }
         });
+        
+        
+        }else{
+            $('.btn').before('<div class="allFields_validationTag">Husk at udfylde alle felter!</div>');
+        }
     
 }
 
@@ -2229,6 +2429,19 @@ $("input[name='checkbox_closed']").live('click', function(){
      $("select[name='"+id+"']").attr("disabled", "disabled"); 
  }
  });
+ 
+ 
+ //Check for select to disable
+ setTimeout(function(){
+ $("input[name='checkbox_closed']").each(function() {
+
+     if ($(this).is(':checked')) {
+         var id = $(this).attr('id').substring(0, 4);
+         var number = id.charAt(3);
+         $("select[name='" + id + '_' + number + "']").attr("disabled", "disabled");
+         $("select[name='" + id + "']").attr("disabled", "disabled");
+     }
+ });},1500);
 
  // image upload
  var imagetemloate = false;
@@ -2529,7 +2742,7 @@ function editImage(id, imageUrl){
         } else {
             $('.ImageControllCanBeDisabled').removeClass("disable");
         }
-        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 50)) {
+        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 300)) {
             $('#imageEidterCropButton').addClass("disable");
         }
         $("#imageEidter").fadeIn(100);
@@ -2581,7 +2794,7 @@ function editImageUpdate(){
         } else {
             $('.ImageControllCanBeDisabled').removeClass("disable");
         }
-        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 50)) {
+        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 300)) {
             $('#imageEidterCropButton').addClass("disable");
         } else {
             $('#imageEidterCropButton').removeClass("disable");
@@ -2619,7 +2832,7 @@ function lukImageEidter(e){
     $("#imageEidter").fadeOut(100);
 }
 function editImageSetupCrop(){
-    if((eiditimageVariable.width*0.9)>700 && (eiditimageVariable.height*0.9)>50){
+    if((eiditimageVariable.width*0.9)>700 && (eiditimageVariable.height*0.9)>300){
         $('#imageEidterAmlToolBar').hide();
         $('#imageEidterCropToolBar').show();
 
@@ -2723,7 +2936,7 @@ function set_hiv_i_mig() {
 
          }
      } else if (forskelY_percent < 0) {
-         if ( (((eiditimageVariable.customCropNowPosistions.height-(Math.abs(forskelY_percent)*100))/100)*eiditimageVariable.height) > 50 ) {
+         if ( (((eiditimageVariable.customCropNowPosistions.height-(Math.abs(forskelY_percent)*100))/100)*eiditimageVariable.height) > 300 ) {
              $('#custum_crop_resizer').css({ "height":(eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100))+"%"});
              set_hiv_i_mig();
 
@@ -2834,7 +3047,7 @@ function editImageRotate(vej) {
 
  var MessageFinishImageAspect = {
      max: 1.42857142857,
-     min: 0.0714285714285714
+     min: 0.42857142857
  };
  function PutImageInPreviewBox(url, id) {
     var newImg = new Image();
@@ -2939,3 +3152,9 @@ function AddImageToImageDragStart(ev){
 
 
 
+
+ 
+ 
+ 
+ 
+ 

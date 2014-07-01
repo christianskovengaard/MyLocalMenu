@@ -9,11 +9,11 @@ if(isset($_POST['username']) && isset($_POST['password']))
    if($loggedIn['result'] == 'true'){
         header('location: admin');
    }else if($loggedIn['result'] == 'Account locked'){
-       header("location: login-page?login=Account_locked");
+       header("location: login-page?login=Account_locked#LogInd");
    }else if($loggedIn['result'] == 'false'){
-       header("location: login-page?login=false");
+       header("location: login-page?login=false#LogInd");
    }else if($loggedIn['result'] == 'nocafe'){
-       header("location: login-page?login=nocafe");
+       header("location: login-page?login=nocafe#LogInd");
    }
    
 }

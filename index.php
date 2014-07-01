@@ -47,14 +47,14 @@ $oSecurityController->sec_session_start();
             <div class="wrapper">
                 <div class="left">
                     <h1>Er du cafe ejer?</h1>
-                    <a href="http://mylocalcafe.dk/admin">Log ind</a>
+                    <a href="admin.php#LogInd">Log ind</a>
                     <p>eller</p>
-                    <a href="http://mylocalcafe.dk/admin">læs mere</a>
+                    <a href="admin">læs mere</a>
                     <br>
                     <h3>og få oprettet din café med det samme, helt gratis!</h3>
                 </div>
                 <div class="rigth">
-                    <img class="logo" src="img/logo_4.png">
+                    <img style="width:250px;" src="img/Iphone_CutA.png">
                 </div>
             </div>
         </div>

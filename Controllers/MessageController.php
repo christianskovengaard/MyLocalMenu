@@ -244,7 +244,7 @@ class MessageController
 
                         $oMessageFinishImageAspect = (object)Array(
                             "max" => 1.42857142857,
-                            "min" => 0.0714285714285714
+                            "min" => 0.42857142857
                         );
 
                         $iNeturalAspect = $oImageL->getHeight() / $oImageL->getWidth();
