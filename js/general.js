@@ -1846,7 +1846,10 @@ function TapChange(subject) {
         $("#Tab"+subject).addClass("On");
         $(".menuWrapper").hide();
         $("#TabWrapper"+subject).show();
-        if( subject === "sMessenger" ) { 
+        if( subject === "sMessenger" ) {
+            $("#beskedWrapper").show();
+            $("#galleriWrapper").hide();
+
             $("#sMessageHeadline").focus(); 
             $('#sMessageHeadline').autogrow();
             $('#sMessengerTextarea').autogrow();
@@ -1854,6 +1857,12 @@ function TapChange(subject) {
             var todayDate = $.datepicker.formatDate('dd-mm-yy', new Date());
             $("#dMessageStart").val(todayDate);
         }
+        if( subject === "sGallery" ){
+            $("#TabWrappersMessenger").show();
+            $("#beskedWrapper").hide();
+            $("#galleriWrapper").show();
+        }
+
     }
     else{  }
 }

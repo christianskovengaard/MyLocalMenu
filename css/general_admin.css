@@ -852,3 +852,16 @@ left: 9px;
     right: 5px;
 
 }
+
+
+
+/* gallery */
+@media screen and (min-width: 720px) {
+    .galleryWrapperInner { margin: 0 0 0 330px }
+}
+/* gallery end */
+
+
+
+
+
