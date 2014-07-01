@@ -2433,8 +2433,6 @@ $("input[name='checkbox_closed']").live('click', function(){
          $("select[name='" + id + "']").attr("disabled", "disabled");
      }
  });},1500);
-     
- });
 
  // image upload
  var imagetemloate = false;
