@@ -2248,6 +2248,7 @@ $("input[name='checkbox_closed']").live('click', function(){
      MessageImage.addEventListener("click", function (e) {
 
          if (e.target.id == "MessageImage" || e.target.id == "MessageImageBC" || e.target.id == "MessageImageBC2") {
+             $('#MessageImage').finish();
              $('#findImage').show();
              $('#findImages').html('');
              $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
@@ -2288,7 +2289,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          delete filer;
      });
      $('#toggleImageButton').click(function () {
-        $('#upload_inner').toggle();
+        $('#upload_inner').slideToggle();
      });
  }
  function HentMinBilleder() {
