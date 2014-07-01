@@ -112,6 +112,7 @@ input {
   background: #FCA041 !important;
   text-decoration: none !important;
   color: #333 !important;
+  cursor: pointer;
 }
 .body {
   position: relative;

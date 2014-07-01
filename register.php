@@ -91,8 +91,14 @@ if(isset($_GET['sUserToken']))
                     makeOpeningHours();
                     InitiateAutocompleteForRegister();
                 });
-               window.onbeforeunload = function() {
-                    return "Du er ved at lukke siden. Hvis du forlader siden går alle data tabt!";
+                window.onbeforeunload = function() {
+                    //Check for validationTag
+                    if($(".creatingProfile")[0]){
+                        //Ingen fejl
+                    }else{
+                        return "Du er ved at lukke siden. Hvis du forlader siden går alle data tabt!";
+                    }
+                   
                 };
         </script>
 
