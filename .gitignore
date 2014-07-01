@@ -38,3 +38,4 @@ app_data/image_upload_id.txt
 
 Classes/DatabaseClass.php
 /imgmsg/
+/imgmsg_sendt/
