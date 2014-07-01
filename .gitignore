@@ -37,3 +37,4 @@ Controllers/DatabaseController.php
 app_data/image_upload_id.txt
 
 Classes/DatabaseClass.php
+/imgmsg/
