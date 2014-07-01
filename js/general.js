@@ -2501,7 +2501,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          delete filer;
      });
      $('#toggleImageButton').click(function () {
-        $('#upload_inner').fadeToggle();
+        $('#upload_inner').slideToggle();
      });
  }
  function HentMinBilleder() {
