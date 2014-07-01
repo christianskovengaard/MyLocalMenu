@@ -1,0 +1,13 @@
+{{#images}}
+<div data-imageid="{{id}}" data-imagesrc="{{n}}" class="imageInList" draggable="true" ondragstart="AddImageToImageDragStart(event)">
+    <img src="imgmsg/{{n}}" draggable="false" >
+    <div class="imageInList_left">
+        <p class="imageInList_dato">{{ d }}</p>
+        <div class="retogsletimage">
+            <p class="ret" onclick="editImage({{id}},'{{n}}')">ret</p>
+            <p class="slet" onclick="deleteImage({{id}}, '{{n}}')">slet</p>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{{/images}}

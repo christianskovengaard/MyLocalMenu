@@ -2102,10 +2102,18 @@ function GetMessages() {
               var date = dd+"-"+mm+"-"+yy+" "+h+":"+m;
 
               if( key === 0){
-                  $('#currentMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+date+'</h3><h2>'+value.sMessageBodyText+'</h2></div>');
+                  if (value.sMessageImage == "") {
+                      $('#currentMessages').append('<div><h1>' + value.sMessageHeadline + '</h1><h3>' + date + '</h3><h2>' + value.sMessageBodyText + '</h2></div>');
+                  } else {
+                      $('#currentMessages').append('<img src="imgmsg_sendt/' + value.sMessageImage + '"><div><h1>' + value.sMessageHeadline + '</h1><h3>' + date + '</h3><h2>' + value.sMessageBodyText + '</h2></div>');
+                  }
               }
               else {
-              $('#oldMessages').append('<div><h1>'+value.sMessageHeadline+'</h1><h3>'+date+'</h3><h2>'+value.sMessageBodyText+'</h2></div>');
+                  if (value.sMessageImage == "") {
+                      $('#oldMessages').append('<div><h1>' + value.sMessageHeadline + '</h1><h3>' + date + '</h3><h2>' + value.sMessageBodyText + '</h2></div>');
+                  } else {
+                      $('#oldMessages').append('<img src="imgmsg_sendt/' + value.sMessageImage + '"><div><h1>' + value.sMessageHeadline + '</h1><h3>' + date + '</h3><h2>' + value.sMessageBodyText + '</h2></div>');
+                  }
               }
           });
            
@@ -2122,6 +2130,7 @@ function SaveMessage() {
        aData['dMessageEnd'] = $('#dMessageEnd').val();
        aData['sMessageHeadnline'] = $('#sMessageHeadline').val(); 
        aData['sMessageBodyText'] = $('#sMessengerTextarea').val();
+        aData['iMessageImageId'] = $("#MessageImage").attr('data-urlid');
        
        //Workaround with encoding issue in IE8 and JSON.stringify
        for (var i in aData) {
@@ -2140,6 +2149,7 @@ function SaveMessage() {
            //alert('Besked gemt: '+result.result);
            $('#sMessageHeadline').val(''); 
            $('#sMessengerTextarea').val('');
+           FjernPrewievImage();
            GetMessages();
        });
     }
@@ -2408,12 +2418,729 @@ $("input[name='checkbox_closed']").live('click', function(){
  
  //Check for select to disable
  setTimeout(function(){
- $("input[name='checkbox_closed']").each(function(){
-   
-     if($(this).is(':checked')){
-        var id = $(this).attr('id').substring(0,4);
-        var number  = id.charAt(3);
-        $("select[name='"+id+'_'+number+"']").attr("disabled", "disabled"); 
-        $("select[name='"+id+"']").attr("disabled", "disabled"); 
-    }
+ $("input[name='checkbox_closed']").each(function() {
+
+     if ($(this).is(':checked')) {
+         var id = $(this).attr('id').substring(0, 4);
+         var number = id.charAt(3);
+         $("select[name='" + id + '_' + number + "']").attr("disabled", "disabled");
+         $("select[name='" + id + "']").attr("disabled", "disabled");
+     }
  });},1500);
+     
+ });
+
+ // image upload
+ var imagetemloate = false;
+ function InitFileManeger() {
+
+     var uploadbox = document.getElementById("drop_image_here");
+
+     uploadbox.addEventListener("drop", drop, false);
+     uploadbox.addEventListener("dragenter", dragEnter, false);
+     uploadbox.addEventListener("dragover", dragOver, false);
+     uploadbox.addEventListener("dragleave", dragLeave, false);
+
+
+     document.getElementById("custum_crop_resizer").addEventListener("dragstart", f_dragstart);
+     document.getElementById("custum_crop_resizer").addEventListener("drag", f_dragmove);
+
+     document.getElementById("custum_crop_resizer_hivimig").addEventListener("dragstart", r_dragstart);
+     document.getElementById("custum_crop_resizer_hivimig").addEventListener("drag", r_dragmove)
+
+
+     var MessageImage = document.getElementById('MessageImage');
+     MessageImage.addEventListener("drop", AddImageToImageDrop, false);
+     MessageImage.addEventListener("dragenter", AddImageToImageDragEnter, false);
+     MessageImage.addEventListener("dragover", AddImageToImageDragOver, false);
+     MessageImage.addEventListener("dragleave", AddImageToImageDragLeave, false);
+     MessageImage.addEventListener("click", function (e) {
+
+         if (e.target.id == "MessageImage" || e.target.id == "MessageImageBC" || e.target.id == "MessageImageBC2") {
+             $('#findImage').show();
+             $('#findImages').html('');
+             $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
+                 $('#findImages').append('<div style="background-image: url(imgmsg/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
+             })
+             $("#findImages div").click(function () {
+                 PutImageInPreviewBox($(this).attr('data-imageSrc'), $(this).attr('data-imageId'));
+                 $('#findImage').hide();
+             });
+
+         }
+     });
+     $('#lukFindImage').click(function () {
+         $('#findImage').hide();
+     });
+     $("#MessageImageRemove").click(function () {
+         FjernPrewievImage();
+     });
+
+     jQuery.get('mustache_templates/imageupload_uploaded_images.txt', function (data) {
+         imagetemloate = data;
+         HentMinBilleder();
+     });
+     $('#uploadBtn').change(function (e) {
+         var filer = [];
+         for (var i = 0; i < e.target.files.length; i++) {
+
+             filer.push(e.target.files[i].name);
+
+         }
+         $('#uploadFile').html(filer.join(', '));
+
+         if(filer.length == 0) {
+             $('#uploadFile').html('Fil(er) ej valgt, klik for at vælg fil');
+
+         }
+
+         delete filer;
+     });
+     $('#toggleImageButton').click(function () {
+        $('#upload_inner').toggle();
+     });
+ }
+ function HentMinBilleder() {
+     $.ajax({
+         type: "GET",
+         url: "API/api.php",
+         dataType: "json",
+         data: {sFunction:"GetUsersImageLibrary"}
+     }).done(function(result)
+     {
+         $('#mit_billede_biblotek').html(Mustache.to_html(imagetemloate, result));
+     });
+ }
+
+ function FjernPrewievImage() {
+     $("#MessageImageRemove").fadeOut(150);
+     $("#MessageImage").css({"backgroundImage": "", "height": "auto"}).attr('data-urlid', '');
+
+ }
+
+
+ function dragEnter(e) {
+     $("#drop_image_here").addClass("uploadhover");
+     e.stopPropagation();
+     e.preventDefault();
+ }
+
+ function dragOver(e) {
+     e.stopPropagation();
+     e.preventDefault();
+ }
+ function dragLeave(e) {
+     $("#drop_image_here").removeClass("uploadhover");
+     e.stopPropagation();
+     e.preventDefault();
+ }
+ function drop(e) {
+     e.stopPropagation();
+     e.preventDefault();
+     $("#drop_image_here").removeClass("uploadhover");
+     /** @namespace e.dataTransfer.files */
+     var filer = e.target.files || e.dataTransfer.files;
+
+     if (filer.length > 0) {
+
+         beforeUpload(filer);
+     }
+ }
+ function uploadFraKnap() {
+     var filer = document.getElementById('uploadBtn').files;
+
+     if (filer.length != 0) {
+         beforeUpload(filer);
+     }
+
+     document.getElementById('uploadBtn').value = null
+
+ }
+ var regespForTestImage = new RegExp("^image/");
+
+ function beforeUpload(files) {
+     $('#uploadFile').html('Fil(er) ej valgt, klik for at vælg fil');
+
+     var nyefiler = [];
+     var filer = [];
+     for (var i = 0; i < files.length; i++) {
+         if(regespForTestImage.test(files[i].type)){
+            nyefiler.push(files[i]);
+            filer.push(files[i].name);
+         }else {
+             filer.push(files[i].name+" er ikke et billede")
+         }
+     }
+     files = nyefiler;
+
+
+     if (files.length > 0) {
+
+         $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
+         upload(files, function (file) { });
+     } else {
+         $('#upload_in_progress').html('<p>' + filer.join(', ') + '</p>');
+
+     }
+ }
+
+
+
+ function upload(files, done) {
+     var formobject = new FormData();
+     formobject.append('file[]', files[0]);
+     formobject.append('sFunction', 'UploadImage');
+
+     var oldfilelist = files;
+     files = [];
+     for (var i = 1; i < oldfilelist.length; i++) {
+         files.push(oldfilelist[i])
+     }
+
+
+     $.ajax({
+         type: "POST",
+         url: "API/api.php",
+         dataType: "json",
+         data: formobject,
+
+         async: false,
+         cache: false,
+         contentType: false,
+         processData: false
+
+     }).done(function (result) {
+         if (result.result) {
+             // dette bliver kort hvis billede bliver uploadet med succes
+             $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result))
+         } else {
+             // dette bliver koret hvis billede ikke bliver uploaded
+             if (result.toSmall) {
+                 alert("Dette billede er ikke stort nok");
+             } else {
+                 alert("fejl")
+             }
+
+         }
+
+
+
+         var filer = [];
+         for (var i = 0; i < files.length; i++) {
+
+             filer.push(files[i].name);
+
+         }
+
+         $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
+         if (files.length > 0) {
+             // todo skal set timeout fjernes?
+             setTimeout(function () {
+             // koe upload igen hvis der er flere billeder der skal uploades
+                upload(files, function () {
+                });
+             }, 250);
+         }else {
+             // ryd upload_in_progress diven
+             $('#upload_in_progress').html('');
+
+             done(result.images.n, result.images.id)
+         }
+     });
+
+ }
+
+
+ function deleteImage(id, url) {
+    if(confirm("Er du sikker på at du vil slette dette billede?")) {
+        var sel = "[data-imageid="+id+"]";
+        var sel2 = "[data-imageid="+id+"] .retogsletimage";
+        $(sel).css("opacity", 0.5);
+        $(sel2).hide();
+
+        if ($("#MessageImage").data('urlid') == id) {
+            FjernPrewievImage();
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "API/api.php",
+            dataType: "json",
+            data: {sFunction:"DeleteImage",imageid:id}
+        }).done(function(result) {
+
+            if(result.result) {
+                $(sel).animate({opacity: 0}, 500).slideUp(500);
+            }else {
+                $(sel).css("opacity", 1);
+                $(sel2).show();
+            }
+
+
+            delete sel;
+            delete sel2;
+
+        });
+    }
+
+}
+
+var eiditimageVariable = {
+    "open":false,
+    "width":0,
+    "height":0,
+    "id":null,
+    "functions":[],
+    "customCropNowPosistions":{
+        "top":0,
+        "left":0,
+        "height":0,
+        "width":0
+    },
+    "drag_pos":{
+        "mouseX": 0,
+        "mouseY": 0
+
+
+    }
+};
+function editImage(id, imageUrl){
+    var newImg = new Image();
+    newImg.onload = function() {
+        eiditimageVariable.open = true;
+        eiditimageVariable.height = newImg.naturalHeight;
+        eiditimageVariable.width = newImg.naturalWidth;
+        eiditimageVariable.id = id;
+
+        document.getElementById('imageAreaImageOuter').innerHTML = "";
+        newImg.id = "imageSrc";
+        document.getElementById('imageAreaImageOuter').appendChild( newImg );
+
+        $('#imageEidterSave').addClass("disable");
+        $('#imageEidterAmlToolBar').show();
+        $('#imageEidterCropToolBar').hide();
+        $('#custum_crop_resizer').hide();
+        $('#custum_crop_resizer_hivimig').hide();
+        $('#toSmallToFlipOpOnSide').hide();
+        $('#imageEidterCropButton').removeClass("disable");
+        if (eiditimageVariable.height < 701) {
+            $('.ImageControllCanBeDisabled').addClass("disable");
+        } else {
+            $('.ImageControllCanBeDisabled').removeClass("disable");
+        }
+        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 50)) {
+            $('#imageEidterCropButton').addClass("disable");
+        }
+        $("#imageEidter").fadeIn(100);
+        resizeEidtImage();
+        setTimeout(resizeEidtImage, 50);
+        setTimeout(resizeEidtImage, 300);
+        // todo eidt this quickfix
+    };
+    newImg.src = "imgmsg/"+imageUrl;
+}
+ function editImageSaveImage(){
+     $("#imageEidter").fadeOut(100);
+
+
+     $.ajax({
+         type: "GET",
+         url: "API/api.php",
+         dataType: "json",
+         data: {sFunction:"SaveEidtImage", imageId: eiditimageVariable.id, functions: eiditimageVariable.functions }
+     }).done(function(result)
+     {
+         $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result));
+
+         eiditimageVariable.open = false;
+         eiditimageVariable.height = 0;
+         eiditimageVariable.width = 0;
+         eiditimageVariable.id = null;
+         eiditimageVariable.functions = [];
+
+     });
+
+ }
+function editImageUpdate(){
+    var newImg = new Image();
+    $('#imageEidterAmlToolBar').hide();
+    newImg.onload = function() {
+        eiditimageVariable.height = newImg.naturalHeight;
+        eiditimageVariable.width = newImg.naturalWidth;
+
+
+        document.getElementById('imageAreaImageOuter').innerHTML = "";
+        newImg.id = "imageSrc";
+        document.getElementById('imageAreaImageOuter').appendChild( newImg );
+
+        $('#imageEidterSave').removeClass("disable");
+
+        if (eiditimageVariable.height < 701) {
+            $('.ImageControllCanBeDisabled').addClass("disable");
+        } else {
+            $('.ImageControllCanBeDisabled').removeClass("disable");
+        }
+        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 50)) {
+            $('#imageEidterCropButton').addClass("disable");
+        } else {
+            $('#imageEidterCropButton').removeClass("disable");
+        }
+
+        $('#imageEidterAmlToolBar').show();
+
+        resizeEidtImage();
+        setTimeout(function(){
+            resizeEidtImage()
+        }, 25)
+        // todo eidt this quickfix
+    };
+
+    newImg.src = "API/api.php?sFunction=PreviewImage&imageId="+eiditimageVariable.id+"&"+$.param({functions:eiditimageVariable.functions});
+}
+function lukMaaskeImageEidter(e){
+    if(e.target.id == "imageEidter"){
+        if(eiditimageVariable.functions.length == 0){
+            lukImageEidter();
+        }else {
+            if(confirm("Du har ikke gemt dine rettelser.\n\nVil du forsætte med at lukke?")){
+                lukImageEidter();
+            }
+        }
+
+    }
+}
+function lukImageEidter(e){
+    eiditimageVariable.open = false;
+    eiditimageVariable.height = 0;
+    eiditimageVariable.width = 0;
+    eiditimageVariable.id = null;
+    eiditimageVariable.functions = [];
+    $("#imageEidter").fadeOut(100);
+}
+function editImageSetupCrop(){
+    if((eiditimageVariable.width*0.9)>700 && (eiditimageVariable.height*0.9)>50){
+        $('#imageEidterAmlToolBar').hide();
+        $('#imageEidterCropToolBar').show();
+
+        $('#custum_crop_resizer').css({"top":"5%", "left":"5%", "height":"90%", "width":"90%", "display":"block"});
+        eiditimageVariable.customCropNowPosistions.height = 90;
+        eiditimageVariable.customCropNowPosistions.width = 90;
+        eiditimageVariable.customCropNowPosistions.top = 5;
+        eiditimageVariable.customCropNowPosistions.left = 5;
+
+        $('#custum_crop_resizer_hivimig').css(
+            {
+                "top": "95%",
+                "left": "95%",
+                "display": "block"
+            }
+        );
+        if (eiditimageVariable.height * 0.9 < 701) {
+            $('#toSmallToFlipOpOnSide').css("display", "inline");
+        } else {
+            $('#toSmallToFlipOpOnSide').hide();
+        }
+    }else{
+        alert("Dette billede er ikke stort nok til at blive beskæret")
+    }
+}
+ function editImageSaveCrop() {
+
+     $('#imageEidterAmlToolBar').show();
+     $('#imageEidterCropToolBar').hide();
+     $('#custum_crop_resizer').hide();
+     $('#custum_crop_resizer_hivimig').hide();
+
+     eiditimageVariable.functions.push(
+         'crop-' + parseFloat(document.getElementById("custum_crop_resizer").style.left) + '-' +
+         parseFloat(document.getElementById("custum_crop_resizer").style.top) + '-' +
+         parseFloat(document.getElementById("custum_crop_resizer").style.width) + '-' +
+         parseFloat(document.getElementById("custum_crop_resizer").style.height)
+     );
+     editImageUpdate()
+ }
+
+ function editImageCancelCrop() {
+     $('#imageEidterAmlToolBar').show();
+     $('#imageEidterCropToolBar').hide();
+     $('#custum_crop_resizer').hide();
+     $('#custum_crop_resizer_hivimig').hide();
+
+ }
+function set_hiv_i_mig() {
+    $('#custum_crop_resizer_hivimig').css(
+        {
+            "top": (parseFloat(document.getElementById('custum_crop_resizer').style.height) + parseFloat(document.getElementById('custum_crop_resizer').style.top)) + "%",
+            "left": (parseFloat(document.getElementById('custum_crop_resizer').style.width) + parseFloat(document.getElementById('custum_crop_resizer').style.left)) + "%",
+            "display": "block"
+        }
+    );
+}
+
+
+ function r_dragstart(e) {
+     eiditimageVariable.drag_pos.mouseX = e.clientX;
+     eiditimageVariable.drag_pos.mouseY = e.clientY;
+
+
+     eiditimageVariable.customCropNowPosistions.width = parseFloat(document.getElementById("custum_crop_resizer").style.width);
+     eiditimageVariable.customCropNowPosistions.height = parseFloat(document.getElementById("custum_crop_resizer").style.height);
+     eiditimageVariable.customCropNowPosistions.top = parseFloat(document.getElementById("custum_crop_resizer").style.top);
+     eiditimageVariable.customCropNowPosistions.left = parseFloat(document.getElementById("custum_crop_resizer").style.left);
+
+
+ }
+ function r_dragmove(e) {
+     e.preventDefault();
+     var new_drag_pos_x = e.clientX;
+     var new_drag_pos_y = e.clientY;
+     var forskelX_percent = (new_drag_pos_x - eiditimageVariable.drag_pos.mouseX)/$('#imageSrc').width();
+     var forskelY_percent = (new_drag_pos_y - eiditimageVariable.drag_pos.mouseY)/$('#imageSrc').height();
+     if (forskelX_percent > 0) {
+         if ( (eiditimageVariable.customCropNowPosistions.width+(forskelX_percent*100)+eiditimageVariable.customCropNowPosistions.left)<100 ) {
+             $('#custum_crop_resizer').css({ "width":(eiditimageVariable.customCropNowPosistions.width+(forskelX_percent*100))+"%"});
+             set_hiv_i_mig();
+         }
+     } else if (forskelX_percent < 0) {
+         if ( (((eiditimageVariable.customCropNowPosistions.width-(Math.abs(forskelX_percent)*100))/100)*eiditimageVariable.width) > 700 ) {
+             $('#custum_crop_resizer').css({ "width":(eiditimageVariable.customCropNowPosistions.width+(forskelX_percent*100))+"%"});
+             set_hiv_i_mig();
+         }
+     }
+
+     if (forskelY_percent > 0) {
+         if ( (eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100)+eiditimageVariable.customCropNowPosistions.top)<100 ) {
+             $('#custum_crop_resizer').css({ "height":(eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100))+"%"});
+
+             set_hiv_i_mig();
+
+             if ((((eiditimageVariable.customCropNowPosistions.height + (forskelY_percent * 100)) / 100) * eiditimageVariable.height) < 701) {
+                 $('#toSmallToFlipOpOnSide').css("display", "inline");
+             } else {
+                 $('#toSmallToFlipOpOnSide').hide();
+             }
+
+         }
+     } else if (forskelY_percent < 0) {
+         if ( (((eiditimageVariable.customCropNowPosistions.height-(Math.abs(forskelY_percent)*100))/100)*eiditimageVariable.height) > 50 ) {
+             $('#custum_crop_resizer').css({ "height":(eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100))+"%"});
+             set_hiv_i_mig();
+
+             if ((((eiditimageVariable.customCropNowPosistions.height + (forskelY_percent * 100)) / 100) * eiditimageVariable.height) < 701) {
+                 $('#toSmallToFlipOpOnSide').css("display", "inline");
+             } else {
+                 $('#toSmallToFlipOpOnSide').hide();
+             }
+
+
+         }
+     }
+
+     delete new_drag_pos_x;
+     delete new_drag_pos_y;
+     delete forskelX_percent;
+     delete forskelY_percent;
+
+
+
+
+ }
+ function f_dragstart(e) {
+     eiditimageVariable.drag_pos.mouseX = e.clientX;
+     eiditimageVariable.drag_pos.mouseY = e.clientY;
+     eiditimageVariable.customCropNowPosistions.width = parseFloat(document.getElementById("custum_crop_resizer").style.width);
+     eiditimageVariable.customCropNowPosistions.height = parseFloat(document.getElementById("custum_crop_resizer").style.height);
+     eiditimageVariable.customCropNowPosistions.top = parseFloat(document.getElementById("custum_crop_resizer").style.top);
+     eiditimageVariable.customCropNowPosistions.left = parseFloat(document.getElementById("custum_crop_resizer").style.left);
+
+ }
+ function f_dragmove(e) {
+     e.preventDefault();
+     var new_drag_pos_x = e.clientX;
+     var new_drag_pos_y = e.clientY;
+     var forskelX_percent = (new_drag_pos_x - eiditimageVariable.drag_pos.mouseX)/$('#imageSrc').width();
+     var forskelY_percent = (new_drag_pos_y - eiditimageVariable.drag_pos.mouseY)/$('#imageSrc').height();
+    if (forskelX_percent > 0) {
+         if (eiditimageVariable.customCropNowPosistions.left+eiditimageVariable.customCropNowPosistions.width+(forskelX_percent*100)<100) {
+             document.getElementById("custum_crop_resizer").style.left = eiditimageVariable.customCropNowPosistions.left+(Math.abs(forskelX_percent)*100) + "%";
+             set_hiv_i_mig();
+         }
+     } else if (forskelX_percent < 0) {
+         if (Math.abs(forskelX_percent)*100<eiditimageVariable.customCropNowPosistions.left) {
+             document.getElementById("custum_crop_resizer").style.left = eiditimageVariable.customCropNowPosistions.left-(Math.abs(forskelX_percent)*100)+"%";
+             set_hiv_i_mig();
+         }
+     }
+     if (forskelY_percent > 0) {
+         if (eiditimageVariable.customCropNowPosistions.top+eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100)<100) {
+             document.getElementById("custum_crop_resizer").style.top = eiditimageVariable.customCropNowPosistions.top+(Math.abs(forskelY_percent)*100) + "%";
+             set_hiv_i_mig();
+         }
+     } else if (forskelY_percent < 0) {
+         // op
+         if (Math.abs(forskelY_percent)*100<eiditimageVariable.customCropNowPosistions.top) {
+             document.getElementById("custum_crop_resizer").style.top = eiditimageVariable.customCropNowPosistions.top-(Math.abs(forskelY_percent)*100)+"%";
+             set_hiv_i_mig();
+         }
+     }
+ }
+
+
+
+
+
+ $( window ).resize(function() {
+     resizeEidtImage();
+ });
+
+function resizeEidtImage(){
+    if(eiditimageVariable.open){
+
+        var newHeight = 0;
+        if(eiditimageVariable.width>window.innerWidth-60) {
+            $('#imageEidterInner').width(window.innerWidth-60);
+            newHeight = ((window.innerWidth - 60) / eiditimageVariable.width) * eiditimageVariable.height;
+        }else{
+            $('#imageEidterInner').width(eiditimageVariable.width);
+            newHeight = eiditimageVariable.height;
+        }
+
+        if(newHeight>window.innerHeight-60-$('#toolLine').height()  ) {
+            // alt for hoj
+            $('#imageEidterInner').width(eiditimageVariable.width * ((window.innerHeight-60-$('#toolLine').height()) / eiditimageVariable.height));
+
+        }
+        $("#imageEidterInner").css("marginTop",(window.innerHeight-$('#imageEidterInner').height())/2);
+
+
+        $("#imageArea").height($("#imageSrc").height());
+        delete newHeight;
+    }
+}
+function editImageSortHvid(){
+    eiditimageVariable.functions.push('sortHvid');
+    editImageUpdate();
+}
+function editImageRotate(vej) {
+    if(vej == "Halv" || (eiditimageVariable.height>699 && eiditimageVariable.width>299)) {
+        eiditimageVariable.functions.push('rotate'+vej);
+        editImageUpdate()
+    }else {
+        alert("Dette billede er ikke stort nok det at blive flippet op på siden, det kan kun flippes en halv omagang");
+    }
+
+}
+
+ var MessageFinishImageAspect = {
+     max: 1.42857142857,
+     min: 0.0714285714285714
+ };
+ function PutImageInPreviewBox(url, id) {
+    var newImg = new Image();
+    newImg.onload = function() {
+        var neturalAspect = newImg.naturalHeight / newImg.naturalWidth;
+        var contWidth = $("#MessageImage").width();
+        var newHeight = 0;
+
+        if (neturalAspect < MessageFinishImageAspect.min) {
+            newHeight = contWidth * MessageFinishImageAspect.min;
+        } else if (neturalAspect > MessageFinishImageAspect.max) {
+            newHeight = contWidth * MessageFinishImageAspect.max;
+        } else {
+            newHeight = contWidth * neturalAspect;
+        }
+
+
+        $("#MessageImage").attr('data-urlid', id).css({"backgroundImage": "url('" + newImg.src + "')"}).animate({"height": newHeight + "px"}, 1000)
+        $("#MessageImageRemove").fadeIn(150)
+
+
+
+    };
+    newImg.src = "imgmsg/"+url;
+}
+
+
+function AddImageToImageDrop(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+
+    $("#MessageImage").removeClass("uploadhover");
+
+    var filer = e.target.files || e.dataTransfer.files;
+
+
+
+    if(filer.length == 0){
+        if( e.dataTransfer.getData('imageId') && e.dataTransfer.getData('imageSrc') ){
+            if (!$('#findImage').is(":visible")) {
+                PutImageInPreviewBox(e.dataTransfer.getData('imageSrc'), e.dataTransfer.getData('imageId'));
+            }
+        }else {
+            alert("Det er ikke et billede du har slippet")
+        }
+
+    }else if(filer.length == 1){
+        var files = [filer[0]];
+        upload(files, function (file, id) {
+            PutImageInPreviewBox(file, id);
+        });
+    }else{
+        alert("Du kan kun uploader et billede af gangenn");
+    }
+
+
+
+}
+function AddImageToImageDragEnter(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+
+
+}
+function AddImageToImageDragOver(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+    $("#MessageImage").addClass("uploadhover");
+}
+function AddImageToImageDragLeave(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+    $("#MessageImage").removeClass("uploadhover");
+}
+function AddImageToImageDragStart(ev){
+    if(ev.target.className == "imageInList") {
+        ev.dataTransfer.setData( 'imageId', ev.target.attributes['data-imageid'].value );
+        ev.dataTransfer.setData( 'imageSrc', ev.target.attributes['data-imagesrc'].value );
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 

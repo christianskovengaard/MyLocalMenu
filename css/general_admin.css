@@ -9,7 +9,7 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,900,100,200,300,500,600,700,800);
 
 
-root { 
+root {
     display: block;
 }
 
@@ -18,16 +18,16 @@ body,html { width: 100%;  margin: 0px; background: #dddddd;  }
 
 /* ::::::::::::::::: TEKST, LINKS OG INPUT :::::::::::::::::::::  */
 
-h5, h6  { 
+h5, h6  {
     /*font-family:"HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
     font-family: 'Exo 2', sans-serif;
-    font-weight : normal; color:#3c3c3c; 
+    font-weight : normal; color:#3c3c3c;
 }
 
-h1, h2, h3, h4, a, p, div  { 
+h1, h2, h3, h4, a, p, div  {
     /*font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
     font-family: 'Exo 2', sans-serif;
-    font-weight : normal; color:#3c3c3c; 
+    font-weight : normal; color:#3c3c3c;
 }
 
 h1 { font-size: 40px; line-height: 30px; }
@@ -41,27 +41,27 @@ div { font-size: 15px; }
 .button { display: table; background: #333; color: #fff; padding: 5px 10px; cursor: pointer; }
 .button:hover {  }
 
-input { 
-    /*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/ 
+input {
+    /*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
     font-family: 'Exo 2', sans-serif;
-    color:#333; 
-    display: inline-block; font-size: 18px; height: 35px; border: 0px; margin: 0 10px 0 0; padding: 2px 10px; vertical-align: middle; outline: none; 
-    -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; 
+    color:#333;
+    display: inline-block; font-size: 18px; height: 35px; border: 0px; margin: 0 10px 0 0; padding: 2px 10px; vertical-align: middle; outline: none;
+    -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px;
 }
 .inputFrame { display: table; background: rgba(255,255,255,0.5); margin: 0 auto; padding: 10px; }
 
 .buttonEdit.top { top: -1px; bottom: auto; font-size: 15px; line-height: 15px; padding: 0px 9px; height: 30px; margin: 0; color: #fff; background: #333; }
-.buttonEdit {       
+.buttonEdit {
       position: absolute;
       bottom: 10px; right: 10px;
-      background: #21201f; 
-      color: #ddd; 
-      padding: 0px 9px 0px 1px; 
-      text-decoration: none; 
+      background: #21201f;
+      color: #ddd;
+      padding: 0px 9px 0px 1px;
+      text-decoration: none;
       cursor: pointer;
       vertical-align: middle;
-      -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; -khtml-border-radius: 4px; 
-      -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
+      -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; -khtml-border-radius: 4px;
+      -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;
 }
 .buttonEdit img { width: 30px; vertical-align: middle; }
 
@@ -79,58 +79,58 @@ input {
 .RestaurantInfo { position: relative; display: table; width: 100%; margin: 0px; padding: 10px 0 0 0; background: rgba(143,130,121,0.2); overflow: hidden;}  background: #dedcc9;
 .menuWrapper { position: relative; display: table; width: 100%; margin-top: 20px;}*/
 .header { position: fixed; background: #fff; width: 100%; height: 80px; margin: 0px; top: 0px; left: 0px; z-index: 1; }
-.RestaurantInfo { 
-    position: fixed; 
-    width: 100%; 
-    margin: 0px; padding: 10px 0 0 0; 
-    background: #fff; 
-    border-bottom: 1px solid #cec9c4; 
-    overflow: hidden; 
-    top: 0px; left: 0px; 
+.RestaurantInfo {
+    position: fixed;
+    width: 100%;
+    margin: 0px; padding: 10px 0 0 0;
+    background: #fff;
+    border-bottom: 1px solid #cec9c4;
+    overflow: hidden;
+    top: 0px; left: 0px;
     z-index: 1;
     height: 80px;
 }
 .menuWrapper { position: relative; display: table; width: 100%; margin-top: 135px; z-index: 0; padding-bottom: 40px;}
 
-.TabMenu { 
+.TabMenu {
     position: fixed;
     width: 100%; height: 30px;
-    top: 91px; 
-    background: #eee ; 
+    top: 91px;
+    background: #eee ;
     /*box-shadow: inset 0px 6px 6px -2px #ddd;*/
     z-index: 1;
     border-bottom: 1px solid #cec9c4;
 }
 .TabMenu div { display: inline-table; }
-.Tab { 
-    margin: 3px -1px 0 0; 
-    width: 110px; 
-    height: 23px; 
-    text-align: center; 
+.Tab {
+    margin: 3px -1px 0 0;
+    width: 110px;
+    height: 23px;
+    text-align: center;
     font-weight: 100;
-    padding-top: 3px; 
+    padding-top: 3px;
     color: #ccc;
     background: #686868;
     box-shadow: inset 0px -6px 6px -2px #555;
-    /*border-left: 1px solid #dcdcdc;*/ 
+    /*border-left: 1px solid #dcdcdc;*/
     cursor: pointer;
     font-size: 16px;
-    o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s; 
+    o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;
 
 }
-.Tab:hover { 
+.Tab:hover {
     margin-top: 2px;
-    background: #ddd; 
+    background: #ddd;
     color: #333;
     font-weight: 400;
-    /* border-left: 1px solid #ccc;*/ 
+    /* border-left: 1px solid #ccc;*/
     box-shadow: none;
     height: 25px;
     background: #ddd; color: #333; box-shadow: none;
     border: 1px solid #cec9c4;
     border-bottom: none;
 }
-.Tab.On { 
+.Tab.On {
     margin-top: 2px;
     font-weight: 400;
     height: 25px;
@@ -184,16 +184,21 @@ input {
 .appGetInfo img:hover { opacity:0.7; }
 
 .menuWrapperInner { display: table; margin: 0 auto; min-width: 200px; }
-.menuWrapperInner textarea { 
+
+@media screen and (max-width: 1112px ) and (min-width: 720px) {
+.menuWrapperInner { margin: 0 0 0 330px }
+}
+
+.menuWrapperInner textarea {
             /*font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
             font-family: 'Exo 2', sans-serif;
-            font-size: 18px; line-height: 14px; 
+            font-size: 18px; line-height: 14px;
             display: block;
-            background: #fff; 
-            border: 0px; 
-            padding: 12px; 
+            background: #fff;
+            border: 0px;
+            padding: 12px;
             outline: none;  overflow: hidden;
-            margin: 20px 0 0 0;  
+            margin: 20px 0 0 0;
             width: 400px; height: 25px;
             resize: none;
             -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;
@@ -201,7 +206,30 @@ input {
 .menuWrapperInner p { display: inline-table; vertical-align: middle; }
 .menuWrapperInner select { display: inline-table; width: 80px; margin: 2px 0 0 10px; }
 .menuWrapperInner .button { display: inline-table; float: right; margin: 8px 0px 0 0; }
+.MessageImage {
+    padding: 10px;
+    background-color: #9f9f9f;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    position: relative;
 
+    box-sizing: border-box;
+}
+.MessageImage p {
+    display: block;
+    text-align: center;
+    font-size: 1.2em;
+}
+.MessageImage #MessageImageRemove{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2px;
+    display: none;
+}
 .MessageText {
     max-width: 420px;
     margin-bottom: 5px;
@@ -217,6 +245,81 @@ input {
     margin: 1px auto;
     /*background: #f2b854;*/
 }
+
+#findImage {
+    background: #373737;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -70px;
+    z-index: 10;
+    position: absolute;
+    display: none;
+    min-height: 500px;
+}
+
+#findImageInner {
+    position: relative;
+    height: 100%;
+}
+
+#findImages {
+    position: absolute;
+    top: 24px;
+    bottom: 0;
+    overflow-y: scroll;
+    left: 0;
+    right: 0;
+    padding: 5px;
+}
+
+#findImages div {
+    height: 72px;
+    width: 72px;
+    margin: 5px;
+    float: left;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+}
+#findImageTopBar {
+    position: absolute;
+    top: 0;
+    height: 24px;
+    left: 0;
+    right: 0;
+    background-color: #f2a620;
+    padding-left: 5px;
+}
+
+#findImageTopBar p {
+    color: #ffffff;
+    display: inline;
+}
+
+#findImages .imageInList {
+    height: 50px;
+    width: 50px;
+    overflow: hidden;
+    float: left;
+    margin: 5px;
+}
+
+#lukFindImage {
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    float: right;
+    font-weight: bold;
+    outline: none;
+}
+
+#findImages:after {
+    content: " ";
+    clear: both;
+}
 #sMessengerTextarea {
     font-weight: 100;
 }
@@ -231,6 +334,12 @@ input {
     position: relative;
     width: 400px;
 }
+
+.oldMessenge img {
+    width: 420px;
+    position: relative;
+    top: 3px;
+}
 .oldMessenge div {
     position: relative;
     width: 100%;
@@ -239,16 +348,16 @@ input {
     margin-bottom: 10px;
 }
 .oldMessenge div h1 {
-    font-size: 18px; line-height: 18px; 
+    font-size: 18px; line-height: 18px;
     margin-top: 24px;
 }
 .oldMessenge div h2 {
-    font-size: 14px; line-height: 14px; 
+    font-size: 14px; line-height: 14px;
 }
 .oldMessenge div h3 {
     position: absolute;
     top: 5px; right: 10px;
-    font-size: 12px; 
+    font-size: 12px;
     color: #a56800;
 }
 
@@ -282,7 +391,7 @@ left: 9px;
 .Restaurant.info { padding-top: 7px;  }
     .RestaurantPhone { margin: 0; }
     .RestaurantAdresse { margin: -5px 0 0 0; }
-    
+
     .Restaurant.OpeningHours { display: inline-block; margin: 5px 0 0 0; }
         .Restaurant h4 { margin: 12px 0 0 0; text-align:left; }
         .Restaurant h5 { margin: 7px 0 0 0; text-align: center; font-size: 15px;  }
@@ -290,9 +399,9 @@ left: 9px;
         .open { background: #fea525; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -khtml-border-radius: 3px;  }
     .Restaurant.Delivery { margin: 5px 10px 0 10px; }
 .RestaurantAdresse img { display: inline-block; width: 18px; vertical-align: middle; margin: 0 4px 0px -2px; }
-.RestaurantAdresse h4 { display: inline-block; font-size: 15px; line-height: 16px; margin: 5px 0; } 
+.RestaurantAdresse h4 { display: inline-block; font-size: 15px; line-height: 16px; margin: 5px 0; }
 .RestaurantPhone img { display: inline-block; width: 15px; vertical-align: middle; margin:0 5px 3px 0; }
-.RestaurantPhone h2 { display: inline-block;  } 
+.RestaurantPhone h2 { display: inline-block;  }
 
 /* ::::::::::::::::: Stamp :::::::::::::::::::::  */
 .StampEX {
@@ -305,7 +414,7 @@ left: 9px;
 }
 .Stamp{
     position: relative;
-    background: #d1d1d1; 
+    background: #d1d1d1;
     display: inline-table;
     width: 23px; height: 23px;
     -webkit-border-radius: 100%;
@@ -317,16 +426,16 @@ left: 9px;
     border: 5px solid #ddd;
 }
 .Stamp:after {
-    content: ""; 
+    content: "";
     position: absolute;
     top: 50%; right: -12px;
-    margin-top: -4px; 
+    margin-top: -4px;
     width: 10px; height: 8px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
     background: #ddd;
-    z-index: 0;  
+    z-index: 0;
 }
 .Stamp.Full{
     background: #473a35;
@@ -361,19 +470,19 @@ left: 9px;
 }
 /* ::::::::::::::::: Sortabel :::::::::::::::::::::  */
 
-.sortableLi 
-{ 
+.sortableLi
+{
     position: relative;
     display: table;
-    margin: 2px 0; 
+    margin: 2px 0;
     width: 100%;
 }
 .sortablediv ul
 {
-    position: relative; 
-    list-style-type: none; 
-    margin: 0; 
-    padding: 0; 
+    position: relative;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .sortablediv
@@ -382,7 +491,7 @@ left: 9px;
     display: inline-table;
     background: #333;
     padding: 10px;
-    margin: 5px; 
+    margin: 5px;
     vertical-align: top;
     min-width: 345px;
 }
@@ -394,14 +503,14 @@ left: 9px;
 .newsortablediv
 {
     position: relative;
-    display: none; 
+    display: none;
     padding: 10px;
     margin: 5px;
     height: 100px;
     background: #333;
     width: 345px;
     cursor: pointer;
-    -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;  
+    -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;
 }
 .newsortablediv div { background: #777; padding: 14px 0; margin: 17px 0 0 0; text-align: center; color: #333; font-size: 32px;}
 .newsortablediv h3 { color: #777; margin:0; font-size: 22px; line-height: 20px; }
@@ -409,7 +518,7 @@ left: 9px;
 .newsortablediv:hover > div {background: #fff; -o-transition:.5s; -ms-transition:.5s; -moz-transition:.5s; -webkit-transition:.5s; transition:.5s;  }
 .newsortabledivbuffer { display: none; width: 365px; margin: 5px;}
 
-.AddLiButton 
+.AddLiButton
 {
     display: none;
     background: rgba(255,255,255,0.3);
@@ -419,7 +528,7 @@ left: 9px;
     cursor: pointer;
     width: 100%; height: 50px;
     min-width: 325px;
-    -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s; 
+    -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;
 }
 .AddLiButton h5 { color: #d6d6d6; text-align: center; font-size: 38px; line-height: 38px; margin: 0px; }
 
@@ -441,12 +550,12 @@ left: 9px;
         .DishDescription textarea, .InfoSlide textarea {
             /*font-family: "HelveticaNeue", "Helvetica Neue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
             font-family: 'Exo 2', sans-serif;
-            font-size: 15px; line-height: 16px; 
-            background: #ddd; 
-            border: 0px; 
-            padding: 2px; 
+            font-size: 15px; line-height: 16px;
+            background: #ddd;
+            border: 0px;
+            padding: 2px;
             outline: none;  overflow: hidden;
-            margin: 2px 0 0 0;  
+            margin: 2px 0 0 0;
             width: 100%;  height: 25px;
             resize: none;
             -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;
@@ -454,7 +563,7 @@ left: 9px;
     .DishPrice { display: inline-table; vertical-align: bottom; text-align: right; }
     .DishPrice input { width: 8px; min-width: 8px; font-size: 15px; padding-left: 6px; }
         .DishPrice h2 { display: inline; text-align: right;}
-    
+
 .DishEditWrapper { position: absolute; display: none; top:0px; right: 0px; padding: 0; text-align: center; }
     .DeleteDish { display: inline-table; margin: 1px 3px 0 0; cursor: pointer; vertical-align: top; }
         .DeleteDish img { width: 12px; margin: 2px; vertical-align: top; }
@@ -463,8 +572,8 @@ left: 9px;
        .EditDish img { width: 12px; margin: 2px; vertical-align: top; }
        .EditDish:hover { opacity: .5; }
     .moveDish { display: inline-table; width: 20px; height: 20px; cursor: move; margin-right:5px; vertical-align: top; }
- 
-.DishEditWrapperTEMP { display: none; }    
+
+.DishEditWrapperTEMP { display: none; }
 
 #restuarantInfo h3 { margin-bottom: 7px;}
 .InfoSlide { position: relative; width: 335px; padding: 10px 5px; background: #fff; }
@@ -477,14 +586,14 @@ left: 9px;
 .InfoSlidebox#Openinghours { max-width: 102px;}
 .InfoSlidebox#Openinghours h4 { display: inline-block; min-width: 30px;}
 .InfoSlidebox#Openinghours h4:nth-child(12),
-.InfoSlidebox#Openinghours h4:nth-child(13) { border-top: 1px solid #555; padding-top: 3px; } 
+.InfoSlidebox#Openinghours h4:nth-child(13) { border-top: 1px solid #555; padding-top: 3px; }
 
 .fullPage { position: fixed; top: 0; bottom: 0; left: 0; right: 0; }
 .inforUpdateAlert { position: absolute; top: 50%; left: 50%; margin-left: -100px; background: #F9AC4D; padding: 10px 20px; color: #fff; z-index:1000; }
 
 .SaveMenuDish { text-align: center; padding: 5px 0; display: block; min-width: 345px;}
 .saveMenuDishButton { font-size: 18px; background: #fea525; color: #fff; display: inline-table; padding: 5px 10px;  cursor: pointer;
-                     -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; -khtml-border-radius: 4px; 
+                     -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; -khtml-border-radius: 4px;
                      -o-transition:.2s; -ms-transition:.2s; -moz-transition:.2s; -webkit-transition:.2s; transition:.2s;}
 .saveMenuDishButton.Cancel { margin: 0 10px 0 0; background: #555;}
 .saveMenuDishButton:hover { background: #ff9000;  }
@@ -507,4 +616,239 @@ left: 9px;
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
     color: #21201f;
+}
+@media screen and (min-width:720px){
+    #upload {
+        position: fixed;
+        left: 15px;
+        bottom: 15px;
+        top: 140px;
+    }
+    #upload_inner {
+        position: fixed;
+        left: 15px;
+        bottom: 15px;
+        top: 168px;
+        width: 290px;
+
+    }
+    #toggleImageButton {
+        width: 312px;
+    }
+}
+@media screen and (max-width:719px){
+    #upload {
+        width: 398px;
+        margin: auto auto 20px;
+    }
+    #upload_inner {
+        max-height: 500px;
+        width: 367px;
+    }
+
+    #findImages div {
+        height: 68px;
+        width: 68px;
+
+    }
+
+}
+
+#toggleImageButton {
+    padding: 5px;
+    background-color: #878787;
+    color: #fff;
+    font-weight: bold;
+}
+
+#upload_inner {
+    display: none;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border: 1px solid #cec9c4;;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#upload_eller {
+    text-align: center;
+}
+#drop_image_here{
+    background-color: #888888;
+    text-align: center;
+    font-weight: bold;
+    padding: 20px 0;
+    font-size: 20px;
+
+
+}
+
+
+
+#upload_feild {
+    position: relative;
+    margin-bottom: 10px;
+}
+#uploadFile {
+    background-color: #dcdcdc;
+    padding: 10px;
+    font-family: 'Exo 2', sans-serif;
+}
+#uploadBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.uploadhover {
+    background-color: #F9CF85 !important;
+}
+
+#mit_billede_biblotek .imageInList {
+    background-color: #DDD;
+    margin-bottom: 20px;
+    position: relative;
+    min-height: 115px;
+}
+
+#mit_billede_biblotek .imageInList img {
+    width: 150px;
+    float: left;
+}
+
+#mit_billede_biblotek .imageInList_left {
+
+    float: left;
+    position: absolute;
+    right: 0;
+    left: 150px;
+    bottom: 0;
+    top: 0;
+}
+
+#mit_billede_biblotek .imageInList p {
+    margin: 0;
+}
+
+#mit_billede_biblotek .imageInList_left .imageInList_dato {
+    padding: 10px;
+    font-weight: bold;
+}
+
+#mit_billede_biblotek .imageInList_left .slet, .imageInList_left .ret {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#mit_billede_biblotek .imageInList_left .ret {
+    background: #f2a620;
+}
+
+#mit_billede_biblotek .imageInList_left .slet {
+    background: #333;
+    color: #fff;
+}
+
+#mit_billede_biblotek .imageInList_left .retogsletimage {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.clear {
+    clear: both;
+}
+
+
+#imageEidter {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.4);
+    z-index: 2;
+    display: none;
+}
+#imageEidterInner {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#imageEidter #imageArea img{
+    width: 100%;
+}
+
+#imageEidter #toolLine {
+    background-color: rgba(0,0,0,.7);
+    padding: 3px;
+}
+#imageEidter #toolLine span {
+    color: #ffffff !important;
+    font-family: arial, helvetica, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#imageEidter #toolR {
+    float: right;
+}
+#imageEidter .toolL {
+    float: left;
+    padding: 4px;
+}
+#imageEidter .toolL span {
+    margin-right: 15px;
+
+}
+
+#imageEidter span.disable {
+    opacity: .5;
+    text-decoration: line-through;
+}
+#imageEidter #imageEidterInner #toolLine #toolR span#imageEidterSave.disable  {
+    color: #888888 !important;
+    cursor: not-allowed;
+}
+
+#imageEidter #toSmallToFlipOpOnSide, #imageEidter #toSmallToFlipOpOnSide {
+    display: none;
+
+}
+#mageEidterCropToolBar {
+    display: none;
+}
+
+#imageArea {
+    position: relative;
+
+}
+#custum_crop_resizer, #custum_crop_resizer_hivimig {
+    position: absolute;
+    cursor: move;
+    z-index: 2;
+}
+#custum_crop_resizer {
+    background-color: rgba(255, 255, 255, .3);
+}
+#custum_crop_resizer_hivimig {
+
+}
+#custum_crop_resizer_hivimig_inner {
+    height: 10px;
+    width: 10px;
+    background-color: #EEEEEE;
+    border-radius: 10px;
+    cursor: se-resize;
+    position: relative;
+    bottom: 5px;
+    right: 5px;
+
 }

@@ -49,8 +49,58 @@ if($oSecurityController->login_check() == true) { ?>
         <!-- Messages -->
         <div id="TabWrappersMessenger" class="menuWrapper" style="display: none;" >
             <div class="wrapper">
+
+
+                <div id="upload">
+                    <div id="toggleImageButton">
+                        Vis/Skjul billebiblotek
+                    </div>
+                    <div id="upload_inner" onscroll="this.scrollLeft = 0">
+                        <div id="drop_image_here">
+                            Slip billede her
+                        </div>
+                        <div id="find_billede">
+                            <p class="upload_eller">Eller</p>
+                            <div id="upload_feild">
+                                <p id="uploadFile">Fil(er) ej valgt, klik for at vælg fil</p>
+                                <input id="uploadBtn" type="file" accept="image/*" multiple />
+
+                            </div>
+                            <input id="amlUploadBtn" type="button"  onclick="uploadFraKnap()" value="Upload">
+                        </div>
+                        <div id="upload_in_progress">
+
+                        </div>
+                        <div id="mine_uploaded_billeder">
+                            <p class="uploadarea">Mit billede biblotek</p>
+                            <div id="mit_billede_biblotek"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
                 <div class="menuWrapperInner" id="wrapper">
                     <div class="MessageText">Her kan du skrive beskeder ud til dine kunder, i forbindelse med tilbud, events m.m.</div>
+
+
+                    <div class="MessageImage" id="MessageImage" data-urlid="">
+                        <p id="MessageImageBC">Slip billede her</p>
+                        <p id="MessageImageBC2">Eller klik for at vælge fra biblottek</p>
+                        <p id="MessageImageRemove">FJERN</p>
+                        <div id="findImage">
+                            <div id="findImageInner">
+
+                                <div id="findImageTopBar">
+                                    <p>Vælg billede fra biblotek</p>
+                                    <button id="lukFindImage">LUK</button>
+                                </div>
+                                <div id="findImages">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="Messagepreview">
                     <textarea id="sMessageHeadline" type="text" value="" placeholder="Overskrift"></textarea>
                     <textarea id="sMessengerTextarea" placeholder="Skriv en ny besked"></textarea>
@@ -68,10 +118,74 @@ if($oSecurityController->login_check() == true) { ?>
                     <div id="currentMessages" class="oldMessenge"></div>
                     <h2>Gamle beskeder:</h2>
                     <div id="oldMessages" class="oldMessenge"></div>
-                          
+
                 </div>
             </div>
+
+
         </div>
+        <div id="imageEidter" onclick="lukMaaskeImageEidter(event)">
+            <div id="imageEidterInner">
+                <div id="imageArea">
+                    <div id="imageAreaImageOuter">
+                        <img id="imageSrc" src=""/>
+                    </div>
+
+                    <div id="custum_crop_resizer" style="display: none" draggable="true"></div>
+                    <div id="custum_crop_resizer_hivimig" style="display: none" draggable="true">
+                        <div id="custum_crop_resizer_hivimig_inner">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div id="toolLine">
+                    <div class="toolL" id="imageEidterAmlToolBar">
+                        <span onclick="editImageSetupCrop()" id="imageEidterCropButton">
+                            BESKÆR
+                        </span>
+                        <span onclick="editImageSortHvid()">
+                            SORT/HVID
+                        </span>
+                        <span onclick="editImageRotate('Hojre')" class="ImageControllCanBeDisabled">
+                            FLIP HØJRE
+                        </span>
+                        <span onclick="editImageRotate('Halv')">
+                            FLIP HALV OMGANG
+                        </span>
+                        <span onclick="editImageRotate('Venstre')"  class="ImageControllCanBeDisabled">
+                            FLIP VENSTRE
+                        </span>
+                    </div>
+                    <div class="toolL" id="imageEidterCropToolBar">
+                        <span onclick="editImageCancelCrop()">
+                            ANULER BESKÆRING
+                        </span>
+                        <span onclick="editImageSaveCrop()">
+                            GEM BESKÆRING
+                        </span>
+                        <div id="toSmallToFlipOpOnSide" title="Det vil ikke være mulig at lippe billedet op på siden hvis du gemmer denne ændring da billedet vill bliver for småt">
+                            <span class="disable">
+                                FLIP HØJRE
+                            </span>
+
+                            <span class="disable">
+                                FLIP VENSTRE
+                            </span>
+                        </div>
+                    </div>
+                    <div id="toolR">
+                        <span onclick="editImageSaveImage()" id="imageEidterSave" class="button disable">
+                            GEM OG LUK
+                        </span>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+        </div>
+
+
         <!-- end Messages -->
         
         <!-- Stampcard and QRcode -->
@@ -189,6 +303,7 @@ if($oSecurityController->login_check() == true) { ?>
             $('.datepicker').datepicker({ dateFormat: 'dd-mm-yy' });
             AutomaticUpdateMenucard();
             InitiateAutocomplete();
+            InitFileManeger();
             
             //TODO: Changed this Quick fix
             //Set menucard in edit mode 
