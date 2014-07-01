@@ -287,7 +287,7 @@ if($oSecurityController->login_check() == true) { ?>
         
     <div id="mustache_template">           
     </div>
-    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="js/general.js"></script>
     <script type="text/javascript" src="js/mustache.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
