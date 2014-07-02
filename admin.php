@@ -288,6 +288,7 @@ if($oSecurityController->login_check() == true) { ?>
     <div id="mustache_template">           
     </div>
     <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->  
     <script type="text/javascript" src="js/general.js"></script>
     <script type="text/javascript" src="js/mustache.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
