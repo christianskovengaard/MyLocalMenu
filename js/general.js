@@ -3144,7 +3144,19 @@ function AddImageToImageDragStart(ev){
 
 }
 
+ function InitGallery() {
+/*
+     $.ajax({
+         type: "GET",
+         url: "API/api.php",
+         dataType: "json",
+         data: {sFunction:"GetUsersGallery"}
+     }).done(function(result)
+     {
 
+     });
+*/
+ }
 
 
 
