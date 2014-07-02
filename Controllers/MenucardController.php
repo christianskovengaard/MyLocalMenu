@@ -79,6 +79,7 @@ class MenucardController
         $sQuery->bindValue(':Text', "");
         $sQuery->bindValue(':iMenucardId', $iMenucardId);
         $sQuery->execute();
+       
         
         //Create Default menucardcategory 
         $sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory (sMenucardCategoryName,sMenucardCategoryDescription,iFK_iMenucardId) VALUES (:Categoryname,:CategoryDesc,:iMenucardId)");
