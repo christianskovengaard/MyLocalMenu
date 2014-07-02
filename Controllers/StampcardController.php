@@ -116,11 +116,11 @@ class StampcardController
     
     }
     
-    //Function for when user scan QRcode
-    public function UseStamp() {
+    //Function for when user gets a stamp
+    public function GetStamp() {
         
         $oStampcard = array(
-                'sFunction' => 'UseStamp',
+                'sFunction' => 'GetStamp',
                 'result' => false
             );
         
@@ -128,34 +128,36 @@ class StampcardController
         header('Access-Control-Allow-Origin: *');  
         
         /* Only allow trusted, MUCH more safe
-        header('Access-Control-Allow-Origin: spjæl.dk');
-        header('Access-Control-Allow-Origin: xn--spjl-xoa.sk');
-        header('Access-Control-Allow-Origin: www.spjæl.dk');
-        header('Access-Control-Allow-Origin: www.xn--spjl-xoa.dk');
+        header('Access-Control-Allow-Origin: mylocalcafe.dk');
+        header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
         */
         
         
         //Get $sCustomerId  and iMenucardSerialNumber from the App API call
-        if(isset($_GET['QRcodeData']) && isset($_GET['sCustomerId']) && isset($_GET['iMenucardSerialNumber'])) {
+        if(isset($_GET['Stampcode']) && isset($_GET['sCustomerId']) && isset($_GET['iMenucardSerialNumber'])) {
             
             $sCustomerId = $_GET['sCustomerId'];
-            $sQRcodeData = $_GET['QRcodeData'];
+            $Stampcode = $_GET['Stampcode'];
             $iMenucardSerialNumber = $_GET['iMenucardSerialNumber'];
 
-            $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo 
-                                                WHERE sRestuarentInfoQrcodeData = :QRcodeData");
-            $sQuery->bindValue(':QRcodeData', $sQRcodeData);
+            $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId FROM menucard 
+                                                WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
+            $sQuery->bindValue(':iMenucardSerialNumber', $iMenucardSerialNumber);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-            $iRestuarentInfoId = $aResult['iRestuarentInfoId'];
+            $iRestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
             
             //Get stampcardid
-            $sQuery = $this->conPDO->prepare("SELECT iStampcardId FROM stampcard WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
+            $sQuery = $this->conPDO->prepare("SELECT iStampcardId,iStampcardRedemeCode FROM stampcard WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
             $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+            $iStampcardRedemeCode = $aResult['iStampcardRedemeCode'];
             $iStampcardId = $aResult['iStampcardId'];
-
+            
+            //Check if the Stamcode code is the right one
+            if($iStampcardRedemeCode == $Stampcode) {
+            
             //Update stampcard card and increment number og given stamps by 1
             $sQuery = $this->conPDO->prepare("UPDATE stampcard SET iStampcardNumberOfGivenStamps = iStampcardNumberOfGivenStamps + 1 WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
             $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
@@ -169,6 +171,10 @@ class StampcardController
             $sQuery->execute();
 
             $oStampcard['result'] = 'true';
+            
+            }else{
+                $oStampcard['result'] = 'wrong stampcode';
+            }
             
         }
        
@@ -213,7 +219,7 @@ class StampcardController
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $result = $aResult['result'];
             
-            //sRedemecode is Valid
+            // is sRedemecode valid
             if($result == 1)
             {              
 
@@ -236,7 +242,6 @@ class StampcardController
                 //Convert string to int
                 $iStamps = intval($aResult['number']);
 
-
                 //Calculate if there is enough stamps for one free cup of coffe.
                 //Antal stempler divideret med antal stempler det kræver at få en kop gratis kaffe
                 if($iStamps/$iStampcardMaxStamps >= 1) {
@@ -251,7 +256,7 @@ class StampcardController
 
                     $oStampcard['result'] = 'true';
                 } else {
-                    $oStampcard['result'] = 'false';
+                    $oStampcard['result'] = 'not enough stamps';
                 }
             } else {
                 $oStampcard['result'] = 'wrong redemecode';

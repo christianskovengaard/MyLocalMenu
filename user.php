@@ -25,6 +25,7 @@ if(isset($_GET['sUserToken']) && $oUserController->ChecksUserToken() == true) :
         <![endif]-->
         
         <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->  
         <script type="text/javascript" src="js/general.js"></script>
         <script type="text/javascript" src="js/jsencrypt.js"></script>
     </head>

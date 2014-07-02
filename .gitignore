@@ -31,5 +31,9 @@ nbproject/private/config.properties
 /nbproject/private/
 /TESTfiles/cafenavne1.csv
 /TESTfiles/cafenavne.csv
-Classes/DatabaseClass.php
 Controllers/DatabaseController.php
+
+app_data/image_upload_id.txt
+
+/imgmsg/
+/imgmsg_sendt/

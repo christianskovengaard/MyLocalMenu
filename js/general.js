@@ -308,6 +308,8 @@
                 ids += $(this).attr('id');  
                 ids += ',';             
       });
+      //Remove last ,
+      var ids = ids.substring(0, ids.length-1);
       $(ids).sortable({
                 connectWith: ".connectedSortable",
                 items: "li:not(.non-dragable)",
