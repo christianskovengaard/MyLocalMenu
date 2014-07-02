@@ -2465,14 +2465,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          if (e.target.id == "MessageImage" || e.target.id == "MessageImageBC" || e.target.id == "MessageImageBC2") {
              $('#MessageImage').finish();
              $('#findImage').show();
-             $('#findImages').html('');
-             $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
-                 $('#findImages').append('<div style="background-image: url(imgmsg/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
-             })
-             $("#findImages div").click(function () {
-                 PutImageInPreviewBox($(this).attr('data-imageSrc'), $(this).attr('data-imageId'));
-                 $('#findImage').hide();
-             });
+             putImagesInPopupForSelection();
 
          }
      });
@@ -2518,6 +2511,18 @@ $("input[name='checkbox_closed']").live('click', function(){
          $('#mit_billede_biblotek').html(Mustache.to_html(imagetemloate, result));
      });
  }
+
+ function putImagesInPopupForSelection() {
+     $('#findImages').html('');
+     $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
+         $('#findImages').append('<div style="background-image: url(imgmsg/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
+     })
+     $("#findImages div").click(function () {
+         PutImageInPreviewBox($(this).attr('data-imageSrc'), $(this).attr('data-imageId'));
+         $('#findImage').hide();
+     });
+ }
+
 
  function FjernPrewievImage() {
      $("#MessageImageRemove").fadeOut(150);
@@ -2619,7 +2624,10 @@ $("input[name='checkbox_closed']").live('click', function(){
      }).done(function (result) {
          if (result.result) {
              // dette bliver kort hvis billede bliver uploadet med succes
-             $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result))
+             $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result));
+             if($('#findImage').is(":visible")){
+                 putImagesInPopupForSelection();
+             }
          } else {
              // dette bliver koret hvis billede ikke bliver uploaded
              if (result.toSmall) {

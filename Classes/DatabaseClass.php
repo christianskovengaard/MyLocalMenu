@@ -12,7 +12,7 @@ class Database
     public function __construct() {
         $this->sDatabaseName = 'mylocalmenu';
         $this->sUsername = 'root';
-        $this->sPassword = 'root';
+        $this->sPassword = '';
         $this->sEncoding = 'utf8';
         $this->sHost = 'localhost';
         
