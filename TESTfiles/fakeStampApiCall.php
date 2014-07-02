@@ -20,20 +20,20 @@
          <script type="text/javascript" src="GetMessagesApp.js"></script>
     </head>
     <body>
-        <p>API call for Use stamp</p>
-        <p>http://www.spjæl.dk/MyLocalMenu/API/api.php?sFunction=UseStamp&sCustomerId=abc123&QRcodeData=LGi9Cv7imHvjZzOH3Z2bm4QDqs9EnN</p>
-        <a href="http://localhost/MyLocalMenu/API/api.php?sFunction=UseStamp&sCustomerId=abc123&QRcodeData=LGi9Cv7imHvjZzOH3Z2bm4QDqs9EnN">Use stamp</a>
+        <p>API call for Get stamp</p>
+        <p>http://www.mylocalcafe.dk/MyLocalMenu/API/api.php?sFunction=GetStamp&sCustomerId=abc123&Stampcode=1234&iMenucardSerialNumber=AA0000</p>
+        <a href="http://localhost/MyLocalMenu/API/api.php?sFunction=GetStamp&sCustomerId=abc123&Stampcode=1234&iMenucardSerialNumber=AA0000">Get stamp</a>
         
         <p>API call for redeme stampcard</p>
-        <p>http://www.spjæl.dk/MylocalMenu?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123</p>
+        <p>http://www.mylocalcafe.dk/MylocalMenu?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123</p>
         <a href="http://localhost/MyLocalMenu/API/api.php?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123">Redeme stampcard</a>
         
         
-        <input type="button" onclick="GetMessagesAndStampsApp();" value="GetMessagesApp">
+<!--        <input type="button" onclick="GetMessagesAndStampsApp();" value="GetMessagesApp">
         
         
         <input type="button" onclick="GetmenucardWithRestuarentName();" value="GetMenucardWithRestName">
-        <input type="text" id="sRestuarentName" placeholder="sRestuarentName">
+        <input type="text" id="sRestuarentName" placeholder="sRestuarentName">-->
         
     </body>
 </html>

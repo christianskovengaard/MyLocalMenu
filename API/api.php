@@ -321,10 +321,10 @@ if(isset($_GET['sFunction']))
             echo $sResult;
         break;
     
-        case "UseStamp":
+        case "GetStamp":
             require_once '../Controllers/StampcardController.php';
             $oStampcard = new StampcardController();
-            $result = $oStampcard->UseStamp();
+            $result = $oStampcard->GetStamp();
             $sResult = json_encode($result);
             echo $sResult;
         break;
