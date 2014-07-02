@@ -25,8 +25,8 @@
         <a href="http://localhost/MyLocalMenu/API/api.php?sFunction=GetStamp&sCustomerId=abc123&Stampcode=1234&iMenucardSerialNumber=AA0000">Get stamp</a>
         
         <p>API call for redeme stampcard</p>
-        <p>http://www.mylocalcafe.dk/MylocalMenu?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123</p>
-        <a href="http://localhost/MyLocalMenu/API/api.php?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123">Redeme stampcard</a>
+        <p>http://www.mylocalcafe.dk/MylocalMenu?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123&sRedemeCode=1234</p>
+        <a href="http://localhost/MyLocalMenu/API/api.php?sFunction=RedemeStampcard&iMenucardSerialNumber=AA0000&sCustomerId=abc123&sRedemeCode=1234">Redeme stampcard</a>
         
         
 <!--        <input type="button" onclick="GetMessagesAndStampsApp();" value="GetMessagesApp">

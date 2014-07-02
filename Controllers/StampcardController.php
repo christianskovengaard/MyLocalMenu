@@ -142,7 +142,7 @@ class StampcardController
 
             $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId FROM menucard 
                                                 WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
-            $sQuery->bindValue(':iMenucardSerialNumber', $Stampcode);
+            $sQuery->bindValue(':iMenucardSerialNumber', $iMenucardSerialNumber);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $iRestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
@@ -152,8 +152,8 @@ class StampcardController
             $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
             $sQuery->execute();
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-            $iStampcardId = $aResult['iStampcardId'];
             $iStampcardRedemeCode = $aResult['iStampcardRedemeCode'];
+            $iStampcardId = $aResult['iStampcardId'];
             
             //Check if the Stamcode code is the right one
             if($iStampcardRedemeCode == $Stampcode) {
@@ -219,7 +219,7 @@ class StampcardController
             $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
             $result = $aResult['result'];
             
-            //sRedemecode is Valid
+            // is sRedemecode valid
             if($result == 1)
             {              
 
@@ -242,7 +242,6 @@ class StampcardController
                 //Convert string to int
                 $iStamps = intval($aResult['number']);
 
-
                 //Calculate if there is enough stamps for one free cup of coffe.
                 //Antal stempler divideret med antal stempler det kræver at få en kop gratis kaffe
                 if($iStamps/$iStampcardMaxStamps >= 1) {
@@ -257,7 +256,7 @@ class StampcardController
 
                     $oStampcard['result'] = 'true';
                 } else {
-                    $oStampcard['result'] = 'false';
+                    $oStampcard['result'] = 'not enough stamps';
                 }
             } else {
                 $oStampcard['result'] = 'wrong redemecode';
