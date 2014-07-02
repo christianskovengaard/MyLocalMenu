@@ -257,13 +257,26 @@ input {
     display: none;
     min-height: 500px;
 }
+#findImage2{
+    background: #373737;
+    top: 137px;
+    left: 10px;
+    right: 10px;
+    bottom: 50px;
+    z-index: 10;
+    position: fixed;
+    display: none;
+    max-height: 500px;
+    max-width: 519px;
+    margin: 0 auto;
+}
 
-#findImageInner {
+#findImageInner, #findImageInner2 {
     position: relative;
     height: 100%;
 }
 
-#findImages {
+#findImages, #findImages2 {
     position: absolute;
     top: 24px;
     bottom: 0;
@@ -273,7 +286,7 @@ input {
     padding: 5px;
 }
 
-#findImages div {
+#findImages div, #findImages2 div {
     height: 72px;
     width: 72px;
     margin: 5px;
@@ -284,7 +297,7 @@ input {
     background-size: cover;
     background-position: center;
 }
-#findImageTopBar {
+#findImageTopBar, #findImageTopBar2 {
     position: absolute;
     top: 0;
     height: 24px;
@@ -294,12 +307,12 @@ input {
     padding-left: 5px;
 }
 
-#findImageTopBar p {
+#findImageTopBar p, #findImageTopBar2 p {
     color: #ffffff;
     display: inline;
 }
 
-#findImages .imageInList {
+#findImages .imageInList, #findImages2 .imageInList {
     height: 50px;
     width: 50px;
     overflow: hidden;
@@ -307,7 +320,7 @@ input {
     margin: 5px;
 }
 
-#lukFindImage {
+#lukFindImage, #lukFindImage2 {
     background: none;
     border: none;
     color: #FFFFFF;
@@ -316,7 +329,7 @@ input {
     outline: none;
 }
 
-#findImages:after {
+#findImages:after, #findImages2:after {
     content: " ";
     clear: both;
 }
@@ -838,9 +851,6 @@ left: 9px;
 #custum_crop_resizer {
     background-color: rgba(255, 255, 255, .3);
 }
-#custum_crop_resizer_hivimig {
-
-}
 #custum_crop_resizer_hivimig_inner {
     height: 10px;
     width: 10px;
@@ -856,12 +866,63 @@ left: 9px;
 
 
 /* gallery */
-@media screen and (min-width: 720px) {
-    .galleryWrapperInner { margin: 0 0 0 330px }
+.galleriWrapperInner {
+    margin: 5px;
 }
+@media screen and (min-width: 720px) {
+    .galleryWrapperInner { margin: 5px 5px 5px 330px }
+
+    #findImage2{
+        left: 350px;
+    }
+}
+.galleryImageItem{
+    height: 100px;
+    width: 150px;
+    float: left;
+    margin-right: 25px;
+    margin-bottom: 25px;
+    background-size: contain;
+    background-position: center;
+    background-color: #B8B8B8;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+
+}
+.galleryRemoveImage {
+    background-color: rgba(220, 50, 47, 0.70);
+    position: absolute;
+    bottom: -30px;
+    padding: 3px;
+    color: #ffffff;
+    text-align: center;
+    left: 0;
+    right: 0;
+    -webkit-transition: bottom .5s;
+    -moz-transition: bottom .5s;
+    -o-transition: bottom .5s;
+    transition: bottom .5s;
+
+}
+.galleryImageItem:hover .galleryRemoveImage{
+    bottom: 0;
+}
+#addImageToGallery{
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    display: table;
+
+}
+#addImageToGallery p{
+    display: table-cell;
+    vertical-align: middle;
+    font-weight: bold;
+    color: #3c3c3c;
+    font: 25px;
+}
+
 /* gallery end */
-
-/* a */
-
 
 

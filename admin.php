@@ -122,7 +122,30 @@ if($oSecurityController->login_check() == true) { ?>
 
                 </div>
                 <div class="galleryWrapperInner" id="galleriWrapper">
+                    <div id="galleryImages">
 
+
+                    </div>
+
+
+
+                    <div id="addImageToGallery" class="galleryImageItem">
+                        <p>Tryk aller slip for at tilføj billede</p>
+                    </div>
+
+
+                    <div id="findImage2">
+                        <div id="findImageInner2">
+
+                            <div id="findImageTopBar2">
+                                <p>Vælg billede fra biblotek</p>
+                                <button id="lukFindImage2">LUK</button>
+                            </div>
+                            <div id="findImages2">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
