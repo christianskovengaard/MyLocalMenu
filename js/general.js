@@ -2698,7 +2698,9 @@ $("input[name='checkbox_closed']").live('click', function(){
         }).done(function(result) {
 
             if(result.result) {
-                $(sel).animate({opacity: 0}, 500).slideUp(500);
+                $(sel).animate({opacity: 0}, 500).slideUp(500).delay(1000, function(){
+                    $(sel).remove();
+                })
             }else {
                 $(sel).css("opacity", 1);
                 $(sel2).show();
