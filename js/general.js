@@ -2525,7 +2525,7 @@ $("input[name='checkbox_closed']").live('click', function(){
  function putImagesInPopupForSelection() {
      $('#findImages').html('');
      $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
-         $('#findImages').append('<div style="background-image: url(user_img/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
+         $('#findImages').append('<div style="background-image: url(img_user/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
      })
      $("#findImages div").click(function () {
          PutImageInPreviewBox($(this).attr('data-imageSrc'), $(this).attr('data-imageId'));
@@ -2765,7 +2765,7 @@ function editImage(id, imageUrl){
         setTimeout(resizeEidtImage, 300);
         // todo eidt this quickfix
     };
-    newImg.src = "user_img/"+imageUrl;
+    newImg.src = "img_user/"+imageUrl;
 }
  function editImageSaveImage(){
      $("#imageEidter").fadeOut(100);
@@ -3085,7 +3085,7 @@ function editImageRotate(vej) {
 
 
     };
-    newImg.src = "user_img/"+url;
+    newImg.src = "img_user/"+url;
 }
 
 
@@ -3150,7 +3150,7 @@ function AddImageToImageDragStart(ev){
 function putImagesInPopupForSelectionInGallary(){
     $('#findImages2').html('');
     $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
-        $('#findImages2').append('<div style="background-image: url(user_img/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
+        $('#findImages2').append('<div style="background-image: url(img_user/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
     })
     $("#findImages2 div").click(function () {
         $('#findImage2').hide();
