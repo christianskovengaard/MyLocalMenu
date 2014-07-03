@@ -101,9 +101,9 @@ class ImageController
                 if ($rows == 1) {
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
 
-                    if (file_exists("../imgmsg/" . $aResult['sImageName'])) {
+                    if (file_exists("../user_img/" . $aResult['sImageName'])) {
 
-                        unlink("../imgmsg/" . $aResult['sImageName']);
+                        unlink("../user_img/" . $aResult['sImageName']);
                     }
 
                     $sQuery = $this->conPDO->prepare("DELETE FROM images WHERE iImageId = :imageId AND iFK_iRestuarentInfoId = :resturentid");
@@ -164,7 +164,7 @@ class ImageController
                         
                         $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
                         $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . end(explode(".", $fil['name']));
-                        $location = '../imgmsg/' . $filename;
+                        $location = '../user_img/' . $filename;
 
                         if ($fil['error'] == 0 && move_uploaded_file($fil['tmp_name'], $location)) {
 
@@ -222,7 +222,7 @@ class ImageController
                 $rows = $sQuery->rowCount();
                 if ($rows == 1) {
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-                    $url = "../imgmsg/" . $aResult['sImageName'];
+                    $url = "../user_img/" . $aResult['sImageName'];
 
                     $this->LoadPhpImageMagician();
 
@@ -293,13 +293,13 @@ class ImageController
                 $rows = $sQuery->rowCount();
                 if ($rows == 1) {
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-                    $url = "../imgmsg/" . $aResult['sImageName'];
+                    $url = "../user_img/" . $aResult['sImageName'];
                     $this->LoadPhpImageMagician();
                     /** @var imageLib $newImage */
                     $newImage = $this->getProcessedImage($url, $_GET['functions']);
                     $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
                     $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . $newImage->getFileExtension();
-                    $location = '../imgmsg/' . $filename;
+                    $location = '../user_img/' . $filename;
                     $newImage->saveImage($location);
                     $sQuery = $this->conPDO->prepare("INSERT INTO images (iFK_iRestuarentInfoId, sImageName, sImageDate) VALUES (:iFK_iRestuarentInfoId, :imageName, CURDATE())");
                     $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());

@@ -98,14 +98,14 @@ class GalleryController
                 $rows = $sQuery->rowCount();
                 if ($rows == 1) {
                     $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-                    if (file_exists("../imgmsg/" . $aResult['sImageName'])) {
+                    if (file_exists("../user_img/" . $aResult['sImageName'])) {
                         $image = $aResult['sImageName'];
                     }
                 }
                 if ($image) {
                     $resId = $this->GetResturantId();
                     $this->LoadPhpImageMagician();
-                    $oImageL = new imageLib("../imgmsg/" . $image);
+                    $oImageL = new imageLib("../user_img/" . $image);
 
                     $oMessageFinishImageAspect = (object)Array(
                         "max" => 1.42857142857,
