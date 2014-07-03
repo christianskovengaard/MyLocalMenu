@@ -2518,7 +2518,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          data: {sFunction:"GetUsersImageLibrary"}
      }).done(function(result)
      {
-         $('#mit_billede_biblotek').html(Mustache.to_html(imagetemloate, result));
+         addImageOnBibList(result)
      });
  }
 
@@ -2634,13 +2634,7 @@ $("input[name='checkbox_closed']").live('click', function(){
      }).done(function (result) {
          if (result.result) {
              // dette bliver kort hvis billede bliver uploadet med succes
-             $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result));
-             if($('#findImage').is(":visible")){
-                 putImagesInPopupForSelection();
-             }
-             if($('#findImage2').is(":visible")){
-                 putImagesInPopupForSelectionInGallary();
-             }
+             addImageOnBibList(result);
          } else {
              // dette bliver koret hvis billede ikke bliver uploaded
              if (result.toSmall) {
@@ -2678,6 +2672,16 @@ $("input[name='checkbox_closed']").live('click', function(){
 
  }
 
+function addImageOnBibList(image){
+    $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, image));
+    if ($('#findImage').css("display") == "block") {
+        putImagesInPopupForSelection();
+    }
+    if ($('#findImage2').css("display") == "block") {
+        putImagesInPopupForSelectionInGallary();
+    }
+
+}
 
  function deleteImage(id, url) {
     if(confirm("Er du sikker på at du vil slette dette billede?")) {
@@ -2780,7 +2784,7 @@ function editImage(id, imageUrl){
          data: {sFunction:"SaveEidtImage", imageId: eiditimageVariable.id, functions: eiditimageVariable.functions }
      }).done(function(result)
      {
-         $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result));
+         addImageOnBibList(result)
 
          eiditimageVariable.open = false;
          eiditimageVariable.height = 0;
