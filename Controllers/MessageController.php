@@ -224,7 +224,7 @@ class MessageController
                     $rows = $sQuery->rowCount();
                     if ($rows == 1) {
                         $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-                        if (file_exists("../imgmsg/" . $aResult['sImageName'])) {
+                        if (file_exists("../img_user/" . $aResult['sImageName'])) {
                             $image = $aResult['sImageName'];
                         }
                     }
@@ -240,7 +240,7 @@ class MessageController
                     if ($image !== false) {
 
                         require_once "../Classes/PhpImageMagicianClass.php";
-                        $oImageL = new imageLib("../imgmsg/" . $image);
+                        $oImageL = new imageLib("../img_user/" . $image);
 
                         $oMessageFinishImageAspect = (object)Array(
                             "max" => 1.42857142857,

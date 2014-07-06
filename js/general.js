@@ -2048,7 +2048,10 @@ function TapChange(subject) {
         $("#Tab"+subject).addClass("On");
         $(".menuWrapper").hide();
         $("#TabWrapper"+subject).show();
-        if( subject === "sMessenger" ) { 
+        if( subject === "sMessenger" ) {
+            $("#beskedWrapper").show();
+            $("#galleriWrapper").hide();
+
             $("#sMessageHeadline").focus(); 
             $('#sMessageHeadline').autogrow();
             $('#sMessengerTextarea').autogrow();
@@ -2056,6 +2059,12 @@ function TapChange(subject) {
             var todayDate = $.datepicker.formatDate('dd-mm-yy', new Date());
             $("#dMessageStart").val(todayDate);
         }
+        if( subject === "sGallery" ){
+            $("#TabWrappersMessenger").show();
+            $("#beskedWrapper").hide();
+            $("#galleriWrapper").show();
+        }
+
     }
     else{  }
 }
@@ -2473,6 +2482,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          $('#findImage').hide();
      });
      $("#MessageImageRemove").click(function () {
+         $('#MessageImage').finish();
          FjernPrewievImage();
      });
 
@@ -2508,14 +2518,14 @@ $("input[name='checkbox_closed']").live('click', function(){
          data: {sFunction:"GetUsersImageLibrary"}
      }).done(function(result)
      {
-         $('#mit_billede_biblotek').html(Mustache.to_html(imagetemloate, result));
+         addImageOnBibList(result)
      });
  }
 
  function putImagesInPopupForSelection() {
      $('#findImages').html('');
      $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
-         $('#findImages').append('<div style="background-image: url(imgmsg/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
+         $('#findImages').append('<div style="background-image: url(img_user/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
      })
      $("#findImages div").click(function () {
          PutImageInPreviewBox($(this).attr('data-imageSrc'), $(this).attr('data-imageId'));
@@ -2624,10 +2634,7 @@ $("input[name='checkbox_closed']").live('click', function(){
      }).done(function (result) {
          if (result.result) {
              // dette bliver kort hvis billede bliver uploadet med succes
-             $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result));
-             if($('#findImage').is(":visible")){
-                 putImagesInPopupForSelection();
-             }
+             addImageOnBibList(result);
          } else {
              // dette bliver koret hvis billede ikke bliver uploaded
              if (result.toSmall) {
@@ -2665,6 +2672,16 @@ $("input[name='checkbox_closed']").live('click', function(){
 
  }
 
+function addImageOnBibList(image){
+    $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, image));
+    if ($('#findImage').css("display") == "block") {
+        putImagesInPopupForSelection();
+    }
+    if ($('#findImage2').css("display") == "block") {
+        putImagesInPopupForSelectionInGallary();
+    }
+
+}
 
  function deleteImage(id, url) {
     if(confirm("Er du sikker på at du vil slette dette billede?")) {
@@ -2685,7 +2702,9 @@ $("input[name='checkbox_closed']").live('click', function(){
         }).done(function(result) {
 
             if(result.result) {
-                $(sel).animate({opacity: 0}, 500).slideUp(500);
+                $(sel).animate({opacity: 0}, 500).slideUp(500).delay(1000, function(){
+                    $(sel).remove();
+                })
             }else {
                 $(sel).css("opacity", 1);
                 $(sel2).show();
@@ -2752,7 +2771,7 @@ function editImage(id, imageUrl){
         setTimeout(resizeEidtImage, 300);
         // todo eidt this quickfix
     };
-    newImg.src = "imgmsg/"+imageUrl;
+    newImg.src = "img_user/"+imageUrl;
 }
  function editImageSaveImage(){
      $("#imageEidter").fadeOut(100);
@@ -2765,7 +2784,7 @@ function editImage(id, imageUrl){
          data: {sFunction:"SaveEidtImage", imageId: eiditimageVariable.id, functions: eiditimageVariable.functions }
      }).done(function(result)
      {
-         $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result));
+         addImageOnBibList(result)
 
          eiditimageVariable.open = false;
          eiditimageVariable.height = 0;
@@ -3072,7 +3091,7 @@ function editImageRotate(vej) {
 
 
     };
-    newImg.src = "imgmsg/"+url;
+    newImg.src = "img_user/"+url;
 }
 
 
@@ -3134,8 +3153,140 @@ function AddImageToImageDragStart(ev){
     }
 
 }
+function putImagesInPopupForSelectionInGallary(){
+    $('#findImages2').html('');
+    $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
+        $('#findImages2').append('<div style="background-image: url(img_user/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
+    })
+    $("#findImages2 div").click(function () {
+        $('#findImage2').hide();
+        var id = $(this).attr('data-imageid');
+        functionPutInGal(id)
+
+    });
+}
+function functionPutInGal(id){
+     $.ajax({
+         type: "GET",
+         url: "API/api.php",
+         dataType: "json",
+         data: {sFunction:"AddImageToGallery",iImageId:id}
+     }).done(function(result)
+     {
+         if(result.result) {
+             $('#galleryImages').append(" <div class='galleryImageItem' style='background-image: url(img_gallery/"+result.image+")' data-src='"+result.image+"' data-id='"+result.id+"'><div class='galleryRemoveImage'>Fjern</div></div>")
+
+         }
+     });
+ }
+ function InitGallery() {
+     $( "#galleryImages" ).sortable({
+         update: function(event, ui) {
+             var nyRaekefolge = [];
+             $("#galleryImages > div").each(function( index, value ) {
+                 nyRaekefolge.push( $(value).attr("data-id") );
+             });
+
+             $.ajax({
+                 type: "GET",
+                 url: "API/api.php",
+                 dataType: "json",
+                 data: {sFunction:"ReorderImageUserGallery", order:nyRaekefolge.join('-')}
+             })
+         }
+     });
+     $( ".galleryRemoveImage").live('click', function(){
+         var id = $(this).parent().attr("data-id");
+         $(this).parent().css('opacity',0.5);
+         $(this).hide();
+         $.ajax({
+             type: "GET",
+             url: "API/api.php",
+             dataType: "json",
+             data: {sFunction:"RemoveFromUsersGallery", imageid:id}
+         }).done(function(result)
+         {
+             if(result.result) {
+                 $(".galleryImageItem[data-id="+id+"]").remove();
+             }else {
+                 $(".galleryImageItem[data-id="+id+"]").css('opacity',1).find(".galleryRemoveImage").show();
+                alert("Der er sket en fejl")
+             }
+         });
+
+     })
 
 
+     $.ajax({
+         type: "GET",
+         url: "API/api.php",
+         dataType: "json",
+         data: {sFunction:"GetUsersGallery"}
+     }).done(function(result)
+     {
+         for (var i = 0; i < result.images.length; i++) {
+             var obj = result.images[i];
+             $('#galleryImages').append(" <div class='galleryImageItem' style='background-image: url(img_gallery/"+obj.n+")' data-src='"+obj.n+"' data-id='"+obj.id+"'><div class='galleryRemoveImage'>Fjern</div></div>")
+         }
+     });
+
+
+
+
+
+
+     var MessageImage = document.getElementById('addImageToGallery');
+     MessageImage.addEventListener("drop", function (e) {
+         e.stopPropagation();
+         e.preventDefault();
+         $(this).removeClass("uploadhover");
+         var filer = e.target.files || e.dataTransfer.files;
+
+         if(filer.length == 0){
+             if( e.dataTransfer.getData('imageId') && e.dataTransfer.getData('imageSrc') ){
+                 if (!$('#findImage').is(":visible")) {
+                     functionPutInGal(e.dataTransfer.getData('imageId'));
+                 }
+             }else {
+                 alert("Det er ikke et billede du har slippet")
+             }
+
+         }else if(filer.length == 1){
+             var files = [filer[0]];
+             upload(files, function (file, id) {
+                 functionPutInGal(id);
+             });
+         }else{
+             alert("Du kan kun uploader et billede af gangenn");
+         }
+
+     }, false);
+     MessageImage.addEventListener("dragenter", function (e) {
+         e.stopPropagation();
+         e.preventDefault();
+     }, false);
+     MessageImage.addEventListener("dragover", function (e) {
+         $(this).addClass("uploadhover");
+         e.stopPropagation();
+         e.preventDefault();
+     }, false);
+     MessageImage.addEventListener("dragleave", function (e) {
+         $(this).removeClass("uploadhover");
+         e.stopPropagation();
+         e.preventDefault();
+     }, false);
+     $('#addImageToGallery').click(function (){
+         $('#findImage2').show();
+        putImagesInPopupForSelectionInGallary();
+
+
+     });
+     $('#lukFindImage2').click(function () {
+         $('#findImage2').hide();
+     });
+
+
+ }
 
 
 

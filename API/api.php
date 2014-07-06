@@ -425,7 +425,30 @@ if(isset($_GET['sFunction']))
             $oImageController = new ImageController();
             echo json_encode($oImageController->SaveEidtImage());
         break;
-        
+
+        case 'GetUsersGallery':
+            require_once "../Controllers/GalleryControler.php";
+            $oGalleryControler = new GalleryController();
+            echo json_encode($oGalleryControler->GetImages());
+        break;
+        case 'AddImageToGallery':
+            require_once "../Controllers/GalleryControler.php";
+            $oGalleryControler = new GalleryController();
+            echo json_encode($oGalleryControler->AddImage());
+        break;
+        case 'RemoveFromUsersGallery':
+            require_once "../Controllers/GalleryControler.php";
+            $oGalleryControler = new GalleryController();
+            echo json_encode($oGalleryControler->RemoveImage());
+        break;
+        case 'ReorderImageUserGallery':
+            require_once "../Controllers/GalleryControler.php";
+            $oGalleryControler = new GalleryController();
+            echo json_encode($oGalleryControler->ReorderImage());
+        break;
+
+
+
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';
                 echo $result;
