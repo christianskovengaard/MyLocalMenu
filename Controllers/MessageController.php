@@ -173,8 +173,14 @@ class MessageController
         while($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
             $oMessages[$i]['headline'] = utf8_encode($aResult['sMessageHeadline']);
             $oMessages[$i]['bodytext'] = utf8_encode($aResult['sMessageBodyText']); 
-            $oMessages[$i]['date'] = utf8_encode($aResult['dtMessageDate']); 
-            $oMessages[$i]['image'] = utf8_encode($aResult['sMessageImage']); 
+            $oMessages[$i]['date'] = utf8_encode($aResult['dtMessageDate']);
+            if($aResult['sMessageImage'] != ''){
+                //GET the image from the imgmsg_sendt and base64_encode it
+                $image = file_get_contents('../imgmsg_sendt/'.$aResult['sMessageImage']);
+                $imagedata = base64_encode($image);  
+                $oMessages[$i]['image'] = $imagedata;
+                
+            }
             $i++;
         }
        return $oMessages;
