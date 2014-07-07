@@ -80,7 +80,7 @@ class MenucardController
         $sQuery->bindValue(':iMenucardId', $iMenucardId);
         $sQuery->execute();
        
-        
+        /*
         //Create Default menucardcategory 
         $sQuery = $this->conPDO->prepare("INSERT INTO menucardcategory (sMenucardCategoryName,sMenucardCategoryDescription,iFK_iMenucardId) VALUES (:Categoryname,:CategoryDesc,:iMenucardId)");
         $sQuery->bindValue(':Categoryname', "Kategori overskift");
@@ -115,7 +115,7 @@ class MenucardController
         $sQuery->bindValue(':iMenucardItemIdHashed', $iMenucardItemIdHashed);
         $sQuery->bindValue(':iMenucardItemId', $iMenucardItemId);
         $sQuery->execute();
-        
+        */
         
         return $iMenucardId;
     }

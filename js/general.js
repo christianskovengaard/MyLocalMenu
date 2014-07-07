@@ -1203,62 +1203,64 @@
                               iMenucardIdHashed: result.iMenucardIdHashed //This will only work when the user has one menucard.
                           };
                           
-                          //Foreach menucard insert into the menucarcardinfo
-                          $.each(result.aMenucardCategory, function(key,value){
+                          if(typeof result.aMenucardCategory !== "undefined") {
+                              
+                            //Foreach menucard insert into the menucarcardinfo
+                            $.each(result.aMenucardCategory, function(key,value){
 
-                              //alert('liste index: '+key);
-                              var category = {
-                                  sMenucardCategoryName: value.sMenucardCategoryName,
-                                  sMenucardCategoryDescription: value.sMenucardCategoryDescription,
-                                  iMenucardCategoryIdHashed: value.iMenucardCategoryIdHashed,
-                                  items:[]
-                              };                                                       
+                                //alert('liste index: '+key);
+                                var category = {
+                                    sMenucardCategoryName: value.sMenucardCategoryName,
+                                    sMenucardCategoryDescription: value.sMenucardCategoryDescription,
+                                    iMenucardCategoryIdHashed: value.iMenucardCategoryIdHashed,
+                                    items:[]
+                                };                                                       
 
-                              //Get all the items and the values name,desc,number,price
-                              //Check for items
-                              if(typeof result['aMenucardCategoryItems'+key] !== "undefined") {                             
-                                $.each(result['aMenucardCategoryItems'+key].sMenucardItemName, function(keyItem,value){
+                                //Get all the items and the values name,desc,number,price
+                                //Check for items
+                                if(typeof result['aMenucardCategoryItems'+key] !== "undefined") {                             
+                                  $.each(result['aMenucardCategoryItems'+key].sMenucardItemName, function(keyItem,value){
 
-                                    var sMenucardItemName = value;
-                                    var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
-                                    var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
-                                    var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
-                                    if(isNaN(iMenucardItemPrice) || iMenucardItemPrice === ''){
-                                        var havePrice = '';
-                                    }
-                                    else{
-                                        havePrice = true;
-                                    }
-                                    
-                                    var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
-                                    var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
+                                      var sMenucardItemName = value;
+                                      var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
+                                      var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
+                                      var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
+                                      if(isNaN(iMenucardItemPrice) || iMenucardItemPrice === ''){
+                                          var havePrice = '';
+                                      }
+                                      else{
+                                          havePrice = true;
+                                      }
 
-                                    var item = {
-                                        sMenucardItemName: sMenucardItemName,
-                                        sMenucardItemDescription: sMenucardItemDescription,
-                                        sMenucardItemNumber: sMenucardItemNumber,
-                                        iMenucardItemPrice: iMenucardItemPrice,
-                                        havePrice: havePrice,
-                                        iMenucardItemIdHashed: iMenucardItemIdHashed,
-                                        iMenucardItemPlaceInList: iMenucardItemPlaceInList
-                                    };
+                                      var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
+                                      var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
 
-                                    //Append the item to the items in the category obj
-                                    category.items.push(item);
-                                });                            
-                              }
+                                      var item = {
+                                          sMenucardItemName: sMenucardItemName,
+                                          sMenucardItemDescription: sMenucardItemDescription,
+                                          sMenucardItemNumber: sMenucardItemNumber,
+                                          iMenucardItemPrice: iMenucardItemPrice,
+                                          havePrice: havePrice,
+                                          iMenucardItemIdHashed: iMenucardItemIdHashed,
+                                          iMenucardItemPlaceInList: iMenucardItemPlaceInList
+                                      };
 
-                              //Append the category obj to the menucard obj
-                              menucards.menucard.push(category);
+                                      //Append the item to the items in the category obj
+                                      category.items.push(item);
+                                  });                            
+                                }
 
-                          });
+                                //Append the category obj to the menucard obj
+                                menucards.menucard.push(category);
 
+                            });
+                          }
                           var template = $('#menucard_admin').html();
                           var html = Mustache.to_html(template, menucards);
                           $('#restuarantInfo').after(html);
                           
                           //Function to initiate all sortable lists 
-                          UpdateSortableLists();                                                    
+                          UpdateSortableLists();                            
                       });
                 }else{
                     
