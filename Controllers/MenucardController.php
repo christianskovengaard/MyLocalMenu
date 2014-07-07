@@ -1315,10 +1315,9 @@ class MenucardController
         header('Access-Control-Allow-Origin: *');  
         
         /* Only allow trusted, MUCH more safe
-        header('Access-Control-Allow-Origin: spjæl.dk');
-        header('Access-Control-Allow-Origin: xn--spjl-xoa.sk');
-        header('Access-Control-Allow-Origin: www.spjæl.dk');
-        header('Access-Control-Allow-Origin: www.xn--spjl-xoa.dk');
+        header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
+        header('Access-Control-Allow-Origin: mylocalcafe.dk');
+        
         */
         $aMenucard = array(
                 'sFunction' => 'GetMenucardWithSerialNumber',

@@ -158,21 +158,23 @@ class MessageController
         $oMessages = array();
         
         //Get iRestuarentInfoId based on the $iMenucardSerialNumber
-        $sQuery = $this->conPDO->prepare("SELECT iFk_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
+        $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
         $sQuery->bindValue(":iMenucardSerialNumber", $iMenucardSerialNumber);
         $sQuery->execute();
         $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-        $iRestuarentInfoId = $aResult['iFk_iRestuarentInfoId'];
+        $iRestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
         
         //Get all message that are active (fits the time span based on the time now)
         $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC LIMIT 1");
         $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
         $sQuery->execute();
+        
         $i = 0;
         while($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
             $oMessages[$i]['headline'] = utf8_encode($aResult['sMessageHeadline']);
             $oMessages[$i]['bodytext'] = utf8_encode($aResult['sMessageBodyText']); 
             $oMessages[$i]['date'] = utf8_encode($aResult['dtMessageDate']); 
+            $oMessages[$i]['image'] = utf8_encode($aResult['sMessageImage']); 
             $i++;
         }
        return $oMessages;
