@@ -2400,7 +2400,7 @@ function UpdateStampcardText() {
                 var text1 = parseInt($('#iMaxStamps').val())+1;
                 text1 = text1+'.';
                 var text = 'Køb '+$('#iMaxStamps').val()+' '+$('#sStampcardText').val()+' og få den '+text1+' gratis';
-                $('#.StampEX h4').html(text);
+                $('#StampEX h4').html(text);
            }
        }); 
 }
@@ -3290,25 +3290,3 @@ function functionPutInGal(id){
 
  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
