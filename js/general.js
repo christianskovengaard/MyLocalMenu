@@ -2585,10 +2585,12 @@ $("input[name='checkbox_closed']").live('click', function(){
 
      var nyefiler = [];
      var filer = [];
+     var data = 0;
      for (var i = 0; i < files.length; i++) {
          if(regespForTestImage.test(files[i].type)){
             nyefiler.push(files[i]);
             filer.push(files[i].name);
+             data += files[i].size;
          }else {
              filer.push(files[i].name+" er ikke et billede")
          }
@@ -2598,8 +2600,9 @@ $("input[name='checkbox_closed']").live('click', function(){
 
      if (files.length > 0) {
 
-         $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
-         upload(files, function (file) { });
+         $('#upload_in_progress').html('<p>Uploadding ...</p><div id="upload_in_progress_bar_outer"><div id="upload_in_progress_bar" style="width: 0%;"></div></div><p>' + filer.join(', <br> ') + '</p>');
+         console.log(data+' ia');
+         upload(files, function (file) { }, data, data);
      } else {
          $('#upload_in_progress').html('<p>' + filer.join(', ') + '</p>');
 
@@ -2608,7 +2611,7 @@ $("input[name='checkbox_closed']").live('click', function(){
 
 
 
- function upload(files, done) {
+ function upload(files, done, dataialt, datatilbage) {
      var formobject = new FormData();
      formobject.append('file[]', files[0]);
      formobject.append('sFunction', 'UploadImage');
@@ -2619,7 +2622,78 @@ $("input[name='checkbox_closed']").live('click', function(){
          files.push(oldfilelist[i])
      }
 
+     var xhrhttp;
+     if (window.XMLHttpRequest)
+     {// code for IE7+, Firefox, Chrome, Opera, Safari
+         xhrhttp=new XMLHttpRequest();
+     }
+     else
+     {// code for IE6, IE5
+         xhrhttp=new ActiveXObject("Microsoft.XMLHTTP");
+     }
 
+     xhrhttp.open('POST', "API/api.php", true);
+
+
+     try {
+         xhrhttp.upload.onprogress = function (e) {
+             /** @namespace e.lengthComputable */
+             if (e.lengthComputable) {
+                 var percentComplete = (1 - ((datatilbage - e.loaded) / dataialt)) * 100;
+                 $('#upload_in_progress_bar').css("width", percentComplete + "%");
+
+             }
+         };
+     } catch (e) {
+     }
+
+     xhrhttp.onload = function () {
+         if (this.status == 200) {
+             var result = JSON.parse(this.response);
+             if (result.result) {
+                 // dette bliver kort hvis billede bliver uploadet med succes
+                 addImageOnBibList(result);
+
+             } else {
+                 // dette bliver koret hvis billede ikke bliver uploaded
+                 if (result.toSmall) {
+                     alert("Dette billede er ikke stort nok");
+                 } else {
+                     alert("fejl")
+                 }
+             }
+             var filer = [];
+             for (var i = 0; i < files.length; i++) {
+                 filer.push(files[i].name);
+             }
+             if (files.length > 0) {
+                 var dataleft = 0;
+                 for (var i = 0; i < files.length; i++) {
+                     dataleft += files[i].size
+                 }
+
+
+
+                 $('#upload_in_progress').html('<p>Uploadding ...</p><div id="upload_in_progress_bar_outer"><div id="upload_in_progress_bar" style="width: '+parseFloat((1-(dataleft/dataialt))*100)+'%;"></div></div><p>' + filer.join(', <br> ') + '</p>');
+                 // todo skal set timeout fjernes?
+                 setTimeout(function () {
+                     // koe upload igen hvis der er flere billeder der skal uploades
+
+
+
+                     upload(files, function () {}, dataialt, dataleft);
+                 }, 250);
+             }else {
+                 // ryd upload_in_progress diven
+                 $('#upload_in_progress').html('');
+                 done(result.images.n, result.images.id)
+             }
+         }
+     };
+     xhrhttp.send(formobject);
+
+
+/*
      $.ajax({
          type: "POST",
          url: "API/api.php",
@@ -2669,7 +2743,7 @@ $("input[name='checkbox_closed']").live('click', function(){
              done(result.images.n, result.images.id)
          }
      });
-
+*/
  }
 
 function addImageOnBibList(image){
@@ -3119,7 +3193,7 @@ function AddImageToImageDrop(e){
         var files = [filer[0]];
         upload(files, function (file, id) {
             PutImageInPreviewBox(file, id);
-        });
+        }, filer[0].size, filer[0].size);
     }else{
         alert("Du kan kun uploader et billede af gangenn");
     }
@@ -3255,7 +3329,7 @@ function functionPutInGal(id){
              var files = [filer[0]];
              upload(files, function (file, id) {
                  functionPutInGal(id);
-             });
+             }, filer[0].size, filer[0].size);
          }else{
              alert("Du kan kun uploader et billede af gangenn");
          }

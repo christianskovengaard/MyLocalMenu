@@ -186,7 +186,7 @@ input {
 .menuWrapperInner { display: table; margin: 0 auto; min-width: 200px; }
 
 @media screen and (max-width: 1112px ) and (min-width: 720px) {
-.menuWrapperInner { margin: 0 0 0 330px }
+.uploadWrappers { margin: 0 0 0 330px }
 }
 
 .menuWrapperInner textarea {
@@ -779,7 +779,27 @@ left: 9px;
     clear: both;
 }
 
-
+#upload_in_progress_bar_outer {
+    border: 1px #666666 solid;
+    height: 10px;
+    background-color: #EEE;
+    padding: 1px;
+    margin: 15px 0;
+}
+#upload_in_progress_bar {
+    width: 0;
+    height: 10px;
+    background-color: #F4A720;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    background-size: 19px 10px;
+    background-image: -webkit-linear-gradient(315deg, transparent, transparent 33%, rgba(0, 0, 0, 0.12) 33%, rgba(0, 0, 0, 0.12) 66%, transparent 66%, transparent);
+    background-image: -moz-linear-gradient(315deg, transparent, transparent 33%, rgba(0, 0, 0, 0.12) 33%, rgba(0, 0, 0, 0.12) 66%, transparent 66%, transparent);
+    background-image: -o-linear-gradient(315deg, transparent, transparent 33%, rgba(0, 0, 0, 0.12) 33%, rgba(0, 0, 0, 0.12) 66%, transparent 66%, transparent);
+    background-image: linear-gradient(315deg, transparent, transparent 33%, rgba(0, 0, 0, 0.12) 33%, rgba(0, 0, 0, 0.12) 66%, transparent 66%, transparent);
+    -webkit-animation: pb 0.8s linear 0 infinite;
+    box-shadow: 0px -5px 0px rgba(255, 255, 255, 0.1) inset;
+}
 #imageEidter {
     position: fixed;
     top: 0;
