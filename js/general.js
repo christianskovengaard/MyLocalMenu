@@ -2693,57 +2693,6 @@ $("input[name='checkbox_closed']").live('click', function(){
      xhrhttp.send(formobject);
 
 
-/*
-     $.ajax({
-         type: "POST",
-         url: "API/api.php",
-         dataType: "json",
-         data: formobject,
-
-         async: false,
-         cache: false,
-         contentType: false,
-         processData: false
-
-     }).done(function (result) {
-         if (result.result) {
-             // dette bliver kort hvis billede bliver uploadet med succes
-             addImageOnBibList(result);
-         } else {
-             // dette bliver koret hvis billede ikke bliver uploaded
-             if (result.toSmall) {
-                 alert("Dette billede er ikke stort nok");
-             } else {
-                 alert("fejl")
-             }
-
-         }
-
-
-
-         var filer = [];
-         for (var i = 0; i < files.length; i++) {
-
-             filer.push(files[i].name);
-
-         }
-
-         $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
-         if (files.length > 0) {
-             // todo skal set timeout fjernes?
-             setTimeout(function () {
-             // koe upload igen hvis der er flere billeder der skal uploades
-                upload(files, function () {
-                });
-             }, 250);
-         }else {
-             // ryd upload_in_progress diven
-             $('#upload_in_progress').html('');
-
-             done(result.images.n, result.images.id)
-         }
-     });
-*/
  }
 
 function addImageOnBibList(image){
