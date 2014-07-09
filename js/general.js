@@ -2611,7 +2611,7 @@ $("input[name='checkbox_closed']").live('click', function(){
 
 
 
- function upload(files, done, dataialt, datatilbage) {
+ function upload(files, done, dataialt, datatilbage, progressFunction) {
      var formobject = new FormData();
      formobject.append('file[]', files[0]);
      formobject.append('sFunction', 'UploadImage');
@@ -2640,7 +2640,11 @@ $("input[name='checkbox_closed']").live('click', function(){
              /** @namespace e.lengthComputable */
              if (e.lengthComputable) {
                  var percentComplete = (1 - ((datatilbage - e.loaded) / dataialt)) * 100;
-                 $('#upload_in_progress_bar').css("width", percentComplete + "%");
+                 if(!progressFunction) {
+                     $('#upload_in_progress_bar').css("width", percentComplete + "%");
+                 }else{
+                     progressFunction(percentComplete);
+                 }
 
              }
          };
@@ -3139,10 +3143,14 @@ function AddImageToImageDrop(e){
         }
 
     }else if(filer.length == 1){
+        FjernPrewievImage();
         var files = [filer[0]];
         upload(files, function (file, id) {
             PutImageInPreviewBox(file, id);
-        }, filer[0].size, filer[0].size);
+        }, filer[0].size, filer[0].size, function(percent){
+            percent = parseInt(percent);
+            $('#MessageImage').css('backgroundImage', "radial-gradient(#F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
+        });
     }else{
         alert("Du kan kun uploader et billede af gangenn");
     }
@@ -3277,8 +3285,13 @@ function functionPutInGal(id){
          }else if(filer.length == 1){
              var files = [filer[0]];
              upload(files, function (file, id) {
+                 $('#addImageToGallery').css('backgroundImage', "");
                  functionPutInGal(id);
-             }, filer[0].size, filer[0].size);
+             }, filer[0].size, filer[0].size, function(percent){
+                 percent = parseInt(percent);
+                 $('#addImageToGallery').css('backgroundImage', "radial-gradient(#F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
+
+             });
          }else{
              alert("Du kan kun uploader et billede af gangenn");
          }

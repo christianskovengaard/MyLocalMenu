@@ -218,6 +218,13 @@ input {
 
     box-sizing: border-box;
 }
+.MessageImage,#addImageToGallery {
+    -webkit-transition: background-image 0.2s ease-in-aut;
+    -moz-transition: background-image 0.2s ease-in-aut;
+    -ms-transition: background-image 0.2s ease-in-aut;
+    -o-transition: background-image 0.2s ease-in-aut;
+    transition: background-image 0.2s ease-in-aut;
+}
 .MessageImage p {
     display: block;
     text-align: center;
@@ -397,7 +404,7 @@ left: 9px;
 
 /* ::::::::::::::::: Restaurant INFO :::::::::::::::::::::  */
 
-.RestaurantInfo img { display: inline-table; width: 60px; vertical-align: middle; margin: 0px 20px 0px -10px }
+.RestaurantInfo img { display: inline-table; width: 60px; vertical-align: middle; margin: 0px 20px 0px -10px; float: left; }/* float left, ie fix */
 .Restaurant { display: inline-table; margin: 0 25px 0px 0; vertical-align: top; }
 .Restaurant.Name {  }
     .Restaurant.Name h1 { margin: 10px 0 0px 0; }
@@ -413,7 +420,7 @@ left: 9px;
     .Restaurant.Delivery { margin: 5px 10px 0 10px; }
 .RestaurantAdresse img { display: inline-block; width: 18px; vertical-align: middle; margin: 0 4px 0px -2px; }
 .RestaurantAdresse h4 { display: inline-block; font-size: 15px; line-height: 16px; margin: 5px 0; }
-.RestaurantPhone img { display: inline-block; width: 15px; vertical-align: middle; margin:0 5px 3px 0; }
+.RestaurantPhone img { display: inline-block; width: 15px; vertical-align: middle; margin:0 5px 3px 0;height: 25px;}/* height 26 ei prefix */
 .RestaurantPhone h2 { display: inline-block;  }
 
 /* ::::::::::::::::: Stamp :::::::::::::::::::::  */
