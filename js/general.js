@@ -2717,7 +2717,7 @@ function addImageOnBibList(image){
         $(sel).css("opacity", 0.5);
         $(sel2).hide();
 
-        if ($("#MessageImage").data('urlid') == id) {
+        if ($("#MessageImage").attr('data-urlid') == id) {
             FjernPrewievImage();
         }
 
@@ -3149,7 +3149,7 @@ function AddImageToImageDrop(e){
             PutImageInPreviewBox(file, id);
         }, filer[0].size, filer[0].size, function(percent){
             percent = parseInt(percent);
-            $('#MessageImage').css('backgroundImage', "radial-gradient(#F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
+            $('#MessageImage').css('backgroundImage', "radial-gradient(circle, #F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
         });
     }else{
         alert("Du kan kun uploader et billede af gangenn");
@@ -3289,7 +3289,7 @@ function functionPutInGal(id){
                  functionPutInGal(id);
              }, filer[0].size, filer[0].size, function(percent){
                  percent = parseInt(percent);
-                 $('#addImageToGallery').css('backgroundImage', "radial-gradient(#F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
+                 $('#addImageToGallery').css('backgroundImage', "radial-gradient( circle,#F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
 
              });
          }else{
