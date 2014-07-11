@@ -81,7 +81,7 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
 
 
-                <div class="menuWrapperInner" id="beskedWrapper">
+                <div class="menuWrapperInner uploadWrappers" id="beskedWrapper">
                     <div class="MessageText">Her kan du skrive beskeder ud til dine kunder, i forbindelse med tilbud, events m.m.</div>
 
 
