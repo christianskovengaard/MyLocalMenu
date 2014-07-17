@@ -158,21 +158,29 @@ class MessageController
         $oMessages = array();
         
         //Get iRestuarentInfoId based on the $iMenucardSerialNumber
-        $sQuery = $this->conPDO->prepare("SELECT iFk_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
+        $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
         $sQuery->bindValue(":iMenucardSerialNumber", $iMenucardSerialNumber);
         $sQuery->execute();
         $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-        $iRestuarentInfoId = $aResult['iFk_iRestuarentInfoId'];
+        $iRestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
         
         //Get all message that are active (fits the time span based on the time now)
         $sQuery = $this->conPDO->prepare("SELECT * FROM messages WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId AND dMessageDateStart <=  CURDATE() AND dMessageDateEnd >= CURDATE() ORDER BY dtMessageDate DESC LIMIT 1");
         $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
         $sQuery->execute();
+        
         $i = 0;
         while($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
             $oMessages[$i]['headline'] = utf8_encode($aResult['sMessageHeadline']);
             $oMessages[$i]['bodytext'] = utf8_encode($aResult['sMessageBodyText']); 
-            $oMessages[$i]['date'] = utf8_encode($aResult['dtMessageDate']); 
+            $oMessages[$i]['date'] = utf8_encode($aResult['dtMessageDate']);
+            if($aResult['sMessageImage'] != ''){
+                //GET the image from the imgmsg_sendt and base64_encode it
+                $image = file_get_contents('../imgmsg_sendt/'.$aResult['sMessageImage']);
+                $imagedata = base64_encode($image);  
+                $oMessages[$i]['image'] = $imagedata;
+                
+            }
             $i++;
         }
        return $oMessages;
@@ -224,7 +232,7 @@ class MessageController
                     $rows = $sQuery->rowCount();
                     if ($rows == 1) {
                         $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-                        if (file_exists("../imgmsg/" . $aResult['sImageName'])) {
+                        if (file_exists("../img_user/" . $aResult['sImageName'])) {
                             $image = $aResult['sImageName'];
                         }
                     }
@@ -240,7 +248,7 @@ class MessageController
                     if ($image !== false) {
 
                         require_once "../Classes/PhpImageMagicianClass.php";
-                        $oImageL = new imageLib("../imgmsg/" . $image);
+                        $oImageL = new imageLib("../img_user/" . $image);
 
                         $oMessageFinishImageAspect = (object)Array(
                             "max" => 1.42857142857,

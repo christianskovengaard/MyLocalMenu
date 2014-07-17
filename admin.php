@@ -29,6 +29,7 @@ if($oSecurityController->login_check() == true) { ?>
         <div class="TabMenu">
             <div id="TabsMenu" class="Tab On" onclick="TapChange('sMenu');">Menu</div>
             <div id="TabsMessenger" class="Tab" onclick="TapChange('sMessenger');">Beskeder</div>
+            <div id="TabsGallery" class="Tab" onclick="TapChange('sGallery');">Galleri</div>
             <div id="TabsStamp" class="Tab" onclick="TapChange('sStamp');">Stemplekort</div>
             <div id="TabsEdit" class="Tab" onclick="TapChange('sEdit');">Indstillinger</div>
         </div>
@@ -80,7 +81,7 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
 
 
-                <div class="menuWrapperInner" id="wrapper">
+                <div class="menuWrapperInner uploadWrappers" id="beskedWrapper">
                     <div class="MessageText">Her kan du skrive beskeder ud til dine kunder, i forbindelse med tilbud, events m.m.</div>
 
 
@@ -119,6 +120,32 @@ if($oSecurityController->login_check() == true) { ?>
                     <h2>Gamle beskeder:</h2>
                     <div id="oldMessages" class="oldMessenge"></div>
 
+                </div>
+                <div class="galleryWrapperInner" id="galleriWrapper">
+                    <div id="galleryImages">
+
+
+                    </div>
+
+
+
+                    <div id="addImageToGallery" class="galleryImageItem">
+                        <p>Tryk aller slip for at tilføj billede</p>
+                    </div>
+
+
+                    <div id="findImage2">
+                        <div id="findImageInner2">
+
+                            <div id="findImageTopBar2">
+                                <p>Vælg billede fra biblotek</p>
+                                <button id="lukFindImage2">LUK</button>
+                            </div>
+                            <div id="findImages2">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -288,7 +315,8 @@ if($oSecurityController->login_check() == true) { ?>
     <div id="mustache_template">           
     </div>
     <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-    <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->  
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->
+    <script type="text/javascript" src="js/jquery-da-calendar.js"></script> <!-- danish jQuery calendar-->
     <script type="text/javascript" src="js/general.js"></script>
     <script type="text/javascript" src="js/mustache.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
@@ -301,10 +329,11 @@ if($oSecurityController->login_check() == true) { ?>
             GetMessages();
             GetStampcard();
             GetUserinformation();
-            $('.datepicker').datepicker({ dateFormat: 'dd-mm-yy' });
+            $('.datepicker').datepicker();
             AutomaticUpdateMenucard();
             InitiateAutocomplete();
             InitFileManeger();
+            InitGallery();
             
             //TODO: Changed this Quick fix
             //Set menucard in edit mode 

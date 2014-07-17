@@ -1203,62 +1203,64 @@
                               iMenucardIdHashed: result.iMenucardIdHashed //This will only work when the user has one menucard.
                           };
                           
-                          //Foreach menucard insert into the menucarcardinfo
-                          $.each(result.aMenucardCategory, function(key,value){
+                          if(typeof result.aMenucardCategory !== "undefined") {
+                              
+                            //Foreach menucard insert into the menucarcardinfo
+                            $.each(result.aMenucardCategory, function(key,value){
 
-                              //alert('liste index: '+key);
-                              var category = {
-                                  sMenucardCategoryName: value.sMenucardCategoryName,
-                                  sMenucardCategoryDescription: value.sMenucardCategoryDescription,
-                                  iMenucardCategoryIdHashed: value.iMenucardCategoryIdHashed,
-                                  items:[]
-                              };                                                       
+                                //alert('liste index: '+key);
+                                var category = {
+                                    sMenucardCategoryName: value.sMenucardCategoryName,
+                                    sMenucardCategoryDescription: value.sMenucardCategoryDescription,
+                                    iMenucardCategoryIdHashed: value.iMenucardCategoryIdHashed,
+                                    items:[]
+                                };                                                       
 
-                              //Get all the items and the values name,desc,number,price
-                              //Check for items
-                              if(typeof result['aMenucardCategoryItems'+key] !== "undefined") {                             
-                                $.each(result['aMenucardCategoryItems'+key].sMenucardItemName, function(keyItem,value){
+                                //Get all the items and the values name,desc,number,price
+                                //Check for items
+                                if(typeof result['aMenucardCategoryItems'+key] !== "undefined") {                             
+                                  $.each(result['aMenucardCategoryItems'+key].sMenucardItemName, function(keyItem,value){
 
-                                    var sMenucardItemName = value;
-                                    var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
-                                    var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
-                                    var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
-                                    if(isNaN(iMenucardItemPrice) || iMenucardItemPrice === ''){
-                                        var havePrice = '';
-                                    }
-                                    else{
-                                        havePrice = true;
-                                    }
-                                    
-                                    var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
-                                    var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
+                                      var sMenucardItemName = value;
+                                      var sMenucardItemDescription = result['aMenucardCategoryItems'+key].sMenucardItemDescription[keyItem];
+                                      var sMenucardItemNumber = result['aMenucardCategoryItems'+key].sMenucardItemNumber[keyItem];
+                                      var iMenucardItemPrice = result['aMenucardCategoryItems'+key].iMenucardItemPrice[keyItem];
+                                      if(isNaN(iMenucardItemPrice) || iMenucardItemPrice === ''){
+                                          var havePrice = '';
+                                      }
+                                      else{
+                                          havePrice = true;
+                                      }
 
-                                    var item = {
-                                        sMenucardItemName: sMenucardItemName,
-                                        sMenucardItemDescription: sMenucardItemDescription,
-                                        sMenucardItemNumber: sMenucardItemNumber,
-                                        iMenucardItemPrice: iMenucardItemPrice,
-                                        havePrice: havePrice,
-                                        iMenucardItemIdHashed: iMenucardItemIdHashed,
-                                        iMenucardItemPlaceInList: iMenucardItemPlaceInList
-                                    };
+                                      var iMenucardItemIdHashed = result['aMenucardCategoryItems'+key].iMenucardItemIdHashed[keyItem];
+                                      var iMenucardItemPlaceInList = result['aMenucardCategoryItems'+key].iMenucardItemPlaceInList[keyItem];
 
-                                    //Append the item to the items in the category obj
-                                    category.items.push(item);
-                                });                            
-                              }
+                                      var item = {
+                                          sMenucardItemName: sMenucardItemName,
+                                          sMenucardItemDescription: sMenucardItemDescription,
+                                          sMenucardItemNumber: sMenucardItemNumber,
+                                          iMenucardItemPrice: iMenucardItemPrice,
+                                          havePrice: havePrice,
+                                          iMenucardItemIdHashed: iMenucardItemIdHashed,
+                                          iMenucardItemPlaceInList: iMenucardItemPlaceInList
+                                      };
 
-                              //Append the category obj to the menucard obj
-                              menucards.menucard.push(category);
+                                      //Append the item to the items in the category obj
+                                      category.items.push(item);
+                                  });                            
+                                }
 
-                          });
+                                //Append the category obj to the menucard obj
+                                menucards.menucard.push(category);
 
+                            });
+                          }
                           var template = $('#menucard_admin').html();
                           var html = Mustache.to_html(template, menucards);
                           $('#restuarantInfo').after(html);
                           
                           //Function to initiate all sortable lists 
-                          UpdateSortableLists();                                                    
+                          UpdateSortableLists();                            
                       });
                 }else{
                     
@@ -2048,7 +2050,10 @@ function TapChange(subject) {
         $("#Tab"+subject).addClass("On");
         $(".menuWrapper").hide();
         $("#TabWrapper"+subject).show();
-        if( subject === "sMessenger" ) { 
+        if( subject === "sMessenger" ) {
+            $("#beskedWrapper").show();
+            $("#galleriWrapper").hide();
+
             $("#sMessageHeadline").focus(); 
             $('#sMessageHeadline').autogrow();
             $('#sMessengerTextarea').autogrow();
@@ -2056,6 +2061,12 @@ function TapChange(subject) {
             var todayDate = $.datepicker.formatDate('dd-mm-yy', new Date());
             $("#dMessageStart").val(todayDate);
         }
+        if( subject === "sGallery" ){
+            $("#TabWrappersMessenger").show();
+            $("#beskedWrapper").hide();
+            $("#galleriWrapper").show();
+        }
+
     }
     else{  }
 }
@@ -2389,7 +2400,7 @@ function UpdateStampcardText() {
                 var text1 = parseInt($('#iMaxStamps').val())+1;
                 text1 = text1+'.';
                 var text = 'Køb '+$('#iMaxStamps').val()+' '+$('#sStampcardText').val()+' og få den '+text1+' gratis';
-                $('#.StampEX h4').html(text);
+                $('#StampEX h4').html(text);
            }
        }); 
 }
@@ -2473,6 +2484,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          $('#findImage').hide();
      });
      $("#MessageImageRemove").click(function () {
+         $('#MessageImage').finish();
          FjernPrewievImage();
      });
 
@@ -2508,14 +2520,14 @@ $("input[name='checkbox_closed']").live('click', function(){
          data: {sFunction:"GetUsersImageLibrary"}
      }).done(function(result)
      {
-         $('#mit_billede_biblotek').html(Mustache.to_html(imagetemloate, result));
+         addImageOnBibList(result)
      });
  }
 
  function putImagesInPopupForSelection() {
      $('#findImages').html('');
      $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
-         $('#findImages').append('<div style="background-image: url(imgmsg/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
+         $('#findImages').append('<div style="background-image: url(img_user/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
      })
      $("#findImages div").click(function () {
          PutImageInPreviewBox($(this).attr('data-imageSrc'), $(this).attr('data-imageId'));
@@ -2575,10 +2587,12 @@ $("input[name='checkbox_closed']").live('click', function(){
 
      var nyefiler = [];
      var filer = [];
+     var data = 0;
      for (var i = 0; i < files.length; i++) {
          if(regespForTestImage.test(files[i].type)){
             nyefiler.push(files[i]);
             filer.push(files[i].name);
+             data += files[i].size;
          }else {
              filer.push(files[i].name+" er ikke et billede")
          }
@@ -2588,8 +2602,9 @@ $("input[name='checkbox_closed']").live('click', function(){
 
      if (files.length > 0) {
 
-         $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
-         upload(files, function (file) { });
+         $('#upload_in_progress').html('<p>Uploadding ...</p><div id="upload_in_progress_bar_outer"><div id="upload_in_progress_bar" style="width: 0%;"></div></div><p>' + filer.join(', <br> ') + '</p>');
+         console.log(data+' ia');
+         upload(files, function (file) { }, data, data);
      } else {
          $('#upload_in_progress').html('<p>' + filer.join(', ') + '</p>');
 
@@ -2598,7 +2613,7 @@ $("input[name='checkbox_closed']").live('click', function(){
 
 
 
- function upload(files, done) {
+ function upload(files, done, dataialt, datatilbage, progressFunction) {
      var formobject = new FormData();
      formobject.append('file[]', files[0]);
      formobject.append('sFunction', 'UploadImage');
@@ -2609,62 +2624,93 @@ $("input[name='checkbox_closed']").live('click', function(){
          files.push(oldfilelist[i])
      }
 
+     var xhrhttp;
+     if (window.XMLHttpRequest)
+     {// code for IE7+, Firefox, Chrome, Opera, Safari
+         xhrhttp=new XMLHttpRequest();
+     }
+     else
+     {// code for IE6, IE5
+         xhrhttp=new ActiveXObject("Microsoft.XMLHTTP");
+     }
 
-     $.ajax({
-         type: "POST",
-         url: "API/api.php",
-         dataType: "json",
-         data: formobject,
+     xhrhttp.open('POST', "API/api.php", true);
 
-         async: false,
-         cache: false,
-         contentType: false,
-         processData: false
 
-     }).done(function (result) {
-         if (result.result) {
-             // dette bliver kort hvis billede bliver uploadet med succes
-             $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result));
-             if($('#findImage').is(":visible")){
-                 putImagesInPopupForSelection();
+     try {
+         xhrhttp.upload.onprogress = function (e) {
+             /** @namespace e.lengthComputable */
+             if (e.lengthComputable) {
+                 var percentComplete = (1 - ((datatilbage - e.loaded) / dataialt)) * 100;
+                 if(!progressFunction) {
+                     $('#upload_in_progress_bar').css("width", percentComplete + "%");
+                 }else{
+                     progressFunction(percentComplete);
+                 }
+
              }
-         } else {
-             // dette bliver koret hvis billede ikke bliver uploaded
-             if (result.toSmall) {
-                 alert("Dette billede er ikke stort nok");
+         };
+     } catch (e) {
+     }
+
+     xhrhttp.onload = function () {
+         if (this.status == 200) {
+             var result = JSON.parse(this.response);
+             if (result.result) {
+                 // dette bliver kort hvis billede bliver uploadet med succes
+                 addImageOnBibList(result);
+
              } else {
-                 alert("fejl")
+                 // dette bliver koret hvis billede ikke bliver uploaded
+                 if (result.toSmall) {
+                     alert("Dette billede er ikke stort nok");
+                 } else {
+                     alert("fejl")
+                 }
              }
+             var filer = [];
+             for (var i = 0; i < files.length; i++) {
+                 filer.push(files[i].name);
+             }
+             if (files.length > 0) {
+                 var dataleft = 0;
+                 for (var i = 0; i < files.length; i++) {
+                     dataleft += files[i].size
+                 }
 
+
+
+                 $('#upload_in_progress').html('<p>Uploadding ...</p><div id="upload_in_progress_bar_outer"><div id="upload_in_progress_bar" style="width: '+parseFloat((1-(dataleft/dataialt))*100)+'%;"></div></div><p>' + filer.join(', <br> ') + '</p>');
+                 // todo skal set timeout fjernes?
+                 setTimeout(function () {
+                     // koe upload igen hvis der er flere billeder der skal uploades
+
+
+
+                     upload(files, function () {}, dataialt, dataleft);
+                 }, 250);
+             }else {
+                 // ryd upload_in_progress diven
+                 $('#upload_in_progress').html('');
+                 done(result.images.n, result.images.id)
+             }
          }
+     };
+     xhrhttp.send(formobject);
 
-
-
-         var filer = [];
-         for (var i = 0; i < files.length; i++) {
-
-             filer.push(files[i].name);
-
-         }
-
-         $('#upload_in_progress').html('<p>Uploadding ...</p><p>' + filer.join(', <br> ') + '</p>');
-         if (files.length > 0) {
-             // todo skal set timeout fjernes?
-             setTimeout(function () {
-             // koe upload igen hvis der er flere billeder der skal uploades
-                upload(files, function () {
-                });
-             }, 250);
-         }else {
-             // ryd upload_in_progress diven
-             $('#upload_in_progress').html('');
-
-             done(result.images.n, result.images.id)
-         }
-     });
 
  }
 
+function addImageOnBibList(image){
+    $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, image));
+    if ($('#findImage').css("display") == "block") {
+        putImagesInPopupForSelection();
+    }
+    if ($('#findImage2').css("display") == "block") {
+        putImagesInPopupForSelectionInGallary();
+    }
+
+}
 
  function deleteImage(id, url) {
     if(confirm("Er du sikker på at du vil slette dette billede?")) {
@@ -2673,7 +2719,7 @@ $("input[name='checkbox_closed']").live('click', function(){
         $(sel).css("opacity", 0.5);
         $(sel2).hide();
 
-        if ($("#MessageImage").data('urlid') == id) {
+        if ($("#MessageImage").attr('data-urlid') == id) {
             FjernPrewievImage();
         }
 
@@ -2685,7 +2731,9 @@ $("input[name='checkbox_closed']").live('click', function(){
         }).done(function(result) {
 
             if(result.result) {
-                $(sel).animate({opacity: 0}, 500).slideUp(500);
+                $(sel).animate({opacity: 0}, 500).slideUp(500).delay(1000, function(){
+                    $(sel).remove();
+                })
             }else {
                 $(sel).css("opacity", 1);
                 $(sel2).show();
@@ -2752,7 +2800,7 @@ function editImage(id, imageUrl){
         setTimeout(resizeEidtImage, 300);
         // todo eidt this quickfix
     };
-    newImg.src = "imgmsg/"+imageUrl;
+    newImg.src = "img_user/"+imageUrl;
 }
  function editImageSaveImage(){
      $("#imageEidter").fadeOut(100);
@@ -2765,7 +2813,7 @@ function editImage(id, imageUrl){
          data: {sFunction:"SaveEidtImage", imageId: eiditimageVariable.id, functions: eiditimageVariable.functions }
      }).done(function(result)
      {
-         $('#mit_billede_biblotek').prepend(Mustache.to_html(imagetemloate, result));
+         addImageOnBibList(result)
 
          eiditimageVariable.open = false;
          eiditimageVariable.height = 0;
@@ -3072,7 +3120,7 @@ function editImageRotate(vej) {
 
 
     };
-    newImg.src = "imgmsg/"+url;
+    newImg.src = "img_user/"+url;
 }
 
 
@@ -3097,9 +3145,13 @@ function AddImageToImageDrop(e){
         }
 
     }else if(filer.length == 1){
+        FjernPrewievImage();
         var files = [filer[0]];
         upload(files, function (file, id) {
             PutImageInPreviewBox(file, id);
+        }, filer[0].size, filer[0].size, function(percent){
+            percent = parseInt(percent);
+            $('#MessageImage').css('backgroundImage', "radial-gradient(circle, #F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
         });
     }else{
         alert("Du kan kun uploader et billede af gangenn");
@@ -3134,28 +3186,143 @@ function AddImageToImageDragStart(ev){
     }
 
 }
+function putImagesInPopupForSelectionInGallary(){
+    $('#findImages2').html('');
+    $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
+        $('#findImages2').append('<div style="background-image: url(img_user/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
+    })
+    $("#findImages2 div").click(function () {
+        $('#findImage2').hide();
+        var id = $(this).attr('data-imageid');
+        functionPutInGal(id)
+
+    });
+}
+function functionPutInGal(id){
+     $.ajax({
+         type: "GET",
+         url: "API/api.php",
+         dataType: "json",
+         data: {sFunction:"AddImageToGallery",iImageId:id}
+     }).done(function(result)
+     {
+         if(result.result) {
+             $('#galleryImages').append(" <div class='galleryImageItem' style='background-image: url(img_gallery/"+result.image+")' data-src='"+result.image+"' data-id='"+result.id+"'><div class='galleryRemoveImage'>Fjern</div></div>")
+
+         }
+     });
+ }
+ function InitGallery() {
+     $( "#galleryImages" ).sortable({
+         update: function(event, ui) {
+             var nyRaekefolge = [];
+             $("#galleryImages > div").each(function( index, value ) {
+                 nyRaekefolge.push( $(value).attr("data-id") );
+             });
+
+             $.ajax({
+                 type: "GET",
+                 url: "API/api.php",
+                 dataType: "json",
+                 data: {sFunction:"ReorderImageUserGallery", order:nyRaekefolge.join('-')}
+             })
+         }
+     });
+     $( ".galleryRemoveImage").live('click', function(){
+         var id = $(this).parent().attr("data-id");
+         $(this).parent().css('opacity',0.5);
+         $(this).hide();
+         $.ajax({
+             type: "GET",
+             url: "API/api.php",
+             dataType: "json",
+             data: {sFunction:"RemoveFromUsersGallery", imageid:id}
+         }).done(function(result)
+         {
+             if(result.result) {
+                 $(".galleryImageItem[data-id="+id+"]").remove();
+             }else {
+                 $(".galleryImageItem[data-id="+id+"]").css('opacity',1).find(".galleryRemoveImage").show();
+                alert("Der er sket en fejl")
+             }
+         });
+
+     })
+
+
+     $.ajax({
+         type: "GET",
+         url: "API/api.php",
+         dataType: "json",
+         data: {sFunction:"GetUsersGallery"}
+     }).done(function(result)
+     {
+         for (var i = 0; i < result.images.length; i++) {
+             var obj = result.images[i];
+             $('#galleryImages').append(" <div class='galleryImageItem' style='background-image: url(img_gallery/"+obj.n+")' data-src='"+obj.n+"' data-id='"+obj.id+"'><div class='galleryRemoveImage'>Fjern</div></div>")
+         }
+     });
 
 
 
 
 
 
+     var MessageImage = document.getElementById('addImageToGallery');
+     MessageImage.addEventListener("drop", function (e) {
+         e.stopPropagation();
+         e.preventDefault();
+         $(this).removeClass("uploadhover");
+         var filer = e.target.files || e.dataTransfer.files;
+
+         if(filer.length == 0){
+             if( e.dataTransfer.getData('imageId') && e.dataTransfer.getData('imageSrc') ){
+                 if (!$('#findImage').is(":visible")) {
+                     functionPutInGal(e.dataTransfer.getData('imageId'));
+                 }
+             }else {
+                 alert("Det er ikke et billede du har slippet")
+             }
+
+         }else if(filer.length == 1){
+             var files = [filer[0]];
+             upload(files, function (file, id) {
+                 $('#addImageToGallery').css('backgroundImage', "");
+                 functionPutInGal(id);
+             }, filer[0].size, filer[0].size, function(percent){
+                 percent = parseInt(percent);
+                 $('#addImageToGallery').css('backgroundImage', "radial-gradient( circle,#F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
+
+             });
+         }else{
+             alert("Du kan kun uploader et billede af gangenn");
+         }
+
+     }, false);
+     MessageImage.addEventListener("dragenter", function (e) {
+         e.stopPropagation();
+         e.preventDefault();
+     }, false);
+     MessageImage.addEventListener("dragover", function (e) {
+         $(this).addClass("uploadhover");
+         e.stopPropagation();
+         e.preventDefault();
+     }, false);
+     MessageImage.addEventListener("dragleave", function (e) {
+         $(this).removeClass("uploadhover");
+         e.stopPropagation();
+         e.preventDefault();
+     }, false);
+     $('#addImageToGallery').click(function (){
+         $('#findImage2').show();
+        putImagesInPopupForSelectionInGallary();
 
 
+     });
+     $('#lukFindImage2').click(function () {
+         $('#findImage2').hide();
+     });
 
 
+ }
 
-
-
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
