@@ -130,7 +130,7 @@ if($oSecurityController->login_check() == true) { ?>
 
 
                     <div id="addImageToGallery" class="galleryImageItem">
-                        <p>Tryk aller slip for at tilføj billede</p>
+                        <p>Tryk eller slip for at tilføje billeder</p>
                     </div>
 
 
@@ -186,7 +186,7 @@ if($oSecurityController->login_check() == true) { ?>
                     </div>
                     <div class="toolL" id="imageEidterCropToolBar">
                         <span onclick="editImageCancelCrop()">
-                            ANULER BESKÆRING
+                            ANNULLER BESKÆRING
                         </span>
                         <span onclick="editImageSaveCrop()">
                             GEM BESKÆRING
