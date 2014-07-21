@@ -2604,7 +2604,7 @@ $("input[name='checkbox_closed']").live('click', function(){
 
          $('#upload_in_progress').html('<p>Uploadding ...</p><div id="upload_in_progress_bar_outer"><div id="upload_in_progress_bar" style="width: 0%;"></div></div><p>' + filer.join(', <br> ') + '</p>');
          console.log(data+' ia');
-         upload(files, function (file) { }, data, data);
+         upload(files, function () { }, data, data);
      } else {
          $('#upload_in_progress').html('<p>' + filer.join(', ') + '</p>');
 
@@ -2692,7 +2692,7 @@ $("input[name='checkbox_closed']").live('click', function(){
              }else {
                  // ryd upload_in_progress diven
                  $('#upload_in_progress').html('');
-                 done(result.images.n, result.images.id)
+                 done(result)
              }
          }
      };
@@ -3147,8 +3147,13 @@ function AddImageToImageDrop(e){
     }else if(filer.length == 1){
         FjernPrewievImage();
         var files = [filer[0]];
-        upload(files, function (file, id) {
-            PutImageInPreviewBox(file, id);
+        upload(files, function (result) {
+
+            if(result.result) {
+                PutImageInPreviewBox(result.images.n, result.images.id);
+            }else {
+                $('#MessageImage').css('backgroundImage','');
+            }
         }, filer[0].size, filer[0].size, function(percent){
             percent = parseInt(percent);
             $('#MessageImage').css('backgroundImage', "radial-gradient(circle, #F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
@@ -3286,9 +3291,11 @@ function functionPutInGal(id){
 
          }else if(filer.length == 1){
              var files = [filer[0]];
-             upload(files, function (file, id) {
+             upload(files, function (result) {
                  $('#addImageToGallery').css('backgroundImage', "");
-                 functionPutInGal(id);
+                 if(result.result) {
+                    functionPutInGal(result.images.id);
+                 }
              }, filer[0].size, filer[0].size, function(percent){
                  percent = parseInt(percent);
                  $('#addImageToGallery').css('backgroundImage', "radial-gradient( circle,#F9CF85 "+(percent-1)+"%, #9f9f9f "+(percent+1)+"%)")
