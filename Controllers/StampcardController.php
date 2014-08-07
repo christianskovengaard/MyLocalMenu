@@ -124,17 +124,17 @@ class StampcardController
                 'result' => false
             );
         
-         //Allow all, NOT SAFE
+         //Allow all, NOT SAFE, ONLY FOR TESTING
         header('Access-Control-Allow-Origin: *');  
         
-        /* Only allow trusted, MUCH more safe
-        header('Access-Control-Allow-Origin: mylocalcafe.dk');
-        header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
-        */
+        // Only allow trusted, MUCH more safe
+        //header('Access-Control-Allow-Origin: mylocalcafe.dk');
+        //header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
+        
         
         
         //Get $sCustomerId  and iMenucardSerialNumber from the App API call
-        if(isset($_GET['Stampcode']) && isset($_GET['sCustomerId']) && isset($_GET['iMenucardSerialNumber'])) {
+        if(isset($_GET['Stampcode']) && isset($_GET['sCustomerId']) && isset($_GET['iMenucardSerialNumber']) && isset($_GET['iNumberOfStamps'])) {
             
             $sCustomerId = $_GET['sCustomerId'];
             $Stampcode = $_GET['Stampcode'];
@@ -162,14 +162,17 @@ class StampcardController
             $sQuery = $this->conPDO->prepare("UPDATE stampcard SET iStampcardNumberOfGivenStamps = iStampcardNumberOfGivenStamps + 1 WHERE iFK_iRestuarentInfoId = :iRestuarentInfoId");
             $sQuery->bindValue(":iRestuarentInfoId", $iRestuarentInfoId);
             $sQuery->execute();
-
-            //Insert stamp used into stamp table
-            $sQuery = $this->conPDO->prepare("INSERT INTO stamp (dtStampDateTime,sCustomerId,iFK_iStampcardId,iFK_iMenucardSerialNumber) VALUES (NOW(),:sCustomerId,:iStampcardId,:iFK_iMenucardSerialNumber)");
-            $sQuery->bindValue(':iStampcardId', $iStampcardId);
-            $sQuery->bindValue(':sCustomerId', $sCustomerId);
-            $sQuery->bindValue(":iFK_iMenucardSerialNumber", $iMenucardSerialNumber);
-            $sQuery->execute();
-
+            
+            //Insert x number of stamps
+            for($i = 1; $i <= $_GET['iNumberOfStamps'];$i++) {           
+                //Insert stamp used into stamp table
+                $sQuery = $this->conPDO->prepare("INSERT INTO stamp (dtStampDateTime,sCustomerId,iFK_iStampcardId,iFK_iMenucardSerialNumber) VALUES (NOW(),:sCustomerId,:iStampcardId,:iFK_iMenucardSerialNumber)");
+                $sQuery->bindValue(':iStampcardId', $iStampcardId);
+                $sQuery->bindValue(':sCustomerId', $sCustomerId);
+                $sQuery->bindValue(":iFK_iMenucardSerialNumber", $iMenucardSerialNumber);
+                $sQuery->execute();
+            }
+            
             $oStampcard['result'] = 'true';
             
             }else{
@@ -189,7 +192,7 @@ class StampcardController
                 'result' => false
             );
         
-         //Allow all, NOT SAFE
+         //Allow all, NOT SAFE, ONLY FOR TESTING
         header('Access-Control-Allow-Origin: *');  
         
         /* Only allow trusted, MUCH more safe
@@ -198,11 +201,12 @@ class StampcardController
 
         */
         
-        if(isset($_GET['iMenucardSerialNumber']) && isset($_GET['sCustomerId']) && isset($_GET['sRedemeCode']) ) {
+        if(isset($_GET['iMenucardSerialNumber']) && isset($_GET['sCustomerId']) && isset($_GET['sRedemeCode']) && isset($_GET['iNumberOfStamps']) ) {
         
             $iMenucardSerialNumber = $_GET['iMenucardSerialNumber'];
             $sCustomerId = $_GET['sCustomerId'];
             $sRedemeCode = $_GET['sRedemeCode'];
+            $iNumberOfStamps = $_GET['iNumberOfStamps'];
             
             //Get iRestuarentInfoId
             $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
@@ -246,12 +250,16 @@ class StampcardController
                 //Antal stempler divideret med antal stempler det kræver at få en kop gratis kaffe
                 if($iStamps/$iStampcardMaxStamps >= 1) {
 
-                    //Set $iStampcardMaxStamps number of stamps to used
-                    $sQuery = $this->conPDO->prepare("UPDATE stamp SET iStampUsed = '1'
+                    //Only set x number of stamps to used equal to $iNumberOfStamps                 
+                    $sQuery = $this->conPDO->prepare("UPDATE stamp SET iStampUsed=1
                                                         WHERE sCustomerId = :sCustomerId 
-                                                        AND iStampUsed = '0' AND iFK_iStampcardId = :iStampcardId");
+                                                        AND iStampUsed=0 
+                                                        AND iFK_iStampcardId = :iStampcardId
+                                                        ORDER BY iStampId ASC
+                                                        LIMIT :iNumberOfStamps");
                     $sQuery->bindValue(":sCustomerId", $sCustomerId);
                     $sQuery->bindValue(":iStampcardId", $iStampcardId);
+                    $sQuery->bindValue(":iNumberOfStamps", $iNumberOfStamps);
                     $sQuery->execute();
 
                     $oStampcard['result'] = 'true';
