@@ -10,7 +10,9 @@ class MenucardController
     private $oStampcardController;
     private $oMessageController;
     private $oZipcodeCityController;
-    
+    private $oGalleryController;
+
+
     private $oBcrypt;
     private $conPDO;
 
@@ -51,6 +53,9 @@ class MenucardController
         
         require_once 'ZipcodeCityController.php';
         $this->oZipcodeCityController = new ZipcodeCityController();
+        
+        require_once 'GalleryControler.php';
+        $this->oGalleryController = new GalleryController();
     }
     
     //Add menucard when registreting a new user 
@@ -1539,6 +1544,10 @@ class MenucardController
             //Get messages for the menucard
             $oMessage = $this->oMessageController->GetMessagesAppFromMenucard($iMenucardSerialNumber);
             $aMenucard['oMessages'] = $oMessage;
+            
+            //Get the gallery pictures
+            $oGallery = $this->oGalleryController->GetImagesApp($iMenucardSerialNumber);
+            $aMenucard['oGallery'] = $oGallery;
             
             //Get the stampcard
             $aStampcard = $this->oStampcardController->GetStampcardApp($iMenucardSerialNumber);

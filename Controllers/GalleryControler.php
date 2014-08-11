@@ -44,6 +44,47 @@ class GalleryController
         return $aResult['iRestuarentInfoId'];
 
     }
+    
+    public function GetImagesApp($iMenucardSerialNumber){
+        
+        //Allow all, NOT SAFE
+        //header('Access-Control-Allow-Origin: *');  
+        
+        /* Only allow trusted, MUCH more safe
+        header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
+        header('Access-Control-Allow-Origin: mylocalcafe.dk');
+        
+        */
+        
+        $oMessage = array();
+        
+        //Get iRestuarentInfoId based on the $iMenucardSerialNumber
+        $sQuery = $this->conPDO->prepare("SELECT iFK_iRestuarentInfoId FROM menucard WHERE iMenucardSerialNumber = :iMenucardSerialNumber");
+        $sQuery->bindValue(":iMenucardSerialNumber", $iMenucardSerialNumber);
+        $sQuery->execute();
+        $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+        $iRestuarentInfoId = $aResult['iFK_iRestuarentInfoId'];
+
+
+        $sQuery = $this->conPDO->prepare("SELECT iGalleryId, sGalleryImage, iGalleryImagePlaceInList FROM gallery WHERE iFK_iResturentInfoId = :iFK_iRestuarentInfoId ORDER BY iGalleryImagePlaceInList");
+        $sQuery->bindValue(":iFK_iRestuarentInfoId", $iRestuarentInfoId);
+        $sQuery->execute();
+        $i = 0;
+        while ($aResult = $sQuery->fetch(PDO::FETCH_ASSOC)) {
+            if($aResult['sGalleryImage'] != ''){
+                //GET the image from the imgmsg_sendt and base64_encode it
+                $image = file_get_contents('../img_gallery/'.$aResult['sGalleryImage']);
+                $imagedata = base64_encode($image);  
+                $oMessage[$i]['image'] = $imagedata;
+                $oMessage[$i]['placeinlist'] = $aResult['iGalleryImagePlaceInList'];
+            }
+            $i++;
+
+
+        }
+        return $oMessage;
+    }
+
 
     public function GetImages()
     {
