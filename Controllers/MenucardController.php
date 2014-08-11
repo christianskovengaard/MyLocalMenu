@@ -2080,6 +2080,10 @@ class MenucardController
             $oMessage = $this->oMessageController->GetMessagesAppFromMenucard($iMenucardSerialNumber);
             $aMenucard['oMessages'] = $oMessage;
             
+            //Get the gallery pictures
+            $oGallery = $this->oGalleryController->GetImagesApp($iMenucardSerialNumber);
+            $aMenucard['oGallery'] = $oGallery;
+            
             //Get the stampcard
             $aStampcard = $this->oStampcardController->GetStampcardApp($iMenucardSerialNumber);
             $aMenucard['oStampcard'] = $aStampcard;
