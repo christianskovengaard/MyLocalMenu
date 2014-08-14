@@ -238,9 +238,9 @@ if($oSecurityController->login_check() == true) { ?>
                         <input type="text" id="RedemeCode4" maxlength="1"><br><br>
                         <div class="button StampButton" onclick="UpdateRedemeCode();">Sæt stempelkort kode</div>
                         <div class='StampStat'>
-                            <div> <span id="iStampsgiven"></span> stempler er blevet uddelt</div><br/>
                             <h3>Stempler uddelt i år</h3>
-                            <img src="" id="stampchart" title="Uddelte stempler" alt="Chart"><br/>
+                            <!--Div that will hold the pie chart-->
+                            <div id="chart_div"></div>
                         </div>
    
                         <!--<h3>QR kode</h3>
@@ -322,6 +322,8 @@ if($oSecurityController->login_check() == true) { ?>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/jquery.autogrow.js"></script>
     <script type="text/javascript" src="js/jsencrypt.js"></script>
+    <!--Load the Google chart API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             GetMenucard(true);
@@ -340,6 +342,8 @@ if($oSecurityController->login_check() == true) { ?>
             setTimeout(function(){ HideShowSwitch('HideSortableEdits');},1000);
             
         });
+        // Load the Google Visualization API and the piechart package.
+        google.load('visualization', '1.0', {'packages':['corechart']});
     </script>    
     </body>
 </html>

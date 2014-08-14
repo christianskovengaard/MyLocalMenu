@@ -312,11 +312,11 @@ class StampcardController
             $iStampcardId = $aResult['iStampcardId'];
             $iStampcardMaxStamps = $aResult['iStampcardMaxStamps'];
             //Create GoogleChart
-            $charturl = $this->CreateGoogleChart($iStampcardId,$iStampcardMaxStamps);
+            $chartdata = $this->CreateGoogleChart($iStampcardId,$iStampcardMaxStamps);
             
             
             $oStampcard['stampcard'] = $aResult;
-            $oStampcard['stampcard']['charturl'] = $charturl;
+            $oStampcard['stampcard']['chartdata'] = $chartdata;
             $oStampcard['result'] = true;
             
             return $oStampcard;
@@ -547,7 +547,7 @@ class StampcardController
         }
 
         //Stamps pr. month given
-        $stamps_pr_month = '&chd=t:'.$iNumberJan.','.$iNumberFeb.','.$iNumberMar.','.$iNumberApr.','.$iNumberMaj.','.$iNumberJun.','.$iNumberJul.','.$iNumberAug.','.$iNumberSep.','.$iNumberOkt.','.$iNumberNov.','.$iNumberDec.'|';
+        //$stamps_pr_month = '&chd=t:'.$iNumberJan.','.$iNumberFeb.','.$iNumberMar.','.$iNumberApr.','.$iNumberMaj.','.$iNumberJun.','.$iNumberJul.','.$iNumberAug.','.$iNumberSep.','.$iNumberOkt.','.$iNumberNov.','.$iNumberDec.'|';
         
         
         $iFreebiesJanTotal = floor($iNumberJan/$iStampcardMaxStamps);
@@ -564,32 +564,65 @@ class StampcardController
         $iFreebiesDecTotal = floor($iNumberDec/$iStampcardMaxStamps);
         
         $iTotalNumberOfFreebies = $iFreebiesJanTotal+$iFreebiesFebTotal+$iFreebiesMarTotal+$iFreebiesAprTotal+$iFreebiesMajTotal+$iFreebiesJunTotal+$iFreebiesJulTotal+$iFreebiesAugTotal+$iFreebiesSepTotal+$iFreebiesOktTotal+$iFreebiesNovTotal+$iFreebiesDecTotal;
-        //$iTotalNumberOfFreebies = floor($iTotalNumberOfFreebies);
         
-        $freebies_pr_month = ''.$iFreebiesJanTotal.','.$iFreebiesFebTotal.','.$iFreebiesMarTotal.','.$iFreebiesAprTotal.','.$iFreebiesMajTotal.','.$iFreebiesJunTotal.','.$iFreebiesJulTotal.','.$iFreebiesAugTotal.','.$iFreebiesSepTotal.','.$iFreebiesOktTotal.','.$iFreebiesNovTotal.','.$iFreebiesDecTotal.'';
+
+//$iTotalNumberOfFreebies = floor($iTotalNumberOfFreebies);
+        
+        //$freebies_pr_month = ''.$iFreebiesJanTotal.','.$iFreebiesFebTotal.','.$iFreebiesMarTotal.','.$iFreebiesAprTotal.','.$iFreebiesMajTotal.','.$iFreebiesJunTotal.','.$iFreebiesJulTotal.','.$iFreebiesAugTotal.','.$iFreebiesSepTotal.','.$iFreebiesOktTotal.','.$iFreebiesNovTotal.','.$iFreebiesDecTotal.'';
         
         
-        $url = 'https://chart.googleapis.com/chart?cht=lc';
+        //$url = 'https://chart.googleapis.com/chart?cht=lc';
         
         //Data labels
-        $datalabels = '&chdl=Antal stempler givet i alt '.$iNumberOfStampsGiven.'|Antal gratis kopper kaffe givet ud '.$iTotalNumberOfFreebies;
+        //$datalabels = '&chdl=Antal stempler givet i alt '.$iNumberOfStampsGiven.'|Antal gratis kopper kaffe givet ud '.$iTotalNumberOfFreebies;
         
-        //Data show on line
-        $datavalueonline = '&chm=N,000000,0,0,10,,h::30|N,000000,0,1,10,,h::30|N,000000,0,2,10,,h::30|N,000000,0,3,10,,h::30|N,000000,0,4,10,,h::30|N,000000,0,5,10,,h::30|N,000000,0,6,10,,h::30|N,000000,0,7,10,,h::30|N,000000,0,8,10,,h::30|N,000000,0,9,10,,h::30|N,000000,0,10,10,,h::30|N,000000,0,11,10,,h::30|N,000000,1,0,10,,e|N,000000,1,1,10,,e|N,000000,1,2,10,,e|N,000000,1,3,10,,e|N,000000,1,4,10,,e|N,000000,1,5,10,,e|N,000000,1,6,10,,e|N,000000,1,7,10,,e|N,000000,1,8,10,,e|N,000000,1,9,10,,e|N,000000,1,10,10,,e|N,000000,1,11,10,,e|N,000000,1,12,10,,e';
+//        //Data show on line
+//        $datavalueonline = '&chm=N,000000,0,0,10,,h::30|N,000000,0,1,10,,h::30|N,000000,0,2,10,,h::30|N,000000,0,3,10,,h::30|N,000000,0,4,10,,h::30|N,000000,0,5,10,,h::30|N,000000,0,6,10,,h::30|N,000000,0,7,10,,h::30|N,000000,0,8,10,,h::30|N,000000,0,9,10,,h::30|N,000000,0,10,10,,h::30|N,000000,0,11,10,,h::30|N,000000,1,0,10,,e|N,000000,1,1,10,,e|N,000000,1,2,10,,e|N,000000,1,3,10,,e|N,000000,1,4,10,,e|N,000000,1,5,10,,e|N,000000,1,6,10,,e|N,000000,1,7,10,,e|N,000000,1,8,10,,e|N,000000,1,9,10,,e|N,000000,1,10,10,,e|N,000000,1,11,10,,e|N,000000,1,12,10,,e';
+//        
+//        //Set color of data legend and line colorto blue and green
+//        $chatlegendlinecolor = '&chco=0000FF,00FF00';
+//        
+//        $chartsize = '&chs=550x300';
+//        
+//        $chartmargin = '&chma=20,20,20,30|100,100';
         
-        //Set color of data legend and line colorto blue and green
-        $chatlegendlinecolor = '&chco=0000FF,00FF00';
+        //$x_axis = '0:|Jan|Feb|Mar|Apr|Maj|Jun|Jul|Aug|Sep|Okt|Nov|Dec|';
+        //$y_axis = '1:|0|5|10|25|50|75|100';
         
-        $chartsize = '&chs=550x300';
+        //$url = $url.$chartsize.$chatlegendlinecolor.$chartmargin.$stamps_pr_month.$freebies_pr_month.'&chxt=x,y&chxl='.$x_axis.$y_axis.$datalabels.$datavalueonline;
         
-        $chartmargin = '&chma=20,20,20,30|100,100';
+        //return $url;
         
-        $x_axis = '0:|Jan|Feb|Mar|Apr|Maj|Jun|Jul|Aug|Sep|Okt|Nov|Dec|';
-        $y_axis = '1:|0|5|10|25|50|75|100';
+        $aGoogleChart = array(
+            'totalstamps' => $iNumberOfStampsGiven,
+            'totalfree' => $iTotalNumberOfFreebies,
+            'jan_stamp' => $iNumberJan,
+            'feb_stamp' => $iNumberFeb,
+            'mar_stamp' => $iNumberMar,
+            'apr_stamp' => $iNumberApr,
+            'maj_stamp' => $iNumberMaj,
+            'jun_stamp' => $iNumberJun,
+            'jul_stamp' => $iNumberJul,
+            'aug_stamp' => $iNumberAug,
+            'sep_stamp' => $iNumberSep,
+            'okt_stamp' => $iNumberOkt,
+            'nov_stamp' => $iNumberOkt,
+            'dec_stamp' => $iNumberDec,
+            'jan_free' => $iFreebiesJanTotal,
+            'feb_free' => $iFreebiesFebTotal,
+            'mar_free' => $iFreebiesMarTotal,
+            'apr_free' => $iFreebiesAprTotal,
+            'maj_free' => $iFreebiesMajTotal,
+            'jun_free' => $iFreebiesJunTotal,
+            'jul_free' => $iFreebiesJulTotal,
+            'aug_free' => $iFreebiesAugTotal,
+            'sep_free' => $iFreebiesSepTotal,
+            'okt_free' => $iFreebiesOktTotal,
+            'nov_free' => $iFreebiesNovTotal,
+            'dec_free' => $iFreebiesDecTotal
+        );
         
-        $url = $url.$chartsize.$chatlegendlinecolor.$chartmargin.$stamps_pr_month.$freebies_pr_month.'&chxt=x,y&chxl='.$x_axis.$y_axis.$datalabels.$datavalueonline;
-        
-        return $url;
+        return $aGoogleChart;
         
     }
 

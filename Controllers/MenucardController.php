@@ -1313,7 +1313,7 @@ class MenucardController
         }
     }
     
-    /* TODO: check allow origin */
+
     public function GetMenucardWithSerialNumber ()
     {
         //Allow all, NOT SAFE
@@ -1329,10 +1329,10 @@ class MenucardController
                 'result' => false
             );
         
-        if(isset($_GET['iMenucardSerialNumber']))
+        if(isset($_GET['sRestName_sSerialNumberNumber']))
         {
             
-            $iMenucardSerialNumber = $_GET['iMenucardSerialNumber'];
+            $iMenucardSerialNumber = $_GET['sRestName_sSerialNumberNumber']; 
             
             $aMenucard['result'] = true;
             
@@ -1847,10 +1847,10 @@ class MenucardController
                 'result' => false
             );
         
-        if(isset($_GET['sRestuarentName']))
+        if(isset($_GET['sRestName_sSerialNumberNumber']))
         {
             
-            $sRestuarentName = $_GET['sRestuarentName'];
+            $sRestuarentName = $_GET['sRestName_sSerialNumberNumber'];
             $sRestuarentName = str_replace("+", " ", $sRestuarentName);
             $sRestuarentName = utf8_decode($sRestuarentName);
 
