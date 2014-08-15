@@ -2201,45 +2201,47 @@ function GetStampcard() {
 }
 
 function DrawGoogleChart(chartdata) {
-    
-    // Callback that creates and populates a data table,
-    // instantiates the pie chart, passes in the data and
-    // draws it.
+       
+    var data = new google.visualization.DataTable();
 
-    // Create the data table.
-    var data = google.visualization.arrayToDataTable([
-          ['Måned', 'Stempler i alt '+chartdata.totalstamps, 'Indløst i alt '+chartdata.totalfree],
-          ['Jan',  chartdata.jan_stamp,   chartdata.jan_free],
-          ['Feb',  chartdata.feb_stamp,   chartdata.feb_free],
-          ['Mar',  chartdata.mar_stamp,   chartdata.mar_free],
-          ['Apr',  chartdata.apr_stamp,   chartdata.apr_free],
-          ['Maj',  chartdata.maj_stamp,   chartdata.maj_free],
-          ['Jun',  chartdata.jun_stamp,   chartdata.jun_free],
-          ['Jul',  chartdata.jul_stamp,   chartdata.jul_free],
-          ['Aug',  chartdata.aug_stamp,   chartdata.aug_free],
-          ['Sep',  chartdata.sep_stamp,   chartdata.sep_free],
-          ['Okt',  chartdata.okt_stamp,   chartdata.okt_free],
-          ['Nov',  chartdata.nov_stamp,   chartdata.nov_free],
-          ['Dec',  chartdata.dec_stamp,   chartdata.dec_free]
-        ]);
+    // Declare columns
+    data.addColumn('string', 'Måned');
+    data.addColumn('number', 'Stempler');
+    data.addColumn('number', 'Gratis');
 
-        var options = {
-          title: '',
-          height: 300,
-          width:650,
-          backgroundColor: '#CCCECF',
-          legend: { 
+    // Add data.
+    data.addRows([
+      ['Jan',  chartdata.jan_stamp,   chartdata.jan_free],
+      ['Feb',  chartdata.feb_stamp,   chartdata.feb_free],
+      ['Mar',  chartdata.mar_stamp,   chartdata.mar_free],
+      ['Apr',  chartdata.apr_stamp,   chartdata.apr_free],
+      ['Maj',  chartdata.maj_stamp,   chartdata.maj_free],
+      ['Jun',  chartdata.jun_stamp,   chartdata.jun_free],
+      ['Jul',  chartdata.jul_stamp,   chartdata.jul_free],
+      ['Aug',  chartdata.aug_stamp,   chartdata.aug_free],
+      ['Sep',  chartdata.sep_stamp,   chartdata.sep_free],
+      ['Okt',  chartdata.okt_stamp,   chartdata.okt_free],
+      ['Nov',  chartdata.nov_stamp,   chartdata.nov_free],
+      ['Dec',  chartdata.dec_stamp,   chartdata.dec_free]
+    ]);
 
-              textStyle: {
-                  fontSize: 16
-              }
-          },
-          chartArea:{left: 50,backgroundColor:'#dddddd'}
-          
-        };
+    var options = {
+      title: '',
+      height: 300,
+      width:650,
+      backgroundColor: '#CCCECF',
+      legend: { 
 
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
+          textStyle: {
+              fontSize: 16
+          }
+      },
+      chartArea:{left: 50,backgroundColor:'#dddddd'}
+
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
 }
 
 function MakeStampcard(sStampcardText) {
