@@ -292,6 +292,11 @@ input {
     right: 0;
     padding: 5px;
 }
+#findImages .ingenbiller, #findImages2 .ingenbiller {
+    color: #ffffff;
+    text-align: left;
+    margin: 0;
+}
 
 #findImages div, #findImages2 div {
     height: 72px;

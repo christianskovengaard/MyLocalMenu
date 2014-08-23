@@ -128,7 +128,7 @@ class ImageController
         $oMessage = array(
             'sFunction' => 'UploadImage',
             'result' => false,
-            'toSmall' => true
+            'toSmall' => false
         );
 
         //Check if session is started
@@ -154,45 +154,52 @@ class ImageController
                     'size' => $sizes[0]
                 );
 
+                if ($fil['error'] == 0) {
+                    if (getimagesize($fil['tmp_name'])) {
 
-                if (getimagesize($fil['tmp_name'])) {
+                        list($width, $height, $type, $attr) = getimagesize($fil['tmp_name']);
 
-                    list($width, $height, $type, $attr) = getimagesize($fil['tmp_name']);
+                        $oMessage["size"] = array(
+                            "width" => $width,
+                            "height" => $height
+                        );
 
-                    if($width>699 && $height>299){
-                        $oMessage['toSmall']=false;
-                        
-                        $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
-                        $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . end(explode(".", $fil['name']));
-                        $location = '../img_user/' . $filename;
+                        if($width>699 && $height>299){
+                            $oMessage['toSmall']=false;
 
-                        if ($fil['error'] == 0 && move_uploaded_file($fil['tmp_name'], $location)) {
+                            $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
+                            $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . end(explode(".", $fil['name']));
+                            $location = '../img_user/' . $filename;
+
+                            if (move_uploaded_file($fil['tmp_name'], $location)) {
 
 
-                            $sQuery = $this->conPDO->prepare("INSERT INTO images (iFK_iRestuarentInfoId, sImageName, sImageDate) VALUES (:iFK_iRestuarentInfoId, :imageName, CURDATE())");
+                                $sQuery = $this->conPDO->prepare("INSERT INTO images (iFK_iRestuarentInfoId, sImageName, sImageDate) VALUES (:iFK_iRestuarentInfoId, :imageName, CURDATE())");
 
-                            $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());
-                            $sQuery->bindValue(":imageName", $filename);
-                            $sQuery->execute();
+                                $sQuery->bindValue(":iFK_iRestuarentInfoId", $this->GetResturantId());
+                                $sQuery->bindValue(":imageName", $filename);
+                                $sQuery->execute();
 
-                            $oMessage['result'] = true;
+                                $oMessage['result'] = true;
 
-                            $oMessage['images'] = array(
-                                'id' => $this->conPDO->lastInsertId(),
-                                'n' => $filename,
-                                'd' => date('Y-m-d')
-                            );
+                                $oMessage['images'] = array(
+                                    'id' => $this->conPDO->lastInsertId(),
+                                    'n' => $filename,
+                                    'd' => date('Y-m-d')
+                                );
+                            }
+
+                            $id++;
+                            file_put_contents("../app_data/image_upload_id.txt", $id);
+
+                        }else {
+                            $oMessage['toSmall'] = true;
                         }
 
-                        $id++;
-                        file_put_contents("../app_data/image_upload_id.txt", $id);
-
                     }
-
-
-                   
-
                 }
+
+
 
 
             }

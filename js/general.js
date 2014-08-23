@@ -2573,7 +2573,13 @@ $("input[name='checkbox_closed']").live('click', function(){
      $('#findImages').html('');
      $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
          $('#findImages').append('<div style="background-image: url(img_user/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
-     })
+     });
+
+     if($('#findImages').html()==''){
+         $('#findImages').append('<p class="ingenbiller">Du har ikke uploaded nogle billede endnu, for at uploade billeder skal du åbne biblotoket '+(window.innerWidth>720?"til venstre":"i toppen")+' og uploade dine billeder');
+     }
+
+
      $("#findImages div").click(function () {
          PutImageInPreviewBox($(this).attr('data-imageSrc'), $(this).attr('data-imageId'));
          $('#findImage').hide();
@@ -2708,9 +2714,9 @@ $("input[name='checkbox_closed']").live('click', function(){
              } else {
                  // dette bliver koret hvis billede ikke bliver uploaded
                  if (result.toSmall) {
-                     alert("Dette billede er ikke stort nok");
+                     alert("Dette billede er ikke stort nok \nDit billede var "+result.size.height+"x"+result.size.width+" \nog skal minimum være 300x700");
                  } else {
-                     alert("fejl")
+                     alert("Der er sket en fejl\nDit billede er muligvis for stort til at vi kan håndtere det")
                  }
              }
              var filer = [];
@@ -3241,6 +3247,9 @@ function putImagesInPopupForSelectionInGallary(){
     $('#mit_billede_biblotek > .imageInList').each(function (index, value) {
         $('#findImages2').append('<div style="background-image: url(img_user/' + $(value).attr('data-imagesrc') + ')" data-imageid="' + $(value).attr('data-imageid') + '" data-imagesrc="' + $(value).attr('data-imagesrc') + '" ></div>')
     })
+    if($('#findImages2').html()==''){
+        $('#findImages2').append('<p class="ingenbiller">Du har ikke uploaded nogle billede endnu, for at uploade billeder skal du åbne biblotoket '+(window.innerWidth>720?"til venstre":"i toppen")+' og uploade dine billeder');
+    }
     $("#findImages2 div").click(function () {
         $('#findImage2').hide();
         var id = $(this).attr('data-imageid');
