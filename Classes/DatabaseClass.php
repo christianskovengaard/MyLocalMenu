@@ -15,7 +15,8 @@ class Database
         $this->sPassword = '';
         $this->sEncoding = 'utf8';
         $this->sHost = 'localhost';
-        
+
+        // dette må ikke komme med
         //Production user 
         //name: sec_user
         //pass: tvgoseVtu7pmEE4bZ7rV

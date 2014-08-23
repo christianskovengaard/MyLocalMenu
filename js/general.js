@@ -2677,11 +2677,13 @@ $("input[name='checkbox_closed']").live('click', function(){
 
      var xhrhttp;
      if (window.XMLHttpRequest)
-     {// code for IE7+, Firefox, Chrome, Opera, Safari
+     {
+         // code for IE7+, Firefox, Chrome, Opera, Safari
          xhrhttp=new XMLHttpRequest();
      }
      else
-     {// code for IE6, IE5
+     {
+        // code for IE6, IE5
          xhrhttp=new ActiveXObject("Microsoft.XMLHTTP");
      }
 
