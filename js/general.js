@@ -3268,7 +3268,7 @@ function functionPutInGal(id){
      }).done(function(result)
      {
          if(result.result) {
-             $('#galleryImages').append(" <div class='galleryImageItem' style='background-image: url(img_gallery/"+result.image+")' data-src='"+result.image+"' data-id='"+result.id+"'><div class='galleryRemoveImage'>Fjern</div></div>")
+             $('#galleryImages').append("<div class='galleryImageItem' style='background-image: url(img_gallery/"+result.image+")' data-src='"+result.image+"' data-id='"+result.id+"'><div class='galleryRemoveImage'>Fjern</div></div>")
 
          }
      });
