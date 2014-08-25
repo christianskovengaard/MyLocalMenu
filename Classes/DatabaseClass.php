@@ -15,7 +15,7 @@ class Database
         $this->sPassword = '';
         $this->sEncoding = 'utf8';
         $this->sHost = 'localhost';
-        
+
         //Production user 
         //name: sec_user
         //pass: tvgoseVtu7pmEE4bZ7rV
@@ -44,4 +44,5 @@ class Database
         return $oDatabase;
     }
 }
+
 ?>

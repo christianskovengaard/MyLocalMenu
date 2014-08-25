@@ -32,3 +32,6 @@ nbproject/private/config.properties
 /TESTfiles/cafenavne1.csv
 /TESTfiles/cafenavne.csv
 Controllers/DatabaseController.php
+
+
+Classes/DatabaseClass.php

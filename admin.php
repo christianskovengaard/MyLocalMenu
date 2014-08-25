@@ -29,8 +29,8 @@ if($oSecurityController->login_check() == true) { ?>
         <div class="TabMenu">
             <div id="TabsMenu" class="Tab On" onclick="TapChange('sMenu');">Menu</div>
             <div id="TabsMessenger" class="Tab" onclick="TapChange('sMessenger');">Beskeder</div>
-            <div id="TabsGallery" class="Tab" onclick="TapChange('sGallery');">Galleri</div>
-            <div id="TabsStamp" class="Tab" onclick="TapChange('sStamp');">Stemplekort</div>
+            <div id="TabsGallery" class="Tab" onclick="TapChange('sGallery');">Billeder</div>
+            <div id="TabsStamp" class="Tab" onclick="TapChange('sStamp');">Stempelkort</div>
             <div id="TabsEdit" class="Tab" onclick="TapChange('sEdit');">Indstillinger</div>
         </div>
         
@@ -54,7 +54,7 @@ if($oSecurityController->login_check() == true) { ?>
 
                 <div id="upload">
                     <div id="toggleImageButton">
-                        Vis/Skjul billebiblotek
+                        Vis/Skjul billedebibliotek
                     </div>
                     <div id="upload_inner" onscroll="this.scrollLeft = 0">
                         <div id="drop_image_here">
@@ -219,17 +219,18 @@ if($oSecurityController->login_check() == true) { ?>
         <div id="TabWrappersStamp" class="menuWrapper" style="display: none;">
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
-                    <p>Sådan ser dit stemplkort ud:</p><br>                   
+                    <!-- <p>Sådan ser dit stemplkort ud:</p><br>                    -->
                     <div class='StampEX' id='StampEX'>
-                        <h3>STEMPLEKORT</h3>
-                        <h4></h4>
+                        <!-- <div class="stampCircle"></div> -->
                     </div>
                     <div class='StampWrapper'>
                         <p>Antal stempler på stempelkortet:</p>
                         <input value="" placeholder="" id="iMaxStamps" maxlength="2">
                         <div class='button StampButton' onclick="SaveStampcard();">Gem</div>
-                        <input type="text" placeholder="Stempelkort tekst" id="sStampcardText" style="width: 200px;"/>
+                        <br><br>
                         <div id="sStampcardTextExample">Stempelkort tekst...</div><br>
+                        <input type="text" placeholder="Stempelkort tekst" id="sStampcardText" style="width: 100%;"/>
+                        <br><br>
                         <div class="button StampButton" onclick="UpdateStampcardText();">Opdater stempelkort tekst</div><br>
                         <p>Stempelkort kode: </p><p id="RedemeCode"></p><br>
                         <input type="text" id="RedemeCode1" maxlength="1">
