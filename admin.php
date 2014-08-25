@@ -238,9 +238,9 @@ if($oSecurityController->login_check() == true) { ?>
                         <input type="text" id="RedemeCode4" maxlength="1"><br><br>
                         <div class="button StampButton" onclick="UpdateRedemeCode();">Sæt stempelkort kode</div>
                         <div class='StampStat'>
-                            <h3>Stempler uddelt i år</h3>
-                            <!--Div that will hold the pie chart-->
-                            <div id="chart_div"></div>
+                            <!--<h3>Stempler uddelt i år</h3>
+                            Div that will hold the google chart
+                            <div id="chart_div"></div>-->
                         </div>
    
                         <!--<h3>QR kode</h3>
@@ -254,7 +254,7 @@ if($oSecurityController->login_check() == true) { ?>
                 </div>
             </div>
         </div>
-        <!-- end Stampcard and QRcode -->
+        <!-- end Stampcard -->
         
         <!-- Settings -->
         <div id="TabWrappersEdit" class="menuWrapper" style="display: none;">   
