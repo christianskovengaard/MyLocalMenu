@@ -100,16 +100,18 @@ class StampcardController
             );
         
         //Get stampcard based on the menucard serialnumber
-        $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps FROM stampcard
+        $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps,sStampcardText FROM stampcard
                                             INNER JOIN `menucard`
                                             ON menucard.`iMenucardSerialNumber` = :iMenucardSerialNumber
                                             WHERE stampcard.`iFK_iRestuarentInfoId` = menucard.`iFK_iRestuarentInfoId`");
         $sQuery->bindValue(":iMenucardSerialNumber", $iMenucardSerialNumber);
         $sQuery->execute();
         $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
-        $iStampcardMaxStamps = $aResult['iStampcardMaxStamps'];
         
-        $oStampcard['iStampcardMaxStamps'] = $iStampcardMaxStamps;
+//$iStampcardMaxStamps = $aResult['iStampcardMaxStamps'];
+        
+        $oStampcard['sStampcardText'] = $aResult['sStampcardText'];
+        $oStampcard['iStampcardMaxStamps'] = $aResult['iStampcardMaxStamps'];
         
         //Return to MenucardController
         return $oStampcard;
