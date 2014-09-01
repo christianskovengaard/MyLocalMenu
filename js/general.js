@@ -2194,9 +2194,13 @@ function GetStampcard() {
            $('#iMaxStamps').val(result.stampcard.iStampcardMaxStamps);
            //Generate Google chart
            // Set a callback to run when the Google Visualization API is loaded.
-           google.setOnLoadCallback(DrawGoogleChart(result.stampcard.chartdata));
+           //google.setOnLoadCallback(DrawGoogleChart(result.stampcard.chartdata));
            $('#RedemeCode').html(result.stampcard.iStampcardRedemeCode);
-           MakeStampcard(result.stampcard.sStampcardText);
+           var sStampcardText = result.stampcard.sStampcardText;
+           var number = result.stampcard.iStampcardMaxStamps;
+           $('#sStampcardText').val(sStampcardText);
+           $(".appEksamble h4").text(sStampcardText);
+           $("#stampsCounterText").text("0/"+number);
        });
 }
 
@@ -2244,19 +2248,6 @@ function DrawGoogleChart(chartdata) {
     chart.draw(data, options);
 }
 
-function MakeStampcard(sStampcardText) {
-   $('#StampEX h4').nextAll().remove();
-   var NumStamps = $("#iMaxStamps").val();
-   var NumStampsPlusOne = parseInt(NumStamps) + 1;
-   $('#StampEX h4').text('Køb '+NumStamps+' '+sStampcardText+' og få den '+NumStampsPlusOne+'. gratis');
-   
-   for(var i=1; i <= NumStamps; i++) {
-       $('#StampEX h4').after("<div class='Stamp'></div>");
-       
-   }
-   
-}
-
 function SaveStampcard() {
     
    var aData = {};
@@ -2277,7 +2268,9 @@ function SaveStampcard() {
         data: {sFunction:"SaveStampcard",sJSONStampcard:sJSON}
        }).done(function(result) 
        {
-           MakeStampcard();
+        alert("Antallet af stempler er opdateret, husk at se efter at teksten passer til antalet af numre.");
+        var number = $('#iMaxStamps').val();
+        $("#stampsCounterText").text("0/"+number);
        });
 }
 
@@ -2441,25 +2434,21 @@ function UpdateStampcardText() {
        }).done(function(result) {
            if(result.result === 'true') {
                 alert('Stempelkort tekst er blevet opdateret');
-                //Set the new text frontend
-                var text1 = parseInt($('#iMaxStamps').val())+1;
-                text1 = text1+'.';
-                var text = 'Køb '+$('#iMaxStamps').val()+' '+$('#sStampcardText').val()+' og få den '+text1+' gratis';
-                $('#StampEX h4').html(text);
+                $(".appEksamble h4").text(sStampcardtext);
            }
        }); 
 }
 
 
-$('#sStampcardText').keyup(function() {
+// $('#sStampcardText').keyup(function() {
     
-    //Set the new text
-    var text1 = parseInt($('#iMaxStamps').val()) + 1;
-    text1 = text1+'.';
-    var text = 'Køb '+$('#iMaxStamps').val()+' '+this.value+' og få den '+text1+' gratis';
-    $('#sStampcardTextExample').html(text);
+//     //Set the new text
+//     var text1 = parseInt($('#iMaxStamps').val()) + 1;
+//     text1 = text1+'.';
+//     var text = 'Køb '+$('#iMaxStamps').val()+' '+this.value+' og få den '+text1+' gratis';
+//     $('#sStampcardTextExample').html(text);
     
-});
+// });
 
 //Disabled/enable select input types
 $("input[name='checkbox_closed']").live('click', function(){

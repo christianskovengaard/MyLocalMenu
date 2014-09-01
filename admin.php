@@ -221,14 +221,14 @@ if($oSecurityController->login_check() == true) { ?>
                 <div class="menuWrapperInner" id="wrapper">
                     <!-- <p>Sådan ser dit stemplkort ud:</p><br>                    -->
                     <div class='StampEX' id='StampEX'>
-                        <!-- <div class="stampCircle"></div> -->
+                        <!--  -->
                     </div>
                     <div class='StampWrapper'>
                         <p>Antal stempler på stempelkortet:</p>
                         <input value="" placeholder="" id="iMaxStamps" maxlength="2">
                         <div class='button StampButton' onclick="SaveStampcard();">Gem</div>
                         <br><br>
-                        <div id="sStampcardTextExample">Stempelkort tekst...</div><br>
+                        <div id="sStampcardTextExample">Stempelkort tekst:</div><br>
                         <input type="text" placeholder="Stempelkort tekst" id="sStampcardText" style="width: 100%;"/>
                         <br><br>
                         <div class="button StampButton" onclick="UpdateStampcardText();">Opdater stempelkort tekst</div><br>
@@ -242,8 +242,16 @@ if($oSecurityController->login_check() == true) { ?>
                             <!--<h3>Stempler uddelt i år</h3>
                             Div that will hold the google chart
                             <div id="chart_div"></div>-->
+                            <h3 style="margin: 2px auto; text-align: center;">Sådan ser dit stempelkort ud i appen:</h3>
                         </div>
-   
+                        <div class="appEksamble">
+                            <div class="stampCircle">
+                                <h3 class="" style="display: block; opacity: 1;">Stempler</h3>
+                                <h3 id="stampsCounterText"></h3>
+                                <p>+</p>
+                            </div>
+                            <h4 style="color: #fff; font-size: 16px; line-height: 16px; text-align: center;"></h4>
+                        </div>
                         <!--<h3>QR kode</h3>
                         <div>
                             <div class='button StampButton' onclick="PrintQRcode();">Print din QR kode</div>

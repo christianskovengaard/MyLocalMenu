@@ -441,6 +441,10 @@ left: 9px;
 .RestaurantPhone h2 { display: inline-block;  }
 
 /* ::::::::::::::::: Stamp :::::::::::::::::::::  */
+.appEksamble{
+    background: #333;
+    padding: 20px;
+}
 .StampEX {
     margin-bottom: 20px;
 }
@@ -460,33 +464,25 @@ left: 9px;
     z-index: 1;
     color: #fff;
 }
-.Stamp{
-    position: relative;
-    background: #d1d1d1;
-    display: inline-table;
-    width: 23px; height: 23px;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-    vertical-align: middle;
-    margin: 0 12px 10px 0;
-    box-shadow: inset 1px 1px 2px -2px #000,1px 1px 5px -3px #333;
-    border: 5px solid #ddd;
+.stampCircle h3 {
+margin: 5px 0;
+font-size: 18px;
+line-height: 18px;
+font-weight: 100;
+z-index: 3;
+color: #333;
+text-align: center;
 }
-.Stamp:after {
-    content: "";
-    position: absolute;
-    top: 50%; right: -12px;
-    margin-top: -4px;
-    width: 10px; height: 8px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    background: #ddd;
-    z-index: 0;
-}
-.Stamp.Full{
-    background: #473a35;
+.stampCircle p {
+position: absolute;
+top: 50%;
+left: 32%;
+font-size: 170px;
+line-height: 0px;
+margin: 0;
+font-weight: 100;
+z-index: 3;
+color: #333;
 }
 .StampWrapper {
     max-width: 355px;
