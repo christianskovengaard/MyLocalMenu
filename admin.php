@@ -224,15 +224,18 @@ if($oSecurityController->login_check() == true) { ?>
                         <!--  -->
                     </div>
                     <div class='StampWrapper'>
-                        <p>Antal stempler på stempelkortet:</p>
+                        <h3>Antal stempler på stempelkortet</h3>
+                        <p>Antal</p>
                         <input value="" placeholder="" id="iMaxStamps" maxlength="2">
                         <div class='button StampButton' onclick="SaveStampcard();">Gem</div>
                         <br><br>
-                        <div id="sStampcardTextExample">Stempelkort tekst:</div><br>
+                        <h3>Stempelkort tekst</h3>
+                        <!--<div id="sStampcardTextExample">Stempelkort tekst:</div><br>-->
                         <input type="text" placeholder="Stempelkort tekst" id="sStampcardText" style="width: 100%;"/>
-                        <br><br>
+                        <br><br>                    
                         <div class="button StampButton" onclick="UpdateStampcardText();">Opdater stempelkort tekst</div><br>
-                        <p>Stempelkort kode: </p><p id="RedemeCode"></p><br>
+                        <h3>Stempelkort kode</h3>
+                        <p>Nuværende kode: </p><p id="RedemeCode"></p><br>
                         <input type="text" id="RedemeCode1" maxlength="1">
                         <input type="text" id="RedemeCode2" maxlength="1">
                         <input type="text" id="RedemeCode3" maxlength="1">
