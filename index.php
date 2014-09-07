@@ -23,6 +23,11 @@ $oSecurityController->sec_session_start();
         <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->  
         <script type="text/javascript" src="js/jquery-ui.js"></script>
         <script type="text/javascript" src="js/general.js"></script>
+        <script type="text/javascript">
+        if (screen.width <= 720) {
+            //window.location = "adminapp/index.php";
+        }
+        </script>
 
     </head>
     <body>
