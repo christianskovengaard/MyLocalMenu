@@ -251,6 +251,13 @@ class UserController
                     //$username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
                     $_SESSION['username'] = $username;
                     $_SESSION['login_string'] = hash('sha512', $password.$ip_address.$user_browser);
+                    
+
+                    //Save time and number of login for user
+                    $sQuery = $this->conPDO->prepare("UPDATE users SET iUserNumberOfLogIn = iUserNumberOfLogIn + 1, dtUserLastLogIn = NOW() WHERE iUserId = :iUserId");
+                    $sQuery->bindValue(':iUserId', $user_id);
+                    $sQuery->execute();
+                    
                     // Login successful.
                     $aLogin['result'] = 'true';
                     return $aLogin;
