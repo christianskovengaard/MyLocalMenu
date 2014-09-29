@@ -2705,7 +2705,7 @@ $("input[name='checkbox_closed']").live('click', function(){
              } else {
                  // dette bliver koret hvis billede ikke bliver uploaded
                  if (result.toSmall) {
-                     alert("Dette billede er ikke stort nok \nDit billede var "+result.size.height+"x"+result.size.width+" \nog skal minimum være 300x700");
+                     alert("Dette billede er ikke stort nok \nDit billede var "+result.size.height+"x"+result.size.width+" \nog skal minimum være 250x400");
                  } else {
                      alert("Der er sket en fejl\nDit billede er muligvis for stort til at vi kan håndtere det")
                  }
@@ -2833,7 +2833,7 @@ function editImage(id, imageUrl){
         } else {
             $('.ImageControllCanBeDisabled').removeClass("disable");
         }
-        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 300)) {
+        if (!((eiditimageVariable.width * 0.9) > 400 && (eiditimageVariable.height * 0.9) > 250)) {
             $('#imageEidterCropButton').addClass("disable");
         }
         $("#imageEidter").fadeIn(100);
@@ -2880,12 +2880,12 @@ function editImageUpdate(){
 
         $('#imageEidterSave').removeClass("disable");
 
-        if (eiditimageVariable.height < 701) {
+        if (eiditimageVariable.height < 401) {
             $('.ImageControllCanBeDisabled').addClass("disable");
         } else {
             $('.ImageControllCanBeDisabled').removeClass("disable");
         }
-        if (!((eiditimageVariable.width * 0.9) > 700 && (eiditimageVariable.height * 0.9) > 300)) {
+        if (!((eiditimageVariable.width * 0.9) > 400 && (eiditimageVariable.height * 0.9) > 250)) {
             $('#imageEidterCropButton').addClass("disable");
         } else {
             $('#imageEidterCropButton').removeClass("disable");
@@ -2923,7 +2923,7 @@ function lukImageEidter(e){
     $("#imageEidter").fadeOut(100);
 }
 function editImageSetupCrop(){
-    if((eiditimageVariable.width*0.9)>700 && (eiditimageVariable.height*0.9)>300){
+    if((eiditimageVariable.width*0.9)>400 && (eiditimageVariable.height*0.9)>250){
         $('#imageEidterAmlToolBar').hide();
         $('#imageEidterCropToolBar').show();
 
@@ -2940,7 +2940,7 @@ function editImageSetupCrop(){
                 "display": "block"
             }
         );
-        if (eiditimageVariable.height * 0.9 < 701) {
+        if (eiditimageVariable.height * 0.9 < 401) {
             $('#toSmallToFlipOpOnSide').css("display", "inline");
         } else {
             $('#toSmallToFlipOpOnSide').hide();
@@ -3007,7 +3007,7 @@ function set_hiv_i_mig() {
              set_hiv_i_mig();
          }
      } else if (forskelX_percent < 0) {
-         if ( (((eiditimageVariable.customCropNowPosistions.width-(Math.abs(forskelX_percent)*100))/100)*eiditimageVariable.width) > 700 ) {
+         if ( (((eiditimageVariable.customCropNowPosistions.width-(Math.abs(forskelX_percent)*100))/100)*eiditimageVariable.width) > 400 ) {
              $('#custum_crop_resizer').css({ "width":(eiditimageVariable.customCropNowPosistions.width+(forskelX_percent*100))+"%"});
              set_hiv_i_mig();
          }
@@ -3019,7 +3019,7 @@ function set_hiv_i_mig() {
 
              set_hiv_i_mig();
 
-             if ((((eiditimageVariable.customCropNowPosistions.height + (forskelY_percent * 100)) / 100) * eiditimageVariable.height) < 701) {
+             if ((((eiditimageVariable.customCropNowPosistions.height + (forskelY_percent * 100)) / 100) * eiditimageVariable.height) < 401) {
                  $('#toSmallToFlipOpOnSide').css("display", "inline");
              } else {
                  $('#toSmallToFlipOpOnSide').hide();
@@ -3027,11 +3027,11 @@ function set_hiv_i_mig() {
 
          }
      } else if (forskelY_percent < 0) {
-         if ( (((eiditimageVariable.customCropNowPosistions.height-(Math.abs(forskelY_percent)*100))/100)*eiditimageVariable.height) > 300 ) {
+         if ( (((eiditimageVariable.customCropNowPosistions.height-(Math.abs(forskelY_percent)*100))/100)*eiditimageVariable.height) > 250 ) {
              $('#custum_crop_resizer').css({ "height":(eiditimageVariable.customCropNowPosistions.height+(forskelY_percent*100))+"%"});
              set_hiv_i_mig();
 
-             if ((((eiditimageVariable.customCropNowPosistions.height + (forskelY_percent * 100)) / 100) * eiditimageVariable.height) < 701) {
+             if ((((eiditimageVariable.customCropNowPosistions.height + (forskelY_percent * 100)) / 100) * eiditimageVariable.height) < 401) {
                  $('#toSmallToFlipOpOnSide').css("display", "inline");
              } else {
                  $('#toSmallToFlipOpOnSide').hide();
@@ -3137,8 +3137,8 @@ function editImageRotate(vej) {
 }
 
  var MessageFinishImageAspect = {
-     max: 1.42857142857,
-     min: 0.42857142857
+     max: 1.625, // (300/700)+1 : (250/400)+1
+     min: 0.625 // 300/700 : 250/400
  };
  function PutImageInPreviewBox(url, id) {
     var newImg = new Image();

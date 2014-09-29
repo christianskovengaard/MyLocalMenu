@@ -44,7 +44,12 @@ class GalleryController
         return $aResult['iRestuarentInfoId'];
 
     }
-    
+
+    private function replace_extension($filename, $new_extension) {
+        $info = pathinfo($filename);
+        return $info['filename'] . '.' . $new_extension;
+    }
+
     public function GetImagesApp($iMenucardSerialNumber){
         
         //Allow all, NOT SAFE
@@ -148,21 +153,16 @@ class GalleryController
                     $this->LoadPhpImageMagician();
                     $oImageL = new imageLib("../img_user/" . $image);
 
-                    $oMessageFinishImageAspect = (object)Array(
-                        "max" => 1.42857142857,
-                        "min" => 0.42857142857
-                    );
+                    $oImageL->resizeImage(400, 250, 4);
 
-                    $iNeturalAspect = $oImageL->getHeight() / $oImageL->getWidth();
+                    $id = intval(file_get_contents("../app_data/gallery_id.txt"));
+                    $new_image_name = $id . "-" . $this->replace_extension($image,"jpg");
+                    $id++;
+                    file_put_contents("../app_data/gallery_id.txt", $id);
 
-                    if ($iNeturalAspect < $oMessageFinishImageAspect->min) {
-                        $oImageL->resizeImage(700, 300, 4);
-                    } else if ($iNeturalAspect > $oMessageFinishImageAspect->max) {
-                        $oImageL->resizeImage(700, 1000, 4);
-                    } else {
-                        $oImageL->resizeImage(700, 700 * $iNeturalAspect, 4);
-                    }
-                    $oImageL->saveImage("../img_gallery/" . $image);
+
+                    $oImageL->saveImage("../img_gallery/" .$new_image_name ,70);
+
 
                     $sQuery = $this->conPDO->prepare("SELECT max(iGalleryImagePlaceInList) as max FROM gallery WHERE iFK_iResturentInfoId = :resturentid");
                     $sQuery->bindValue(':resturentid', $resId);
@@ -178,11 +178,11 @@ class GalleryController
 
                     $sQuery = $this->conPDO->prepare("INSERT INTO gallery (iFK_iResturentInfoId, sGalleryImage, iGalleryImagePlaceInList) VALUES (:resturentId, :image, :placeinlist)");
                     $sQuery->bindValue(":resturentId", $resId);
-                    $sQuery->bindValue(":image", $image);
+                    $sQuery->bindValue(":image", $new_image_name);
                     $sQuery->bindValue(":placeinlist", $nextInList);
                     $sQuery->execute();
 
-                    $oMessage['image'] = $image;
+                    $oMessage['image'] = $new_image_name;
                     $oMessage['id'] = $this->conPDO->lastInsertId();
                     $oMessage['result'] = true;
                 }

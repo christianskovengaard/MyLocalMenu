@@ -20,8 +20,12 @@ class MessageController
         require_once 'StampcardController.php';
         $this->oStampcard = new StampcardController();
     }
-    
-    
+
+    private function replace_extension($filename, $new_extension) {
+        $info = pathinfo($filename);
+        return $info['filename'] . '.' . $new_extension;
+    }
+
     //GetMessage
     
     //GetMessages
@@ -251,22 +255,22 @@ class MessageController
                         $oImageL = new imageLib("../img_user/" . $image);
 
                         $oMessageFinishImageAspect = (object)Array(
-                            "max" => 1.42857142857,
-                            "min" => 0.42857142857
+                            "max" => 1.625,
+                            "min" => 0.625
                         );
 
                         $iNeturalAspect = $oImageL->getHeight() / $oImageL->getWidth();
 
                         if ($iNeturalAspect < $oMessageFinishImageAspect->min) {
-                            $oImageL->resizeImage(700, 300, 4);
+                            $oImageL->resizeImage(400, 250, 4);
                         } else if ($iNeturalAspect > $oMessageFinishImageAspect->max) {
-                            $oImageL->resizeImage(700, 1000, 4);
+                            $oImageL->resizeImage(400, 650, 4);
                         } else {
-                            $oImageL->resizeImage(700, 700 * $iNeturalAspect, 4);
+                            $oImageL->resizeImage(400, 400 * $iNeturalAspect, 4);
                         }
-                        $oImageL->saveImage("../imgmsg_sendt/" . $image);
+                        $oImageL->saveImage("../imgmsg_sendt/" . $this->replace_extension($image,"jpg"),70);
 
-                        $sQuery->bindParam(":sMessageImage", $image);
+                        $sQuery->bindParam(":sMessageImage",  $this->replace_extension($image,"jpg"));
                     } else {
                         $blank = "";
                         $sQuery->bindParam(":sMessageImage", $blank);

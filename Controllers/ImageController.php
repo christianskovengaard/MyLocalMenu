@@ -164,11 +164,11 @@ class ImageController
                             "height" => $height
                         );
 
-                        if($width>699 && $height>299){
+                        if($width>399 && $height>249){
                             $oMessage['toSmall']=false;
 
                             $id = intval(file_get_contents("../app_data/image_upload_id.txt"));
-                            $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . '.' . end(explode(".", $fil['name']));
+                            $filename = $this->GetResturantId() . date('-Y-m-d-') . time() . $id . '.' . end(explode(".", $fil['name']));
                             $location = '../img_user/' . $filename;
 
                             if (move_uploaded_file($fil['tmp_name'], $location)) {
