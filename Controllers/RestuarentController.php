@@ -193,10 +193,10 @@ class RestuarentController
         header('Access-Control-Allow-Origin: *');  
         
         
-        /* Only allow trusted, MUCH more safe
-        header('Access-Control-Allow-Origin: mylocalcafe.dk');
-        header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
-        */
+        // Only allow trusted, MUCH more safe
+        //header('Access-Control-Allow-Origin: mylocalcafe.dk');
+        //header('Access-Control-Allow-Origin: www.mylocalcafe.dk');
+        
         
         $aRestuarent = array(
                 'sFunction' => 'SearchForRestuarentname',
@@ -204,22 +204,30 @@ class RestuarentController
                 'cafe' => ''
             );
         
-        if(isset($_GET['sCafename'])) {
+        if(isset($_GET['sCafename']) && isset($_GET['iCafeId'])) {
         
             $sCafename = utf8_decode($_GET['sCafename']);
-
-            $sQuery = $this->conPDO->prepare("SELECT sRestuarentInfoName,sRestuarentInfoAddress FROM restuarentinfo WHERE sRestuarentInfoName LIKE :sCafename");
+            
+     //Get Restuarentnames,adress and id that match the search string and where the id is greater than the one passed from the ajax call from app
+            $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId,sRestuarentInfoName,sRestuarentInfoAddress FROM restuarentinfo WHERE sRestuarentInfoName LIKE :sCafename AND iRestuarentInfoId > :iRestuarentInfoId LIMIT 10");
             $sQuery->bindValue(":sCafename", '%'.$sCafename.'%');
+            $sQuery->bindValue(":iRestuarentInfoId", $_GET['iCafeId']);
             $sQuery->execute();
             
-            $i = 0;
-            while ($result = $sQuery->fetch(PDO::FETCH_ASSOC)) {
-                $aRestuarent['cafe'][$i]['name'] = utf8_encode($result['sRestuarentInfoName']);
-                $aRestuarent['cafe'][$i]['address'] = utf8_encode($result['sRestuarentInfoAddress']);
-                $i++;
-            }
-            $aRestuarent['result'] = 'true';
+            //Count number of results
+            if($sQuery->rowCount() >= 1){
             
+                $i = 0;
+                while ($result = $sQuery->fetch(PDO::FETCH_ASSOC)) {
+                    $aRestuarent['cafe'][$i]['id'] = $result['iRestuarentInfoId'];
+                    $aRestuarent['cafe'][$i]['name'] = utf8_encode($result['sRestuarentInfoName']);
+                    $aRestuarent['cafe'][$i]['address'] = utf8_encode($result['sRestuarentInfoAddress']);
+                    $i++;
+                }
+                $aRestuarent['result'] = 'true';
+            }else{
+                $aRestuarent['result'] = 'done';
+            }
         }
         
         return $aRestuarent;
