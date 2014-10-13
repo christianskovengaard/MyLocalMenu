@@ -2543,7 +2543,7 @@ $("input[name='checkbox_closed']").live('click', function(){
          delete filer;
      });
      $('#toggleImageButton').click(function () {
-        $('#upload_inner').slideToggle();
+       // $('#upload_inner').slideToggle();
      });
  }
  function HentMinBilleder() {

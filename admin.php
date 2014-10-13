@@ -54,10 +54,11 @@ if($oSecurityController->login_check() == true) { ?>
 
                 <div id="upload">
                     <div id="toggleImageButton">
-                        Vis/Skjul billedebibliotek
+                        Billedebibliotek
                     </div>
                     <div id="upload_inner" onscroll="this.scrollLeft = 0">
                         <div id="drop_image_here">
+                            Upload Felt<br>
                             Slip billede her
                         </div>
                         <div id="find_billede">
@@ -73,7 +74,7 @@ if($oSecurityController->login_check() == true) { ?>
 
                         </div>
                         <div id="mine_uploaded_billeder">
-                            <p class="uploadarea">Mit billede biblotek</p>
+                            <p class="uploadarea">Billede biblotek</p>
                             <div id="mit_billede_biblotek"></div>
                         </div>
                     </div>
