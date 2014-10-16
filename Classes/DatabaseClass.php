@@ -14,7 +14,13 @@ class Database
         $this->sUsername = 'root';
         $this->sPassword = '';
         $this->sEncoding = 'utf8';
-        $this->sHost = 'localhost';
+        $this->sHost = 'localhost';        
+
+        $this->sDatabaseName = 'mylocalmenu';
+        $this->sUsername = 'root';
+        $this->sPassword = 'mZlcyVKWzp';
+        $this->sEncoding = 'utf8';
+        $this->sHost = '80.240.142.68';
 
         //Production user 
         //name: sec_user
