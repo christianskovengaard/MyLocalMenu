@@ -174,7 +174,7 @@ input {
 #MenuTown { width: 186px; }
 .EditmenuWrapperInner { display: table; margin: 0 auto;  }
 .Hours.Opening { width: 300px; }
-.Hours.Opening h2 { display: inline-table; width: 30px; font-size: 14px; line-height: 14px; vertical-align: middle; margin: 0; }
+.Hours.Opening h2 { display: inline-table; width: 34px; font-size: 14px; line-height: 14px; vertical-align: middle; margin: 0; }
 .Hours.Opening p { display: inline-table; width: 30px; text-align: center; }
 
 
