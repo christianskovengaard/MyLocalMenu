@@ -1,0 +1,252 @@
+/* 
+    Created on : 18-12-2014, 10:38:30
+    Author     : christianskovengaard
+    Desc       : index.php
+*/
+
+
+
+root {
+  display: block;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  color: #333;
+}
+
+h1, h2, p, h3, h4, h5, h6, a, div, ul {
+  font-family: 'Raleway', sans-serif;
+}
+
+input {
+  outline: none;
+}
+
+.wrapper {
+  position: relative;
+  margin: 0 auto;
+  width: 705px;
+}
+
+.header {
+  position: relative;
+  background: #333;
+  width: 100%;
+  padding: 200px 0 0 0;
+  .wrapper {
+    div {
+      display: inline-block;
+      margin: 0;
+    }
+    .left {
+      vertical-align: bottom;
+      position: relative;
+      height: 10px;
+      min-width: 220px;
+      img {
+        position: absolute;
+        width: 220px;
+        margin-left: -110px;
+        left: 50%;
+        bottom: -30px;
+        z-index: 2;
+      }
+    }
+    .rigth {
+      margin: 0 0 60px 60px;
+      width: 400px;
+      p {
+        color: #fff;
+        margin: 0;
+      }
+      h1 {
+        color: #fff;
+        margin: 0;
+        span {
+          font-weight: 100;
+        }
+      }
+      h3 {
+        color: #fff;
+        font-weight: 300;
+      }
+      h4 {
+        color: #fff;
+      }
+      a {
+        color: #fff;
+        background: rgba(0, 0, 0, 0.3);
+        margin: 50px 20px 0 0;
+        padding: 10px 20px 10px 15px;
+        -moz-border-radius: 30px;
+        -webkit-border-radius: 30px;
+        border-radius: 30px;
+        text-decoration: none;
+        img {
+          fill: #fff;
+          height: 20px;
+          margin: -5px 5px 0 0px;
+          vertical-align: middle;
+        }
+        &:hover {
+          background: rgba(0, 0, 0, 0.5);
+        }
+      }
+      input {
+        color: #333;
+        background: #fff;
+        border: 0;
+        margin: 10px 5px 0 0;
+        padding: 10px 20px 10px 15px;
+        -moz-border-radius: 30px;
+        -webkit-border-radius: 30px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        font-family: 'Raleway', sans-serif;
+      }
+    }
+  }
+}
+
+.logindtop {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #777;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+  &:hover {
+    color: #fff;
+  }
+}
+
+.btn {
+  background: #FCA041 !important;
+  text-decoration: none !important;
+  color: #333 !important;
+  cursor: pointer;
+}
+
+.body {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  .wrapper {
+    padding: 100px 0 0 0;
+    .left {
+      display: inline-table;
+      position: relative;
+      width: 450px;
+      vertical-align: top;
+      h1 {
+        display: table;
+      }
+      a {
+        background: #333;
+        padding: 10px 20px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        text-decoration: none;
+        margin: 50px 10px 0 0;
+        -webkit-border-radius: 30px;
+        color: #fff;
+        &:hover {
+          background: #444;
+        }
+      }
+      p {
+        display: inline-table;
+        margin: 0px 10px 0 0;
+      }
+      h3 {
+        display: table;
+        width: 400px;
+      }
+    }
+    .rigth {
+      display: inline-table;
+      width: 220px;
+      text-align: center;
+    }
+  }
+}
+
+.logo {
+  display: block;
+  width: 120px;
+  margin: 0px auto 10px auto;
+}
+
+.body .wrapper {
+  .left.login-page, .rigth.login-page {
+    width: 300px;
+    text-align: left;
+  }
+}
+
+.loginBlock {
+  background: #333;
+  color: #fff;
+  height: 100%;
+  min-height: 500px;
+}
+
+.inputFrame {
+  text-align: center;
+  padding: 30px 0;
+  h1 {
+    display: table;
+    margin: 0px auto;
+    span {
+      font-weight: 100;
+    }
+  }
+  h2 {
+    margin: 50px 0 10px;
+  }
+  a {
+    color: #333;
+    background: #FCA041;
+    border: 0;
+    margin: 10px auto 0 auto;
+    padding: 10px 20px 10px 15px;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Raleway', sans-serif;
+    display: table;
+    &:hover {
+      background: #fff;
+    }
+  }
+  input {
+    color: #333;
+    background: #fff;
+    border: 0;
+    margin: 10px auto 0 auto;
+    padding: 10px 20px 10px 15px;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Raleway', sans-serif;
+    display: table;
+  }
+}
+
+.EmailSubmission h3 {
+  color: #FCA041 !important;
+  padding: 0px;
+  margin: 30px 0px 0px 0px;
+}

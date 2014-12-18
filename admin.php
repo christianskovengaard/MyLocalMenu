@@ -11,12 +11,7 @@ if($oSecurityController->login_check() == true) { ?>
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0" />
         <title>MyLocalCafé - Admin</title>
         <link rel="icon" href="img/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="css/general_admin.css" />
-<!--        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 700px)" href="css/general_admin_small.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:701px) and (max-width: 1170px)" href="css/general_admin_medium.css" />-->
-        
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 461px)" href="css/general_admin_small.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:462px) and (max-width: 790px)" href="css/general_admin_medium.css" />
+        <link rel="stylesheet" type="text/css" href="css/admin.min.css" />
         <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>        
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

@@ -6,19 +6,10 @@
         <title>MyLocalCafé</title>
         <link rel="icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css" />
-        <link rel="stylesheet" type="text/css" href="css/general_index.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 500px)" href="css/general_index_small.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:501px) and (max-width: 850px)" href="css/general_index_medium.css" />
-                
+        <link rel="stylesheet" type="text/css" href="css/index.min.css" />              
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        
-        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-        <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->  
-        <script type="text/javascript" src="js/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/general.js"></script>
-
     </head>
     <body>
         
@@ -35,21 +26,10 @@
                   <br><br>
                 </div>
             </div>
-        </div>
-        <!--<div class="body">
-            <div class="wrapper">
-                <div class="left">
-                    <h1>Er du cafe ejer?</h1>
-                    <a href="admin">Log ind</a>
-                    <p>eller</p>
-                    <a href="admin">læs mere</a>
-                    <br>
-                    <h3>og få oprettet din café med det samme, helt gratis!</h3>
-                </div>
-                <div class="rigth">
-                    <img class="logo" src="img/logo_4.png">
-                </div>
-            </div>
-        </div>-->
+        </div>                
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->  
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/general.js"></script>
     </body>
 </html>

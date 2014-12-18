@@ -16,18 +16,10 @@ if(isset($_GET['sUserToken']) && $oUserController->ChecksUserToken() == true) :
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimun-scale=1.0, initial-scale=1.0" />
         <title>My Local Menu</title>
         <link rel="icon" href="img/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="css/general_index.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:50px) and (max-width: 500px)" href="css/general_index_small.css" />
-        <link rel="stylesheet" type="text/css" media="only screen and (min-width:501px) and (max-width: 850px)" href="css/general_index_medium.css" />
-                
+        <link rel="stylesheet" type="text/css" href="css/index.min.css" />    
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        
-        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-        <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->  
-        <script type="text/javascript" src="js/general.js"></script>
-        <script type="text/javascript" src="js/jsencrypt.js"></script>
     </head>
     <body>
          
@@ -47,7 +39,11 @@ if(isset($_GET['sUserToken']) && $oUserController->ChecksUserToken() == true) :
                     </form>
                 </div>
             </div>
-        </div>
+        </div>         
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->  
+        <script type="text/javascript" src="js/general.js"></script>
+        <script type="text/javascript" src="js/jsencrypt.js"></script>
         <script type="text/javascript" >
                 $(document).ready(function() {
                     $('#NewPassword').focus();                   
