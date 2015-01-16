@@ -2204,6 +2204,59 @@ function GetStampcard() {
        });
 }
 
+function ShowHideStampcard(){
+    
+    $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"ShowHideStampcard"}
+       }).done(function(result) 
+       {
+           if(result.result === true){
+               console.log(result);
+               if(result.show === '1'){
+                   //Show StampWrapper
+                   $('.StampWrapper').show();
+                   $('#ShowHideStampcard').prop('checked', true);
+               }else{
+                   //Hide StampWrapper
+                   $('.StampWrapper').hide();
+                   $('#ShowHideStampcard').prop('checked', false);
+               }
+           }else{
+               //Throw error
+               console.log('error');
+           }
+       });
+    
+}
+
+function UpdateShowHideStampcard(){
+    
+    var input = '';
+    if($('#ShowHideStampcard').is(':checked')){
+        input = 1;
+    }else{
+        input = 0;
+    };
+
+    $.ajax({
+        type: "GET",
+        url: "API/api.php",
+        dataType: "json",
+        data: {sFunction:"UpdateShowHideStampcard",show:input}
+       }).done(function(result) 
+       {
+           if(result.result === true){
+                $('.StampWrapper').toggle();
+           }else{
+               //Throw error
+               console.log('error');
+           }
+       });
+}
+
 function DrawGoogleChart(chartdata) {
        
     var data = new google.visualization.DataTable();

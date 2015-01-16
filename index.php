@@ -20,6 +20,7 @@ $oSecurityController->sec_session_start();
         
         <div class="header">
             <div class="wrapper">
+                   
                 <div class="left">
                   <img src="img/iphone.png">
                 </div>
@@ -35,11 +36,28 @@ $oSecurityController->sec_session_start();
                 </div>
             </div>
         </div>
+        
+        
+                <!-- Responsive TEST
+                <div class="frame">
+                    <div class="col-2"><img src="img/iphone.png"></div>
+                    <div class="col-2"><p>Velkommen til</p>
+                  <h1>MyLocal<span>Café</span></h1>
+                  <h3>Her kan du følge dine favorit caféer. </h3>
+                  <h3>Du kan se info om deres sted, se deres menukort, samt få aktuelle tilbud og beskeder direkte.</h3>
+                  <h3>Søg blot på dine lokale favorit caféer i søgefeltet for at komme i gang!</h3>
+                  <br><br>
+                  <a href="https://itunes.apple.com/us/app/mylocalcafe/id877545381?mt=8" target="_blank"><img src="img/apple.svg"> Hent til Apple</a>
+                  <a href="https://play.google.com/store/apps/details?id=com.mylocal.mylocalcafe&hl=da" target="_blank"><img src="img/android.svg"> Hent til Android</a></div>
+                </div> 
+                <!-- end --->
+        
+        
         <div class="body">
             <div class="wrapper">
                 <div class="left">
                     <h1>Er du cafe ejer?</h1>
-                    <a href="admin.php#LogInd">Log ind</a>
+                    <a href="login-page.php#LogInd">Log ind</a>
                     <p>eller</p>
                     <a href="admin">læs mere</a>
                     <br>

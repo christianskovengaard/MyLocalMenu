@@ -215,10 +215,7 @@ if($oSecurityController->login_check() == true) { ?>
         <div id="TabWrappersStamp" class="menuWrapper" style="display: none;">
             <div class="wrapper">
                 <div class="menuWrapperInner" id="wrapper">
-                    <!-- <p>Sådan ser dit stemplkort ud:</p><br>                    -->
-                    <div class='StampEX' id='StampEX'>
-                        <!--  -->
-                    </div>
+                   <div class="hide_show_stampcard"><input onclick="UpdateShowHideStampcard();" type="checkbox" name="" id="ShowHideStampcard"><h3>Aktiver stempelkort på App'en </h3></div>                 
                     <div class='StampWrapper'>
                         <h3>Antal stempler på stempelkortet</h3>
                         <p>Antal</p>
@@ -344,6 +341,7 @@ if($oSecurityController->login_check() == true) { ?>
             InitiateAutocomplete();
             InitFileManeger();
             InitGallery();
+            ShowHideStampcard();
             
             //TODO: Changed this Quick fix
             //Set menucard in edit mode 

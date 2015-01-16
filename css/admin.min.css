@@ -622,6 +622,14 @@ left: 9px;
 
 /* height 26 ei prefix */
 /* ::::::::::::::::: Stamp :::::::::::::::::::::  */
+.hide_show_stampcard {
+  height: 50px; }
+  .hide_show_stampcard h3 {
+    float: left; }
+  .hide_show_stampcard input {
+    float: left;
+    margin-top: 5px; }
+
 .appEksamble {
   background: #333;
   padding: 20px; }

@@ -411,7 +411,91 @@ class StampcardController
         
         return $oStampcard;
     }
+    
+    
+    public function ShowHideStampcard() {
+             
+        $result = array(
+            'sFunction' => 'ShowHideStampcard',
+            'show' => '',
+            'result' => ''
+        );
+        
+        
+        //Check if session is started
+        if(!isset($_SESSION['sec_session_id'])) { 
+            $this->oSecurityController->sec_session_start();
+        }
 
+        //Check if user is logged in
+        if($this->oSecurityController->login_check() == true) {
+                  
+        
+            $sQuery = $this->conPDO->prepare("SELECT iStampCardActive FROM stampcard                                                     
+                                                        INNER JOIN restuarentinfo
+                                                        ON restuarentinfo.`iRestuarentInfoId` = stampcard.`iFK_iRestuarentInfoId`
+                                                        INNER JOIN company
+                                                        ON company.`iCompanyId` = restuarentinfo.`iFK_iCompanyInfoId`
+                                                        INNER JOIN users
+                                                        ON users.iFK_iCompanyId = company.iCompanyId
+                                                        WHERE users.sUsername = :sUsername");
+            $sQuery->bindValue(':sUsername', $_SESSION['username']);
+            
+            if($sQuery->execute()){
+                $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+                $result['show'] = $aResult['iStampCardActive'];
+                $result['result'] = true;
+            }else{
+                $result['result'] = false;   
+            }
+        }else{
+            //User not logged in;
+        }
+        return $result;
+    }
+    
+    
+    
+    public function UpdateShowHideStampcard() {
+             
+        $result = array(
+            'sFunction' => 'UpdateHideStampcard',
+            'show' => '',
+            'result' => ''
+        );
+        
+        
+        if(isset($_GET['show'])) {
+        
+        //Check if session is started
+        if(!isset($_SESSION['sec_session_id'])) { 
+            $this->oSecurityController->sec_session_start();
+        }
+
+        //Check if user is logged in
+        if($this->oSecurityController->login_check() == true) {
+                  
+        
+            $this->GetResturantId();
+            
+            //Build query
+            $sQuery = $this->conPDO->prepare("UPDATE stampcard SET iStampCardActive = :iStampCardActive WHERE iFK_iRestuarentInfoId = :iRestuarentId");
+            $sQuery->bindValue(":iStampCardActive", $_GET['show']);
+            $sQuery->bindValue(":iRestuarentId", $this->GetResturantId());
+            
+            if($sQuery->execute()){
+                $result['result'] = true;
+            }else{
+                $result['result'] = false;   
+            }
+        }else{
+            //User not logged in;
+        }
+        
+        }
+        return $result;
+    }
+    
 
     private function CreateGoogleChart ($iStampcardId,$iStampcardMaxStamps) {
         
@@ -626,6 +710,23 @@ class StampcardController
         
         return $aGoogleChart;
         
+    }
+    
+    
+    
+    private function GetResturantId()
+    {
+        $sQuery = $this->conPDO->prepare("SELECT iRestuarentInfoId FROM restuarentinfo
+                                                        INNER JOIN company
+                                                        ON company.iCompanyId = restuarentinfo.iFK_iCompanyInfoId
+                                                        INNER JOIN users
+                                                        ON users.iFK_iCompanyId = company.iCompanyId
+                                                        WHERE users.sUsername = :sUsername");
+        $sQuery->bindValue(':sUsername', $_SESSION['username']);
+        $sQuery->execute();
+        $aResult = $sQuery->fetch(PDO::FETCH_ASSOC);
+        return $aResult['iRestuarentInfoId'];
+
     }
 
     public function __destruct() {

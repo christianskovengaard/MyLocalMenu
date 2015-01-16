@@ -321,6 +321,21 @@ if(isset($_GET['sFunction']))
             echo $sResult;
         break;
     
+        case "ShowHideStampcard":
+            require_once '../Controllers/StampcardController.php';
+            $oStampcard = new StampcardController();
+            $result = $oStampcard->ShowHideStampcard();
+            echo json_encode($result);
+        break;
+        
+        case "UpdateShowHideStampcard":
+            require_once '../Controllers/StampcardController.php';
+            $oStampcard = new StampcardController();
+            $result = $oStampcard->UpdateShowHideStampcard();
+            echo json_encode($result);
+        break;
+    
+    
         case "GetStamp":
             require_once '../Controllers/StampcardController.php';
             $oStampcard = new StampcardController();
@@ -431,23 +446,26 @@ if(isset($_GET['sFunction']))
             $oGalleryControler = new GalleryController();
             echo json_encode($oGalleryControler->GetImages());
         break;
+    
         case 'AddImageToGallery':
             require_once "../Controllers/GalleryControler.php";
             $oGalleryControler = new GalleryController();
             echo json_encode($oGalleryControler->AddImage());
         break;
+    
         case 'RemoveFromUsersGallery':
             require_once "../Controllers/GalleryControler.php";
             $oGalleryControler = new GalleryController();
             echo json_encode($oGalleryControler->RemoveImage());
         break;
+    
         case 'ReorderImageUserGallery':
             require_once "../Controllers/GalleryControler.php";
             $oGalleryControler = new GalleryController();
             echo json_encode($oGalleryControler->ReorderImage());
         break;
 
-
+        
 
         default:
                 $result = '{"sFunction":"'.$sFunction.'","result":"Error - Unknown function"}';

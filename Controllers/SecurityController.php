@@ -54,7 +54,7 @@ class SecurityController
     
     //CREATE LOGIN CHECK FUNCTION - Logged Status, check if user is loggede in
     public function login_check() 
-    {
+    {   
         //Check if DatabaseClass is declared, this applies when checking for if user is logged in at admin.php
         require_once 'DatabaseController.php';   
         $oDatabase = new DatabaseController();
@@ -106,10 +106,10 @@ class SecurityController
             // Not logged in
             //return 4;
             return false;
-        }
+        }     
     }
     
-    public function __destruct() {
+    public function __destruct() { 
         ;
     }
 }
