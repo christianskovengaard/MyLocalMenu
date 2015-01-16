@@ -96,11 +96,12 @@ class StampcardController
     public function GetStampcardApp($iMenucardSerialNumber) {
         
         $oStampcard = array(
-                'iStampcardMaxStamps' => ''
+                'iStampcardMaxStamps' => '',
+                'iStampcardActive' => ''
             );
         
         //Get stampcard based on the menucard serialnumber
-        $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps,sStampcardText FROM stampcard
+        $sQuery = $this->conPDO->prepare("SELECT iStampcardMaxStamps,sStampcardText,iStampcardActive FROM stampcard
                                             INNER JOIN `menucard`
                                             ON menucard.`iMenucardSerialNumber` = :iMenucardSerialNumber
                                             WHERE stampcard.`iFK_iRestuarentInfoId` = menucard.`iFK_iRestuarentInfoId`");
@@ -112,6 +113,7 @@ class StampcardController
         
         $oStampcard['sStampcardText'] = $aResult['sStampcardText'];
         $oStampcard['iStampcardMaxStamps'] = $aResult['iStampcardMaxStamps'];
+        $oStampcard['iStampcardActive'] = $aResult['iStampcardActive'];
         
         //Return to MenucardController
         return $oStampcard;
