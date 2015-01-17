@@ -974,5 +974,45 @@ color: #333;
 }
 
 /* gallery end */
-
-
+#google_map_my_cafe {
+    width: 300px;
+    margin-top: 20px;
+    height: 250px;
+    background-color: #e7e7e7;
+    position: relative;
+}
+#google_map_my_cafe div {
+    display: block;
+}
+#google_map_my_cafe_map{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -10px;
+    left: 0;
+}
+#google_map_my_cafe_hent_button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background: #fff;
+    padding: 15px;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.5);
+    font-weight: bold;
+    width: 250px;
+}
+#google_map_my_cafe div#google_map_my_cafe_hent_fail, #google_map_my_cafe div#google_map_my_cafe_hent_fail_2{
+    position: absolute;
+    bottom: 59px;
+    left: 10px;
+    right: 10px;
+    background: #ffc3c3;
+    padding: 5px;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.5);
+    font-weight: bold;
+    text-align: center;
+    font-size: 10px;
+    display: none;
+    width: 270px;
+}

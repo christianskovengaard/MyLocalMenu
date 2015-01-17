@@ -33,7 +33,7 @@ class EmailController
                                 'h:Return-Path' => 'info@mylocalcafe.dk')
                 );
         
-        /*
+
         $sReturnPath = 'info@mylocalcafe.dk';
         $sReplayTo = 'info@mylocalcafe.dk';
 
@@ -43,7 +43,7 @@ class EmailController
         $headers .= 'Return-Path: MyLocalCafe<'.$sReturnPath. ">\r\n";
         $headers .= 'Reply-To: MyLocalCafe <'.$sReplayTo."> \r\n";
        
-        mail($sTo,$sSubject,$sMessage, $headers," -f ".$sReturnPath);*/
+        mail($sTo,$sSubject,$sMessage, $headers," -f ".$sReturnPath);
     }
 
         public function __destruct() {

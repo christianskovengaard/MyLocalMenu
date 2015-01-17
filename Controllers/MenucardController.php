@@ -1552,7 +1552,10 @@ class MenucardController
             //Get the stampcard
             $aStampcard = $this->oStampcardController->GetStampcardApp($iMenucardSerialNumber);
             $aMenucard['oStampcard'] = $aStampcard;
-                  
+
+            $aMenucard['oPlace'] = ['dLat'=>55.632004, 'dLng'=>12.090112];
+
+
             //var_dump($aMenucard);
             return $aMenucard;
         }
@@ -1826,6 +1829,9 @@ class MenucardController
             $aMenucard['sRestuarentCityname'] = $this->oZipcodeCityController->GetCitynamePriv($aResult['iRestuarentInfoZipcode']);
             $aMenucard['sRestuarentInfoQRcode'] = $aResult['sRestuarentInfoQRcode']; 
             $aMenucard['iMenucardSerialNumber'] = $iMenucardSerialNumber;
+
+            $aMenucard['location'] = ['lat'=>$aResult['sRestuarentInfoLat'],'lng'=>$aResult['sRestuarentInfoLng']];
+
         } 
         
         return $aMenucard;
@@ -2087,7 +2093,9 @@ class MenucardController
             //Get the stampcard
             $aStampcard = $this->oStampcardController->GetStampcardApp($iMenucardSerialNumber);
             $aMenucard['oStampcard'] = $aStampcard;
-            
+
+
+            $aMenucard['oPlace'] = ['dLat'=>55.632004, 'dLng'=>12.090112];
             
             //var_dump($aMenucard);
             return $aMenucard;

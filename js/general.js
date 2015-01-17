@@ -958,8 +958,13 @@
       */
 
       aData['sRestuarentPhone'] = $("#MenuPhone").val();
-   
-     //Get the Openinghours monday-sunday   
+
+
+      aData['dRestuarentLocationLat'] = BrugerCafePlacering.placering.lat;
+      aData['dRestuarentLocationLng'] = BrugerCafePlacering.placering.lng;
+
+
+      //Get the Openinghours monday-sunday
      aData['iMondayTimeFrom'] = $("#iMondayTimeFrom option:selected").val();
      aData['iMondayTimeTo'] = $("#iMondayTimeTo option:selected").val();
      aData['iThuesdayTimeFrom'] = $("#iThuesdayTimeFrom option:selected").val();   
@@ -1115,6 +1120,8 @@
                           //Get restuarent info from database opening hours
                           $("#MenuName").val(result.sRestuarentName);
                           $("#MenuName").focus();
+
+                          BrugerCafePlacering.initMap(result.location);
 
                           $("#MenuSubName").val(result.sRestuarentInfoSlogan);
                           $("#MenuAdress").val(result.sRestuarentAddress);
@@ -1770,13 +1777,92 @@ function ValidateRegSwitch(CaseName,id){
         break;  
      }
  }
- 
- 
+ /*
+  latLng: hfD: 11.513671875k: 55.329535012504195
+  */
+ var BrugerCafePlacering = {
+     placering:false,
+     map:false,
+     marker:new google.maps.Marker({
+         position:new google.maps.LatLng(0,0),
+         icon: new google.maps.MarkerImage("img/cafeHere.png",
+             new google.maps.Size(42, 50),
+             new google.maps.Point(0,0),
+             new google.maps.Point(21, 50)
+         )
+     }),
+     initMap:function(place){
+
+         BrugerCafePlacering.map = new google.maps.Map(document.getElementById("google_map_my_cafe_map"),{
+             center:new google.maps.LatLng(55.401685, 10.381026),
+             zoom:5,
+             mapTypeId:google.maps.MapTypeId.ROADMAP
+         });
+         google.maps.event.addListenerOnce(BrugerCafePlacering.map, 'idle', function(){
+             setTimeout(function(){
+                 google.maps.event.trigger(BrugerCafePlacering.map, "resize");
+
+                 if (BrugerCafePlacering.placering!==false) {
+                     BrugerCafePlacering.map.setCenter(new google.maps.LatLng(BrugerCafePlacering.placering.lat, BrugerCafePlacering.placering.lng));
+                 }
+             },5000)
+
+
+         });
+         google.maps.event.addListener(this.map, 'click', function(event) {
+             if (!BrugerCafePlacering.marker.getMap()){
+                 BrugerCafePlacering.marker.setMap(BrugerCafePlacering.map)
+             }
+             BrugerCafePlacering.placering={lat:event.latLng.k, lng:event.latLng.D};
+             BrugerCafePlacering.marker.setPosition(event.latLng);
+         })
+
+         if (typeof place !== 'undefined') {
+             if (!BrugerCafePlacering.marker.getMap()){
+                 BrugerCafePlacering.marker.setMap(BrugerCafePlacering.map)
+             }
+             BrugerCafePlacering.placering={lat:place.lat, lng:place.lng};
+             BrugerCafePlacering.marker.setPosition(new google.maps.LatLng(place.lat, place.lng));
+             BrugerCafePlacering.map.setCenter(new google.maps.LatLng(place.lat, place.lng));
+             BrugerCafePlacering.map.setZoom(14);
+
+         }
+     },
+     hentPlacering: function(addr, zip){
+         if(
+            addr=="" ||
+            zip==""
+         ){
+             $('#google_map_my_cafe_hent_fail_2').fadeIn().delay(5000).fadeOut();
+         }else{
+             $.get(
+                 "http://maps.google.com/maps/api/geocode/json",
+                 {
+                     sensor:false,
+                     address:addr+", "+zip+", danmark"
+                 },function(data){
+                    if(data.status == "OK") {
+                        BrugerCafePlacering.placering={lat:data.results[0].geometry.location.lat, lng:data.results[0].geometry.location.lng};
+                        if (!BrugerCafePlacering.marker.getMap()){
+                            BrugerCafePlacering.marker.setMap(BrugerCafePlacering.map)
+                        }
+                        BrugerCafePlacering.marker.setPosition(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
+                        BrugerCafePlacering.map.setCenter(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
+                        BrugerCafePlacering.map.setZoom(14);
+
+                    }else {
+                        $('#google_map_my_cafe_hent_fail').fadeIn().delay(5000).fadeOut();
+                    }
+                 }
+             )
+         }
+     }
+ }
 function SubmitFormRegister(){
 
         // if validate (check if validationTag exist.. if then they miss something)       
         //Check if there are any validationTag
-        if (!$(".validationTag")[0]){
+        if (!$(".validationTag")[0] && BrugerCafePlacering.placering!==false){
         
         //Encrypt password with jsEncrypt
         var pubKey = "-----BEGIN PUBLIC KEY-----\r\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4jCNEY3ZyZbhNksbKG+l\r\n+LX9fIEiLkrRy9roGTKJnr2TEuZ28qvwRKeFbAs0wpMUS5\/8hF+Fte2Qywqq9ARG\r\nRNzTcDxjz72VRwTf1tSTKAJUsHYLKbBWPsvZ8FWk9EzJqltdj1mYVKMWcm7Ham5g\r\nwydozgnI3VbX8HMY8EglycKIc43gC+liSUmloWHGCnfKrfSEQ2cuIjnupvodvFw6\r\n5dAanLu+FRuL6hnvt7huxXz5+wbPI5\/aFGWUIHUbHoDFOag8BhVaDjXCrjWt3ry3\r\noFkheO87swYfSmQg4tHM\/2keCrsdHAk2z\/eCuYcbksnmNgTqWgcSHNGM+nq9ngz\/\r\nxXeb1UT+KxBy7K86oCD0a67eDzGvu3XxxW5N3+vvKJnfL6xT0EWTYw9Lczqhl9lp\r\nUdCgrcYe45pRHCqiPGtlYIBCT5lqVZi9zncWmglzl2Fc4fhjwKiK1DH7MSRBO8ut\r\nlgawBFkCprdsmapioTRLOHFRAylSGUiyqYg0NqMuQc5fMRiVPw8Lq3WeAWMAl8pa\r\nksAQHYAoFoX1L+4YkajSVvD5+jQIt3JFUKHngaGoIWnQXPQupmJpdOGMCCu7giiy\r\n0GeCYrSVT8BCXMb4UwIr\/nAziIOMiK87WAwJKysRoZH7daK26qoqpylJ00MMwFMP\r\nvtrpazOcbKmvyjE+Gg\/ckzMCAwEAAQ==\r\n-----END PUBLIC KEY-----";
@@ -1798,6 +1884,8 @@ function SubmitFormRegister(){
         aData['sRestuarentAddress'] = $('#sRestuarentAddress').val();
         aData['iRestuarentZipcode'] = $('#iRestuarentZipcode').val();
         aData['iRestuarentTel'] = $('#iRestuarentTel').val();
+            aData['dRestuarentLocationLat'] = BrugerCafePlacering.placering.lat;
+            aData['dRestuarentLocationLng'] = BrugerCafePlacering.placering.lng;
 
         //Get the Openinghours monday-sunday 
         aData['iMondayTimeFrom'] = $("#iMondayTimeFrom option:selected").val();
@@ -1859,7 +1947,7 @@ function SubmitFormRegister(){
         
         
         }else{
-            $('.btn').before('<div class="allFields_validationTag">Husk at udfylde alle felter!</div>');
+            $('.btn').before('<div class="allFields_validationTag">Husk at udfylde alle felter og vælg placering på kortet!</div>');
         }
     
 }

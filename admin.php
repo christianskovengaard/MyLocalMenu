@@ -280,7 +280,21 @@ if($oSecurityController->login_check() == true) { ?>
                         <input id="MenuTown" type="text" value=""> <br/>
                         <p>Caféns telefonnr.</p>
                         <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="11">
-                        
+                        <br/>
+                        <div id="google_map_my_cafe">
+                            <div id="google_map_my_cafe_map"></div>
+                            <div id="google_map_my_cafe_hent">
+                                <div id="google_map_my_cafe_hent_fail">
+                                    Kunne ikke finde din adresse, kilk på kort hvor din cafe er
+                                </div>
+                                <div id="google_map_my_cafe_hent_fail_2">
+                                    Intast cafens adresse førest
+                                </div>
+                                <div id="google_map_my_cafe_hent_button" onclick="BrugerCafePlacering.hentPlacering($('#MenuAdress').val(), $('#MenuZip').val())">
+                                    Find addresse
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div>
@@ -324,6 +338,7 @@ if($oSecurityController->login_check() == true) { ?>
     </div>
     <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->
+        <script src="http://maps.googleapis.com/maps/api/js"></script>
     <script type="text/javascript" src="js/jquery-da-calendar.js"></script> <!-- danish jQuery calendar-->
     <script type="text/javascript" src="js/general.js"></script>
     <script type="text/javascript" src="js/mustache.js"></script>
