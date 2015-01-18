@@ -12,7 +12,6 @@ class MapController
     {
 
         $output = array();
-        $id = 0;
 
 
         $sQuery = $con->prepare("SELECT sRestuarentInfoName, sRestuarentInfoAddress, sRestuarentInfoLat, sRestuarentInfoLng FROM restuarentinfo WHERE iRestuarentInfoActive = 1 AND sRestuarentInfoLng != '0.0'");
@@ -22,13 +21,11 @@ class MapController
         //Count number of results
         while ($result = $sQuery->fetch(PDO::FETCH_ASSOC)) {
             $output[]=array(
-                "id"=>$id,
-                "navn"=>utf8_encode($result['sRestuarentInfoName']),
-                "addr"=>utf8_encode($result['sRestuarentInfoAddress']),
-                "lat"=>utf8_encode($result['sRestuarentInfoLat']),
-                "lng"=>utf8_encode($result['sRestuarentInfoLng'])
+                utf8_encode($result['sRestuarentInfoName']),
+                utf8_encode($result['sRestuarentInfoAddress']),
+                utf8_encode($result['sRestuarentInfoLat']),
+                utf8_encode($result['sRestuarentInfoLng'])
             );
-            $id++;
         }
 
         file_put_contents(__DIR__ . "/../API/map_data.json", json_encode($output));
