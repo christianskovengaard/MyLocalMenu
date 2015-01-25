@@ -17,7 +17,7 @@ if(isset($_GET['sUserToken']))
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0" />
         <title>MyLocalCafé - Register</title>
         <link rel="icon" href="img/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="css/general_register.css" />
+        <link rel="stylesheet" type="text/css" href="css/register.min.css" />
         <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>          
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

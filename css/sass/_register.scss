@@ -1,0 +1,136 @@
+/* 
+    Created on : 25-01-2015, 21:08:22
+    Author     : christianskovengaard
+    Desc       : register.php
+*/
+
+root {
+  display: block;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  color: #333;
+}
+
+h1, h2, p, h3, h4, h5, h6, a, div, ul {
+  font-family: 'Raleway', sans-serif;
+}
+
+input {
+  outline: none;
+}
+
+.wrapper {
+  position: relative;
+  margin: 0 auto;
+  width: 705px;
+}
+
+.logo {
+  display: block;
+  width: 120px;
+  margin: 0px auto 10px auto;
+}
+
+.header {
+  position: relative;
+  background: #333;
+  width: 100%;
+  padding: 30px 0 10px 0;
+  color: #fff;
+  text-align: center;
+  h3 {
+    color: #fff;
+    font-size: 23px;
+    font-weight: 600;
+  }
+}
+
+.wrapper {
+  width: 300px;
+}
+
+input {
+  background: #ddd;
+  border: 0px;
+  outline: none;
+  font-size: 16px;
+  padding: 10px 20px;
+  width: 100%;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+.inputFrame.C {}
+
+.Hours.Opening {
+  h2 {
+    display: inline-table;
+    font-size: 13px;
+    margin: 0 5px 0 0;
+    width: 30px;
+  }
+  p, select {
+    display: inline-table;
+    font-size: 13px;
+    margin: 0 5px 0 0;
+  }
+  input {
+    display: inline-table;
+    width: 20px;
+  }
+}
+
+.btn {
+  background: #FCA041;
+  display: table;
+  padding: 10px 20px;
+  margin: 20px 0 50px 0;
+  float: right;
+  cursor: pointer;
+}
+
+#google_map_my_cafe {
+  width: 340px;
+  height: 250px;
+  background-color: #e7e7e7;
+  position: relative;
+}
+
+#google_map_my_cafe_map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+#google_map_my_cafe_hent_button {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: #fff;
+  padding: 15px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+#google_map_my_cafe_hent_fail, #google_map_my_cafe_hent_fail_2 {
+  position: absolute;
+  bottom: 59px;
+  left: 10px;
+  right: 10px;
+  background: #ffc3c3;
+  padding: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+  text-align: center;
+  font-size: 10px;
+  display: none;
+}
