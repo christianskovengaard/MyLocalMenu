@@ -12,7 +12,8 @@
     Desc       : register.php
 */
 root {
-  display: block; }
+  display: block;
+  direction: inherit; }
 
 body, html {
   width: 100%;
