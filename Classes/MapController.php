@@ -14,7 +14,7 @@ class MapController
         $output = array();
 
 
-        $sQuery = $con->prepare("SELECT sRestuarentInfoName, sRestuarentInfoAddress, sRestuarentInfoLat, sRestuarentInfoLng FROM restuarentinfo WHERE iRestuarentInfoActive = 1 AND sRestuarentInfoLng != '0.0'");
+        $sQuery = $con->prepare("SELECT sRestuarentInfoName, sRestuarentInfoAddress, sRestuarentInfoLat, sRestuarentInfoLng FROM restuarentinfo WHERE iRestuarentInfoActive = 1 AND sRestuarentInfoLng != ''");
         $sQuery->execute();
 
 

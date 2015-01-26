@@ -1553,7 +1553,7 @@ class MenucardController
             $aStampcard = $this->oStampcardController->GetStampcardApp($iMenucardSerialNumber);
             $aMenucard['oStampcard'] = $aStampcard;
 
-            $aMenucard['oPlace'] = ['dLat'=>55.632004, 'dLng'=>12.090112];
+            $aMenucard['oPlace'] = ['dLat'=>$aResult['sRestuarentInfoLat'], 'dLng'=>$aResult['sRestuarentInfoLng']];
 
 
             //var_dump($aMenucard);
@@ -1830,7 +1830,8 @@ class MenucardController
             $aMenucard['sRestuarentInfoQRcode'] = $aResult['sRestuarentInfoQRcode']; 
             $aMenucard['iMenucardSerialNumber'] = $iMenucardSerialNumber;
 
-            $aMenucard['location'] = ['lat'=>$aResult['sRestuarentInfoLat'],'lng'=>$aResult['sRestuarentInfoLng']];
+
+            $aMenucard['oPlace'] = ['dLat'=>$aResult['sRestuarentInfoLat'], 'dLng'=>$aResult['sRestuarentInfoLng']];
 
         } 
         
@@ -2095,7 +2096,7 @@ class MenucardController
             $aMenucard['oStampcard'] = $aStampcard;
 
 
-            $aMenucard['oPlace'] = ['dLat'=>55.632004, 'dLng'=>12.090112];
+            $aMenucard['oPlace'] = ['dLat'=>$aResult['sRestuarentInfoLat'], 'dLng'=>$aResult['sRestuarentInfoLng']];
             
             //var_dump($aMenucard);
             return $aMenucard;
