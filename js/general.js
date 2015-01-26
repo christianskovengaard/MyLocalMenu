@@ -963,7 +963,10 @@
       aData['dRestuarentLocationLat'] = BrugerCafePlacering.placering.lat;
       aData['dRestuarentLocationLng'] = BrugerCafePlacering.placering.lng;
 
-      if(BrugerCafePlacering.placering == BrugerCafePlacering.gemtPlacering) {
+      if(BrugerCafePlacering.placering == BrugerCafePlacering.gemtPlacering &&
+          $("#MenuName").val() == $('.RestaurantInfo .Name h1').html() &&
+          $('.RestaurantInfo .RestaurantAdresse h4').html() == aData['sRestuarentAddress']+", "+aData['sRestuarentZipcode']+" "+$('#MenuTown').val()
+      ) {
           aData['bRestuarentLocationUpdate'] = 0;
       }else{
           aData['bRestuarentLocationUpdate'] = 1;
