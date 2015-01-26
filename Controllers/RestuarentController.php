@@ -187,8 +187,10 @@ class RestuarentController
                 }  
 
                 require_once __DIR__.'/../Classes/MapController.php';
-                MapController::UpdateJSON($this->conPDO);
-                
+                if ($aJSONRestuarent->bRestuarentLocationUpdate == true) {
+                    MapController::UpdateJSON($this->conPDO);
+                }
+
                 $aRestuarent['result'] = true;
             }
         }

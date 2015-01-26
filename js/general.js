@@ -963,6 +963,13 @@
       aData['dRestuarentLocationLat'] = BrugerCafePlacering.placering.lat;
       aData['dRestuarentLocationLng'] = BrugerCafePlacering.placering.lng;
 
+      if(BrugerCafePlacering.placering == BrugerCafePlacering.gemtPlacering) {
+          aData['bRestuarentLocationUpdate'] = 0;
+      }else{
+          aData['bRestuarentLocationUpdate'] = 1;
+          BrugerCafePlacering.gemtPlacering =  BrugerCafePlacering.placering;
+      }
+
 
       //Get the Openinghours monday-sunday
      aData['iMondayTimeFrom'] = $("#iMondayTimeFrom option:selected").val();
@@ -1781,7 +1788,7 @@ function ValidateRegSwitch(CaseName,id){
   latLng: hfD: 11.513671875k: 55.329535012504195
   */
  var BrugerCafePlacering = {
-     oprigligPlacerin:false,
+     gemtPlacering:false,
      placering:false,
      map:false,
      marker:new google.maps.Marker({
@@ -1794,7 +1801,7 @@ function ValidateRegSwitch(CaseName,id){
      }),
      initMap:function(place){
          if (typeof place !== 'undefined') {
-             BrugerCafePlacering.placering = BrugerCafePlacering.oprigligPlacerin = {lat: place.dLat, lng: place.dLng};
+             BrugerCafePlacering.placering = BrugerCafePlacering.gemtPlacering = {lat: place.dLat, lng: place.dLng};
          }
 
          BrugerCafePlacering.map = new google.maps.Map(document.getElementById("google_map_my_cafe_map"),{
