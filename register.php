@@ -17,7 +17,7 @@ if(isset($_GET['sUserToken']))
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0" />
         <title>MyLocalCafé - Register</title>
         <link rel="icon" href="img/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="css/general_register.css" />
+        <link rel="stylesheet" type="text/css" href="css/register.min.css" />
         <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>          
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -52,10 +52,24 @@ if(isset($_GET['sUserToken']))
                             <h2>Din Café</h2>
                             <input type="text" id="sRestuarentName" onblur="ValidateRegSwitch('MustFill',this);" placeholder="Cafénavn">
                             <input type="text" id="sRestuarentSlogan" style="background: #eee; " placeholder="Evt. slogan">
+                            <input type="text" id="iRestuarentTel" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Telefonnummer">
                             <input type="text" id="sRestuarentAddress" onblur="ValidateRegSwitch('MustFill',this);" placeholder="Gadenavn og nummer">
                             <input type="text" id="iRestuarentZipcode" onblur="ValidateRegSwitch('zipcode',this);" style="display: inline-block;" size="4" maxlength="4" placeholder="Postnr">
                             <div class="RegCity"></div>
-                            <input type="text" id="iRestuarentTel" onblur="ValidateRegSwitch('phone',this);" maxlength="8" placeholder="Telefonnummer">
+                            <div id="google_map_my_cafe">
+                                <div id="google_map_my_cafe_map"></div>
+                                <div id="google_map_my_cafe_hent">
+                                    <div id="google_map_my_cafe_hent_fail">
+                                        Kunne ikke finde din adresse, kilk på kort hvor din cafe er
+                                    </div>
+                                    <div id="google_map_my_cafe_hent_fail_2">
+                                        Intast cafens adresse førest
+                                    </div>
+                                    <div id="google_map_my_cafe_hent_button" onclick="BrugerCafePlacering.hentPlacering($('#sRestuarentAddress').val(), $('#iRestuarentZipcode').val())">
+                                        Find addresse
+                                    </div>
+                                </div>
+                            </div>
                             <!--<div onclick="registerNext(0);" class="button prev">Tilbage</div>
                             <div onclick="registerNext(2);" class="button Reg">Næste</div>-->
                         </div>
@@ -76,6 +90,7 @@ if(isset($_GET['sUserToken']))
         <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
         <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- migrate plugin for old jQuery-->  
         <script type="text/javascript" src="js/jquery-ui.js"></script>
+        <script src="http://maps.googleapis.com/maps/api/js"></script>
         <script type="text/javascript" src="js/general.js"></script>
         <script type="text/javascript" src="js/jsencrypt.js"></script>
         <script type="text/javascript" src="js/mustache.js"></script>
@@ -88,6 +103,9 @@ if(isset($_GET['sUserToken']))
                 $(document).ready(function() {
                     makeOpeningHours();
                     InitiateAutocompleteForRegister();
+                });
+                google.maps.event.addDomListener(window, 'load', function () {
+                    BrugerCafePlacering.initMap();
                 });
                 window.onbeforeunload = function() {
                     //Check for validationTag

@@ -1,0 +1,19 @@
+/* 
+    Created on : 25-01-2015, 10:39:33
+    Author     : christianskovengaard
+    Description: all register styles in one file  
+*/
+
+
+//font
+@import url(http://fonts.googleapis.com/css?family=Exo+2:400,100,200,300,500,600,700,800,900);
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,900,100,200,300,500,600,700,800);
+@import url(http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic);
+
+
+//IMPORTANT the grid FUCKS something up in the styling
+//base
+//@import "./grid/lemonade.min.css";
+
+//register.php page
+@import "register";

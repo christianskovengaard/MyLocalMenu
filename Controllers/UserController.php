@@ -491,7 +491,7 @@ zRT9yVmqGJTgjz0E+cV8/0ODbzajfq9JLIj/aICn+BXft7sLt1fJz9fwAwU2
             
             //Create the new restuarent
             //Function returns the irestuarentInfoId           
-            $iRestuarentInfoId = $this->oRestuarent->AddRestuarent($aJSONInfo->sRestuarentName, $aJSONInfo->sRestuarentSlogan ,$aJSONInfo->iRestuarentTel, $aJSONInfo->sRestuarentAddress, $aJSONInfo->iRestuarentZipcode, $iCompanyId);
+            $iRestuarentInfoId = $this->oRestuarent->AddRestuarent($aJSONInfo->sRestuarentName, $aJSONInfo->sRestuarentSlogan ,$aJSONInfo->iRestuarentTel, $aJSONInfo->sRestuarentAddress, $aJSONInfo->iRestuarentZipcode, $iCompanyId, $aJSONInfo->dRestuarentLocationLat, $aJSONInfo->dRestuarentLocationLng);
             
             
             //Create Menucard

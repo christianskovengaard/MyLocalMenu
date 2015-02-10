@@ -54,12 +54,12 @@ class RestuarentController
         return $aRestuarentNames;
     }
     
-    public function AddRestuarent($sRestuarentInfoName, $sRestuarentSlogan,$sRestuarentInfoPhone, $sRestuarentInfoAddress, $iRestuarentZipcode, $iFK_iCompanyInfoId)
+    public function AddRestuarent($sRestuarentInfoName, $sRestuarentSlogan,$sRestuarentInfoPhone, $sRestuarentInfoAddress, $iRestuarentZipcode, $iFK_iCompanyInfoId, $dRestuarentLocationLat, $dRestuarentLocationLng)
     {
-        $this->oRestuarent->SetRestaurent($sRestuarentInfoName, $sRestuarentInfoPhone, $sRestuarentInfoAddress, $iFK_iCompanyInfoId);
+        $this->oRestuarent->SetRestaurent($sRestuarentInfoName, $sRestuarentInfoPhone, $sRestuarentInfoAddress, $iFK_iCompanyInfoId, $dRestuarentLocationLat, $dRestuarentLocationLng);
         
         //Insert into database          
-        $sQuery = $this->conPDO->prepare("INSERT INTO restuarentinfo (sRestuarentInfoName, sRestuarentInfoSlogan,sRestuarentInfoPhone, sRestuarentInfoAddress, iRestuarentInfoZipcode ,iFK_iCompanyInfoId) VALUES (:sRestuarentInfoName, :sRestuarentSlogan, :sRestuarentInfoPhone, :sRestuarentInfoAddress, :iRestuarentInfoZipcode, :iFK_iCompanyInfoId)");
+        $sQuery = $this->conPDO->prepare("INSERT INTO restuarentinfo (sRestuarentInfoName, sRestuarentInfoSlogan,sRestuarentInfoPhone, sRestuarentInfoAddress, iRestuarentInfoZipcode ,iFK_iCompanyInfoId, sRestuarentInfoLat, sRestuarentInfoLng) VALUES (:sRestuarentInfoName, :sRestuarentSlogan, :sRestuarentInfoPhone, :sRestuarentInfoAddress, :iRestuarentInfoZipcode, :iFK_iCompanyInfoId, :sRestuarentInfoLat, :sRestuarentInfoLng)");
 
         $oRestuarent = $this->oRestuarent->GetRestuarent();
         
@@ -69,10 +69,16 @@ class RestuarentController
         $sQuery->bindValue(':sRestuarentInfoAddress', utf8_decode(urldecode($oRestuarent->sRestuarentInfoAddress)));
         $sQuery->bindValue(':iRestuarentInfoZipcode', $iRestuarentZipcode);     
         $sQuery->bindValue(':iFK_iCompanyInfoId', $oRestuarent->iFK_iCompanyInfoId);
+        $sQuery->bindValue(':sRestuarentInfoLat', $oRestuarent->dRestuarentLocationLat);
+        $sQuery->bindValue(':sRestuarentInfoLng', $oRestuarent->dRestuarentLocationLng);
         $sQuery->execute();
         
         //Get the last inserted id
         $iRestuarentInfoId = $this->conPDO->lastInsertId();
+
+        require_once __DIR__.'/../Classes/MapController.php';
+        MapController::UpdateJSON($this->conPDO);
+
         
         return $iRestuarentInfoId;
     }
@@ -110,12 +116,14 @@ class RestuarentController
                 $iFK_iCompanyId = $aResult['iFK_iCompanyId'];
 
 
-                $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoName = :sRestuarentInfoName, sRestuarentInfoSlogan = :sRestuarentInfoSlogan, sRestuarentInfoPhone = :sRestuarentInfoPhone, sRestuarentInfoAddress = :sRestuarentInfoAddress, iRestuarentInfoZipcode = :iRestuarentInfoZipcode WHERE iFK_iCompanyInfoId = :iFK_iCompanyId LIMIT 1");
+                $sQuery = $this->conPDO->prepare("UPDATE restuarentinfo SET sRestuarentInfoName = :sRestuarentInfoName, sRestuarentInfoSlogan = :sRestuarentInfoSlogan, sRestuarentInfoPhone = :sRestuarentInfoPhone, sRestuarentInfoAddress = :sRestuarentInfoAddress, iRestuarentInfoZipcode = :iRestuarentInfoZipcode, sRestuarentInfoLat = :sRestuarentInfoLat, sRestuarentInfoLng = :sRestuarentInfoLng WHERE iFK_iCompanyInfoId = :iFK_iCompanyId LIMIT 1");
                 $sQuery->bindValue(":sRestuarentInfoName", utf8_decode(urldecode($aJSONRestuarent->sRestuarentName)));
                 $sQuery->bindValue(":sRestuarentInfoSlogan", utf8_decode(urldecode($aJSONRestuarent->sRestuarentSlogan)));      
                 $sQuery->bindValue(":sRestuarentInfoPhone", urldecode($aJSONRestuarent->sRestuarentPhone));
                 $sQuery->bindValue(":sRestuarentInfoAddress", utf8_decode(urldecode($aJSONRestuarent->sRestuarentAddress)));
                 $sQuery->bindValue(':iRestuarentInfoZipcode', $aJSONRestuarent->sRestuarentZipcode); 
+                $sQuery->bindValue(':sRestuarentInfoLat', $aJSONRestuarent->dRestuarentLocationLat);
+                $sQuery->bindValue(':sRestuarentInfoLng', $aJSONRestuarent->dRestuarentLocationLng);
                 $sQuery->bindValue(":iFK_iCompanyId", $iFK_iCompanyId);
                 $sQuery->execute();
                 
@@ -177,8 +185,12 @@ class RestuarentController
                         break;
                     }
                 }  
-                
-                
+
+                require_once __DIR__.'/../Classes/MapController.php';
+                if ($aJSONRestuarent->bRestuarentLocationUpdate == true) {
+                    MapController::UpdateJSON($this->conPDO);
+                }
+
                 $aRestuarent['result'] = true;
             }
         }

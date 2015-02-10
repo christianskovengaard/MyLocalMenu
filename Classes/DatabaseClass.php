@@ -16,6 +16,7 @@ class Database
         $this->sEncoding = 'utf8';
         $this->sHost = 'localhost';        
 
+
         //$this->sDatabaseName = 'mylocalmenu';
         //$this->sUsername = 'root';
         //$this->sPassword = 'mZlcyVKWzp';
