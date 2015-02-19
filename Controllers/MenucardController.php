@@ -1407,6 +1407,7 @@ class MenucardController
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iClosed'] = $row['iClosed'];
+                $aMenucard['aMenucardOpeningHours']['Today'] = utf8_encode(substr($row['sDayName'],0,3));
                 
                 //Check for Openinghours hour today   
                 if($row['sDayName'] == $TodayDaynameDanish)
@@ -1419,7 +1420,7 @@ class MenucardController
 
                     if ($date1 > $date2 && $date1 < $date3)
                     {
-                      $aMenucard['openNow'] = 'open';
+                      $aMenucard['openNow'] = 'open';                    
                     }
                     else{$aMenucard['openNow'] = 'closed';}
                     
@@ -1952,6 +1953,7 @@ class MenucardController
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iClosed'] = $row['iClosed'];
+                $aMenucard['aMenucardOpeningHours']['Today'] = utf8_encode(substr($row['sDayName'],0,3));
                 //Check for Openinghours hour today               
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
