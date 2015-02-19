@@ -1398,8 +1398,8 @@ class MenucardController
                die($e->getMessage()); 
             }
             $i = 0;
-            $TodayDayname = $today = date("l");
-            $TodayDaynameDanish = $this->GetDanishDayname($TodayDayname);
+            $today = date("l");
+            $TodayDaynameDanish = $this->GetDanishDayname($today);
             $current_time = date('H:i:s');
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
@@ -1407,13 +1407,14 @@ class MenucardController
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iClosed'] = $row['iClosed'];
-                $aMenucard['aMenucardOpeningHours']['Today'] = utf8_encode(substr($row['sDayName'],0,3));
-                
+
                 //Check for Openinghours hour today   
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
                     $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);                  
-
+                    $aMenucard['sRestuarentOpenningToday']['iClosed'] = $row['iClosed'];
+                    
+                    //Check if cafe is open now based on the time
                     $date1 = DateTime::createFromFormat('H:i:s', $current_time);
                     $date2 = DateTime::createFromFormat('H:i:s', $row['iTimeFrom']);
                     $date3 = DateTime::createFromFormat('H:i:s', $row['iTimeTo']);
@@ -1944,8 +1945,8 @@ class MenucardController
                die($e->getMessage()); 
             }
             $i = 0;
-            $TodayDayname = $today = date("l");
-            $TodayDaynameDanish = $this->GetDanishDayname($TodayDayname);
+            $today = date("l");
+            $TodayDaynameDanish = $this->GetDanishDayname($today);
             $current_time = date('H:i:s');
             while ($row = $sQuery->fetch(PDO::FETCH_ASSOC)) 
             {
@@ -1953,12 +1954,15 @@ class MenucardController
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeFrom'] = substr($row['iTimeFrom'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iTimeTo'] = substr($row['iTimeTo'], 0, -3);
                 $aMenucard['aMenucardOpeningHours'][$i]['iClosed'] = $row['iClosed'];
-                $aMenucard['aMenucardOpeningHours']['Today'] = utf8_encode(substr($row['sDayName'],0,3));
+                
                 //Check for Openinghours hour today               
                 if($row['sDayName'] == $TodayDaynameDanish)
                 {                  
                     $aMenucard['sRestuarentOpenningHoursToday'] = substr($row['iTimeFrom'], 0, -3)."-".substr($row['iTimeTo'], 0, -3);                  
-
+                    
+                    $aMenucard['sRestuarentOpenningToday']['iClosed'] = $row['iClosed'];
+                    
+                    //Check if cafe is open now based on the time
                     $date1 = DateTime::createFromFormat('H:i:s', $current_time);
                     $date2 = DateTime::createFromFormat('H:i:s', $row['iTimeFrom']);
                     $date3 = DateTime::createFromFormat('H:i:s', $row['iTimeTo']);
