@@ -8,7 +8,7 @@ $oSecurityController->sec_session_start();
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0" />
-        <title>MyLocalCafé</title>
+        <title>MyLocal</title>
         <link rel="icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css" />
         <link rel="stylesheet" type="text/css" href="css/index.min.css" />          
@@ -26,10 +26,10 @@ $oSecurityController->sec_session_start();
                 </div>
                 <div class="rigth">
                   <p>Velkommen til</p>
-                  <h1>MyLocal<span>Café</span></h1>
-                  <h3>Her kan du følge dine favorit caféer. </h3>
+                  <h1>MyLocal</h1>
+                  <h3>Her kan du følge dine favorit steder. </h3>
                   <h3>Du kan se info om deres sted, se deres menukort, samt få aktuelle tilbud og beskeder direkte.</h3>
-                  <h3>Søg blot på dine lokale favorit caféer i søgefeltet for at komme i gang!</h3>
+                  <h3>Søg blot på dit lokale favorit sted i søgefeltet for at komme i gang!</h3>
                   <br><br>
                   <a href="https://itunes.apple.com/us/app/mylocalcafe/id877545381?mt=8" target="_blank"><img src="img/apple.svg"> Hent til Apple</a>
                   <a href="https://play.google.com/store/apps/details?id=com.mylocal.mylocalcafe&hl=da" target="_blank"><img src="img/android.svg"> Hent til Android</a>
@@ -56,12 +56,12 @@ $oSecurityController->sec_session_start();
         <div class="body">
             <div class="wrapper">
                 <div class="left">
-                    <h1>Er du cafe ejer?</h1>
+                    <h1>Ejer du en restaurant, café eller bar?</h1>
                     <a href="login-page.php#LogInd">Log ind</a>
                     <p>eller</p>
                     <a href="admin">læs mere</a>
                     <br>
-                    <h3>og få oprettet din café med det samme, helt gratis!</h3>
+                    <h3>og få oprettet dit sted med det samme, helt gratis!</h3>
                 </div>
                 <div class="rigth">
                     <img style="width:250px;" src="img/Iphone_CutA.png">

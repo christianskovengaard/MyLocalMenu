@@ -8,7 +8,7 @@ $oSecurityController->sec_session_start();
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0" />
-        <title>MyLocalCafé</title>
+        <title>MyLocal</title>
         <link rel="icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css" />
         <link rel="stylesheet" type="text/css" href="css/index.min.css" />     
@@ -26,13 +26,13 @@ $oSecurityController->sec_session_start();
               <div class="rigth">
                
 
-                  <h1>Kære Café ejer</h1>
+                  <h1>Kære ejer</h1>
                   <h3>Få din egen App, og kommunikér direkte med dine kunder, helt gratis.</h3> 
                   
                   <h3>Opret en profil og få en app i dag, det er helt gratis.</h3>
                    <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
                    <!--<div onclick="HideShowSwitch('Email');" class="button01">Opret</div>-->
-                   <input type="submit" onclick="HideShowSwitch('Email');" id="addUserBtn" value="Opret din café" class="btn"/>
+                   <input type="submit" onclick="HideShowSwitch('Email');" id="addUserBtn" value="Opret nu" class="btn"/>
                                 
               </div>
            </div>
@@ -53,11 +53,11 @@ $oSecurityController->sec_session_start();
                       <img style="width:300px;" src="img/Iphone_CutB.png"> 
 
                       <h3>Sådan virker det</h3>
-                      <p>Dine Café kunder henter MyLocalCafé's app. De indtaster jeres cafénavn, og får vist jeres personlige café app.</p>
+                      <p>Dine kunder henter MyLocal's app. De indtaster jeres navn, og får vist jeres personlige app.</p>
                 </div>
                 <div class="rigth login-page">
                     <img style="width:300px;" src="img/Iphone_CutA.png"> 
-                    <h3>Du kan som café ejer oprette en gratis profil. Med denne profil er det muligt, at tilføje oplysninger om din café. Disse oplysninger er individuelle, men kan bl.a. være:</h3>
+                    <h3>Du kan som ejer oprette en gratis profil. Med denne profil er det muligt, at tilføje oplysninger om dit sted. Disse oplysninger er individuelle, men kan bl.a. være:</h3>
                      <ul>
                          <li> Åbningstider</li>
                          <li> Menukort</li>
@@ -74,7 +74,7 @@ $oSecurityController->sec_session_start();
                      </ul>
                  </div>    
                   <div class="wrapper">   
-                     <h3>Dine café oplysninger kommunikeres direkte til dine kunder igennem MyLocal Café´s app.</h3>
+                     <h3>Dine oplysninger kommunikeres direkte til dine kunder igennem MyLocal's app.</h3>
                      <br><br><br><br>
                   </div>
                 
@@ -88,7 +88,7 @@ $oSecurityController->sec_session_start();
                   <form name="login" method="POST" action="login.php">
                       <div id="LoginBox" class="inputFrame">
                       <img class="logo" src="img/logo_4.png"> 
-                      <h1>MyLocal<span>Café</span></h1>
+                      <h1>MyLocal</h1>
                         <h2>Log Ind</h2>
                         <input name="username" id="LoginEmail" type="text" placeholder="Email">
                         <input name="password" id="LoginPassword" type="Password" placeholder="Kodeord">
@@ -100,7 +100,7 @@ $oSecurityController->sec_session_start();
               <?php else : ?>
                 <div id="LoginBox" class="inputFrame">
                       <img class="logo" src="img/logo_4.png"> 
-                      <h1>MyLocal<span>Café</span></h1>
+                      <h1>MyLocal</h1>
                       <h2>Du er logget ind</h2>
                       <a href="admin">Tryk her, for at gå til redigering af menukort</a>
                   </div>
@@ -130,7 +130,7 @@ $oSecurityController->sec_session_start();
                //$("#forgotpassMail").focus();
            }
            if(url === "nocafe"){
-               $("#loginButton").before("<div id='WrongPassword'><p>Du har endnu ikke oprettet en café</p><p>Vi har sendt en registrerings mail til dig.</p></div>");             
+               $("#loginButton").before("<div id='WrongPassword'><p>Du har endnu ikke oprettet et sted</p><p>Vi har sendt en registrerings mail til dig.</p></div>");             
                $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');
            }
            if(url === "Account_locked"){

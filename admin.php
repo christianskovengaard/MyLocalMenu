@@ -9,7 +9,7 @@ if($oSecurityController->login_check() == true) { ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0" />
-        <title>MyLocalCafé - Admin</title>
+        <title>MyLocal - Admin</title>
         <link rel="icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/admin.min.css" />
         <link rel="stylesheet" type='text/css' href="css/jquery-ui-1.8.16.custom.css"/>        
@@ -264,10 +264,10 @@ if($oSecurityController->login_check() == true) { ?>
         <!-- Settings -->
         <div id="TabWrappersEdit" class="menuWrapper" style="display: none;">   
             <div class="EditRestaurantInfoWrapper">
-                    <h3>Ret Café oplysninger</h3>
+                    <h3>Oplysninger</h3>
                     <div>
-                        <p>Café navn</p>
-                        <input id="MenuName" type="text" value="" placeholder="Café navn"> <br/>
+                        <p>Navn</p>
+                        <input id="MenuName" type="text" value="" placeholder="Navn"> <br/>
                         <p>evt Slogan</p>
                         <input id="MenuSubName" type="text" value="" placeholder="slogan"> <br/>
                         <p>Vejnavn og nummer</p>
@@ -275,20 +275,20 @@ if($oSecurityController->login_check() == true) { ?>
                         <p>Postnr. og by</p>
                         <input id="MenuZip" type="text" value="" placeholder="Post nr." maxlength="4">
                         <input id="MenuTown" type="text" value=""> <br/>
-                        <p>Caféns telefonnr.</p>
+                        <p>Telefonnr.</p>
                         <input id="MenuPhone" type="text" value="" placeholder="Telefonnummer" maxlength="11">
                         <br/>
                         <div id="google_map_my_cafe">
                             <div id="google_map_my_cafe_map"></div>
                             <div id="google_map_my_cafe_hent">
                                 <div id="google_map_my_cafe_hent_fail">
-                                    Kunne ikke finde din adresse, kilk på kort hvor din cafe er
+                                    Kunne ikke finde din adresse, klik på kortet istedet
                                 </div>
                                 <div id="google_map_my_cafe_hent_fail_2">
-                                    Intast cafens adresse førest
+                                    Indtast adressen først
                                 </div>
                                 <div id="google_map_my_cafe_hent_button" onclick="BrugerCafePlacering.hentPlacering($('#MenuAdress').val(), $('#MenuZip').val())">
-                                    Find addresse
+                                    Find adresse
                                 </div>
                             </div>
                         </div>
