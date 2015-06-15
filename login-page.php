@@ -17,6 +17,7 @@ $oSecurityController->sec_session_start();
         <![endif]-->
     </head>
     <body>
+        <!--
         <div class="header">
             <a class="logindtop" href="login-page#LogInd">log ind</a>
             <div class="wrapper">
@@ -32,7 +33,7 @@ $oSecurityController->sec_session_start();
                   <h3>Opret en profil og få en app i dag, det er helt gratis.</h3>
                    <input id="sEmailToSubmit" type="text" placeholder="Indtast din email">
                    <!--<div onclick="HideShowSwitch('Email');" class="button01">Opret</div>-->
-                   <input type="submit" onclick="HideShowSwitch('Email');" id="addUserBtn" value="Opret nu" class="btn"/>
+                   <!--<input type="submit" onclick="HideShowSwitch('Email');" id="addUserBtn" value="Opret nu" class="btn"/>
                                 
               </div>
            </div>
@@ -79,7 +80,7 @@ $oSecurityController->sec_session_start();
                   </div>
                 
             </div>
-        </div>
+        </div>-->
 
         <div class="loginBlock">
             <div class="wrapper">
@@ -141,7 +142,7 @@ $oSecurityController->sec_session_start();
                $("#LoginBox h2").text('Nyt kodeord');
                $("#LoginEmail").remove();
                $("#LoginPassword").remove();
-               $("#loginButton").before("<div id='WrongPassword'><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Send nyt kodeord til email' class='btn' onclick='SendResetPasswordRequest();'><a style='background: none; color:#FCA041; padding:0 3px; display: inline-block;' href='login-page#LogInd'>tilbage</a></div>");             
+               $("#loginButton").before("<div id='WrongPassword'><input type='text' placeholder='Email' id='forgotpassMail'><input type='button' value='Send nyt kodeord til email' class='btn' onclick='SendResetPasswordRequest();'><a style='background: none; color:#FCA041; padding:0 3px; display: inline-block;' href='index'>tilbage</a></div>");             
                $('html,body').animate({scrollTop: $("#loginButton").offset().top},'fast');    
                $("#loginButton").remove();
                $('.forgotpassword').hide();

@@ -28,7 +28,7 @@ $oSecurityController->sec_session_start();
                   <p>Velkommen til</p>
                   <h1>MyLocal</h1>
                   <h3>Her kan du følge dine favorit steder. </h3>
-                  <h3>Du kan se info om deres sted, se deres menukort eller produkter, samt få aktuelle tilbud og beskeder direktes</h3>
+                  <h3>Du kan se info om deres sted, se deres menukort eller produkter, samt få aktuelle tilbud og beskeder direkte</h3>
                   <h3>Søg blot på dit lokale favorit sted i søgefeltet for at komme i gang!</h3>
                   <br><br>
                   <a href="https://itunes.apple.com/us/app/mylocalcafe/id877545381?mt=8" target="_blank"><img src="img/apple.svg"> Hent til Apple</a>
@@ -40,7 +40,7 @@ $oSecurityController->sec_session_start();
         <div class="body">
             <div class="wrapper">
                 <div class="left">
-                    <h1>Ejer du en restaurant, café, Bar eller butik</h1>
+                    <h1>Ejer du en restaurant, café, bar eller butik?</h1>
                     <a href="login-page.php#LogInd">Log ind</a>
                     <p>eller</p>
                     <a href="admin">læs mere</a>
