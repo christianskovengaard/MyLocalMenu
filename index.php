@@ -18,9 +18,10 @@ $oSecurityController->sec_session_start();
     </head>
     <body>
         <div class="header">
-            <a class="logindtop" href="login-page#LogInd">log ind</a>
+           <!-- <a class="logindtop" href="login-page#LogInd">log ind</a>-->
             <div class="wrapper">
                 <!--<h1>MyLocal - Din egen personlige App</h1>-->
+                <h1>Har du en café, bar eller restaurant?</h1>
               <div class="left">
                   <img class="logo" src="img/logo_4.png"> 
                   <img src="img/IphoneB.png">
@@ -28,7 +29,7 @@ $oSecurityController->sec_session_start();
                 
               <div class="rigth">
                 
-                <h1>Har du en café, bar, takeaway eller restaurant?</h1>
+                
                 <h3>Få din helt egen app til Android og iPhone.</h3>
                 <h3>Promovér dit sted, og kommunikér direkte med dine kunder.</h3>
 
@@ -43,9 +44,10 @@ $oSecurityController->sec_session_start();
                     <li>- Menukort funktion</li>
                     <li>- Eget CMS system til styring af indholdet på App'en</li>
                 </ul>
-                
-                <p>Oprettelse: 9.999,- eksl. moms.</p>
-                <p>Årligt abonnement inkl. service: 6.999,- eksl. moms</p>
+
+                <p>Oprettelse: 3.999,- eksl. moms.</p>
+                <p>Månedligt abonnement inkl. service: 349,- eksl. moms</p>
+                  <br>
                 <p>Kontakt os og få et uforpligtende tilbud.</p>
                 <div class="contact_index">
                     <a href="mailto: mylocal@mail.com">mylocal@mail.com</a>
