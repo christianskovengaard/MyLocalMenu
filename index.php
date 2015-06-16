@@ -18,10 +18,11 @@ $oSecurityController->sec_session_start();
     </head>
     <body>
         <div class="header">
-            <!--<a class="logindtop" href="login-page#LogInd">log ind</a>-->
+            <a class="logindtop" href="login-page#LogInd">log ind</a>
             <div class="wrapper">
                 <!--<h1>MyLocal - Din egen personlige App</h1>-->
               <div class="left">
+                  <img class="logo" src="img/logo_4.png"> 
                   <img src="img/IphoneB.png">
               </div>
                 
@@ -43,8 +44,8 @@ $oSecurityController->sec_session_start();
                     <li>- Eget CMS system til styring af indholdet på App'en</li>
                 </ul>
                 
-                <p>Oprettelse 9.999,- eksl. moms.</p>
-                <p>Årligt abonnement inkl. service 6.999,- eksl. moms</p>
+                <p>Oprettelse: 9.999,- eksl. moms.</p>
+                <p>Årligt abonnement inkl. service: 6.999,- eksl. moms</p>
                 <p>Kontakt os og få et uforpligtende tilbud.</p>
                 <div class="contact_index">
                     <a href="mailto: mylocal@mail.com">mylocal@mail.com</a>
@@ -59,7 +60,7 @@ $oSecurityController->sec_session_start();
                 <div class="left login-page">
                     <h3>Med din egen App kan du bl.a:</h3>
                       <ul>
-                          <li>- Promover tilbud direkte til dine kunder</li>
+                          <li>- Promovere tilbud direkte til dine kunder</li>
                           <li>- Få flere nye kunder</li>
                           <li>- Få flere loyale kunder</li>
                           <li>- Måle løbende på dine salg</li>
@@ -69,7 +70,6 @@ $oSecurityController->sec_session_start();
 
                       <img style="width:300px;" src="img/Iphone_CutB.png"> 
 
-                      <p>Dine kunder henter MyLocal's app. De indtaster jeres navn, og får vist jeres personlige app.</p>
                     <div class="app-links-index">
                     <h3>Prøv vores test App nu!</h3>
                   <a href="https://itunes.apple.com/us/app/mylocalcafe/id877545381?mt=8" target="_blank"><img src="img/apple.svg"> Hent til Apple</a>
