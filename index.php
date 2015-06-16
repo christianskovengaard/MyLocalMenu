@@ -33,7 +33,7 @@ $oSecurityController->sec_session_start();
                 <h3>Få din helt egen app til Android og iPhone.</h3>
                 <h3>Promovér dit sted, og kommunikér direkte med dine kunder.</h3>
 
-                <h3>Du får bl.a:</h3>
+                <h3>Du får bl.a.:</h3>
                 <ul>
                     <li>- Eget logo</li>
                     <li>- Eget visuelt udtryk</li>
@@ -60,7 +60,7 @@ $oSecurityController->sec_session_start();
         <div class="body">
             <div class="wrapper">
                 <div class="left login-page">
-                    <h3>Med din egen App kan du bl.a:</h3>
+                    <h3>Med din egen App kan du bl.a.:</h3>
                       <ul>
                           <li>- Promovere tilbud direkte til dine kunder</li>
                           <li>- Få flere nye kunder</li>
@@ -84,7 +84,7 @@ $oSecurityController->sec_session_start();
                 <div class="rigth login-page">
                     <img style="width:300px;" src="img/Iphone_CutA.png"> 
                     <h3>Med din egen App er det muligt, at tilføje oplysninger om dit sted.</h3>
-                    <h3>Disse oplysninger kan bl.a være:</h3>
+                    <h3>Disse oplysninger kan bl.a. være:</h3>
                      <ul>
                          <li>- Åbningstider</li>
                          <li>- Menukort</li>
