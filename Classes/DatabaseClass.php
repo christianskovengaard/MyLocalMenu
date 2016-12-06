@@ -17,12 +17,6 @@ class Database
         $this->sHost = 'localhost';        
 
 
-        //$this->sDatabaseName = 'mylocalmenu';
-        //$this->sUsername = 'root';
-        //$this->sPassword = 'mZlcyVKWzp';
-        //$this->sEncoding = 'utf8';
-        //$this->sHost = '80.240.142.68';
-
         //Production user 
         //name: sec_user
         //pass: tvgoseVtu7pmEE4bZ7rV
